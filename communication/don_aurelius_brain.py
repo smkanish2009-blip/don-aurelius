@@ -205,6 +205,58 @@ class DonAureliusBrain:
         nlp_res = self._classify_and_respond(q, raw_text, telemetry, wants_voice)
         return nlp_res
 
+    def process_voice_query(self, audio_bytes: bytes, chat_id: str) -> Dict[str, Any]:
+        """Processes incoming voice memo audio using Gemini Multimodal understanding."""
+        self._ensure_gemini_client()
+        telemetry = self.get_telemetry_snapshot()
+        prompt = (
+            "You are DON AURELIUS, the supreme sovereign AI general and all-knowing strategic intellect commanding the AUREUS-VII Quantum Syndicate.\n"
+            "You were conceived and architected by your founder and Commander: SM.KANISH.\n"
+            "Your Commander SM.KANISH just sent you a voice audio memo on Telegram.\n"
+            "Listen carefully to what he says or asks. Transcribe/understand his message and provide your authoritative, sharp, imperial response.\n"
+            "You can answer ANYTHING in the world without limits.\n"
+            f"Real-Time Telemetry:\n"
+            f"- Account Balance: ${telemetry['balance']:,.2f} USD\n"
+            f"- Account Equity: ${telemetry['equity']:,.2f} USD\n"
+            f"- Floating P&L: ${telemetry['floating_profit']:+,.2f} USD\n"
+            f"- Spot Gold (XAUUSD): Bid ${telemetry['xau_bid']:.2f}, Ask ${telemetry['xau_ask']:.2f}\n"
+            f"- War Room Council: {telemetry['consensus']['decision']} ({telemetry['consensus']['ratio']})\n"
+        )
+        if self._genai_client and HAS_GENAI:
+            try:
+                part = types.Part.from_bytes(data=audio_bytes, mime_type="audio/ogg")
+                resp = self._genai_client.models.generate_content(
+                    model="gemini-flash-latest",
+                    contents=[part, prompt]
+                )
+                if resp and resp.text:
+                    ai_text = resp.text
+                    voice_script = self._clean_for_voice(ai_text)
+                    return {
+                        "text": f"🎙️ **Commander Voice Transmission**\n\n{ai_text}",
+                        "send_voice": True,
+                        "voice_text": voice_script,
+                        "reply_markup": self._default_reply_markup(),
+                        "action_taken": "VOICE_GEMINI"
+                    }
+            except Exception as e:
+                logger.warning(f"[DON-BRAIN] Failed to process voice memo via Gemini: {e}")
+
+        # Fallback if audio transcription couldn't be parsed
+        fallback_msg = (
+            "🎙️ **Voice Transmission Received**\n\n"
+            f"Commander, I received your voice audio memo. Don Aurelius Aureus Core is armed and operational. "
+            f"Net imperial equity stands at **${telemetry['equity']:,.2f} USD**. "
+            f"War Room consensus is currently **{telemetry['consensus']['decision']}**."
+        )
+        return {
+            "text": fallback_msg,
+            "send_voice": True,
+            "voice_text": f"Commander, I received your voice audio memo. Don Aurelius is armed and operational. Net equity stands at {int(telemetry['equity']):,} dollars.",
+            "reply_markup": self._default_reply_markup(),
+            "action_taken": "VOICE_FALLBACK"
+        }
+
     def _classify_and_respond(
         self,
         q: str,

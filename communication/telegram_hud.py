@@ -229,6 +229,25 @@ class JarvisTelegramHUD:
 
         return "UNKNOWN_COMMAND"
 
+    def _download_telegram_file(self, file_id: str) -> Optional[bytes]:
+        """Downloads voice notes or media files directly from Telegram Servers."""
+        if not self.token or self.token.startswith("mock_") or not file_id:
+            return None
+        try:
+            url = f"{self.api_base}/getFile?file_id={file_id}"
+            r = self._session.get(url, timeout=15)
+            if r.status_code == 200:
+                data = r.json()
+                file_path = data.get("result", {}).get("file_path")
+                if file_path:
+                    download_url = f"https://api.telegram.org/file/bot{self.token}/{file_path}"
+                    dr = self._session.get(download_url, timeout=30)
+                    if dr.status_code == 200:
+                        return dr.content
+        except Exception as e:
+            logger.warning(f"[JARVIS-HUD] Telegram file download error: {e}")
+        return None
+
     def _send_chat_action(self, chat_id: str, action: str = "typing"):
         """Displays typing or record_voice indicator in Telegram UI."""
         if not self.token or self.token.startswith("mock_") or not chat_id:
@@ -383,20 +402,37 @@ class JarvisTelegramHUD:
             msg_id = cb.get("message", {}).get("message_id")
             self.handle_button_overrides(data, chat_id, msg_id)
 
-        # 2. Text message (slash command or natural language conversation)
+        # 2. Text message or Voice Memo
         elif "message" in update or "channel_post" in update:
             msg = update.get("message") or update.get("channel_post", {})
             sender_id = str(msg.get("from", {}).get("id", ""))
             chat_id = str(msg.get("chat", {}).get("id", sender_id))
             text = msg.get("text", "").strip()
-            logger.info(f"[JARVIS-HUD] Incoming message from {sender_id} in {chat_id}: '{text}'")
 
             if self.chat_id and sender_id != str(self.chat_id) and chat_id != str(self.chat_id):
                 logger.warning(f"[JARVIS-HUD] Message filtered: {sender_id} != configured {self.chat_id}")
                 return
 
+            # Check if user sent a voice audio memo
+            voice_memo = msg.get("voice") or msg.get("audio")
+            if voice_memo and not text:
+                file_id = voice_memo.get("file_id")
+                logger.info(f"[JARVIS-HUD] Incoming voice memo detected from {sender_id} (file_id={file_id})")
+                self._send_chat_action(chat_id, "record_voice")
+                audio_bytes = self._download_telegram_file(file_id)
+                if audio_bytes:
+                    res = self.brain.process_voice_query(audio_bytes, chat_id)
+                    if res.get("send_voice") and res.get("voice_text"):
+                        audio_reply = self.voice.compile_vocal_briefing(res["voice_text"])
+                        if audio_reply:
+                            self._send_voice(chat_id, audio_reply, caption="🎙️ DON AURELIUS Voice Response")
+                    self._send_message(chat_id, res["text"], reply_markup=res.get("reply_markup"))
+                return
+
             if not text:
                 return
+
+            logger.info(f"[JARVIS-HUD] Incoming message from {sender_id} in {chat_id}: '{text}'")
 
             # Display visual typing indicator in Telegram UI
             self._send_chat_action(chat_id, "typing")
