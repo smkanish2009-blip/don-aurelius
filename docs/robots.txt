@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://smkanish.github.io/don-aurelius/sitemap.xml
+Sitemap: https://smkanish2009-blip.github.io/don-aurelius/sitemap.xml

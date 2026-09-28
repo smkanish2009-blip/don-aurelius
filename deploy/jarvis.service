@@ -1,0 +1,17 @@
+[Unit]
+Description=JARVIS XAUUSD Autonomous Trading Core Daemon Engine
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/jarvis_bot
+ExecStart=/usr/bin/python3 run_jarvis.py
+Restart=always
+RestartSec=5
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=jarvis-core
+
+[Install]
+WantedBy=multi-user.target

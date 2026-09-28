@@ -1,0 +1,14 @@
+{
+  "is_authorized": true,
+  "license_key": "XAUUSD-INSTITUTIONAL-PRO-2026",
+  "tier": "LIFETIME_PERPETUAL",
+  "status": "ACTIVE",
+  "mt5_account_id": 113182919,
+  "expires_at": null,
+  "gas_balance_usd": 500.0,
+  "allows_new_trades": true,
+  "allows_position_management": true,
+  "reason": "Authorized",
+  "timestamp": 1790347471,
+  "hmac_signature": "e993f2e4411bf99b53bb8e7727a1fedbf01eafe707a023ff7d30a37fe26f7965"
+}

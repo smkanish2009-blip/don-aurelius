@@ -1,0 +1,8 @@
+# JARVIS System Crontab Configuration Matrix
+# Deploy to server via: crontab -e  OR  crontab deploy/crontab.txt
+
+# 1. Run database compression and 30-day telemetry cleanup every night at 00:00 (Midnight)
+0 0 * * * /bin/bash /root/jarvis_bot/scripts/db_maintenance.sh >> /var/log/jarvis_cron.log 2>&1
+
+# 2. Hourly Service Liveness Watchdog: Ensures jarvis.service daemon is active; auto-restarts if dead
+0 * * * * systemctl is-active --quiet jarvis.service || systemctl restart jarvis.service

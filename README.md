@@ -3,7 +3,7 @@
 > **Founder & Chief Strategic Architect**: **SM.KANISH**  
 > **Target Asset**: XAUUSD (Spot Gold) | **Terminal**: MetaTrader 5 (MT5)  
 > **Intelligence Engine**: AUREUS Matrix & Multi-Agent War Room Consensus  
-> **Official Showcase**: [https://smkanish.github.io/don-aurelius/](https://smkanish.github.io/don-aurelius/)
+> **Official Showcase**: [https://smkanish2009-blip.github.io/don-aurelius/](https://smkanish2009-blip.github.io/don-aurelius/)
 
 ---
 
