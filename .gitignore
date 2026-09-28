@@ -1,0 +1,27 @@
+# Environments & Private API Secrets (CRITICAL: Never commit to public GitHub!)
+.env
+.env.*
+!.env.example
+*.vault
+vault.key
+
+# Runtime locks & Logs
+data/*.pid
+data/*.log
+data/*.db
+*.log
+*.pid
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# IDE & OS files
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini

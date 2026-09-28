@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://smkanish.github.io/don-aurelius/sitemap.xml
