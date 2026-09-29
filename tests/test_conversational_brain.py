@@ -38,10 +38,11 @@ def test_conversational_brain():
         "thanks for the great work"
     ]
 
+    test_chat_id = os.getenv("TELEGRAM_CHAT_ID", "1234567890")
     for q in queries:
         print(f"\n==================================================")
         print(f"[USER ASKS]: \"{q}\"")
-        res = brain.process_query(q, "8775976760")
+        res = brain.process_query(q, test_chat_id)
         print(f"[ACTION]: {res.get('action_taken')}")
         print(f"[SEND_VOICE]: {res.get('send_voice')}")
         if res.get('send_voice'):
@@ -50,9 +51,9 @@ def test_conversational_brain():
 
     print("\n[*] Initializing JarvisTelegramHUD...")
     hud = JarvisTelegramHUD(
-        token="8612051079:AAFx7jK-Duaxn4bRxqeNeQ2EZhvwrxON61c",
+        token=os.getenv("TELEGRAM_BOT_TOKEN", "DUMMY_TOKEN_FOR_TESTING"),
         execution_bridge=bridge,
-        chat_id="8775976760"
+        chat_id=test_chat_id
     )
     assert hasattr(hud, "brain"), "HUD must have brain instance"
     print("[+] JarvisTelegramHUD successfully initialized with DonAureliusBrain!")

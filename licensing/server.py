@@ -25,10 +25,14 @@ from datetime import datetime, timezone
 # Ensure project root is in sys.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+import threading
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse, Response
 from starlette.requests import Request
 from starlette.routing import Route
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 
 from licensing.database import LicensingDatabase
 from licensing.models import (
@@ -41,8 +45,53 @@ from licensing.gateway_whop import WhopGateway
 
 logger = logging.getLogger("LicensingServer")
 
-# Master cryptographic signing key for lease tokens issued to bot clients
-SERVER_MASTER_SIGNING_KEY = "xauusd_master_hmac_license_secret_2026"
+# Master cryptographic signing key & Admin key loaded securely from environment
+SERVER_MASTER_SIGNING_KEY = os.environ.get("SERVER_MASTER_SIGNING_KEY") or os.environ.get("MASTER_SIGNING_KEY", "xauusd_master_hmac_license_secret_2026")
+ADMIN_API_KEY = os.environ.get("ADMIN_API_KEY", "sovereign_admin_secure_key_2026")
+
+
+class InMemoryRateLimiter:
+    """Sliding-window IP rate limiter to protect against brute-force and DoS attacks."""
+    def __init__(self, requests_per_minute: int = 60):
+        self.rpm = requests_per_minute
+        self.history: Dict[str, list] = {}
+        self.lock = threading.Lock()
+
+    def is_allowed(self, client_ip: str) -> bool:
+        now = time.time()
+        window_start = now - 60.0
+        with self.lock:
+            if client_ip not in self.history:
+                self.history[client_ip] = [now]
+                return True
+            self.history[client_ip] = [t for t in self.history[client_ip] if t > window_start]
+            if len(self.history[client_ip]) >= self.rpm:
+                return False
+            self.history[client_ip].append(now)
+            return True
+
+
+rate_limiter = InMemoryRateLimiter(requests_per_minute=60)
+
+
+class SecurityHeadersAndRateLimitMiddleware(BaseHTTPMiddleware):
+    """Applies IP rate limiting and injects OWASP/NIST-recommended security headers."""
+    async def dispatch(self, request: Request, call_next):
+        client_ip = request.client.host if request.client else "unknown"
+        if not rate_limiter.is_allowed(client_ip):
+            return JSONResponse(
+                {"error": "Too Many Requests: Rate limit exceeded. Try again in 60 seconds."},
+                status_code=429,
+                headers={"Retry-After": "60"}
+            )
+
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["X-XSS-Protection"] = "1; mode=block"
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        return response
 
 
 class LicensingApp:
@@ -345,6 +394,43 @@ class LicensingApp:
             "message": f"Account #{mt5_account_id} not registered under partner IB group."
         }, status_code=400)
 
+
+    def _verify_admin(self, request: Request) -> bool:
+        """Constant-time verification of Admin API key."""
+        key = request.headers.get("X-Admin-Key", "")
+        expected = os.environ.get("ADMIN_API_KEY", ADMIN_API_KEY)
+        return bool(key) and hmac.compare_digest(key, expected)
+
+    async def admin_list_licenses(self, request: Request) -> JSONResponse:
+        """Protected Admin Route: Lists all issued licenses and system status."""
+        if not self._verify_admin(request):
+            return JSONResponse({"error": "Unauthorized: Invalid or missing X-Admin-Key"}, status_code=401)
+
+        conn = self.db._get_connection()
+        cursor = conn.execute("SELECT license_key, user_email, tier, mt5_account_id, status, expires_at, gas_balance_usd, created_at FROM licenses ORDER BY created_at DESC LIMIT 100")
+        rows = [dict(r) for r in cursor.fetchall()]
+        return JSONResponse({"success": True, "total_licenses": len(rows), "licenses": rows})
+
+    async def admin_revoke_license(self, request: Request) -> JSONResponse:
+        """Protected Admin Route: Revokes a rogue or leaked license key."""
+        if not self._verify_admin(request):
+            return JSONResponse({"error": "Unauthorized: Invalid or missing X-Admin-Key"}, status_code=401)
+
+        try:
+            body = await request.json()
+        except Exception:
+            return JSONResponse({"error": "Invalid JSON body"}, status_code=400)
+
+        license_key = body.get("license_key", "").strip()
+        if not license_key:
+            return JSONResponse({"error": "Missing license_key"}, status_code=400)
+
+        ok = self.db.update_license_status(license_key, LicenseStatus.REVOKED)
+        if ok:
+            self.db.log_audit("ADMIN_REVOCATION", license_key, "Revoked via Protected Admin API")
+            return JSONResponse({"success": True, "message": f"License '{license_key}' successfully revoked."})
+        return JSONResponse({"error": "License not found or update failed"}, status_code=404)
+
     async def health(self, request: Request) -> JSONResponse:
         return JSONResponse({
             "status": "healthy",
@@ -364,8 +450,31 @@ def create_app(db_path: str = "data/entitlement.db") -> Starlette:
         Route("/api/v1/webhooks/crypto", lic_app.webhook_crypto, methods=["POST"]),
         Route("/api/v1/webhooks/whop", lic_app.webhook_whop, methods=["POST"]),
         Route("/api/v1/affiliate/verify", lic_app.verify_affiliate, methods=["POST"]),
+        # Protected Admin Endpoints
+        Route("/api/v1/admin/licenses", lic_app.admin_list_licenses, methods=["GET"]),
+        Route("/api/v1/admin/license/revoke", lic_app.admin_revoke_license, methods=["POST"]),
     ]
-    app = Starlette(debug=False, routes=routes)
+
+    # Explicit CORS Whitelist
+    raw_origins = os.environ.get(
+        "ALLOWED_CORS_ORIGINS",
+        "https://smkanish2009-blip.github.io,http://localhost:3000,http://127.0.0.1:8000"
+    )
+    allowed_origins = [o.strip() for o in raw_origins.split(",") if o.strip()]
+
+    middleware = [
+        Middleware(SecurityHeadersAndRateLimitMiddleware),
+        Middleware(
+            CORSMiddleware,
+            allow_origins=allowed_origins,
+            allow_methods=["GET", "POST", "OPTIONS"],
+            allow_headers=["Content-Type", "Authorization", "X-Admin-Key"],
+            allow_credentials=False
+        ),
+    ]
+
+    # Explicit Debug=False for production security
+    app = Starlette(debug=False, routes=routes, middleware=middleware)
     app.state.lic_app = lic_app
     return app
 

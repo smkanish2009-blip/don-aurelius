@@ -13,8 +13,8 @@
 //--- Input Parameters
 input group "=== 👑 Telegram Cloud Telemetry ==="
 input bool            InpTelegramEnabled     = true;                                                   // Enable Telegram Alerts
-input string          InpTelegramToken       = "8612051079:AAFx7jK-Duaxn4bRxqeNeQ2EZhvwrxON61c";      // Bot Token
-input string          InpTelegramChatID      = "8775976760";                                           // Chat ID
+input string          InpTelegramToken       = "";                                                     // Bot Token (Enter securely in MT5 inputs)
+input string          InpTelegramChatID      = "";                                                     // Chat ID (Enter securely in MT5 inputs)
 input int             InpBriefingIntervalMin = 15;                                                     // Periodic Briefing Interval (Minutes)
 
 input group "=== 🏛️ Institutional Risk Management ==="

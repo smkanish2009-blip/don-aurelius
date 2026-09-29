@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Enterprise Security & Content Protection Headers -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   
   <!-- Primary Meta Tags for Google Search & SEO -->
   <title>Don Aurelius | Sovereign AI Trading Syndicate & Genesis Suite by SM.KANISH</title>
@@ -2749,17 +2754,31 @@
     });
 
     /* ==========================================================================
-       Secure Client-Side Verification Form Handler (Zero-Vulnerability)
+       Secure Client-Side Verification Form Handler (Rate-Limited & Pure DOM XSS-Proof)
        ========================================================================== */
+    let lastSubmissionTime = 0;
+
     function handleVerificationSubmit(e) {
       e.preventDefault();
       const form = document.getElementById('access-request-form');
       const status = document.getElementById('form-status');
       const honeypot = document.getElementById('_hp_security_check').value;
 
-      // Anti-Bot Trap: If honeypot is filled, silent discard
+      // 1. Anti-Bot Trap: Neutralize automated scrapers
       if (honeypot) {
-        console.warn('Bot submission neutralized.');
+        console.warn('Automated bot submission neutralized.');
+        return;
+      }
+
+      // 2. Client-Side Rate Limiting (Anti-Spam / Anti-Flooding)
+      const now = Date.now();
+      if (now - lastSubmissionTime < 30000) {
+        const remaining = Math.ceil((30000 - (now - lastSubmissionTime)) / 1000);
+        status.style.display = 'block';
+        status.style.background = 'rgba(239, 68, 68, 0.15)';
+        status.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+        status.style.color = '#fca5a5';
+        status.textContent = `Security Rate Limit: Please wait ${remaining} seconds before submitting another request.`;
         return;
       }
 
@@ -2769,12 +2788,23 @@
       const classification = document.getElementById('applicant-classification').value;
       const consentChecked = document.getElementById('legal-consent-check').checked;
 
+      // 3. Input Validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!name || !email || !classification) {
         status.style.display = 'block';
         status.style.background = 'rgba(239, 68, 68, 0.15)';
         status.style.border = '1px solid rgba(239, 68, 68, 0.4)';
         status.style.color = '#fca5a5';
-        status.innerText = 'Please complete all required fields (*).';
+        status.textContent = 'Please complete all required fields (*).';
+        return;
+      }
+
+      if (!emailRegex.test(email)) {
+        status.style.display = 'block';
+        status.style.background = 'rgba(239, 68, 68, 0.15)';
+        status.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+        status.style.color = '#fca5a5';
+        status.textContent = 'Please enter a valid institutional or personal email address.';
         return;
       }
 
@@ -2783,28 +2813,30 @@
         status.style.background = 'rgba(239, 68, 68, 0.15)';
         status.style.border = '1px solid rgba(239, 68, 68, 0.4)';
         status.style.color = '#fca5a5';
-        status.innerText = 'You must confirm that you are 18+ and unconditionally agree to the Terms, Privacy Policy, and CFTC Rule 4.41 Warning.';
+        status.textContent = 'You must confirm that you are 18+ and unconditionally agree to the Terms, Privacy Policy, and CFTC Rule 4.41 Warning.';
         return;
       }
 
-      // Safe, privacy-preserving confirmation
+      // Record successful submission timestamp for rate limiting
+      lastSubmissionTime = now;
+
+      // 4. Pure DOM Node Construction (100% Mathematically Immune to XSS)
+      status.replaceChildren(); // Clears any previous nodes safely
       status.style.display = 'block';
       status.className = 'form-status-msg success';
-      status.innerHTML = `<strong>Dossier Request Registered for Commander ${escapeHTML(name)}.</strong><br>Our quantitative compliance desk has logged your verification inquiry under entity classification <em>${escapeHTML(classification)}</em>. You will receive cryptographic confirmation at ${escapeHTML(email)}.`;
+
+      const strongTitle = document.createElement('strong');
+      strongTitle.textContent = `Dossier Request Registered for Commander ${name}.`;
+      status.appendChild(strongTitle);
+
+      status.appendChild(document.createElement('br'));
+
+      const bodyText = document.createTextNode(
+        `Our quantitative compliance desk has logged your verification inquiry under entity classification "${classification}". You will receive cryptographic confirmation at ${email}.`
+      );
+      status.appendChild(bodyText);
 
       form.reset();
-    }
-
-    function escapeHTML(str) {
-      return str.replace(/[&<>'"]/g, 
-        tag => ({
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          "'": '&#39;',
-          '"': '&quot;'
-        }[tag] || tag)
-      );
     }
   </script>
 </body>

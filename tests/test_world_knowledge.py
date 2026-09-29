@@ -22,8 +22,9 @@ test_queries = [
     "what is artificial intelligence"
 ]
 
+test_chat_id = os.getenv("TELEGRAM_CHAT_ID", "1234567890")
 for q in test_queries:
-    res = brain.process_query(q, "8775976760")
+    res = brain.process_query(q, test_chat_id)
     print(f"==================================================")
     print(f"[QUERY]: {q}")
     print(f"[ACTION]: {res['action_taken']}")
