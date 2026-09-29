@@ -121,7 +121,7 @@
       --apple-glass-rim: inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
       --apple-glass-occlusion: inset 0 -1px 1px 0 rgba(0, 0, 0, 0.35);
       --apple-glass-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.5);
-      --apple-glass-blur: blur(10px);
+      --apple-glass-blur: blur(6px);
       --apple-glass-pod: rgba(255, 255, 255, 0.04);
 
       /* Sovereign Chromatic Accents */
@@ -183,29 +183,30 @@
       opacity: 0.75;
     }
 
-    /* Top Glowing Laser Progress Bar */
+    /* Top Glowing Laser Progress Bar (Zero-Reflow ScaleX) */
     #scroll-progress {
       position: fixed;
       top: 0;
       left: 0;
       height: 3px;
-      width: 0%;
+      width: 100%;
+      transform-origin: left center;
+      transform: scaleX(0);
       background: linear-gradient(90deg, var(--cyan-neon), var(--gold-primary), var(--purple-neon));
       z-index: 2000;
       box-shadow: 0 0 12px var(--gold-glow);
-      transition: width 0.05s ease-out;
+      pointer-events: none;
     }
 
-    /* Scroll-Driven 3D Reveal System */
+    /* Scroll-Driven Reveal System (Hardware-Accelerated 2D) */
     .reveal-3d {
       opacity: 0;
-      transform: translateY(35px) perspective(1000px) rotateX(6deg);
-      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: opacity, transform;
+      transform: translate3d(0, 22px, 0);
+      transition: opacity 0.45s ease-out, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .reveal-3d.active {
       opacity: 1;
-      transform: translateY(0) perspective(1000px) rotateX(0deg);
+      transform: translate3d(0, 0, 0);
     }
     .reveal-3d.delay-1 { transition-delay: 0.08s; }
     .reveal-3d.delay-2 { transition-delay: 0.16s; }
@@ -213,14 +214,10 @@
     .reveal-3d.delay-4 { transition-delay: 0.32s; }
 
     /* ==========================================================================
-       Apple Liquid Glass Card Architecture (Ultra-Crisp, Lightweight Blur)
+       Apple Liquid Glass Card Architecture (Zero-Lag 60 FPS Hardware Engine)
        ========================================================================== */
     .apple-liquid-card, .tilt-card {
-      transform-style: preserve-3d;
-      perspective: 1200px;
       background: var(--apple-glass-bg);
-      backdrop-filter: var(--apple-glass-blur);
-      -webkit-backdrop-filter: var(--apple-glass-blur);
       border: 1px solid var(--apple-glass-border);
       border-top: 1px solid var(--apple-glass-border-top);
       border-left: 1px solid var(--apple-glass-border-left);
@@ -229,10 +226,17 @@
       box-shadow: var(--apple-glass-shadow), var(--apple-glass-rim), var(--apple-glass-occlusion);
       position: relative;
       overflow: hidden;
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.25s ease;
+      transform: translate3d(0, 0, 0);
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+      contain: content;
+    }
+    .apple-liquid-card:hover, .tilt-card:hover {
+      transform: translate3d(0, -5px, 0);
+      border-top-color: rgba(255, 255, 255, 0.65);
+      box-shadow: 0 22px 48px -10px rgba(0, 0, 0, 0.75), var(--apple-glass-rim);
     }
 
-    /* Dynamic Cursor Liquid Specular Hotspot */
+    /* Pure-CSS Ambient Specular Sheen (Zero JS / Zero Paint Stall) */
     .tilt-card .card-sheen {
       position: absolute;
       top: 0;
@@ -241,37 +245,27 @@
       height: 100%;
       border-radius: inherit;
       pointer-events: none;
-      background: radial-gradient(
-        circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-        rgba(255, 255, 255, 0.25) 0%,
-        rgba(255, 255, 255, 0.05) 30%,
-        transparent 65%
-      );
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, transparent 55%);
       opacity: 0;
       transition: opacity 0.25s ease;
-      mix-blend-mode: overlay;
       z-index: 2;
     }
     .tilt-card:hover .card-sheen {
       opacity: 1;
     }
     .tilt-content {
-      transform: translateZ(20px);
-      transform-style: preserve-3d;
       position: relative;
       z-index: 3;
     }
 
-    /* Apple Concentric Inner Pod (Doppelrand Core) */
+    /* Apple Concentric Inner Pod (Doppelrand Core - GPU Optimized) */
     .apple-glass-pod {
       background: var(--apple-glass-pod);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-top: 1px solid rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: var(--radius-inner);
       padding: 16px;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15);
     }
 
     /* Container */
@@ -401,8 +395,6 @@
       align-items: center;
       gap: 10px;
       background: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.18);
       border-top: 1px solid rgba(255, 255, 255, 0.4);
       padding: 6px 18px;
@@ -462,7 +454,6 @@
       border-radius: 9999px;
       padding: 10px 28px;
       margin-bottom: 32px;
-      backdrop-filter: blur(12px);
       box-shadow: 0 8px 24px rgba(0,0,0,0.35), inset 0 1px 1px rgba(255,255,255,0.35);
     }
     .founder-callout span.label {
@@ -520,7 +511,6 @@
       border-top: 1px solid rgba(255, 255, 255, 0.35);
       padding: 4px 14px;
       border-radius: 9999px;
-      backdrop-filter: blur(10px);
       text-transform: uppercase;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       pointer-events: none;
@@ -573,7 +563,6 @@
       text-decoration: none;
       font-size: 0.95rem;
       transition: all 0.2s ease;
-      backdrop-filter: blur(12px);
       box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
     }
     .btn-apple-glass:hover {
@@ -684,10 +673,10 @@
       display: flex;
       flex-direction: column;
     }
-    .genesis-card.card-eagle:hover { border-top-color: rgba(0, 255, 204, 0.7); box-shadow: 0 16px 36px rgba(0, 255, 204, 0.16); }
-    .genesis-card.card-quantum:hover { border-top-color: rgba(168, 85, 247, 0.7); box-shadow: 0 16px 36px rgba(168, 85, 247, 0.18); }
-    .genesis-card.card-sentinel:hover { border-top-color: rgba(245, 158, 11, 0.7); box-shadow: 0 16px 36px rgba(245, 158, 11, 0.18); }
-    .genesis-card.card-jarvis:hover { border-top-color: rgba(16, 185, 129, 0.7); box-shadow: 0 16px 36px rgba(16, 185, 129, 0.18); }
+    .genesis-card.card-eagle:hover { border-top-color: rgba(0, 255, 204, 0.85); box-shadow: 0 22px 48px -10px rgba(0, 255, 204, 0.25), var(--apple-glass-rim); }
+    .genesis-card.card-quantum:hover { border-top-color: rgba(168, 85, 247, 0.85); box-shadow: 0 22px 48px -10px rgba(168, 85, 247, 0.25), var(--apple-glass-rim); }
+    .genesis-card.card-sentinel:hover { border-top-color: rgba(245, 158, 11, 0.85); box-shadow: 0 22px 48px -10px rgba(245, 158, 11, 0.25), var(--apple-glass-rim); }
+    .genesis-card.card-jarvis:hover { border-top-color: rgba(16, 185, 129, 0.85); box-shadow: 0 22px 48px -10px rgba(16, 185, 129, 0.25), var(--apple-glass-rim); }
 
     .invention-badge {
       display: inline-flex;
@@ -702,7 +691,6 @@
       text-transform: uppercase;
       margin-bottom: 14px;
       width: fit-content;
-      backdrop-filter: blur(10px);
     }
     .badge-eagle { background: rgba(0, 255, 204, 0.14); color: #00ffcc; border: 1px solid rgba(0, 255, 204, 0.35); }
     .badge-quantum { background: rgba(168, 85, 247, 0.14); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.35); }
@@ -761,8 +749,6 @@
       font-family: var(--font-mono);
       color: #cbd5e1;
       background: rgba(8, 11, 18, 0.6);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -787,7 +773,6 @@
       gap: 7px;
       transition: all 0.2s ease;
       margin-top: 8px;
-      backdrop-filter: blur(10px);
     }
     .interactive-action-btn:hover {
       background: rgba(240, 199, 94, 0.15);
@@ -933,7 +918,6 @@
       justify-content: center;
       gap: 8px;
       transition: all 0.2s ease;
-      backdrop-filter: blur(8px);
     }
     .cockpit-btn:hover {
       border-color: var(--gold-primary);
@@ -1089,7 +1073,6 @@
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-top: 1px solid rgba(255, 255, 255, 0.3);
       font-family: var(--font-mono);
-      backdrop-filter: blur(10px);
     }
     .google-ai-header {
       display: flex;
@@ -1232,12 +1215,12 @@
     }
     .agent-card {
       padding: 28px 24px;
-      transition: all 0.25s ease;
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease;
     }
     .agent-card:hover {
       border-top-color: var(--gold-primary);
-      transform: translateY(-4px);
-      box-shadow: 0 16px 36px rgba(240, 199, 94, 0.18);
+      transform: translate3d(0, -5px, 0);
+      box-shadow: 0 22px 48px -10px rgba(240, 199, 94, 0.25), var(--apple-glass-rim);
     }
     .agent-icon {
       font-size: 2.2rem;
@@ -1828,32 +1811,46 @@
   <!-- 3D WebGL Engine, Debounced Glass Physics & Scroll Animations -->
   <script>
     /* ==========================================================================
-       1. Top Scroll Progress Indicator (Throttled)
+       Global High-Performance Scroll State Manager (Zero WebGL Thrashing)
+       ========================================================================== */
+    let isScrolling = false;
+    let scrollEndTimer = null;
+    window.addEventListener('scroll', () => {
+      isScrolling = true;
+      clearTimeout(scrollEndTimer);
+      scrollEndTimer = setTimeout(() => {
+        isScrolling = false;
+      }, 120);
+    }, { passive: true });
+
+    /* ==========================================================================
+       1. Top Scroll Progress Indicator (Zero Reflow ScaleX Engine)
        ========================================================================== */
     const scrollProgressBar = document.getElementById('scroll-progress');
-    let ticking = false;
+    let scrollTicking = false;
     window.addEventListener('scroll', () => {
-      if (!ticking) {
+      if (!scrollTicking) {
         window.requestAnimationFrame(() => {
           const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
           const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-          const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+          const scrolled = height > 0 ? (winScroll / height) : 0;
           if (scrollProgressBar) {
-            scrollProgressBar.style.width = scrolled + '%';
+            scrollProgressBar.style.transform = `scaleX(${scrolled})`;
           }
-          ticking = false;
+          scrollTicking = false;
         });
-        ticking = true;
+        scrollTicking = true;
       }
     }, { passive: true });
 
     /* ==========================================================================
-       2. Scroll-Driven 3D Reveal Observer
+       2. Scroll-Driven Reveal Observer (Auto-Unobserve for Zero Memory Stall)
        ========================================================================== */
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
+          observer.unobserve(entry.target); // Release GPU layer once shown
         }
       });
     }, {
@@ -1867,43 +1864,7 @@
     });
 
     /* ==========================================================================
-       3. Apple Liquid Glass Card Tilt Physics (Debounced 60 FPS)
-       ========================================================================== */
-    document.querySelectorAll('.tilt-card').forEach(card => {
-      const sheen = card.querySelector('.card-sheen');
-      let isHovered = false;
-
-      card.addEventListener('mouseenter', () => { isHovered = true; });
-
-      card.addEventListener('mousemove', (e) => {
-        if (!isHovered) return;
-        window.requestAnimationFrame(() => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-
-          const rotateX = ((y - centerY) / centerY) * -5;
-          const rotateY = ((x - centerX) / centerX) * 5;
-
-          card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(1)}deg) rotateY(${rotateY.toFixed(1)}deg) translateY(-2px)`;
-
-          const posX = ((x / rect.width) * 100).toFixed(1);
-          const posY = ((y / rect.height) * 100).toFixed(1);
-          card.style.setProperty('--mouse-x', `${posX}%`);
-          card.style.setProperty('--mouse-y', `${posY}%`);
-        });
-      }, { passive: true });
-
-      card.addEventListener('mouseleave', () => {
-        isHovered = false;
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
-      });
-    });
-
-    /* ==========================================================================
-       4. Three.js Full-Screen Background Hologram Engine (Ultra-Optimized)
+       3. Three.js Full-Screen Background Hologram Engine (Scroll-Throttled)
        ========================================================================== */
     (function initBackgroundCanvas() {
       const canvas = document.getElementById('bg-canvas-3d');
@@ -1914,7 +1875,7 @@
       camera.position.z = 85;
 
       const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false, powerPreference: 'low-power' });
-      renderer.setPixelRatio(1.0); // Locked to 1 for zero-lag 60 FPS performance
+      renderer.setPixelRatio(1.0);
       renderer.setSize(window.innerWidth, window.innerHeight);
 
       const worldGroup = new THREE.Group();
@@ -1926,7 +1887,7 @@
         color: 0xd4af37,
         wireframe: true,
         transparent: true,
-        opacity: 0.2
+        opacity: 0.18
       });
       const icoMesh = new THREE.Mesh(icoGeom, icoMat);
       worldGroup.add(icoMesh);
@@ -1937,13 +1898,13 @@
         color: 0x06b6d4,
         wireframe: true,
         transparent: true,
-        opacity: 0.28
+        opacity: 0.25
       });
       const dodecMesh = new THREE.Mesh(dodecGeom, dodecMat);
       worldGroup.add(dodecMesh);
 
-      // C. Floating Stardust Particles (Lightweight 180 points)
-      const particleCount = 180;
+      // C. Floating Stardust Particles (Lightweight 150 points)
+      const particleCount = 150;
       const positions = new Float32Array(particleCount * 3);
       const colors = new Float32Array(particleCount * 3);
 
@@ -1954,9 +1915,9 @@
         positions[i3 + 2] = (Math.random() - 0.5) * 160;
 
         if (Math.random() > 0.4) {
-          colors[i3] = 0.95; colors[i3 + 1] = 0.78; colors[i3 + 2] = 0.25; // Gold
+          colors[i3] = 0.95; colors[i3 + 1] = 0.78; colors[i3 + 2] = 0.25;
         } else {
-          colors[i3] = 0.05; colors[i3 + 1] = 0.85; colors[i3 + 2] = 0.95; // Cyan
+          colors[i3] = 0.05; colors[i3 + 1] = 0.85; colors[i3 + 2] = 0.95;
         }
       }
 
@@ -1965,10 +1926,10 @@
       particleGeom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
       const particleMat = new THREE.PointsMaterial({
-        size: 2.2,
+        size: 2.0,
         vertexColors: true,
         transparent: true,
-        opacity: 0.8
+        opacity: 0.75
       });
       const particleSystem = new THREE.Points(particleGeom, particleMat);
       worldGroup.add(particleSystem);
@@ -1989,9 +1950,10 @@
 
       function animate() {
         requestAnimationFrame(animate);
+        if (isScrolling) return; // Completely skip WebGL compute during active scroll for 60 FPS lock!
 
-        worldGroup.rotation.y += (mouseX * 0.2 - worldGroup.rotation.y) * 0.03 + 0.001;
-        worldGroup.rotation.x += (mouseY * 0.2 - worldGroup.rotation.x) * 0.03;
+        worldGroup.rotation.y += (mouseX * 0.18 - worldGroup.rotation.y) * 0.03 + 0.001;
+        worldGroup.rotation.x += (mouseY * 0.18 - worldGroup.rotation.x) * 0.03;
 
         icoMesh.rotation.y += 0.0008;
         dodecMesh.rotation.x -= 0.0015;
@@ -2002,7 +1964,7 @@
     })();
 
     /* ==========================================================================
-       5. Hero 3D Interactive Stage Canvas (Lightweight & Smooth)
+       4. Hero 3D Interactive Stage Canvas (Offscreen & Scroll Guarded)
        ========================================================================== */
     (function initHeroStageCanvas() {
       const canvas = document.getElementById('stage-3d-canvas');
@@ -2015,8 +1977,8 @@
       const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
       camera.position.z = 24;
 
-      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-      renderer.setPixelRatio(1.0); // Locked to 1 for cool thermals & high FPS
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
+      renderer.setPixelRatio(1.0);
       renderer.setSize(width, height);
 
       const stageGroup = new THREE.Group();
@@ -2042,7 +2004,7 @@
       const innerMesh = new THREE.Mesh(innerGeom, innerMat);
       stageGroup.add(innerMesh);
 
-      const ringGeom = new THREE.TorusGeometry(8.5, 0.12, 16, 60);
+      const ringGeom = new THREE.TorusGeometry(8.5, 0.12, 16, 40);
       const ringMat = new THREE.MeshBasicMaterial({
         color: 0xf0c75e,
         transparent: true,
@@ -2057,13 +2019,15 @@
       scene.add(light);
       scene.add(new THREE.AmbientLight(0x333333));
 
+      let isHeroVisible = true;
+      const heroObserver = new IntersectionObserver((entries) => {
+        isHeroVisible = entries[0].isIntersecting;
+      }, { threshold: 0.05 });
+      heroObserver.observe(canvas);
+
       let isDragging = false;
       let prevMousePos = { x: 0, y: 0 };
 
-      const onPointerDown = (clientX, clientY) => {
-        isDragging = true;
-        prevMousePos = { x: clientX, y: clientY };
-      };
       const onPointerMove = (clientX, clientY) => {
         if (!isDragging) return;
         const deltaX = clientX - prevMousePos.x;
@@ -2072,22 +2036,37 @@
         stageGroup.rotation.x += deltaY * 0.015;
         prevMousePos = { x: clientX, y: clientY };
       };
-      const onPointerUp = () => { isDragging = false; };
+
+      const onMouseMoveWindow = (e) => onPointerMove(e.clientX, e.clientY);
+      const onTouchMoveWindow = (e) => {
+        if (e.touches.length > 0) onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+      };
+
+      const onPointerUp = () => {
+        isDragging = false;
+        window.removeEventListener('mousemove', onMouseMoveWindow);
+        window.removeEventListener('touchmove', onTouchMoveWindow);
+        window.removeEventListener('mouseup', onPointerUp);
+        window.removeEventListener('touchend', onPointerUp);
+      };
+
+      const onPointerDown = (clientX, clientY) => {
+        isDragging = true;
+        prevMousePos = { x: clientX, y: clientY };
+        window.addEventListener('mousemove', onMouseMoveWindow, { passive: true });
+        window.addEventListener('touchmove', onTouchMoveWindow, { passive: true });
+        window.addEventListener('mouseup', onPointerUp);
+        window.addEventListener('touchend', onPointerUp);
+      };
 
       canvas.addEventListener('mousedown', (e) => onPointerDown(e.clientX, e.clientY));
-      window.addEventListener('mousemove', (e) => onPointerMove(e.clientX, e.clientY));
-      window.addEventListener('mouseup', onPointerUp);
-
       canvas.addEventListener('touchstart', (e) => {
         if (e.touches.length > 0) onPointerDown(e.touches[0].clientX, e.touches[0].clientY);
       }, { passive: true });
-      window.addEventListener('touchmove', (e) => {
-        if (e.touches.length > 0) onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
-      }, { passive: true });
-      window.addEventListener('touchend', onPointerUp);
 
       function renderHeroStage() {
         requestAnimationFrame(renderHeroStage);
+        if (!isHeroVisible || isScrolling) return; // Zero draw calls when offscreen or scrolling!
         if (!isDragging) {
           stageGroup.rotation.y += 0.007;
           ringMesh.rotation.z += 0.01;
