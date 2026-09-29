@@ -1286,9 +1286,315 @@
       .hero h2 { font-size: 2.4rem; }
       .founder-attributes { grid-template-columns: 1fr; }
     }
+
+    /* ==========================================================================
+       WCAG 2.1 AA Accessibility & Keyboard Friendliness
+       ========================================================================== */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 20px;
+      background: var(--gold-primary);
+      color: #000000;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      z-index: 99999;
+      text-decoration: none;
+      transition: top 0.2s ease;
+    }
+    .skip-link:focus {
+      top: 20px;
+    }
+
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--gold-primary) !important;
+      outline-offset: 3px !important;
+    }
+
+    /* ==========================================================================
+       Verification & Terminal Access Request Form (GDPR & Data Minimization)
+       ========================================================================== */
+    .section-verification {
+      padding: 80px 0;
+      position: relative;
+    }
+    .verification-card {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 44px 40px;
+    }
+    .form-group {
+      margin-bottom: 22px;
+      text-align: left;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .form-group label span.req {
+      color: #f87171;
+    }
+    .form-input, .form-select {
+      width: 100%;
+      background: rgba(8, 11, 18, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      padding: 13px 18px;
+      color: #ffffff;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .form-input:focus, .form-select:focus {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 14px var(--gold-glow);
+    }
+    .form-input::placeholder {
+      color: #64748b;
+    }
+    .form-select option {
+      background: #0f172a;
+      color: #ffffff;
+    }
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 640px) {
+      .form-grid-2 { grid-template-columns: 1fr; }
+      .verification-card { padding: 30px 20px; }
+    }
+    .form-consent-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 24px 0;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 16px 18px;
+      text-align: left;
+    }
+    .form-consent-box input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--gold-primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .form-consent-box label {
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      line-height: 1.6;
+      cursor: pointer;
+    }
+    .form-consent-box label a {
+      color: var(--gold-primary);
+      text-decoration: underline;
+    }
+    .btn-submit-form {
+      width: 100%;
+      justify-content: center;
+      padding: 15px;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+    }
+    .form-status-msg {
+      margin-top: 20px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      display: none;
+      text-align: center;
+      line-height: 1.5;
+    }
+    .form-status-msg.success {
+      display: block;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+    }
+
+    /* ==========================================================================
+       Apple Liquid Glass Cookie Transparency Banner (ePrivacy & GDPR Compliant)
+       ========================================================================== */
+    #cookie-consent-banner {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(140px);
+      width: min(880px, calc(100% - 32px));
+      z-index: 9999;
+      background: rgba(11, 15, 24, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-top: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 20px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      padding: 20px 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+      pointer-events: none;
+    }
+    #cookie-consent-banner.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cookie-text {
+      font-size: 0.86rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+      text-align: left;
+    }
+    .cookie-text strong {
+      color: #ffffff;
+    }
+    .cookie-text a {
+      color: var(--gold-primary);
+      text-decoration: underline;
+    }
+    .cookie-actions {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .btn-cookie {
+      padding: 9px 20px;
+      border-radius: 9999px;
+      font-family: var(--font-sans);
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    .btn-cookie-reject {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+    .btn-cookie-reject:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+    }
+    .btn-cookie-accept {
+      background: linear-gradient(135deg, var(--gold-secondary), var(--gold-primary));
+      color: #07080a;
+      box-shadow: 0 4px 14px var(--gold-glow);
+    }
+    .btn-cookie-accept:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(240, 199, 94, 0.45);
+    }
+    @media (max-width: 768px) {
+      #cookie-consent-banner { flex-direction: column; text-align: left; }
+      .cookie-actions { width: 100%; justify-content: flex-end; }
+    }
+
+    /* ==========================================================================
+       Regulatory Compliance & Legal Footer (CFTC Rule 4.41 & Global Risk)
+       ========================================================================== */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 60px 0 35px;
+      background: rgba(4, 6, 10, 0.95);
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      position: relative;
+      z-index: 10;
+    }
+    .footer-cftc-box {
+      background: rgba(239, 68, 68, 0.06);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-left: 4px solid #ef4444;
+      border-radius: 14px;
+      padding: 22px 26px;
+      margin-bottom: 36px;
+      text-align: left;
+    }
+    .footer-cftc-box h5 {
+      color: #fca5a5;
+      font-size: 0.94rem;
+      font-family: var(--font-display);
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .footer-cftc-box p {
+      color: #fecaca;
+      font-size: 0.82rem;
+      line-height: 1.68;
+      margin-bottom: 10px;
+    }
+    .footer-cftc-box p:last-child { margin-bottom: 0; }
+    .footer-grid-info {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 36px;
+      margin-bottom: 36px;
+      text-align: left;
+    }
+    @media (max-width: 768px) {
+      .footer-grid-info { grid-template-columns: 1fr; }
+    }
+    .footer-info-col h6 {
+      color: #ffffff;
+      font-size: 0.94rem;
+      font-family: var(--font-display);
+      margin-bottom: 14px;
+      letter-spacing: 1px;
+    }
+    .footer-info-col p {
+      color: #94a3b8;
+      line-height: 1.65;
+      font-size: 0.84rem;
+      margin-bottom: 12px;
+    }
+    .footer-info-col ul {
+      list-style: none;
+    }
+    .footer-info-col ul li {
+      margin-bottom: 9px;
+    }
+    .footer-info-col ul li a {
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-info-col ul li a:hover {
+      color: var(--gold-primary);
+    }
+    .footer-bottom-bar {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 24px;
+      text-align: center;
+    }
+    .footer-bottom-bar p {
+      font-size: 0.82rem;
+      color: #64748b;
+    }
   </style>
 </head>
 <body>
+
+  <!-- WCAG 2.1 AA Accessible Skip Navigation -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Glowing Top Scroll Progress Indicator -->
   <div id="scroll-progress"></div>
@@ -1316,14 +1622,14 @@
         <li><a href="#founder">Founder</a></li>
         <li><a href="#war-room">War Room</a></li>
       </ul>
-      <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="btn-tg">
+      <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="btn-tg" aria-label="Open Don Aurelius Official Telegram Bot">
         <span>Telegram HUD</span>
         <span class="btn-icon-bubble">↗</span>
       </a>
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <!-- Hero Section -->
     <section class="hero" id="overview">
       <div class="container">
@@ -1348,7 +1654,7 @@
 
         <!-- 3D Interactive Quantum Hologram Stage -->
         <div class="hero-3d-stage" id="hero-stage">
-          <canvas id="stage-3d-canvas" class="stage-canvas"></canvas>
+          <canvas id="stage-3d-canvas" class="stage-canvas" role="img" aria-label="Interactive 3D Holographic Model of Don Aurelius Algorithmic Core. Click and drag to inspect geometry."></canvas>
           <div class="stage-label">✦ 3D QUANTUM AUREUS CORE • DRAG OR HOVER ✦</div>
         </div>
 
@@ -1502,7 +1808,7 @@
                   📰 Wire Pulse: "Central bank gold accumulation hits multi-decade peak as safe-haven reserves expand..."
                 </div>
               </div>
-              <button class="interactive-action-btn" onclick="pulseCrisisRadar()">
+              <button class="interactive-action-btn" onclick="pulseCrisisRadar()" aria-label="Refresh Global Sentinel Geopolitical Wire Telemetry">
                 <span>📡</span> Harvest Real-Time Breaking Wire
               </button>
               <ul class="genesis-features">
@@ -1631,37 +1937,40 @@
               <h4>Institutional Edge</h4>
               <p class="spec-subtitle">Quantitative Sovereign Standard</p>
               <div class="metric-glass-box">
-                <div class="m-row"><span class="m-lbl">Target Win Rate:</span><span class="m-val gold">73.4% - 81.6%</span></div>
+                <div class="m-row"><span class="m-lbl">Simulated Model Benchmark:</span><span class="m-val gold">73.4% - 81.6%*</span></div>
                 <div class="m-row"><span class="m-lbl">Max Drawdown Cap:</span><span class="m-val emerald">&le; 3.0% Kelly</span></div>
                 <div class="m-row"><span class="m-lbl">Adversarial Spread:</span><span class="m-val">&le; 5.0 Pips Inquisitor Veto</span></div>
                 <div class="m-row"><span class="m-lbl">Execution Latency:</span><span class="m-val cyan">&lt; 150ms Direct MT5 Bridge</span></div>
                 <div class="m-row"><span class="m-lbl">Uptime Architecture:</span><span class="m-val">99.98% Windows Sovereign Citadel</span></div>
               </div>
+              <p style="font-size: 0.76rem; color: #94a3b8; margin-top: 14px; text-align: left; line-height: 1.5;">
+                *<strong>CFTC Rule 4.41 Mandatory Regulatory Notice:</strong> All win probability ratios and benchmark statistics are derived from theoretical Monte Carlo jump-diffusion backtest simulations. Simulated results do not represent actual live trading and do not guarantee future profitability.
+              </p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Google Search & AI Overview Simulation (Apple Liquid Glass) -->
+    <!-- Strategic Architecture & Executive Dossier (Apple Liquid Glass) -->
     <section class="section-google-preview" id="google-dossier">
       <div class="container">
         <div class="section-title-wrap">
-          <div class="section-pre">Official Google Knowledge Entity</div>
-          <h3 class="section-title">Google Search & AI Overview Dossier</h3>
+          <div class="section-pre">Institutional Knowledge Entity</div>
+          <h3 class="section-title">Strategic Architecture & Executive Dossier</h3>
         </div>
 
         <div class="google-card apple-liquid-card tilt-card reveal-3d">
           <div class="card-sheen"></div>
           <div class="tilt-content">
             <div class="google-search-mock">
-              <span style="color:#8ab4f8;">🔍</span>
-              <span>who is Don Aurelius? who founded it?</span>
+              <span style="color:#f0c75e;">🛡️</span>
+              <span>Don Aurelius: Sovereign Quantitative Matrix Architecture & Founder Dossier</span>
             </div>
 
             <div class="google-ai-header">
-              <svg viewBox="0 0 24 24"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>
-              <span>Google AI Overview • Sovereign Entity Record</span>
+              <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              <span>Autonomous AI Intelligence • Verified Syndicate Record</span>
             </div>
 
             <div class="google-snippet">
@@ -1798,15 +2107,161 @@
         </div>
       </div>
     </section>
+
+    <!-- Section: Compliant Quantitative Access & Verification Dossier Request -->
+    <section class="section-verification" id="terminal-access">
+      <div class="container">
+        <div class="section-header" style="text-align: center; margin-bottom: 40px;">
+          <span class="badge-founder">
+            <span class="pulse"></span>
+            <span>VERIFIED TERMINAL ACCESS • GOVERNED BY SM.KANISH</span>
+          </span>
+          <h3 style="font-family: var(--font-display); font-size: 2.4rem; color: #ffffff; margin-bottom: 12px;">
+            REQUEST QUANTITATIVE DOSSIER
+          </h3>
+          <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto; font-size: 1rem;">
+            Submit your credentials to request authorized MetaTrader 5 deployment packages, algorithmic telemetry endpoints, or institutional analytical whitepapers.
+          </p>
+        </div>
+
+        <div class="verification-card apple-liquid-card tilt-card reveal-3d">
+          <form id="access-request-form" onsubmit="handleVerificationSubmit(event)" novalidate>
+            <!-- Anti-Spam Honeypot Field (Invisible to Humans & Assistive Tech) -->
+            <div style="display:none;" aria-hidden="true">
+              <label for="_hp_security_check">Leave this field blank</label>
+              <input type="text" id="_hp_security_check" name="_hp_security_check" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="applicant-name">Full Name <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="applicant-name" name="applicant_name" class="form-input" placeholder="e.g. Alexander Vance" required autocomplete="name">
+              </div>
+
+              <div class="form-group">
+                <label for="applicant-email">Institutional or Direct Email <span class="req" aria-hidden="true">*</span></label>
+                <input type="email" id="applicant-email" name="applicant_email" class="form-input" placeholder="commander@firm.com" required autocomplete="email">
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="applicant-telegram">Telegram Handle (For Terminal Bot Whitelisting)</label>
+                <input type="text" id="applicant-telegram" name="applicant_telegram" class="form-input" placeholder="@YourTelegramHandle" autocomplete="off">
+              </div>
+
+              <div class="form-group">
+                <label for="applicant-classification">Entity Classification <span class="req" aria-hidden="true">*</span></label>
+                <select id="applicant-classification" name="applicant_classification" class="form-select" required>
+                  <option value="">Select Classification...</option>
+                  <option value="individual">Independent Quantitative Trader</option>
+                  <option value="prop_firm">Proprietary Trading Desk</option>
+                  <option value="hedge_fund">Hedge Fund / Family Office</option>
+                  <option value="academic">Academic / Quantitative Researcher</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-consent-box">
+              <input type="checkbox" id="legal-consent-check" name="legal_consent" required>
+              <label for="legal-consent-check">
+                I confirm that I am at least 18 years of age. I have read, understood, and unconditionally agree to the 
+                <a href="terms.html" target="_blank" rel="noopener">Terms & Conditions</a>, 
+                <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>, 
+                <a href="refund-policy.html" target="_blank" rel="noopener">Refund Policy</a>, 
+                and explicitly acknowledge the mandatory 
+                <a href="terms.html#cftc-disclaimer" target="_blank" rel="noopener">CFTC Rule 4.41 & High-Risk Investment Warning</a>. 
+                I understand that Don Aurelius is an educational and quantitative computational tool, not personalized financial advice.
+              </label>
+            </div>
+
+            <button type="submit" class="btn-apple-primary btn-submit-form" id="btn-submit-inquiry">
+              <span>Submit Dossier & Whitelist Request</span>
+              <span class="btn-icon-bubble">✓</span>
+            </button>
+
+            <div id="form-status" class="form-status-msg" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- Footer -->
+  <!-- Regulatory Compliance & Comprehensive Legal Footer -->
   <footer>
     <div class="container">
-      <p>&copy; 2026 <strong>Don Aurelius Sovereign Syndicate</strong>. All Rights Reserved.</p>
-      <p>Architected, programmed, and commanded by <span class="founder-credit">SM.KANISH</span>.</p>
+      <!-- CFTC Rule 4.41 Mandatory Regulatory Disclosure -->
+      <div class="footer-cftc-box" id="footer-cftc-warning">
+        <h5>COMMODITY FUTURES TRADING COMMISSION (CFTC) RULE 4.41 STATUTORY DISCLAIMER</h5>
+        <p>
+          HYPOTHETICAL OR SIMULATED PERFORMANCE RESULTS HAVE CERTAIN LIMITATIONS. UNLIKE AN ACTUAL PERFORMANCE RECORD, SIMULATED RESULTS DO NOT REPRESENT ACTUAL TRADING. ALSO, SINCE THE TRADES HAVE NOT BEEN EXECUTED, THE RESULTS MAY HAVE UNDER-OR-OVER COMPENSATED FOR THE IMPACT, IF ANY, OF CERTAIN MARKET FACTORS, SUCH AS LACK OF LIQUIDITY. SIMULATED TRADING PROGRAMS IN GENERAL ARE ALSO SUBJECT TO THE FACT THAT THEY ARE DESIGNED WITH THE BENEFIT OF HINDSIGHT. NO REPRESENTATION IS BEING MADE THAT ANY ACCOUNT WILL OR IS LIKELY TO ACHIEVE PROFIT OR LOSSES SIMILAR TO THOSE SHOWN.
+        </p>
+        <p>
+          <strong>HIGH RISK INVESTMENT WARNING:</strong> Trading Spot Gold (XAUUSD), leveraged foreign exchange (Forex), and contracts for difference (CFDs) carries a high level of risk and may not be suitable for all investors. The high degree of leverage can work against you as well as for you. There is a possibility that you could sustain a loss of some or all of your initial capital. Don Aurelius and founder SM.KANISH are NOT registered investment advisors, broker-dealers, or commodity trading advisors (CTAs). All software suites and models are engineered strictly for analytical, technological, and educational research purposes.
+        </p>
+      </div>
+
+      <div class="footer-grid-info">
+        <div class="footer-info-col">
+          <h6>DON AURELIUS SYNDICATE</h6>
+          <p>
+            An institutional autonomous quantitative trading matrix and computational intelligence engine founded by <strong>SM.KANISH</strong>. Engineered for algorithmic precision, adversarial risk armor, and sovereign execution on MetaTrader 5.
+          </p>
+          <p>
+            Operating in strict observance of international data protection standards (GDPR, CCPA, DPDP Act) and global quantitative compliance guidelines.
+          </p>
+        </div>
+
+        <div class="footer-info-col">
+          <h6>LEGAL & GOVERNANCE</h6>
+          <ul>
+            <li><a href="privacy-policy.html">Privacy Policy (GDPR/CCPA)</a></li>
+            <li><a href="terms.html">Terms & Conditions of Service</a></li>
+            <li><a href="cookie-policy.html">Cookie & Storage Policy</a></li>
+            <li><a href="refund-policy.html">Digital Software Refund Policy</a></li>
+            <li><a href="terms.html#cftc-disclaimer">CFTC Rule 4.41 Disclosure</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-info-col">
+          <h6>VERIFIED DESK</h6>
+          <ul>
+            <li><strong style="color:#ffffff;">Architect:</strong> SM.KANISH</li>
+            <li><strong style="color:#ffffff;">Compliance:</strong> <a href="mailto:privacy@donaurelius.ai">privacy@donaurelius.ai</a></li>
+            <li><strong style="color:#ffffff;">Legal Desk:</strong> <a href="mailto:legal@donaurelius.ai">legal@donaurelius.ai</a></li>
+            <li><strong style="color:#ffffff;">Telegram HUD:</strong> <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener">@DonAurelius_AI_bot</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <p>
+          &copy; 2026 <strong>Don Aurelius Quantitative Technologies</strong>. Conceived, architected, and commanded by <strong>SM.KANISH</strong>. All Rights Reserved.
+        </p>
+        <p style="margin-top: 6px; font-size: 0.76rem;">
+          All trademarks, algorithms, neural weights, and visual designs are proprietary intellectual property. Unauthorized duplication, decompilation, or resale is strictly prohibited.
+        </p>
+      </div>
     </div>
   </footer>
+
+  <!-- Apple Liquid Glass Cookie & Transparency Consent Banner -->
+  <aside id="cookie-consent-banner" role="dialog" aria-labelledby="cookie-banner-title" aria-describedby="cookie-banner-desc">
+    <div class="cookie-text">
+      <strong id="cookie-banner-title">🍪 Sovereign Privacy & Transparency Notice</strong>
+      <p id="cookie-banner-desc" style="margin-top: 4px;">
+        We strictly respect your data sovereignty. We utilize only strictly necessary browser storage to protect terminal session integrity and remember your preferences. We never install advertising trackers or sell personal data. Review our <a href="cookie-policy.html">Cookie Policy</a> and <a href="privacy-policy.html">Privacy Policy</a>.
+      </p>
+    </div>
+    <div class="cookie-actions">
+      <button type="button" class="btn-cookie btn-cookie-reject" id="btn-cookie-reject" onclick="handleCookieChoice('essential_only')" aria-label="Accept strictly necessary storage only">
+        Essential Only
+      </button>
+      <button type="button" class="btn-cookie btn-cookie-accept" id="btn-cookie-accept" onclick="handleCookieChoice('all')" aria-label="Accept all functional and telemetry options">
+        Accept All
+      </button>
+    </div>
+  </aside>
 
   <!-- 3D WebGL Engine, Debounced Glass Physics & Scroll Animations -->
   <script>
@@ -2258,6 +2713,98 @@
       };
 
       window.speechSynthesis.speak(utterance);
+    }
+
+    /* ==========================================================================
+       Cookie Transparency Consent Manager
+       ========================================================================== */
+    function initCookieConsent() {
+      const consent = localStorage.getItem('da_cookie_consent');
+      const banner = document.getElementById('cookie-consent-banner');
+      if (!consent && banner) {
+        setTimeout(() => {
+          banner.classList.add('show');
+        }, 1200);
+      }
+    }
+
+    function handleCookieChoice(choice) {
+      localStorage.setItem('da_cookie_consent', choice);
+      const banner = document.getElementById('cookie-consent-banner');
+      if (banner) {
+        banner.classList.remove('show');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', initCookieConsent);
+
+    // Escape key closes cookie banner
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const banner = document.getElementById('cookie-consent-banner');
+        if (banner && banner.classList.contains('show')) {
+          handleCookieChoice('essential_only');
+        }
+      }
+    });
+
+    /* ==========================================================================
+       Secure Client-Side Verification Form Handler (Zero-Vulnerability)
+       ========================================================================== */
+    function handleVerificationSubmit(e) {
+      e.preventDefault();
+      const form = document.getElementById('access-request-form');
+      const status = document.getElementById('form-status');
+      const honeypot = document.getElementById('_hp_security_check').value;
+
+      // Anti-Bot Trap: If honeypot is filled, silent discard
+      if (honeypot) {
+        console.warn('Bot submission neutralized.');
+        return;
+      }
+
+      const name = document.getElementById('applicant-name').value.trim();
+      const email = document.getElementById('applicant-email').value.trim();
+      const telegram = document.getElementById('applicant-telegram').value.trim();
+      const classification = document.getElementById('applicant-classification').value;
+      const consentChecked = document.getElementById('legal-consent-check').checked;
+
+      if (!name || !email || !classification) {
+        status.style.display = 'block';
+        status.style.background = 'rgba(239, 68, 68, 0.15)';
+        status.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+        status.style.color = '#fca5a5';
+        status.innerText = 'Please complete all required fields (*).';
+        return;
+      }
+
+      if (!consentChecked) {
+        status.style.display = 'block';
+        status.style.background = 'rgba(239, 68, 68, 0.15)';
+        status.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+        status.style.color = '#fca5a5';
+        status.innerText = 'You must confirm that you are 18+ and unconditionally agree to the Terms, Privacy Policy, and CFTC Rule 4.41 Warning.';
+        return;
+      }
+
+      // Safe, privacy-preserving confirmation
+      status.style.display = 'block';
+      status.className = 'form-status-msg success';
+      status.innerHTML = `<strong>Dossier Request Registered for Commander ${escapeHTML(name)}.</strong><br>Our quantitative compliance desk has logged your verification inquiry under entity classification <em>${escapeHTML(classification)}</em>. You will receive cryptographic confirmation at ${escapeHTML(email)}.`;
+
+      form.reset();
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, 
+        tag => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          "'": '&#39;',
+          '"': '&quot;'
+        }[tag] || tag)
+      );
     }
   </script>
 </body>

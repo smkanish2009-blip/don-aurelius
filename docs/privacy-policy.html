@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Privacy Policy & Data Protection Dossier | Don Aurelius Sovereign Syndicate</title>
+  <meta name="description" content="Comprehensive GDPR, CCPA/CPRA, and DPDP Act privacy policy and data governance protocol for Don Aurelius Sovereign Quantitative Syndicate, founded by SM.KANISH.">
+  <meta name="author" content="SM.KANISH">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://smkanish2009-blip.github.io/don-aurelius/privacy-policy.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #020306;
+      --apple-glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(9, 13, 22, 0.85);
+      --apple-glass-border: rgba(255, 255, 255, 0.12);
+      --apple-glass-border-top: rgba(255, 255, 255, 0.45);
+      --apple-glass-rim: inset 0 1px 1px 0 rgba(255, 255, 255, 0.45);
+      --apple-glass-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.65);
+      --gold-primary: #f0c75e;
+      --gold-secondary: #c99e32;
+      --gold-glow: rgba(240, 199, 94, 0.25);
+      --text-main: #ffffff;
+      --text-body: #cbd5e1;
+      --text-muted: #94a3b8;
+      --font-display: 'Cinzel', serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-outer: 24px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 18% 10%, rgba(240, 199, 94, 0.14) 0%, transparent 40%),
+        radial-gradient(circle at 82% 35%, rgba(0, 255, 204, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 15% 75%, rgba(168, 85, 247, 0.09) 0%, transparent 40%);
+      background-attachment: fixed;
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      line-height: 1.8;
+      overflow-x: hidden;
+      padding-top: 110px;
+      padding-bottom: 80px;
+    }
+
+    /* Accessibility Skip Link */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 20px;
+      background: var(--gold-primary);
+      color: #000000;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      z-index: 99999;
+      text-decoration: none;
+      transition: top 0.2s ease;
+    }
+    .skip-link:focus { top: 20px; }
+
+    /* Focus visible */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--gold-primary);
+      outline-offset: 3px;
+    }
+
+    header {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1040px, calc(100% - 32px));
+      z-index: 1000;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(12, 16, 24, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-top: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 9999px;
+      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+      padding: 8px 20px;
+    }
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .brand-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold-primary);
+      overflow: hidden;
+    }
+    .brand-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--gold-primary);
+      letter-spacing: 1px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-body);
+      text-decoration: none;
+      font-size: 0.86rem;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .btn-back {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-top: 1px solid rgba(255, 255, 255, 0.4);
+      color: #ffffff !important;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .legal-card {
+      background: var(--apple-glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--apple-glass-border);
+      border-top: 1px solid var(--apple-glass-border-top);
+      border-radius: var(--radius-outer);
+      box-shadow: var(--apple-glass-shadow), var(--apple-glass-rim);
+      padding: 48px;
+      margin-bottom: 40px;
+    }
+
+    .legal-header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 24px;
+      margin-bottom: 36px;
+    }
+    .legal-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--gold-primary);
+      background: rgba(240, 199, 94, 0.1);
+      border: 1px solid rgba(240, 199, 94, 0.3);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      margin-bottom: 12px;
+    }
+    .legal-title {
+      font-family: var(--font-display);
+      font-size: 2.3rem;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .legal-meta {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .legal-section {
+      margin-bottom: 32px;
+    }
+    .legal-section h2 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      color: #ffffff;
+      margin-bottom: 14px;
+      border-left: 3px solid var(--gold-primary);
+      padding-left: 12px;
+    }
+    .legal-section h3 {
+      font-size: 1.05rem;
+      color: var(--gold-primary);
+      margin: 16px 0 8px;
+    }
+    .legal-section p {
+      margin-bottom: 14px;
+      font-size: 1rem;
+    }
+    .legal-section ul {
+      margin: 12px 0 16px 24px;
+    }
+    .legal-section li {
+      margin-bottom: 8px;
+    }
+
+    .alert-box {
+      background: rgba(240, 199, 94, 0.08);
+      border: 1px solid rgba(240, 199, 94, 0.28);
+      border-left: 4px solid var(--gold-primary);
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin: 20px 0;
+      color: #fef08a;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 40px 0 20px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .footer-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold-primary); }
+
+    @media (max-width: 768px) {
+      .legal-card { padding: 28px 20px; }
+      .legal-title { font-size: 1.8rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header>
+    <nav class="nav-wrapper" aria-label="Main Navigation">
+      <a href="index.html" class="brand">
+        <div class="brand-avatar">
+          <img src="assets/don_aurelius.jpg" alt="Don Aurelius Official Insignia">
+        </div>
+        <span class="brand-title">DON AURELIUS</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Terminal Home</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="cookie-policy.html">Cookies</a></li>
+        <li><a href="refund-policy.html">Refunds</a></li>
+        <li><a href="index.html" class="btn-back">← Back to Overview</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content" class="container">
+    <article class="legal-card">
+      <header class="legal-header">
+        <span class="legal-badge">Statutory Data Protection Dossier</span>
+        <h1 class="legal-title">Privacy Policy</h1>
+        <p class="legal-meta">Effective Date: September 29, 2026 • Governing Controller: Don Aurelius Quantitative Technologies • Founder: SM.KANISH</p>
+      </header>
+
+      <section class="legal-section">
+        <h2>1. Sovereign Commitment to Data Privacy</h2>
+        <p>Don Aurelius Sovereign Syndicate (&ldquo;Don Aurelius&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;), under the strategic architectural direction of founder <strong>SM.KANISH</strong>, is dedicated to protecting your fundamental digital right to privacy. We strictly observe international privacy legislation, including the European Union and United Kingdom General Data Protection Regulation (GDPR / UK GDPR), the California Consumer Privacy Act as amended by the California Privacy Rights Act (CCPA / CPRA), and the Indian Digital Personal Data Protection Act (DPDP Act).</p>
+        <p>Our core engineering philosophy enforces <strong>Strict Data Minimization</strong>: We only collect data that is technically essential to operate, secure, and verify access to our quantitative algorithmic platform.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>2. Data We Collect & Lawful Grounds</h2>
+        <p>Under GDPR Article 6, we process data solely under the lawful bases of <em>Legitimate Interests</em> (maintaining platform security, preventing denial-of-service cyberattacks) and <em>Explicit Consent</em> (when you voluntarily submit contact or verification inquiries).</p>
+        
+        <h3>A. Technical & Operational Telemetry (Automatically Logged)</h3>
+        <ul>
+          <li><strong>Network Identifiers:</strong> Obfuscated IP address, browser user-agent, operating system, and timestamp of request (processed exclusively for distributed DDoS mitigation and server log security).</li>
+          <li><strong>Local Preferences:</strong> Storage of your explicit cookie banner consent preference (stored strictly locally within your browser via <code>localStorage.getItem('da_cookie_consent')</code>).</li>
+        </ul>
+
+        <h3>B. Voluntary Verification & Inquiry Information</h3>
+        <p>If you choose to submit a verification dossier request or contact our trading desk, you may provide:</p>
+        <ul>
+          <li>Your Full Name</li>
+          <li>Corporate or Personal Email Address</li>
+          <li>Telegram Handle (used exclusively for authorized bot terminal whitelisting)</li>
+          <li>Trading Entity Classification (e.g., Independent Quantitative Researcher, Prop Firm)</li>
+        </ul>
+      </section>
+
+      <div class="alert-box">
+        <strong>Absolute Financial Privacy Guarantee:</strong> Don Aurelius does <em>NEVER</em> collect, store, transmit, or have access to your personal brokerage account passwords, MT5 investor master passwords, private wallet cryptographic keys, or banking account credentials. Quantitative terminal execution happens locally or through your privately configured MetaTrader 5 broker API endpoints.
+      </div>
+
+      <section class="legal-section">
+        <h2>3. Third-Party Infrastructure & Global Data Transfers</h2>
+        <p>To serve this web dossier with ultra-low latency and sovereign security, we utilize trusted enterprise infrastructure providers:</p>
+        <ul>
+          <li><strong>GitHub Pages (Microsoft Corporation):</strong> Global content hosting and static web distribution. Subject to standard EU Model Contractual Clauses.</li>
+          <li><strong>Google Fonts (Google LLC):</strong> Typeface stylesheets cached locally and rendered with privacy-preserving IP anonymization.</li>
+          <li><strong>Telegram Open Platform (Telegram FZ-LLC):</strong> For bidirectional messaging telemetry if you interact directly with <code>@DonAurelius_AI_bot</code>.</li>
+        </ul>
+        <p>We do not use invasive third-party cross-site advertising trackers (such as Meta Pixel or Google Ads Remarketing). We do not sell, rent, monetize, or broker your personal information to any third party.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>4. Data Retention Protocols</h2>
+        <p>We maintain strict data expiration lifecycles:</p>
+        <ul>
+          <li><strong>Security Server Logs:</strong> Rotated and permanently purged every 30 days.</li>
+          <li><strong>Verification Inquiries:</strong> Stored in an encrypted offline administrative archive for up to 12 months for compliance audit trails, after which they are irreversibly destroyed unless ongoing client engagement exists.</li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h2>5. Your Statutory Rights (GDPR, CCPA & Global Laws)</h2>
+        <p>Regardless of your geographic jurisdiction, Don Aurelius extends comprehensive sovereign data rights to all users:</p>
+        <ul>
+          <li><strong>Right of Access & Portability:</strong> You may request a machine-readable copy of any personal data we hold about you.</li>
+          <li><strong>Right to Rectification:</strong> You may request immediate correction of inaccurate or outdated information.</li>
+          <li><strong>Right to Erasure (&ldquo;Right to be Forgotten&rdquo;):</strong> You may request the immediate, permanent deletion of your inquiry and contact records.</li>
+          <li><strong>Right to Restrict or Object:</strong> You have the right to withdraw previously granted consent at any time without penalty.</li>
+          <li><strong>Non-Discrimination:</strong> We will never deny services, alter software functionality, or charge differential pricing based upon the exercise of your statutory privacy rights.</li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h2>6. Security Architecture</h2>
+        <p>Our infrastructure enforces Transport Layer Security (TLS 1.3) cryptographic transit encryption for all HTTP web requests. All internal administrative verification queues are guarded with multi-factor authentication and hardware key verification overseen directly by strategic leadership.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>7. Data Protection Officer & Legal Inquiries</h2>
+        <p>To exercise any of your statutory rights, submit a privacy grievance, or request audit records, contact our designated privacy office:</p>
+        <p><strong>Data Controller:</strong> Don Aurelius Quantitative Technologies<br>
+        <strong>Founder & Strategic Director:</strong> SM.KANISH<br>
+        <strong>Direct Compliance Email:</strong> <a href="mailto:privacy@donaurelius.ai" style="color:var(--gold-primary);">privacy@donaurelius.ai</a><br>
+        <strong>Official Telegram Channel:</strong> <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" style="color:var(--gold-primary);">@DonAurelius_AI_bot</a></p>
+      </section>
+    </article>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms.html">Terms & Conditions</a>
+        <a href="cookie-policy.html">Cookie Policy</a>
+        <a href="refund-policy.html">Refund Policy</a>
+        <a href="terms.html#cftc-disclaimer">CFTC Rule 4.41 Warning</a>
+      </div>
+      <p>&copy; 2026 <strong>Don Aurelius Sovereign Syndicate</strong>. All Rights Reserved.</p>
+      <p>Architected, programmed, and commanded by <span style="color:var(--gold-primary); font-weight:700;">SM.KANISH</span>.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

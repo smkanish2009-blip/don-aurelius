@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Cookie Policy & Local Storage Transparency | Don Aurelius</title>
+  <meta name="description" content="Official Cookie Policy and Local Storage Transparency Statement for Don Aurelius Sovereign Quantitative Syndicate, founded by SM.KANISH.">
+  <meta name="author" content="SM.KANISH">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://smkanish2009-blip.github.io/don-aurelius/cookie-policy.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #020306;
+      --apple-glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(9, 13, 22, 0.85);
+      --apple-glass-border: rgba(255, 255, 255, 0.12);
+      --apple-glass-border-top: rgba(255, 255, 255, 0.45);
+      --apple-glass-rim: inset 0 1px 1px 0 rgba(255, 255, 255, 0.45);
+      --apple-glass-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.65);
+      --gold-primary: #f0c75e;
+      --gold-secondary: #c99e32;
+      --gold-glow: rgba(240, 199, 94, 0.25);
+      --text-main: #ffffff;
+      --text-body: #cbd5e1;
+      --text-muted: #94a3b8;
+      --font-display: 'Cinzel', serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-outer: 24px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 18% 10%, rgba(240, 199, 94, 0.14) 0%, transparent 40%),
+        radial-gradient(circle at 82% 35%, rgba(0, 255, 204, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 15% 75%, rgba(168, 85, 247, 0.09) 0%, transparent 40%);
+      background-attachment: fixed;
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      line-height: 1.8;
+      overflow-x: hidden;
+      padding-top: 110px;
+      padding-bottom: 80px;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 20px;
+      background: var(--gold-primary);
+      color: #000000;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      z-index: 99999;
+      text-decoration: none;
+      transition: top 0.2s ease;
+    }
+    .skip-link:focus { top: 20px; }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--gold-primary);
+      outline-offset: 3px;
+    }
+
+    header {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1040px, calc(100% - 32px));
+      z-index: 1000;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(12, 16, 24, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-top: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 9999px;
+      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+      padding: 8px 20px;
+    }
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .brand-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold-primary);
+      overflow: hidden;
+    }
+    .brand-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--gold-primary);
+      letter-spacing: 1px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-body);
+      text-decoration: none;
+      font-size: 0.86rem;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .btn-back {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-top: 1px solid rgba(255, 255, 255, 0.4);
+      color: #ffffff !important;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .legal-card {
+      background: var(--apple-glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--apple-glass-border);
+      border-top: 1px solid var(--apple-glass-border-top);
+      border-radius: var(--radius-outer);
+      box-shadow: var(--apple-glass-shadow), var(--apple-glass-rim);
+      padding: 48px;
+      margin-bottom: 40px;
+    }
+
+    .legal-header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 24px;
+      margin-bottom: 36px;
+    }
+    .legal-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--gold-primary);
+      background: rgba(240, 199, 94, 0.1);
+      border: 1px solid rgba(240, 199, 94, 0.3);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      margin-bottom: 12px;
+    }
+    .legal-title {
+      font-family: var(--font-display);
+      font-size: 2.3rem;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .legal-meta {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .legal-section {
+      margin-bottom: 32px;
+    }
+    .legal-section h2 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      color: #ffffff;
+      margin-bottom: 14px;
+      border-left: 3px solid var(--gold-primary);
+      padding-left: 12px;
+    }
+    .legal-section p {
+      margin-bottom: 14px;
+      font-size: 1rem;
+    }
+    .legal-section ul {
+      margin: 12px 0 16px 24px;
+    }
+    .legal-section li {
+      margin-bottom: 8px;
+    }
+
+    .cookie-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 28px;
+      font-size: 0.92rem;
+    }
+    .cookie-table th, .cookie-table td {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 12px 16px;
+      text-align: left;
+    }
+    .cookie-table th {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--gold-primary);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .cookie-table td {
+      background: rgba(8, 11, 18, 0.4);
+    }
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 40px 0 20px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .footer-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold-primary); }
+
+    @media (max-width: 768px) {
+      .legal-card { padding: 28px 20px; }
+      .legal-title { font-size: 1.8rem; }
+      .nav-links { display: none; }
+      .cookie-table { font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header>
+    <nav class="nav-wrapper" aria-label="Main Navigation">
+      <a href="index.html" class="brand">
+        <div class="brand-avatar">
+          <img src="assets/don_aurelius.jpg" alt="Don Aurelius Official Insignia">
+        </div>
+        <span class="brand-title">DON AURELIUS</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Terminal Home</a></li>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="refund-policy.html">Refunds</a></li>
+        <li><a href="index.html" class="btn-back">← Back to Overview</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content" class="container">
+    <article class="legal-card">
+      <header class="legal-header">
+        <span class="legal-badge">Transparency & ePrivacy Protocol</span>
+        <h1 class="legal-title">Cookie & Local Storage Policy</h1>
+        <p class="legal-meta">Governed by: European ePrivacy Directive & GDPR Art. 5(3) • Founder: SM.KANISH • Updated: September 29, 2026</p>
+      </header>
+
+      <section class="legal-section">
+        <h2>1. What Are Cookies & Local Storage?</h2>
+        <p>Cookies are small text data files placed upon your computer or mobile device when accessing web applications. HTML5 Local Storage (<code>localStorage</code>) is a modern, high-performance browser technology that allows applications to store client-side preferences without transmitting unnecessary data back to web servers on every HTTP request.</p>
+        <p>Don Aurelius operates with an ultra-strict <strong>Zero-Surveillance Architecture</strong>. We do <strong>NOT</strong> drop third-party advertising cookies, cross-site trackers, behavioural profiling beacons, or canvas fingerprinting scripts.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>2. Storage Inventories Deployed on Don Aurelius</h2>
+        <p>Below is the complete inventory of storage mechanisms utilized by this website:</p>
+
+        <table class="cookie-table">
+          <thead>
+            <tr>
+              <th>Identifier</th>
+              <th>Category</th>
+              <th>Persistence</th>
+              <th>Purpose & Data Stored</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>da_cookie_consent</code></td>
+              <td>Strictly Necessary</td>
+              <td>12 Months (Persistent)</td>
+              <td>Stores your explicit privacy preference (&ldquo;all&rdquo; or &ldquo;essential_only&rdquo;) so the consent banner is not shown repeatedly.</td>
+            </tr>
+            <tr>
+              <td><code>da_audio_muted</code></td>
+              <td>Functional Preference</td>
+              <td>Session / 30 Days</td>
+              <td>Remembers whether you muted or enabled terminal synthesized neural voice briefings.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="legal-section">
+        <h2>3. Third-Party CDNs & Embedded Content</h2>
+        <p>This website utilizes static content delivery networks (CDNs) for open-source mathematical and graphics libraries:</p>
+        <ul>
+          <li><strong>cdnjs / Cloudflare:</strong> Serves the Three.js 3D WebGL library. Cloudflare may log basic network metadata to defend against distributed denial-of-service (DDoS) threats.</li>
+          <li><strong>Google Fonts:</strong> Delivers typography stylesheets. Google does not set tracking cookies when serving fonts.</li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h2>4. How to Manage, Revoke, or Delete Cookies</h2>
+        <p>You have full sovereign control over your browser&rsquo;s storage. You can revoke consent, clear existing storage keys, or block cookies entirely through your browser settings:</p>
+        <ul>
+          <li><strong>Google Chrome:</strong> Settings &rarr; Privacy and Security &rarr; Third-party cookies &rarr; Clear browsing data.</li>
+          <li><strong>Apple Safari:</strong> Preferences &rarr; Privacy &rarr; Manage Website Data &rarr; Remove All.</li>
+          <li><strong>Mozilla Firefox:</strong> Settings &rarr; Privacy & Security &rarr; Cookies and Site Data &rarr; Clear Data.</li>
+          <li><strong>Microsoft Edge:</strong> Settings &rarr; Cookies and site permissions &rarr; Manage and delete cookies.</li>
+        </ul>
+        <p>If you choose to delete or reject <code>da_cookie_consent</code>, the privacy banner will simply re-render upon your next visit.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>5. Inquiries & Technical Governance</h2>
+        <p>For questions regarding our privacy architecture or cookie governance, contact:</p>
+        <p><strong>Chief Architect:</strong> SM.KANISH<br>
+        <strong>Compliance Inquiries:</strong> <a href="mailto:privacy@donaurelius.ai" style="color:var(--gold-primary);">privacy@donaurelius.ai</a></p>
+      </section>
+    </article>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms.html">Terms & Conditions</a>
+        <a href="cookie-policy.html">Cookie Policy</a>
+        <a href="refund-policy.html">Refund Policy</a>
+        <a href="terms.html#cftc-disclaimer">CFTC Rule 4.41 Warning</a>
+      </div>
+      <p>&copy; 2026 <strong>Don Aurelius Sovereign Syndicate</strong>. All Rights Reserved.</p>
+      <p>Architected, programmed, and commanded by <span style="color:var(--gold-primary); font-weight:700;">SM.KANISH</span>.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
