@@ -96,16 +96,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
+  <!-- Three.js 3D WebGL Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
   <style>
     :root {
       --bg-dark: #07080a;
-      --bg-card: rgba(18, 20, 26, 0.7);
-      --bg-card-hover: rgba(26, 30, 40, 0.9);
+      --bg-card: rgba(18, 20, 26, 0.75);
+      --bg-card-hover: rgba(26, 30, 40, 0.95);
       --gold-primary: #f0c75e;
       --gold-secondary: #c99e32;
       --gold-glow: rgba(240, 199, 94, 0.25);
       --emerald-neon: #10b981;
       --emerald-glow: rgba(16, 185, 129, 0.2);
+      --cyan-neon: #00ffcc;
+      --cyan-glow: rgba(0, 255, 204, 0.25);
+      --purple-neon: #c084fc;
+      --purple-glow: rgba(192, 132, 252, 0.25);
       --text-main: #f3f4f6;
       --text-muted: #9ca3af;
       --border-subtle: rgba(240, 199, 94, 0.18);
@@ -131,6 +138,142 @@
         radial-gradient(circle at 50% 0%, rgba(240, 199, 94, 0.08) 0%, transparent 60%),
         radial-gradient(circle at 80% 40%, rgba(16, 185, 129, 0.04) 0%, transparent 50%),
         linear-gradient(to bottom, #07080a, #0b0d12);
+      position: relative;
+    }
+
+    /* Full-Screen 3D WebGL Background Canvas */
+    #bg-canvas-3d {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.7;
+    }
+
+    /* Glowing Top Scroll Progress Indicator */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cyan-neon), var(--gold-primary), var(--purple-neon));
+      z-index: 1000;
+      box-shadow: 0 0 12px var(--gold-glow);
+      transition: width 0.05s ease-out;
+    }
+
+    /* Scroll-Driven 3D Reveal System */
+    .reveal-3d {
+      opacity: 0;
+      transform: translateY(45px) perspective(1000px) rotateX(8deg);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-3d.active {
+      opacity: 1;
+      transform: translateY(0) perspective(1000px) rotateX(0deg);
+    }
+    .reveal-3d.delay-1 { transition-delay: 0.1s; }
+    .reveal-3d.delay-2 { transition-delay: 0.2s; }
+    .reveal-3d.delay-3 { transition-delay: 0.3s; }
+    .reveal-3d.delay-4 { transition-delay: 0.4s; }
+
+    /* 3D Interactive Card Physics & Specular Sheen */
+    .tilt-card {
+      transform-style: preserve-3d;
+      perspective: 1200px;
+      transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+      position: relative;
+    }
+    .tilt-card .card-sheen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      mix-blend-mode: overlay;
+      z-index: 2;
+    }
+    .tilt-card:hover .card-sheen {
+      opacity: 1;
+    }
+    .tilt-content {
+      transform: translateZ(25px);
+      transform-style: preserve-3d;
+    }
+
+    /* Hero Interactive 3D Hologram Stage */
+    .hero-3d-stage {
+      margin: 30px auto 25px;
+      max-width: 550px;
+      height: 180px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      background: rgba(11, 14, 20, 0.6);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .stage-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+    }
+    .stage-canvas:active {
+      cursor: grabbing;
+    }
+    .stage-label {
+      position: absolute;
+      bottom: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      color: var(--gold-primary);
+      background: rgba(7, 8, 10, 0.85);
+      border: 1px solid var(--border-subtle);
+      padding: 3px 12px;
+      border-radius: 20px;
+      backdrop-filter: blur(6px);
+      text-transform: uppercase;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      pointer-events: none;
+    }
+
+    /* Interactive Simulation & Audio Controls */
+    .interactive-action-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--gold-primary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      margin-top: 10px;
+    }
+    .interactive-action-btn:hover {
+      background: rgba(240, 199, 94, 0.15);
+      border-color: var(--gold-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px var(--gold-glow);
     }
 
     /* Scrollbar */
@@ -969,6 +1112,11 @@
   </style>
 </head>
 <body>
+  <!-- Glowing Top Scroll Progress Indicator -->
+  <div id="scroll-progress"></div>
+
+  <!-- Full-Screen 3D WebGL Background Canvas -->
+  <canvas id="bg-canvas-3d"></canvas>
 
   <!-- Top Sticky Navigation -->
   <header>
@@ -1014,13 +1162,19 @@
           <span class="name">SM.KANISH</span>
         </div>
 
+        <!-- 3D Interactive Quantum Hologram Stage -->
+        <div class="hero-3d-stage" id="hero-stage">
+          <canvas id="stage-3d-canvas" class="stage-canvas"></canvas>
+          <div class="stage-label">✦ 3D QUANTUM AUREUS CORE • DRAG OR HOVER ✦</div>
+        </div>
+
         <div class="hero-cta">
           <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="btn-primary">Connect Mobile Telegram HUD</a>
           <a href="#genesis" class="btn-secondary">Explore Genesis Suite</a>
         </div>
 
         <!-- Live Telemetry Stats Bar -->
-        <div class="telemetry-bar">
+        <div class="telemetry-bar reveal-3d">
           <div class="stat-item">
             <div class="stat-label">Net Imperial Equity</div>
             <div class="stat-val emerald">$102,625+ USD</div>
@@ -1058,124 +1212,153 @@
 
         <div class="genesis-grid">
           <!-- Invention 1: Eagle-Eye Vision -->
-          <div class="genesis-card card-eagle">
-            <span class="invention-badge badge-eagle">Invention I • Multimodal Vision</span>
-            <div class="genesis-header">
-              <div class="genesis-title">
-                <h4>Project Eagle-Eye</h4>
-                <span class="codename">Multimodal Computer Vision AI</span>
+          <div class="genesis-card card-eagle tilt-card reveal-3d">
+            <div class="card-sheen"></div>
+            <div class="tilt-content">
+              <span class="invention-badge badge-eagle">Invention I • Multimodal Vision</span>
+              <div class="genesis-header">
+                <div class="genesis-title">
+                  <h4>Project Eagle-Eye</h4>
+                  <span class="codename">Multimodal Computer Vision AI</span>
+                </div>
+                <div class="genesis-icon">👁️</div>
               </div>
-              <div class="genesis-icon">👁️</div>
-            </div>
-            <p class="genesis-desc">
-              Bypasses traditional lagged indicators by generating institutional dark-mode candlestick charts (M15) with Neon Cyan/Magenta candles and Aureus Gold EMAs, passed directly to Google Gemini Vision AI for visual price-action and liquidity inspection.
-            </p>
-            <div class="genesis-media-preview">
-              <img src="assets/eagle_eye_chart.png" alt="Don Aurelius Eagle-Eye Candlestick Chart Analysis" loading="lazy">
-              <div class="media-caption">
-                <span>MetaTrader 5 • 60-Period M15 Institutional Geometry</span>
-                <span class="tag">AI VISION INSPECTED</span>
+              <p class="genesis-desc">
+                Bypasses traditional lagged indicators by generating institutional dark-mode candlestick charts (M15) with Neon Cyan/Magenta candles and Aureus Gold EMAs, passed directly to Google Gemini Vision AI for visual price-action and liquidity inspection.
+              </p>
+              <div class="genesis-media-preview" id="eagle-preview-box">
+                <img src="assets/eagle_eye_chart.png" id="eagle-chart-img" alt="Don Aurelius Eagle-Eye Candlestick Chart Analysis" loading="lazy">
+                <div class="media-caption">
+                  <span>MetaTrader 5 • 60-Period M15 Institutional Geometry</span>
+                  <span class="tag" id="eagle-status-tag">AI VISION INSPECTED</span>
+                </div>
               </div>
+              <button class="interactive-action-btn" onclick="toggleEagleEyeFilter()">
+                <span>⚡</span> <span id="eagle-btn-text">Toggle 3D Liquidity Scan Overlay</span>
+              </button>
+              <ul class="genesis-features">
+                <li><span class="check-icon">⚡</span><span><strong>Gemini Vision Frontier Model:</strong> Inspects visual Fair Value Gaps (FVG) and order blocks.</span></li>
+                <li><span class="check-icon">⚡</span><span><strong>Automated Photo Dispatch:</strong> Delivers full-color candlestick charts directly to Telegram.</span></li>
+                <li><span class="check-icon">⚡</span><span><strong>Visual Bias Verdict:</strong> Yields instant Bullish, Bearish, or Neutral structural conviction.</span></li>
+              </ul>
             </div>
-            <ul class="genesis-features">
-              <li><span class="check-icon">⚡</span><span><strong>Gemini Vision Frontier Model:</strong> Inspects visual Fair Value Gaps (FVG) and order blocks.</span></li>
-              <li><span class="check-icon">⚡</span><span><strong>Automated Photo Dispatch:</strong> Delivers full-color candlestick charts directly to Telegram.</span></li>
-              <li><span class="check-icon">⚡</span><span><strong>Visual Bias Verdict:</strong> Yields instant Bullish, Bearish, or Neutral structural conviction.</span></li>
-            </ul>
           </div>
 
           <!-- Invention 2: Quantum Twin Simulator -->
-          <div class="genesis-card card-quantum">
-            <span class="invention-badge badge-quantum">Invention II • Stochastic Physics</span>
-            <div class="genesis-header">
-              <div class="genesis-title">
-                <h4>Project Quantum Twin</h4>
-                <span class="codename">1,000-Path Monte Carlo Simulator</span>
+          <div class="genesis-card card-quantum tilt-card reveal-3d delay-1">
+            <div class="card-sheen"></div>
+            <div class="tilt-content">
+              <span class="invention-badge badge-quantum">Invention II • Stochastic Physics</span>
+              <div class="genesis-header">
+                <div class="genesis-title">
+                  <h4>Project Quantum Twin</h4>
+                  <span class="codename">1,000-Path Monte Carlo Simulator</span>
+                </div>
+                <div class="genesis-icon">🔮</div>
               </div>
-              <div class="genesis-icon">🔮</div>
-            </div>
-            <p class="genesis-desc">
-              A stochastic jump-diffusion simulation matrix modeling 1,000 parallel realities for Spot Gold over the upcoming 4 hours. Solves Geometric Brownian Motion coupled with Poisson jump shocks to construct empirical future probability corridors.
-            </p>
-            <div class="genesis-media-preview">
-              <img src="assets/quantum_cone.png" alt="Don Aurelius Quantum Twin Monte Carlo Cone" loading="lazy">
-              <div class="media-caption">
-                <span>1,000 Stochastic Paths • 90% Confidence Corridor</span>
-                <span class="tag">MONTE CARLO PROVEN</span>
+              <p class="genesis-desc">
+                A stochastic jump-diffusion simulation matrix modeling 1,000 parallel realities for Spot Gold over the upcoming 4 hours. Solves Geometric Brownian Motion coupled with Poisson jump shocks to construct empirical future probability corridors.
+              </p>
+              <div class="genesis-media-preview">
+                <img src="assets/quantum_cone.png" alt="Don Aurelius Quantum Twin Monte Carlo Cone" loading="lazy">
+                <div class="media-caption">
+                  <span>1,000 Stochastic Paths • 90% Confidence Corridor</span>
+                  <span class="tag">MONTE CARLO PROVEN</span>
+                </div>
               </div>
+              <!-- Live Interactive 3D Canvas Simulator -->
+              <canvas id="monte-carlo-live-canvas" width="480" height="110" style="width:100%; height:110px; border-radius:10px; background:#04060a; margin-bottom:10px; border:1px solid rgba(168,85,247,0.35); display:block;"></canvas>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <button class="interactive-action-btn" onclick="runLiveMonteCarlo()">
+                  <span>🎲</span> Re-run 1,000 Parallel Paths
+                </button>
+                <span id="quantum-win-prob-counter" style="font-family:var(--font-mono); font-size:0.85rem; color:#c084fc; font-weight:700;">Win Prob: 73.4%</span>
+              </div>
+              <ul class="genesis-features">
+                <li><span class="check-icon">⚡</span><span><strong>Empirical Win Probability:</strong> Calculates exact mathematical odds of hit vs. stop.</span></li>
+                <li><span class="check-icon">⚡</span><span><strong>Quantile Fan Charts:</strong> Maps the 5th, 25th, 50th, 75th, and 95th percentile price trajectories.</span></li>
+                <li><span class="check-icon">⚡</span><span><strong>Jump-Diffusion Mechanics:</strong> Accounts for sudden central bank liquidity shocks.</span></li>
+              </ul>
             </div>
-            <ul class="genesis-features">
-              <li><span class="check-icon">⚡</span><span><strong>Empirical Win Probability:</strong> Calculates exact mathematical odds of hit vs. stop.</span></li>
-              <li><span class="check-icon">⚡</span><span><strong>Quantile Fan Charts:</strong> Maps the 5th, 25th, 50th, 75th, and 95th percentile price trajectories.</span></li>
-              <li><span class="check-icon">⚡</span><span><strong>Jump-Diffusion Mechanics:</strong> Accounts for sudden central bank liquidity shocks.</span></li>
-            </ul>
           </div>
 
           <!-- Invention 3: Global Sentinel -->
-          <div class="genesis-card card-sentinel">
-            <span class="invention-badge badge-sentinel">Invention III • Geopolitical Radar</span>
-            <div class="genesis-header">
-              <div class="genesis-title">
-                <h4>Project Global Sentinel</h4>
-                <span class="codename">Crisis Radar & Panic Index</span>
+          <div class="genesis-card card-sentinel tilt-card reveal-3d delay-2">
+            <div class="card-sheen"></div>
+            <div class="tilt-content">
+              <span class="invention-badge badge-sentinel">Invention III • Geopolitical Radar</span>
+              <div class="genesis-header">
+                <div class="genesis-title">
+                  <h4>Project Global Sentinel</h4>
+                  <span class="codename">Crisis Radar & Panic Index</span>
+                </div>
+                <div class="genesis-icon">🌐</div>
               </div>
-              <div class="genesis-icon">🌐</div>
+              <p class="genesis-desc">
+                Continuous breaking wire intelligence harvester extracting headlines across FXStreet, Yahoo Finance, and Investing.com. Computes the real-time Geopolitical Panic Index (GPI: 0–100) and Safe-Haven Macro Gold Bias.
+              </p>
+              <div class="radar-meter-box">
+                <div class="radar-score-row">
+                  <span style="font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px;">Geopolitical Panic Index</span>
+                  <span class="radar-score-val" id="radar-live-score">25 <span style="font-size: 0.9rem; color: #94a3b8;">/ 100</span></span>
+                </div>
+                <div class="radar-bar-bg">
+                  <div class="radar-bar-fill" id="radar-live-bar" style="width: 25%;"></div>
+                </div>
+                <div class="radar-wire-ticker" id="radar-live-ticker">
+                  📰 Wire Pulse: "Central bank gold accumulation hits multi-decade peak as safe-haven reserves expand..."
+                </div>
+              </div>
+              <button class="interactive-action-btn" onclick="pulseCrisisRadar()">
+                <span>📡</span> Harvest Real-Time Breaking Wire
+              </button>
+              <ul class="genesis-features">
+                <li><span class="check-icon">⚡</span><span><strong>Black Swan Shockwave Trigger:</strong> Freezes high-risk positions during wartime or panic spikes.</span></li>
+                <li><span class="check-icon">⚡</span><span><strong>Multi-Feed Wire Harvesting:</strong> Scrapes financial feeds every 5 minutes automatically.</span></li>
+                <li><span class="check-icon">⚡</span><span><strong>Macro Gold Impact Scoring:</strong> Provides instant macroeconomic directional bias.</span></li>
+              </ul>
             </div>
-            <p class="genesis-desc">
-              Continuous breaking wire intelligence harvester extracting headlines across FXStreet, Yahoo Finance, and Investing.com. Computes the real-time Geopolitical Panic Index (GPI: 0–100) and Safe-Haven Macro Gold Bias.
-            </p>
-            <div class="radar-meter-box">
-              <div class="radar-score-row">
-                <span style="font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px;">Geopolitical Panic Index</span>
-                <span class="radar-score-val">25 <span style="font-size: 0.9rem; color: #94a3b8;">/ 100</span></span>
-              </div>
-              <div class="radar-bar-bg">
-                <div class="radar-bar-fill"></div>
-              </div>
-              <div class="radar-wire-ticker">
-                📰 Wire Pulse: "Central bank gold accumulation hits multi-decade peak as safe-haven reserves expand..."
-              </div>
-            </div>
-            <ul class="genesis-features">
-              <li><span class="check-icon">⚡</span><span><strong>Black Swan Shockwave Trigger:</strong> Freezes high-risk positions during wartime or panic spikes.</span></li>
-              <li><span class="check-icon">⚡</span><span><strong>Multi-Feed Wire Harvesting:</strong> Scrapes financial feeds every 5 minutes automatically.</span></li>
-              <li><span class="check-icon">⚡</span><span><strong>Macro Gold Impact Scoring:</strong> Provides instant macroeconomic directional bias.</span></li>
-            </ul>
           </div>
 
           <!-- Invention 4: Jarvis Co-Pilot -->
-          <div class="genesis-card card-jarvis">
-            <span class="invention-badge badge-jarvis">Invention IV • Duplex Voice Matrix</span>
-            <div class="genesis-header">
-              <div class="genesis-title">
-                <h4>Project Jarvis Co-Pilot</h4>
-                <span class="codename">Full-Duplex Neural Voice & Audio Memo</span>
+          <div class="genesis-card card-jarvis tilt-card reveal-3d delay-3">
+            <div class="card-sheen"></div>
+            <div class="tilt-content">
+              <span class="invention-badge badge-jarvis">Invention IV • Duplex Voice Matrix</span>
+              <div class="genesis-header">
+                <div class="genesis-title">
+                  <h4>Project Jarvis Co-Pilot</h4>
+                  <span class="codename">Full-Duplex Neural Voice & Audio Memo</span>
+                </div>
+                <div class="genesis-icon">🎙️</div>
               </div>
-              <div class="genesis-icon">🎙️</div>
+              <p class="genesis-desc">
+                Transforms Don Aurelius into an interactive conversational commander. Transcribes incoming Telegram voice memos via Gemini Multimodal Audio and responds with Microsoft Edge Neural Voice synthesis.
+              </p>
+              <div class="voice-console-box">
+                <div class="voice-waveform" id="voice-wave-container">
+                  <div class="wave-bar"></div>
+                  <div class="wave-bar"></div>
+                  <div class="wave-bar"></div>
+                  <div class="wave-bar"></div>
+                  <div class="wave-bar"></div>
+                  <div class="wave-bar"></div>
+                  <div class="wave-bar"></div>
+                  <div class="wave-bar"></div>
+                </div>
+                <div class="voice-quote" id="voice-quote-text">
+                  "Commander SM.KANISH, Eagle-Eye Vision and Quantum Twin simulation complete. Net equity stands safe at $102,625 USD."
+                </div>
+              </div>
+              <button class="interactive-action-btn" id="btn-play-voice" onclick="playAureusSpeech()">
+                <span id="voice-play-icon">▶</span> <span id="voice-play-text">Listen to Don Aurelius Neural Voice</span>
+              </button>
+              <ul class="genesis-features">
+                <li><span class="check-icon">⚡</span><span><strong>Voice Memo Intelligence:</strong> Tap mic on Telegram and talk; AI listens, transcribes & executes.</span></li>
+                <li><span class="check-icon">⚡</span><span><strong>Neural Voice Briefings:</strong> Powered by Microsoft Edge 'ChristopherNeural' ultra-crisp audio.</span></li>
+                <li><span class="check-icon">⚡</span><span><strong>Universal Intellect:</strong> Discusses market strategy, physics, world history, and code without limits.</span></li>
+              </ul>
             </div>
-            <p class="genesis-desc">
-              Transforms Don Aurelius into an interactive conversational commander. Transcribes incoming Telegram voice memos via Gemini Multimodal Audio and responds with Microsoft Edge Neural Voice synthesis.
-            </p>
-            <div class="voice-console-box">
-              <div class="voice-waveform">
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-              </div>
-              <div class="voice-quote">
-                "Commander SM.KANISH, Eagle-Eye Vision and Quantum Twin simulation complete. Net equity stands safe at $102,625 USD."
-              </div>
-            </div>
-            <ul class="genesis-features">
-              <li><span class="check-icon">⚡</span><span><strong>Voice Memo Intelligence:</strong> Tap mic on Telegram and talk; AI listens, transcribes & executes.</span></li>
-              <li><span class="check-icon">⚡</span><span><strong>Neural Voice Briefings:</strong> Powered by Microsoft Edge 'ChristopherNeural' ultra-crisp audio.</span></li>
-              <li><span class="check-icon">⚡</span><span><strong>Universal Intellect:</strong> Discusses market strategy, physics, world history, and code without limits.</span></li>
-            </ul>
           </div>
         </div>
 
@@ -1204,31 +1387,34 @@
           <h3 class="section-title">Google Search & AI Overview Dossier</h3>
         </div>
 
-        <div class="google-card">
-          <div class="google-search-mock">
-            <span style="color:#8ab4f8;">🔍</span>
-            <span>who is Don Aurelius? who founded it?</span>
-          </div>
+        <div class="google-card tilt-card reveal-3d">
+          <div class="card-sheen"></div>
+          <div class="tilt-content">
+            <div class="google-search-mock">
+              <span style="color:#8ab4f8;">🔍</span>
+              <span>who is Don Aurelius? who founded it?</span>
+            </div>
 
-          <div class="google-ai-header">
-            <svg viewBox="0 0 24 24"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>
-            <span>Google AI Overview • Sovereign Entity Record</span>
-          </div>
+            <div class="google-ai-header">
+              <svg viewBox="0 0 24 24"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/></svg>
+              <span>Google AI Overview • Sovereign Entity Record</span>
+            </div>
 
-          <div class="google-snippet">
-            <strong>Don Aurelius</strong> is an institutional-grade autonomous AI quantitative trading syndicate and neural execution system founded and architected by <strong>SM.KANISH</strong>. Engineered in 2026, the syndicate operates on MetaTrader 5 to execute high-precision algorithmic trading strategies on spot gold (XAUUSD).
-            <br><br>
-            Under the strategic vision of founder <strong>SM.KANISH</strong>, Don Aurelius deployed the revolutionary <strong>Genesis Suite</strong>—four historic inventions never before seen on MetaTrader 5: <strong>Eagle-Eye Multimodal Vision</strong> (candlestick chart computer vision), <strong>Global Sentinel</strong> (geopolitical crisis radar & Geopolitical Panic Index), <strong>Quantum Twin</strong> (1,000-path Monte Carlo jump-diffusion probability simulator), and <strong>Jarvis Co-Pilot</strong> (full-duplex neural voice & voice memo intelligence). These breakthroughs operate alongside the four War Room council agents (Hawk, Radar, Predator, and Inquisitor), enforcing fractional Kelly risk allocations and dynamic auto-trailing stops.
-          </div>
+            <div class="google-snippet">
+              <strong>Don Aurelius</strong> is an institutional-grade autonomous AI quantitative trading syndicate and neural execution system founded and architected by <strong>SM.KANISH</strong>. Engineered in 2026, the syndicate operates on MetaTrader 5 to execute high-precision algorithmic trading strategies on spot gold (XAUUSD).
+              <br><br>
+              Under the strategic vision of founder <strong>SM.KANISH</strong>, Don Aurelius deployed the revolutionary <strong>Genesis Suite</strong>—four historic inventions never before seen on MetaTrader 5: <strong>Eagle-Eye Multimodal Vision</strong> (candlestick chart computer vision), <strong>Global Sentinel</strong> (geopolitical crisis radar & Geopolitical Panic Index), <strong>Quantum Twin</strong> (1,000-path Monte Carlo jump-diffusion probability simulator), and <strong>Jarvis Co-Pilot</strong> (full-duplex neural voice & voice memo intelligence). These breakthroughs operate alongside the four War Room council agents (Hawk, Radar, Predator, and Inquisitor), enforcing fractional Kelly risk allocations and dynamic auto-trailing stops.
+            </div>
 
-          <div class="google-chips">
-            <div class="google-chip">Founder: SM.KANISH</div>
-            <div class="google-chip">Genesis Suite: 4 Inventions</div>
-            <div class="google-chip">Vision: Gemini Multimodal Vision</div>
-            <div class="google-chip">Simulation: 1,000 Monte Carlo Paths</div>
-            <div class="google-chip">Crisis Radar: Geopolitical Panic Index</div>
-            <div class="google-chip">Terminal: MetaTrader 5</div>
-            <div class="google-chip">Status: 24/7 Live Operational</div>
+            <div class="google-chips">
+              <div class="google-chip">Founder: SM.KANISH</div>
+              <div class="google-chip">Genesis Suite: 4 Inventions</div>
+              <div class="google-chip">Vision: Gemini Multimodal Vision</div>
+              <div class="google-chip">Simulation: 1,000 Monte Carlo Paths</div>
+              <div class="google-chip">Crisis Radar: Geopolitical Panic Index</div>
+              <div class="google-chip">Terminal: MetaTrader 5</div>
+              <div class="google-chip">Status: 24/7 Live Operational</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1237,55 +1423,58 @@
     <!-- Founder Section -->
     <section class="section-founder" id="founder">
       <div class="container">
-        <div class="founder-grid">
-          <div class="founder-image-wrapper">
-            <img src="assets/don_aurelius.jpg" alt="Don Aurelius Sovereign AI Avatar">
-            <div class="founder-badge-overlay">FOUNDED BY SM.KANISH</div>
+        <div class="founder-grid reveal-3d">
+          <div class="founder-image-wrapper tilt-card">
+            <div class="card-sheen"></div>
+            <div class="tilt-content">
+              <img src="assets/don_aurelius.jpg" alt="Don Aurelius Sovereign AI Avatar">
+              <div class="founder-badge-overlay">FOUNDED BY SM.KANISH</div>
+            </div>
           </div>
 
-          <div class="founder-bio">
-            <h3>SM.KANISH</h3>
-            <span class="role-subtitle">Founder & Chief Strategic AI Architect • Don Aurelius Syndicate</span>
+          <div class="founder-bio tilt-card">
+            <div class="card-sheen"></div>
+            <div class="tilt-content">
+              <h3>SM.KANISH</h3>
+              <span class="role-subtitle">Founder & Chief Strategic AI Architect • Don Aurelius Syndicate</span>
 
-            <p>
-              <strong>SM.KANISH</strong> is the visionary algorithmic strategist and software architect behind <strong>Don Aurelius</strong>. Driven by the philosophy that cold mathematical discipline and asymmetric edge conquer unpredictable financial markets, SM.KANISH engineered the Don Aurelius matrix from the ground up.
-            </p>
+              <p>
+                <strong>SM.KANISH</strong> is the visionary algorithmic strategist and software architect behind <strong>Don Aurelius</strong>. Driven by the philosophy that cold mathematical discipline and asymmetric edge conquer unpredictable financial markets, SM.KANISH engineered the Don Aurelius matrix from the ground up.
+              </p>
 
-            <p>
-              Combining multi-agent adversarial game theory, real-time macro-economic co-integration (DXY & US Treasury yields), and automated overnight Windows execution state locks, SM.KANISH established a 24/7 sovereign trading citadel that operates continuously without human fatigue or emotional cognitive bias.
-            </p>
+              <p>
+                Combining multi-agent adversarial game theory, real-time macro-economic co-integration (DXY & US Treasury yields), and automated overnight Windows execution state locks, SM.KANISH established a 24/7 sovereign trading citadel that operates continuously without human fatigue or emotional cognitive bias.
+              </p>
 
-            <p>
-              In September 2026, SM.KANISH unveiled the revolutionary <strong>Genesis Suite</strong>, expanding the syndicate with multimodal computer vision chart intelligence, 1,000-path Monte Carlo jump-diffusion future simulators, geopolitical wire crisis telemetry, and full-duplex conversational neural voice capabilities.
-            </p>
+              <p>
+                In September 2026, SM.KANISH unveiled the revolutionary <strong>Genesis Suite</strong>, expanding the syndicate with multimodal computer vision chart intelligence, 1,000-path Monte Carlo jump-diffusion future simulators, geopolitical wire crisis telemetry, and full-duplex conversational neural voice capabilities.
+              </p>
 
-            <div class="founder-attributes">
-              <div class="attr-box">
-                <div class="title">Lead System</div>
-                <div class="val">Don Aurelius Core</div>
-              </div>
-              <div class="attr-box">
-                <div class="title">Latest Breakthrough</div>
-                <div class="val" style="color: var(--gold-primary);">Genesis Suite (4 Inventions)</div>
-              </div>
-              <div class="attr-box">
-                <div class="title">Strategic Doctrine</div>
-                <div class="val">3/4 Consensus Law</div>
-              </div>
-              <div class="attr-box">
-                <div class="title">Risk Engine</div>
-                <div class="val">Quarter-Kelly (1.0%)</div>
-              </div>
-              <div class="attr-box">
-                <div class="title">Visual AI Model</div>
-                <div class="val">Eagle-Eye Gemini Vision</div>
-              </div>
-              <div class="attr-box">
-                <div class="title">Uptime Architecture</div>
-                <div class="val">Windows Away-Mode 24/7</div>
-              </div>
-            </div>
-                <div class="val">Windows Away-Mode 24/7</div>
+              <div class="founder-attributes">
+                <div class="attr-box">
+                  <div class="title">Lead System</div>
+                  <div class="val">Don Aurelius Core</div>
+                </div>
+                <div class="attr-box">
+                  <div class="title">Latest Breakthrough</div>
+                  <div class="val" style="color: var(--gold-primary);">Genesis Suite (4 Inventions)</div>
+                </div>
+                <div class="attr-box">
+                  <div class="title">Strategic Doctrine</div>
+                  <div class="val">3/4 Consensus Law</div>
+                </div>
+                <div class="attr-box">
+                  <div class="title">Risk Engine</div>
+                  <div class="val">Quarter-Kelly (1.0%)</div>
+                </div>
+                <div class="attr-box">
+                  <div class="title">Visual AI Model</div>
+                  <div class="val">Eagle-Eye Gemini Vision</div>
+                </div>
+                <div class="attr-box">
+                  <div class="title">Uptime Architecture</div>
+                  <div class="val">Windows Away-Mode 24/7</div>
+                </div>
               </div>
             </div>
           </div>
@@ -1303,35 +1492,47 @@
 
         <div class="agents-grid">
           <!-- Hawk -->
-          <div class="agent-card">
-            <div class="agent-icon">🦅</div>
-            <h4>HAWK</h4>
-            <span class="agent-role">Macro Radar & Yield Co-Integration</span>
-            <p>Monitors global dollar liquidity via real-time inverted EURUSD (57.6% DXY weight) and standalone US10Y Treasury yields to detect macro regime shifts before price reacts.</p>
+          <div class="agent-card tilt-card reveal-3d delay-1">
+            <div class="card-sheen"></div>
+            <div class="tilt-content">
+              <div class="agent-icon">🦅</div>
+              <h4>HAWK</h4>
+              <span class="agent-role">Macro Radar & Yield Co-Integration</span>
+              <p>Monitors global dollar liquidity via real-time inverted EURUSD (57.6% DXY weight) and standalone US10Y Treasury yields to detect macro regime shifts before price reacts.</p>
+            </div>
           </div>
 
           <!-- Radar -->
-          <div class="agent-card">
-            <div class="agent-icon">📡</div>
-            <h4>RADAR</h4>
-            <span class="agent-role">Sentiment Velocity & Momentum</span>
-            <p>Analyzes tick velocity, orderbook acceleration, and volume shock anomalies to identify explosive volatility breakouts and institutional momentum waves.</p>
+          <div class="agent-card tilt-card reveal-3d delay-2">
+            <div class="card-sheen"></div>
+            <div class="tilt-content">
+              <div class="agent-icon">📡</div>
+              <h4>RADAR</h4>
+              <span class="agent-role">Sentiment Velocity & Momentum</span>
+              <p>Analyzes tick velocity, orderbook acceleration, and volume shock anomalies to identify explosive volatility breakouts and institutional momentum waves.</p>
+            </div>
           </div>
 
           <!-- Predator -->
-          <div class="agent-card">
-            <div class="agent-icon">🦈</div>
-            <h4>PREDATOR</h4>
-            <span class="agent-role">Order Flow & Liquidity Sweeps</span>
-            <p>Identifies retail stop hunts, Asian session liquidity pools, and London/New York session swing sweeps to strike precisely when retail liquidity is trapped.</p>
+          <div class="agent-card tilt-card reveal-3d delay-3">
+            <div class="card-sheen"></div>
+            <div class="tilt-content">
+              <div class="agent-icon">🦈</div>
+              <h4>PREDATOR</h4>
+              <span class="agent-role">Order Flow & Liquidity Sweeps</span>
+              <p>Identifies retail stop hunts, Asian session liquidity pools, and London/New York session swing sweeps to strike precisely when retail liquidity is trapped.</p>
+            </div>
           </div>
 
           <!-- Inquisitor -->
-          <div class="agent-card">
-            <div class="agent-icon">⚔️</div>
-            <h4>INQUISITOR</h4>
-            <span class="agent-role">Adversarial Red-Team Gatekeeper</span>
-            <p>The ultimate defender. Simulates worst-case adversarial slippage, enforces strict interbank spread ceilings (&le; 5.0 pips), and possesses unconditional single-vote veto authority.</p>
+          <div class="agent-card tilt-card reveal-3d delay-4">
+            <div class="card-sheen"></div>
+            <div class="tilt-content">
+              <div class="agent-icon">⚔️</div>
+              <h4>INQUISITOR</h4>
+              <span class="agent-role">Adversarial Red-Team Gatekeeper</span>
+              <p>The ultimate defender. Simulates worst-case adversarial slippage, enforces strict interbank spread ceilings (&le; 5.0 pips), and possesses unconditional single-vote veto authority.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -1346,5 +1547,475 @@
     </div>
   </footer>
 
+  <!-- 3D WebGL Engine, Card Tilt Physics & Kinetic Scroll Animations -->
+  <script>
+    /* ==========================================================================
+       1. Top Scroll Progress Indicator
+       ========================================================================== */
+    const scrollProgressBar = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      if (scrollProgressBar) {
+        scrollProgressBar.style.width = scrolled + '%';
+      }
+    }, { passive: true });
+
+    /* ==========================================================================
+       2. Scroll-Driven 3D Reveal Observer
+       ========================================================================== */
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, {
+      root: null,
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    document.querySelectorAll('.reveal-3d').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    /* ==========================================================================
+       3. 3D Card Tilt Physics & Specular Sheen Hotspot
+       ========================================================================== */
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      const sheen = card.querySelector('.card-sheen');
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        // Max tilt rotation 8 degrees
+        const rotateX = ((y - centerY) / centerY) * -8;
+        const rotateY = ((x - centerX) / centerX) * 8;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px)`;
+
+        if (sheen) {
+          const posX = (x / rect.width) * 100;
+          const posY = (y / rect.height) * 100;
+          sheen.style.background = `radial-gradient(circle at ${posX}% ${posY}%, rgba(255, 255, 255, 0.2), transparent 60%)`;
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+        if (sheen) {
+          sheen.style.background = 'radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15), transparent 70%)';
+        }
+      });
+    });
+
+    /* ==========================================================================
+       4. Three.js Full-Screen Background Hologram Engine
+       ========================================================================== */
+    (function initBackgroundCanvas() {
+      const canvas = document.getElementById('bg-canvas-3d');
+      if (!canvas || typeof THREE === 'undefined') return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 85;
+
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true, powerPreference: 'low-power' });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
+      // Group for all rotating background objects
+      const worldGroup = new THREE.Group();
+      scene.add(worldGroup);
+
+      // A. Golden Wireframe Icosahedron (Outer Sovereign Core)
+      const icoGeom = new THREE.IcosahedronGeometry(28, 1);
+      const icoMat = new THREE.MeshBasicMaterial({
+        color: 0xd4af37,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.18
+      });
+      const icoMesh = new THREE.Mesh(icoGeom, icoMat);
+      worldGroup.add(icoMesh);
+
+      // B. Inner Cyan Dodecahedron (Quantum Neural Core)
+      const dodecGeom = new THREE.DodecahedronGeometry(17, 0);
+      const dodecMat = new THREE.MeshBasicMaterial({
+        color: 0x06b6d4,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.25
+      });
+      const dodecMesh = new THREE.Mesh(dodecGeom, dodecMat);
+      worldGroup.add(dodecMesh);
+
+      // C. Floating Stardust Particles (400 points)
+      const particleCount = 400;
+      const positions = new Float32Array(particleCount * 3);
+      const colors = new Float32Array(particleCount * 3);
+
+      for (let i = 0; i < particleCount; i++) {
+        const i3 = i * 3;
+        positions[i3] = (Math.random() - 0.5) * 220;
+        positions[i3 + 1] = (Math.random() - 0.5) * 220;
+        positions[i3 + 2] = (Math.random() - 0.5) * 160;
+
+        // Alternate gold and cyan points
+        if (Math.random() > 0.4) {
+          colors[i3] = 0.83; colors[i3 + 1] = 0.68; colors[i3 + 2] = 0.21; // Gold
+        } else {
+          colors[i3] = 0.02; colors[i3 + 1] = 0.71; colors[i3 + 2] = 0.83; // Cyan
+        }
+      }
+
+      const particleGeom = new THREE.BufferGeometry();
+      particleGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      particleGeom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+      const particleMat = new THREE.PointsMaterial({
+        size: 1.8,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.65
+      });
+      const particleSystem = new THREE.Points(particleGeom, particleMat);
+      worldGroup.add(particleSystem);
+
+      // Mouse Parallax & Scroll Targets
+      let targetRotX = 0;
+      let targetRotY = 0;
+      let mouseX = 0;
+      let mouseY = 0;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+      }, { passive: true });
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }, { passive: true });
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        const scrollY = window.scrollY || window.pageYOffset;
+        targetRotY = (mouseX * 0.4) + (scrollY * 0.0012);
+        targetRotX = (mouseY * 0.3) + (scrollY * 0.0006);
+
+        // Smooth damping
+        worldGroup.rotation.y += (targetRotY - worldGroup.rotation.y) * 0.05 + 0.0015;
+        worldGroup.rotation.x += (targetRotX - worldGroup.rotation.x) * 0.05;
+
+        icoMesh.rotation.y += 0.001;
+        dodecMesh.rotation.x -= 0.002;
+        particleSystem.rotation.y += 0.0005;
+
+        renderer.render(scene, camera);
+      }
+      animate();
+    })();
+
+    /* ==========================================================================
+       5. Hero 3D Interactive Stage Canvas (Grabbable & Rotatable Aureus Core)
+       ========================================================================== */
+    (function initHeroStageCanvas() {
+      const canvas = document.getElementById('stage-3d-canvas');
+      if (!canvas || typeof THREE === 'undefined') return;
+
+      const width = canvas.clientWidth || 550;
+      const height = canvas.clientHeight || 180;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+      camera.position.z = 24;
+
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(width, height);
+
+      const stageGroup = new THREE.Group();
+      scene.add(stageGroup);
+
+      // Gold Core Mesh
+      const coreGeom = new THREE.OctahedronGeometry(6.5, 2);
+      const coreMat = new THREE.MeshStandardMaterial({
+        color: 0xf0c75e,
+        metalness: 0.85,
+        roughness: 0.25,
+        wireframe: true
+      });
+      const coreMesh = new THREE.Mesh(coreGeom, coreMat);
+      stageGroup.add(coreMesh);
+
+      // Inner Solid Core
+      const innerGeom = new THREE.IcosahedronGeometry(4.2, 1);
+      const innerMat = new THREE.MeshBasicMaterial({
+        color: 0x06b6d4,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.5
+      });
+      const innerMesh = new THREE.Mesh(innerGeom, innerMat);
+      stageGroup.add(innerMesh);
+
+      // Orbiting Quantum Ring
+      const ringGeom = new THREE.TorusGeometry(8.5, 0.12, 16, 100);
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: 0xf0c75e,
+        transparent: true,
+        opacity: 0.45
+      });
+      const ringMesh = new THREE.Mesh(ringGeom, ringMat);
+      ringMesh.rotation.x = Math.PI / 3;
+      stageGroup.add(ringMesh);
+
+      // Lighting
+      const light = new THREE.PointLight(0xfff1b8, 2, 50);
+      light.position.set(10, 15, 15);
+      scene.add(light);
+      scene.add(new THREE.AmbientLight(0x222222));
+
+      // Interactive Grabbing / Dragging Logic
+      let isDragging = false;
+      let prevMousePos = { x: 0, y: 0 };
+
+      const onPointerDown = (clientX, clientY) => {
+        isDragging = true;
+        prevMousePos = { x: clientX, y: clientY };
+      };
+      const onPointerMove = (clientX, clientY) => {
+        if (!isDragging) return;
+        const deltaX = clientX - prevMousePos.x;
+        const deltaY = clientY - prevMousePos.y;
+        stageGroup.rotation.y += deltaX * 0.015;
+        stageGroup.rotation.x += deltaY * 0.015;
+        prevMousePos = { x: clientX, y: clientY };
+      };
+      const onPointerUp = () => { isDragging = false; };
+
+      canvas.addEventListener('mousedown', (e) => onPointerDown(e.clientX, e.clientY));
+      window.addEventListener('mousemove', (e) => onPointerMove(e.clientX, e.clientY));
+      window.addEventListener('mouseup', onPointerUp);
+
+      canvas.addEventListener('touchstart', (e) => {
+        if (e.touches.length > 0) onPointerDown(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener('touchend', onPointerUp);
+
+      function renderHeroStage() {
+        requestAnimationFrame(renderHeroStage);
+        if (!isDragging) {
+          stageGroup.rotation.y += 0.008;
+          ringMesh.rotation.z += 0.012;
+        }
+        renderer.render(scene, camera);
+      }
+      renderHeroStage();
+    })();
+
+    /* ==========================================================================
+       6. Interactive Card: Monte Carlo 1,000-Path Live Simulation
+       ========================================================================== */
+    function runLiveMonteCarlo() {
+      const canvas = document.getElementById('monte-carlo-live-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Grid lines
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let y = 20; y < h; y += 25) {
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+      }
+      ctx.stroke();
+
+      const startY = h * 0.65;
+      const steps = 60;
+      const paths = 45;
+      let profitablePaths = 0;
+
+      // Draw stochastic Brownian paths
+      for (let p = 0; p < paths; p++) {
+        ctx.beginPath();
+        ctx.moveTo(0, startY);
+        let currentY = startY;
+
+        for (let s = 1; s <= steps; s++) {
+          const x = (s / steps) * w;
+          // Drift slightly upward + random gaussian step
+          const drift = -0.35;
+          const jump = (Math.random() < 0.05) ? (Math.random() - 0.4) * 14 : 0;
+          const delta = (Math.random() - 0.48) * 4.5 + drift + jump;
+          currentY += delta;
+          ctx.lineTo(x, Math.max(5, Math.min(h - 5, currentY)));
+        }
+
+        if (currentY < startY) profitablePaths++;
+
+        const isWin = currentY < startY;
+        ctx.strokeStyle = isWin ? 'rgba(168, 85, 247, 0.35)' : 'rgba(244, 63, 94, 0.22)';
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+      }
+
+      // Median Gold trajectory
+      ctx.beginPath();
+      ctx.moveTo(0, startY);
+      let medY = startY;
+      for (let s = 1; s <= steps; s++) {
+        const x = (s / steps) * w;
+        medY += -0.45 + (Math.sin(s / 4) * 0.8);
+        ctx.lineTo(x, medY);
+      }
+      ctx.strokeStyle = '#f0c75e';
+      ctx.lineWidth = 2.5;
+      ctx.shadowColor = '#f0c75e';
+      ctx.shadowBlur = 6;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      const prob = ((profitablePaths / paths) * 100).toFixed(1);
+      const probElem = document.getElementById('quantum-win-prob-counter');
+      if (probElem) {
+        probElem.innerText = `Win Prob: ${prob}%`;
+      }
+    }
+    // Run once on initial DOM load
+    window.addEventListener('DOMContentLoaded', runLiveMonteCarlo);
+    setTimeout(runLiveMonteCarlo, 600);
+
+    /* ==========================================================================
+       7. Interactive Card: Eagle-Eye Computer Vision Filter Toggle
+       ========================================================================== */
+    let eagleFilterMode = 0;
+    function toggleEagleEyeFilter() {
+      const img = document.getElementById('eagle-chart-img');
+      const tag = document.getElementById('eagle-status-tag');
+      const btn = document.getElementById('eagle-btn-text');
+      if (!img || !tag || !btn) return;
+
+      eagleFilterMode = (eagleFilterMode + 1) % 3;
+
+      if (eagleFilterMode === 1) {
+        img.style.filter = 'contrast(170%) saturate(180%) hue-rotate(190deg) brightness(1.1)';
+        tag.innerText = '3D LIQUIDITY SCAN ACTIVE';
+        tag.style.background = 'rgba(6, 182, 212, 0.25)';
+        tag.style.borderColor = '#06b6d4';
+        tag.style.color = '#38bdf8';
+        btn.innerText = 'Switch to AI Neural Heatmap';
+      } else if (eagleFilterMode === 2) {
+        img.style.filter = 'contrast(200%) brightness(1.2) hue-rotate(85deg)';
+        tag.innerText = 'AI NEURAL VECTOR MAP';
+        tag.style.background = 'rgba(16, 185, 129, 0.25)';
+        tag.style.borderColor = '#10b981';
+        tag.style.color = '#34d399';
+        btn.innerText = 'Reset to Dark-Mode M15 Chart';
+      } else {
+        img.style.filter = 'none';
+        tag.innerText = 'AI VISION INSPECTED';
+        tag.style.background = 'rgba(240, 199, 94, 0.15)';
+        tag.style.borderColor = 'rgba(240, 199, 94, 0.4)';
+        tag.style.color = 'var(--gold-primary)';
+        btn.innerText = 'Toggle 3D Liquidity Scan Overlay';
+      }
+    }
+
+    /* ==========================================================================
+       8. Interactive Card: Global Sentinel Crisis Radar Pulse
+       ========================================================================== */
+    const crisisHeadlines = [
+      '📰 Wire Pulse: "Central bank gold accumulation hits multi-decade peak as safe-haven reserves expand..."',
+      '📰 Wire Pulse: "Middle East maritime corridor alerts trigger immediate institutional safe-haven demand on Spot Gold."',
+      '📰 Wire Pulse: "Federal Reserve overnight liquidity facility registers unexpected contraction; dollar softens."',
+      '📰 Wire Pulse: "Global macro funds rotate capital out of sovereign debt into physical bullion vaults."'
+    ];
+    let headlineIndex = 0;
+    function pulseCrisisRadar() {
+      const scoreElem = document.getElementById('radar-live-score');
+      const barFill = document.getElementById('radar-live-bar');
+      const ticker = document.getElementById('radar-live-ticker');
+      if (!scoreElem || !barFill || !ticker) return;
+
+      const newScore = Math.floor(Math.random() * 22) + 24; // 24 to 45
+      scoreElem.innerHTML = `${newScore} <span style="font-size: 0.9rem; color: #94a3b8;">/ 100</span>`;
+      barFill.style.width = `${newScore}%`;
+
+      headlineIndex = (headlineIndex + 1) % crisisHeadlines.length;
+      ticker.innerText = crisisHeadlines[headlineIndex];
+
+      barFill.style.boxShadow = '0 0 16px rgba(245, 158, 11, 0.8)';
+      setTimeout(() => {
+        barFill.style.boxShadow = 'none';
+      }, 500);
+    }
+
+    /* ==========================================================================
+       9. Interactive Card: Jarvis Neural Voice Briefing (Web Speech API)
+       ========================================================================== */
+    let isSpeaking = false;
+    function playAureusSpeech() {
+      const playIcon = document.getElementById('voice-play-icon');
+      const playText = document.getElementById('voice-play-text');
+      const waveBars = document.querySelectorAll('.wave-bar');
+
+      if (!('speechSynthesis' in window)) {
+        alert('Web Speech Synthesis is not supported in this browser.');
+        return;
+      }
+
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        isSpeaking = false;
+        if (playIcon) playIcon.innerText = '▶';
+        if (playText) playText.innerText = 'Listen to Don Aurelius Neural Voice';
+        waveBars.forEach(bar => bar.style.animationPlayState = 'paused');
+        return;
+      }
+
+      const text = "Greetings Commander SM.KANISH. This is Don Aurelius Sovereign Core. All four Genesis inventions and War Room council agents are operational on MetaTrader 5. Quantum Twin jump-diffusion simulation indicates a seventy-three point four percent win probability on Spot Gold. Capital risk armor holds absolute.";
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.95;
+      utterance.pitch = 0.9;
+
+      const voices = window.speechSynthesis.getVoices();
+      const ukVoice = voices.find(v => v.lang.includes('en-GB') || v.name.includes('Natural') || v.name.includes('David') || v.name.includes('George'));
+      if (ukVoice) utterance.voice = ukVoice;
+
+      utterance.onstart = () => {
+        isSpeaking = true;
+        if (playIcon) playIcon.innerText = '⏸';
+        if (playText) playText.innerText = 'Streaming Sovereign Voice Audio...';
+        waveBars.forEach(bar => bar.style.animationPlayState = 'running');
+      };
+
+      utterance.onend = utterance.onerror = () => {
+        isSpeaking = false;
+        if (playIcon) playIcon.innerText = '▶';
+        if (playText) playText.innerText = 'Listen to Don Aurelius Neural Voice';
+        waveBars.forEach(bar => bar.style.animationPlayState = 'paused');
+      };
+
+      window.speechSynthesis.speak(utterance);
+    }
+  </script>
 </body>
 </html>
