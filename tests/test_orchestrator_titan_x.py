@@ -102,7 +102,7 @@ class TestOrchestratorTitanX(unittest.TestCase):
         # Verify Telegram message contains Council Consensus
         self.orchestrator.hud._send_message.assert_called_once()
         msg = self.orchestrator.hud._send_message.call_args[0][1]
-        self.assertIn("TITAN-X COUNCIL CONSENSUS (4/4)", msg)
+        self.assertIn("COUNCIL CONSENSUS: 4/4", msg)
         self.assertIn("Kelly Risk: 1.25%", msg)
 
     @patch("engine.orchestrator.mt5")

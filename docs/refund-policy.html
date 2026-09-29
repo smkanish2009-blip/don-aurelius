@@ -117,6 +117,13 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html {
+      max-width: 100%;
+      overflow-x: hidden;
+      width: 100%;
+      scroll-behavior: smooth;
+    }
+
     body {
       background-color: var(--bg-dark);
       background-image: 
@@ -127,9 +134,15 @@
       color: var(--text-body);
       font-family: var(--font-sans);
       line-height: 1.8;
+      max-width: 100%;
       overflow-x: hidden;
-      padding-top: 110px;
-      padding-bottom: 80px;
+      width: 100%;
+      padding-top: 100px;
+      padding-bottom: 70px;
+    }
+
+    img, video, canvas, svg, table {
+      max-width: 100%;
     }
 
     .skip-link {
@@ -351,9 +364,43 @@
     .footer-links a:hover { color: var(--gold-primary); }
 
     @media (max-width: 768px) {
-      .legal-card { padding: 28px 20px; }
-      .legal-title { font-size: 1.8rem; }
-      .nav-links { display: none; }
+      header {
+        top: 10px;
+        left: 10px;
+        transform: none;
+        width: calc(100% - 20px);
+        padding: 7px 12px;
+      }
+      .brand-title {
+        font-size: 0.95rem;
+      }
+      .container {
+        padding: 0 16px;
+      }
+      .legal-card {
+        padding: 24px 16px;
+        border-radius: 18px;
+        margin-bottom: 24px;
+      }
+      .legal-title {
+        font-size: clamp(1.5rem, 6vw, 2rem);
+        line-height: 1.22;
+        word-break: break-word;
+      }
+      .legal-section h2 {
+        font-size: 1.2rem;
+      }
+      .nav-links li:not(.nav-back-item) {
+        display: none;
+      }
+      .nav-links {
+        display: flex;
+        gap: 0;
+      }
+      .btn-back {
+        padding: 6px 14px;
+        font-size: 0.78rem;
+      }
     }
   </style>
 </head>
@@ -374,7 +421,7 @@
         <li><a href="privacy-policy.html">Privacy</a></li>
         <li><a href="terms.html">Terms</a></li>
         <li><a href="cookie-policy.html">Cookies</a></li>
-        <li><a href="index.html" class="btn-back">← Back to Overview</a></li>
+        <li class="nav-back-item"><a href="index.html" class="btn-back">← Back to Overview</a></li>
       </ul>
     </nav>
   </header>
