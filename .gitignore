@@ -5,12 +5,14 @@
 *.vault
 vault.key
 
-# Runtime locks & Logs
-data/*.pid
-data/*.log
-data/*.db
+# Runtime locks, Data & Logs
+data/
+logs/
 *.log
 *.pid
+*.png
+*.wav
+*.sqlite
 
 # Python cache & virtual environments
 __pycache__/

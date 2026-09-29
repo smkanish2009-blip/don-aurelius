@@ -101,15 +101,19 @@ class JarvisTelegramHUD:
         inline_keyboard = {
             "inline_keyboard": [
                 [
-                    {"text": "🚨 Clean Slate Protocol", "callback_data": "kill_all"},
+                    {"text": "📸 Eagle-Eye Chart", "callback_data": "eagle_eye"},
+                    {"text": "🔮 Quantum Cone", "callback_data": "quantum_sim"}
+                ],
+                [
+                    {"text": "🌐 Crisis Sentinel", "callback_data": "global_sentinel"},
                     {"text": "🎙️ Voice Briefing", "callback_data": "voice_briefing"}
                 ],
                 [
                     {"text": "📊 Refresh Telemetry", "callback_data": "refresh_hud"},
-                    {"text": "📦 Backup Database", "callback_data": "backup_db"}
+                    {"text": "💰 Profit Check", "callback_data": "check_profit"}
                 ],
                 [
-                    {"text": "⏸️ Pause Syndicate", "callback_data": "pause_algo"}
+                    {"text": "🚨 Clean Slate Protocol", "callback_data": "kill_all"}
                 ]
             ]
         }
@@ -227,6 +231,42 @@ class JarvisTelegramHUD:
             self._send_message(target_chat_id, res["text"], reply_markup=res.get("reply_markup"))
             return "GOLD_CHECKED"
 
+        elif callback_data == "eagle_eye":
+            self._send_chat_action(target_chat_id, "upload_photo")
+            res = self.brain.process_query("show me the chart", target_chat_id)
+            if res.get("send_photo"):
+                self._send_photo(target_chat_id, res["send_photo"], caption=res["text"][:1024], reply_markup=res.get("reply_markup"))
+            else:
+                self._send_message(target_chat_id, res["text"], reply_markup=res.get("reply_markup"))
+            if res.get("send_voice") and res.get("voice_text"):
+                audio = self.voice.compile_vocal_briefing(res["voice_text"])
+                if audio:
+                    self._send_voice(target_chat_id, audio, caption="🎙️ Eagle-Eye Vocal Briefing")
+            return "EAGLE_EYE_DISPATCHED"
+
+        elif callback_data == "global_sentinel":
+            self._send_chat_action(target_chat_id, "typing")
+            res = self.brain.process_query("what is the breaking news and crisis radar", target_chat_id)
+            self._send_message(target_chat_id, res["text"], reply_markup=res.get("reply_markup"))
+            if res.get("send_voice") and res.get("voice_text"):
+                audio = self.voice.compile_vocal_briefing(res["voice_text"])
+                if audio:
+                    self._send_voice(target_chat_id, audio, caption="🎙️ Global Sentinel Broadcast")
+            return "SENTINEL_DISPATCHED"
+
+        elif callback_data == "quantum_sim":
+            self._send_chat_action(target_chat_id, "upload_photo")
+            res = self.brain.process_query("simulate the future with quantum cone", target_chat_id)
+            if res.get("send_photo"):
+                self._send_photo(target_chat_id, res["send_photo"], caption=res["text"][:1024], reply_markup=res.get("reply_markup"))
+            else:
+                self._send_message(target_chat_id, res["text"], reply_markup=res.get("reply_markup"))
+            if res.get("send_voice") and res.get("voice_text"):
+                audio = self.voice.compile_vocal_briefing(res["voice_text"])
+                if audio:
+                    self._send_voice(target_chat_id, audio, caption="🎙️ Quantum Twin Broadcast")
+            return "QUANTUM_DISPATCHED"
+
         return "UNKNOWN_COMMAND"
 
     def _download_telegram_file(self, file_id: str) -> Optional[bytes]:
@@ -248,8 +288,36 @@ class JarvisTelegramHUD:
             logger.warning(f"[JARVIS-HUD] Telegram file download error: {e}")
         return None
 
+    def _send_photo(self, chat_id: str, photo_path: str, caption: str = "", reply_markup: Optional[Dict] = None) -> Dict[str, Any]:
+        """Transmits high-definition chart images to Telegram API."""
+        if not self.token or self.token.startswith("mock_") or not chat_id or not os.path.exists(photo_path):
+            return {"status": "MOCK_MODE"}
+        url = f"{self.api_base}/sendPhoto"
+        for attempt in range(1, 4):
+            try:
+                with open(photo_path, "rb") as f:
+                    files = {"photo": (os.path.basename(photo_path), f, "image/png")}
+                    data = {"chat_id": chat_id, "caption": caption[:1024], "parse_mode": "Markdown"}
+                    if reply_markup:
+                        data["reply_markup"] = json.dumps(reply_markup)
+                    r = self._session.post(url, data=data, files=files, timeout=30)
+                    res = r.json()
+                    if res.get("ok"):
+                        logger.info(f"[JARVIS-HUD] Successfully transmitted photo to {chat_id}")
+                        return res
+                    desc = str(res.get("description", ""))
+                    if "parse" in desc.lower() or "entity" in desc.lower():
+                        data.pop("parse_mode", None)
+                        with open(photo_path, "rb") as f2:
+                            r_fb = self._session.post(url, data=data, files={"photo": (os.path.basename(photo_path), f2, "image/png")}, timeout=30)
+                            return r_fb.json()
+            except Exception as e:
+                logger.warning(f"[JARVIS-HUD] Send photo attempt {attempt} failed: {e}")
+                time.sleep(2)
+        return {"status": "ERROR"}
+
     def _send_chat_action(self, chat_id: str, action: str = "typing"):
-        """Displays typing or record_voice indicator in Telegram UI."""
+        """Displays typing, upload_photo, or record_voice indicator in Telegram UI."""
         if not self.token or self.token.startswith("mock_") or not chat_id:
             return
         try:
@@ -426,7 +494,10 @@ class JarvisTelegramHUD:
                         audio_reply = self.voice.compile_vocal_briefing(res["voice_text"])
                         if audio_reply:
                             self._send_voice(chat_id, audio_reply, caption="🎙️ DON AURELIUS Voice Response")
-                    self._send_message(chat_id, res["text"], reply_markup=res.get("reply_markup"))
+                    if res.get("send_photo"):
+                        self._send_photo(chat_id, res["send_photo"], caption=res["text"][:1024], reply_markup=res.get("reply_markup"))
+                    else:
+                        self._send_message(chat_id, res["text"], reply_markup=res.get("reply_markup"))
                 return
 
             if not text:
@@ -458,7 +529,6 @@ class JarvisTelegramHUD:
                 # Natural language conversation through DonAureliusBrain
                 logger.info(f"[JARVIS-HUD] Routing natural language query to Brain: '{text}'")
                 res = self.brain.process_query(text, chat_id)
-
                 # Synthesize and transmit voice if requested
                 if res.get("send_voice") and res.get("voice_text"):
                     self._send_chat_action(chat_id, "record_voice")
@@ -466,6 +536,9 @@ class JarvisTelegramHUD:
                     if audio:
                         self._send_voice(chat_id, audio, caption="🎙️ DON AURELIUS Vocal Transmission")
 
-                # Transmit text response
-                self._send_message(chat_id, res["text"], reply_markup=res.get("reply_markup"))
+                # Transmit photo or text response
+                if res.get("send_photo"):
+                    self._send_photo(chat_id, res["send_photo"], caption=res["text"][:1024], reply_markup=res.get("reply_markup"))
+                else:
+                    self._send_message(chat_id, res["text"], reply_markup=res.get("reply_markup"))
 
