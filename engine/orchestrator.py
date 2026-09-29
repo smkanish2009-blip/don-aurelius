@@ -411,7 +411,7 @@ class JarvisOrchestrator:
                 self.run_step()
             except Exception as e:
                 logger.error(f"[AUREUS] Execution Loop Interrupt: {str(e)}")
-            time.sleep(5)  # 5-second cycling speed for reliable background execution
+            time.sleep(10)  # 10-second cycling speed: cool CPU efficiency & rock-solid execution
 
 
 def run_orchestration_loop():
