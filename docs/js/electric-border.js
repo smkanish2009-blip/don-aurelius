@@ -1,14 +1,14 @@
 /**
  * ElectricBorder Engine (React Bits Port for Don Aurelius)
  * Conceived by @BalintFerenczy, enhanced for 60-120 FPS mobile & desktop hardware acceleration
+ * 
  * Features:
- * - Octaved 2D Procedural Perlin Noise for authentic electric plasma discharge
- * - IntersectionObserver: Zero CPU/GPU cost when cards are offscreen
- * - Mobile Touch/Scroll Throttling: Automatically pauses canvas compute during active touch-drag
- *   and inertial scrolling to guarantee 100% fluid 60-120 FPS scroll performance
+ * - Direct Element Dimension Mapping: Completely eliminates shrink-wrap & 50% width clamp bugs
+ * - Dual-Pass Incandescent Plasma Stroke: Saturated neon color aura + White-hot electric core
+ * - Symmetrically Centered Perlin Noise: Sparks dance both outward and inward around the card rim
  * - Dynamic Card Geometry: Extracts computed border-radius per-device (18px on mobile, 24px on desktop)
- * - Safe Viewport Margins: Tight 10px offset on mobile prevents horizontal overflow while keeping arcs intact
- * - High-DPI Retina canvas scaling with mobile DPR capping (1.5x) to eliminate thermal throttling
+ * - Self-Healing Size Tracking: Automatically resyncs canvas if font loads or layout reflows
+ * - IntersectionObserver + Touch Throttling: Pauses during active inertial touch-swipes for 100% fluid scroll
  */
 
 (function () {
@@ -136,7 +136,7 @@
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(() => {
       isGlobalScrolling = false;
-    }, 120);
+    }, 100);
   };
 
   window.addEventListener('scroll', handleScrollInteraction, { passive: true });
@@ -146,7 +146,7 @@
     constructor(element, options = {}) {
       this.container = element;
       this.color = options.color || element.getAttribute('data-electric-color') || '#f0c75e';
-      this.speed = parseFloat(options.speed || element.getAttribute('data-electric-speed') || '1.15');
+      this.speed = parseFloat(options.speed || element.getAttribute('data-electric-speed') || '1.2');
       this.chaos = parseFloat(options.chaos || element.getAttribute('data-electric-chaos') || '0.12');
 
       this.isVisible = false;
@@ -161,8 +161,8 @@
       this.amplitude = this.chaos;
       this.frequency = 10;
       this.baseFlatness = 0;
-      this.displacement = this.isMobile ? 10 : 32;
-      this.borderOffset = this.isMobile ? 10 : 32;
+      this.displacement = this.isMobile ? 12 : 16;
+      this.borderOffset = this.isMobile ? 16 : 24;
       this.borderRadius = this.isMobile ? 18 : 24;
 
       this.initDOM();
@@ -205,11 +205,15 @@
     updateSize() {
       if (!this.container || !this.canvas || !this.ctx) return;
       const rect = this.container.getBoundingClientRect();
-      if (rect.width === 0 || rect.height === 0) return;
+      const cardW = Math.round(rect.width || this.container.offsetWidth);
+      const cardH = Math.round(rect.height || this.container.offsetHeight);
+      if (cardW === 0 || cardH === 0) return;
 
       this.isMobile = window.innerWidth <= 768;
-      this.borderOffset = this.isMobile ? 10 : 32;
-      this.displacement = this.isMobile ? 10 : 32;
+      // Border offset: extra margin around card so sparks never clip
+      this.borderOffset = this.isMobile ? 16 : 24;
+      // Displacement: physical spark reach
+      this.displacement = this.isMobile ? 12 : 16;
       this.octaves = this.isMobile ? 5 : 7;
 
       // Extract dynamic border radius from computed style (18px mobile, 24px desktop)
@@ -226,11 +230,23 @@
       }
       this.container.style.setProperty('--electric-radius', `${this.borderRadius}px`);
 
-      this.width = Math.round(rect.width + this.borderOffset * 2);
-      this.height = Math.round(rect.height + this.borderOffset * 2);
+      this.cardWidth = cardW;
+      this.cardHeight = cardH;
+      this.width = cardW + this.borderOffset * 2;
+      this.height = cardH + this.borderOffset * 2;
 
-      // DPR capping: 1.5x on mobile to conserve thermal budget, 1.75x on desktop
-      this.dpr = Math.min(window.devicePixelRatio || 1, this.isMobile ? 1.5 : 1.75);
+      // Position the canvas container with exact negative offsets to overhang card symmetrically
+      const canvasBox = this.canvas.parentElement;
+      if (canvasBox) {
+        canvasBox.style.position = 'absolute';
+        canvasBox.style.top = `-${this.borderOffset}px`;
+        canvasBox.style.left = `-${this.borderOffset}px`;
+        canvasBox.style.width = `${this.width}px`;
+        canvasBox.style.height = `${this.height}px`;
+      }
+
+      // DPR capping: 1.5x on mobile to conserve thermal budget, 2x on desktop
+      this.dpr = Math.min(window.devicePixelRatio || 1, this.isMobile ? 1.5 : 2);
       this.canvas.width = Math.round(this.width * this.dpr);
       this.canvas.height = Math.round(this.height * this.dpr);
       this.canvas.style.width = `${this.width}px`;
@@ -241,15 +257,15 @@
     }
 
     initObservers() {
-      // IntersectionObserver: Animate ONLY when card is in or very near the viewport
+      // IntersectionObserver: Animate ONLY when card is in or near the viewport
       this.io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           this.isVisible = entry.isIntersecting;
         });
-      }, { rootMargin: '40px 0px' });
+      }, { rootMargin: '60px 0px' });
       this.io.observe(this.container);
 
-      // ResizeObserver: Adapt automatically to orientation change & layout shifts
+      // ResizeObserver: Adapt automatically to layout shifts & viewport changes
       this.ro = new ResizeObserver(() => {
         this.updateSize();
       });
@@ -260,6 +276,13 @@
       if (!this.isVisible || !this.ctx) return;
       if (isGlobalScrolling) return; // Skip compute during active drag/touch-scroll for 100% 60-120 FPS
       if (document.hidden) return; // Skip when tab is in background or screen is off
+
+      // Self-healing check: if card size changed (e.g. font loaded, window resize)
+      const currentW = Math.round(this.container.offsetWidth);
+      const currentH = Math.round(this.container.offsetHeight);
+      if (Math.abs(currentW - this.cardWidth) > 2 || Math.abs(currentH - this.cardHeight) > 2) {
+        this.updateSize();
+      }
 
       const deltaTime = Math.min((currentTime - this.lastFrameTime) / 1000, 0.1);
       this.time += deltaTime * this.speed;
@@ -274,13 +297,6 @@
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       ctx.scale(this.dpr, this.dpr);
 
-      ctx.strokeStyle = this.color;
-      ctx.lineWidth = this.isMobile ? 1.2 : 1.35;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.shadowColor = this.color;
-      ctx.shadowBlur = this.isMobile ? 3 : 4;
-
       const scale = this.displacement;
       const left = borderOffset;
       const top = borderOffset;
@@ -291,8 +307,8 @@
 
       const approximatePerimeter = 2 * (borderWidth + borderHeight) + 2 * Math.PI * radius;
       const sampleCount = this.isMobile
-        ? Math.max(50, Math.min(100, Math.floor(approximatePerimeter / 7.5)))
-        : Math.max(90, Math.min(220, Math.floor(approximatePerimeter / 4.5)));
+        ? Math.max(70, Math.min(130, Math.floor(approximatePerimeter / 6.0)))
+        : Math.max(100, Math.min(220, Math.floor(approximatePerimeter / 4.2)));
 
       ctx.beginPath();
 
@@ -324,8 +340,12 @@
           this.baseFlatness
         );
 
-        const displacedX = point.x + xNoise * scale;
-        const displacedY = point.y + yNoise * scale;
+        // Center noise symmetrically around 0 so sparks dance inward AND outward across the card rim
+        const centeredX = (xNoise - 0.122) / 0.08;
+        const centeredY = (yNoise - 0.122) / 0.08;
+
+        const displacedX = point.x + centeredX * scale;
+        const displacedY = point.y + centeredY * scale;
 
         if (i === 0) {
           ctx.moveTo(displacedX, displacedY);
@@ -335,6 +355,21 @@
       }
 
       ctx.closePath();
+
+      // Pass 1: Vibrant Saturated Neon Electric Aura
+      ctx.strokeStyle = this.color;
+      ctx.lineWidth = this.isMobile ? 2.2 : 2.6;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.shadowColor = this.color;
+      ctx.shadowBlur = this.isMobile ? 7 : 10;
+      ctx.stroke();
+
+      // Pass 2: White-Hot Incandescent Lightning Core
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = this.isMobile ? 0.9 : 1.1;
+      ctx.shadowColor = '#ffffff';
+      ctx.shadowBlur = 2;
       ctx.stroke();
     }
 
@@ -362,9 +397,9 @@
       { selector: '.card-sentinel', color: '#00ffcc', chaos: 0.12 },      // Electric Cyan
       { selector: '.card-jarvis', color: '#f0c75e', chaos: 0.12 },        // Sovereign Gold
       { selector: '.cockpit-preview-box', color: '#00ffcc', chaos: 0.11 },// Cyan Radar
-      { selector: '.genesis-banner', color: '#f0c75e', chaos: 0.10 },     // Sovereign Gold
-      { selector: '.spec-legacy', color: '#64748b', chaos: 0.08 },        // Slate
-      { selector: '.spec-hedge', color: '#38bdf8', chaos: 0.10 },         // Sky Blue
+      { selector: '.genesis-banner', color: '#f0c75e', chaos: 0.12 },     // Sovereign Gold
+      { selector: '.spec-legacy', color: '#64748b', chaos: 0.09 },        // Slate
+      { selector: '.spec-hedge', color: '#38bdf8', chaos: 0.11 },         // Sky Blue
       { selector: '.spec-aureus', color: '#f0c75e', chaos: 0.14 },        // Sovereign Gold
       { selector: '.agent-card:nth-child(1)', color: '#f59e0b', chaos: 0.12 }, // Agent Hawk: Amber
       { selector: '.agent-card:nth-child(2)', color: '#00ffcc', chaos: 0.12 }, // Agent Radar: Cyan
@@ -405,11 +440,26 @@
         color: assignedColor,
         chaos: assignedChaos,
         borderRadius: 24,
-        speed: 1.15
+        speed: 1.2
       });
       instances.push(instance);
     });
   }
+
+  // Window resize & orientation change triggers global size refresh
+  window.addEventListener('resize', () => {
+    for (let i = 0; i < instances.length; i++) {
+      instances[i].updateSize();
+    }
+  }, { passive: true });
+
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => {
+      for (let i = 0; i < instances.length; i++) {
+        instances[i].updateSize();
+      }
+    }, 150);
+  }, { passive: true });
 
   // Export to window
   window.CardElectricBorder = CardElectricBorder;
