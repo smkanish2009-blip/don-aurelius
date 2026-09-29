@@ -1,11 +1,14 @@
 /**
  * ElectricBorder Engine (React Bits Port for Don Aurelius)
- * Conceived by @BalintFerenczy, ported with 60 FPS hardware acceleration
+ * Conceived by @BalintFerenczy, enhanced for 60-120 FPS mobile & desktop hardware acceleration
  * Features:
  * - Octaved 2D Procedural Perlin Noise for authentic electric plasma discharge
- * - IntersectionObserver: Zero CPU cost when cards are offscreen
- * - Throttled during active page scroll to ensure 100% 60 FPS fluidity
- * - High-DPI Retina canvas rendering with sub-pixel rounding
+ * - IntersectionObserver: Zero CPU/GPU cost when cards are offscreen
+ * - Mobile Touch/Scroll Throttling: Automatically pauses canvas compute during active touch-drag
+ *   and inertial scrolling to guarantee 100% fluid 60-120 FPS scroll performance
+ * - Dynamic Card Geometry: Extracts computed border-radius per-device (18px on mobile, 24px on desktop)
+ * - Safe Viewport Margins: Tight 10px offset on mobile prevents horizontal overflow while keeping arcs intact
+ * - High-DPI Retina canvas scaling with mobile DPR capping (1.5x) to eliminate thermal throttling
  */
 
 (function () {
@@ -123,40 +126,44 @@
     return getCornerPoint(left + radius, top + radius, radius, Math.PI, Math.PI / 2, progress);
   }
 
-  // Active instances registry
+  // Active instances registry & touch/scroll throttle
   const instances = [];
   let isGlobalScrolling = false;
   let scrollTimeout = null;
 
-  window.addEventListener('scroll', () => {
+  const handleScrollInteraction = () => {
     isGlobalScrolling = true;
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(() => {
       isGlobalScrolling = false;
-    }, 100);
-  }, { passive: true });
+    }, 120);
+  };
+
+  window.addEventListener('scroll', handleScrollInteraction, { passive: true });
+  window.addEventListener('touchmove', handleScrollInteraction, { passive: true });
 
   class CardElectricBorder {
     constructor(element, options = {}) {
       this.container = element;
       this.color = options.color || element.getAttribute('data-electric-color') || '#f0c75e';
-      this.speed = parseFloat(options.speed || element.getAttribute('data-electric-speed') || '1.1');
+      this.speed = parseFloat(options.speed || element.getAttribute('data-electric-speed') || '1.15');
       this.chaos = parseFloat(options.chaos || element.getAttribute('data-electric-chaos') || '0.12');
-      this.borderRadius = parseFloat(options.borderRadius || element.getAttribute('data-electric-radius') || '24');
-      
+
       this.isVisible = false;
       this.time = Math.random() * 50;
       this.lastFrameTime = performance.now();
-      
-      // Configuration
-      this.octaves = 8;
+
+      // Mobile Responsive Baseline Parameters
+      this.isMobile = window.innerWidth <= 768;
+      this.octaves = this.isMobile ? 5 : 7;
       this.lacunarity = 1.6;
       this.gain = 0.7;
       this.amplitude = this.chaos;
       this.frequency = 10;
       this.baseFlatness = 0;
-      this.displacement = 45;
-      this.borderOffset = 45;
+      this.displacement = this.isMobile ? 10 : 32;
+      this.borderOffset = this.isMobile ? 10 : 32;
+      this.borderRadius = this.isMobile ? 18 : 24;
 
       this.initDOM();
       this.initObservers();
@@ -165,9 +172,8 @@
     initDOM() {
       this.container.classList.add('electric-border');
       this.container.style.setProperty('--electric-border-color', this.color);
-      this.container.style.setProperty('--electric-radius', `${this.borderRadius}px`);
 
-      // 1. Create layers wrapper if not present
+      // 1. Create ambient glow layers wrapper if not present
       if (!this.container.querySelector('.eb-layers')) {
         const layers = document.createElement('div');
         layers.className = 'eb-layers';
@@ -201,29 +207,49 @@
       const rect = this.container.getBoundingClientRect();
       if (rect.width === 0 || rect.height === 0) return;
 
-      this.width = rect.width + this.borderOffset * 2;
-      this.height = rect.height + this.borderOffset * 2;
+      this.isMobile = window.innerWidth <= 768;
+      this.borderOffset = this.isMobile ? 10 : 32;
+      this.displacement = this.isMobile ? 10 : 32;
+      this.octaves = this.isMobile ? 5 : 7;
 
-      this.dpr = Math.min(window.devicePixelRatio || 1, 1.75);
-      this.canvas.width = this.width * this.dpr;
-      this.canvas.height = this.height * this.dpr;
+      // Extract dynamic border radius from computed style (18px mobile, 24px desktop)
+      try {
+        const style = window.getComputedStyle(this.container);
+        const parsedR = parseFloat(style.borderRadius);
+        if (!isNaN(parsedR) && parsedR > 0) {
+          this.borderRadius = parsedR;
+        } else {
+          this.borderRadius = this.isMobile ? 18 : 24;
+        }
+      } catch (e) {
+        this.borderRadius = this.isMobile ? 18 : 24;
+      }
+      this.container.style.setProperty('--electric-radius', `${this.borderRadius}px`);
+
+      this.width = Math.round(rect.width + this.borderOffset * 2);
+      this.height = Math.round(rect.height + this.borderOffset * 2);
+
+      // DPR capping: 1.5x on mobile to conserve thermal budget, 1.75x on desktop
+      this.dpr = Math.min(window.devicePixelRatio || 1, this.isMobile ? 1.5 : 1.75);
+      this.canvas.width = Math.round(this.width * this.dpr);
+      this.canvas.height = Math.round(this.height * this.dpr);
       this.canvas.style.width = `${this.width}px`;
       this.canvas.style.height = `${this.height}px`;
-      
+
       this.ctx.setTransform(1, 0, 0, 1, 0, 0);
       this.ctx.scale(this.dpr, this.dpr);
     }
 
     initObservers() {
-      // IntersectionObserver: Animate ONLY when card is in viewport
+      // IntersectionObserver: Animate ONLY when card is in or very near the viewport
       this.io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           this.isVisible = entry.isIntersecting;
         });
-      }, { rootMargin: '60px 0px' });
+      }, { rootMargin: '40px 0px' });
       this.io.observe(this.container);
 
-      // ResizeObserver: Adapt automatically to layout shifts
+      // ResizeObserver: Adapt automatically to orientation change & layout shifts
       this.ro = new ResizeObserver(() => {
         this.updateSize();
       });
@@ -232,7 +258,8 @@
 
     render(currentTime) {
       if (!this.isVisible || !this.ctx) return;
-      if (isGlobalScrolling) return; // Skip compute during active drag/scroll for 60 FPS
+      if (isGlobalScrolling) return; // Skip compute during active drag/touch-scroll for 100% 60-120 FPS
+      if (document.hidden) return; // Skip when tab is in background or screen is off
 
       const deltaTime = Math.min((currentTime - this.lastFrameTime) / 1000, 0.1);
       this.time += deltaTime * this.speed;
@@ -248,11 +275,11 @@
       ctx.scale(this.dpr, this.dpr);
 
       ctx.strokeStyle = this.color;
-      ctx.lineWidth = 1.35;
+      ctx.lineWidth = this.isMobile ? 1.2 : 1.35;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
       ctx.shadowColor = this.color;
-      ctx.shadowBlur = 4;
+      ctx.shadowBlur = this.isMobile ? 3 : 4;
 
       const scale = this.displacement;
       const left = borderOffset;
@@ -263,7 +290,9 @@
       const radius = Math.min(this.borderRadius, maxRadius);
 
       const approximatePerimeter = 2 * (borderWidth + borderHeight) + 2 * Math.PI * radius;
-      const sampleCount = Math.max(100, Math.min(240, Math.floor(approximatePerimeter / 4.5)));
+      const sampleCount = this.isMobile
+        ? Math.max(50, Math.min(100, Math.floor(approximatePerimeter / 7.5)))
+        : Math.max(90, Math.min(220, Math.floor(approximatePerimeter / 4.5)));
 
       ctx.beginPath();
 
@@ -315,7 +344,7 @@
     }
   }
 
-  // Master Animation Loop (Centralized 60 FPS Clock)
+  // Master Animation Loop (Centralized 60-120 FPS Clock)
   function masterLoop(time) {
     for (let i = 0; i < instances.length; i++) {
       instances[i].render(time);
@@ -326,7 +355,7 @@
 
   // Auto-init all eligible cards on the page
   function initAllElectricBorders() {
-    // Color mapping by card theme
+    // Sovereign color mapping by card theme
     const cardColorMap = [
       { selector: '.card-eagle', color: '#10b981', chaos: 0.13 },         // Emerald
       { selector: '.card-quantum', color: '#c084fc', chaos: 0.14 },       // Neon Purple
