@@ -1,0 +1,88 @@
+/* ==========================================================================
+   ElectricBorder Component Stylesheet (React Bits Port for Don Aurelius)
+   ========================================================================== */
+
+.electric-border {
+  --electric-border-color: #f0c75e;
+  --electric-light-color: var(--electric-border-color);
+  position: relative;
+  overflow: visible !important;
+  contain: none !important;
+  isolation: isolate;
+}
+
+@supports (color: oklch(from red l c h)) {
+  .electric-border {
+    --electric-light-color: oklch(from var(--electric-border-color) l c h);
+  }
+}
+
+.eb-canvas-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 4;
+}
+
+.eb-canvas {
+  display: block;
+  pointer-events: none;
+}
+
+.eb-content {
+  position: relative;
+  border-radius: inherit;
+  z-index: 2;
+}
+
+.eb-layers {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.eb-glow-1,
+.eb-glow-2,
+.eb-background-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.eb-glow-1 {
+  border: 1.5px solid var(--electric-border-color);
+  opacity: 0.55;
+  filter: blur(1px);
+}
+
+@supports (color: oklch(from red l c h)) {
+  .eb-glow-1 {
+    border: 1.5px solid oklch(from var(--electric-border-color) l c h / 0.55);
+  }
+}
+
+.eb-glow-2 {
+  border: 2px solid var(--electric-light-color);
+  filter: blur(5px);
+  opacity: 0.45;
+}
+
+.eb-background-glow {
+  z-index: -1;
+  transform: scale(1.04);
+  filter: blur(28px);
+  opacity: 0.22;
+  background: linear-gradient(-30deg, var(--electric-light-color), transparent, var(--electric-border-color));
+}
+
+/* Ensure inner card elements sit comfortably above the background glow */
+.electric-border > *:not(.eb-canvas-container):not(.eb-layers) {
+  position: relative;
+  z-index: 2;
+}
