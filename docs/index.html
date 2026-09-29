@@ -153,9 +153,6 @@
   <!-- Three.js 3D WebGL Engine (Deferred to prevent render-blocking) -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-  <!-- React Bits CircularCarousel 3D Spatial Cylinder Stylesheet -->
-  <link rel="stylesheet" href="components/CircularCarousel.css">
-
   <style>
     /* ==========================================================================
        Ultra-High-Performance Apple Liquid Glass (Zero-Lag 60 FPS Engine)
@@ -983,6 +980,8 @@
       font-size: 0.84rem;
       font-weight: 600;
       color: #ffffff;
+      text-decoration: none;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -2213,7 +2212,6 @@
       <ul class="nav-links">
         <li><a href="#overview">Overview</a></li>
         <li><a href="#genesis">Genesis Suite</a></li>
-        <li><a href="#syndicate-matrix">Spatial Ring</a></li>
         <li><a href="#architectural-specs">Benchmark</a></li>
         <li><a href="#google-dossier">Dossier</a></li>
         <li><a href="#founder">Founder</a></li>
@@ -2243,7 +2241,6 @@
       <ul class="mobile-nav-list">
         <li><a href="#overview" class="mobile-nav-link"><span>🏛️</span> Overview</a></li>
         <li><a href="#genesis" class="mobile-nav-link"><span>🔮</span> Genesis Suite (4 Inventions)</a></li>
-        <li><a href="#syndicate-matrix" class="mobile-nav-link"><span>🌀</span> Spatial Ring (3D Matrix)</a></li>
         <li><a href="#architectural-specs" class="mobile-nav-link"><span>⚖️</span> Institutional Benchmark</a></li>
         <li><a href="#google-dossier" class="mobile-nav-link"><span>🛡️</span> Strategic Dossier</a></li>
         <li><a href="#founder" class="mobile-nav-link"><span>👑</span> Founder: SM.KANISH</a></li>
@@ -2506,31 +2503,15 @@
             <div class="cockpit-title">Interactive Telegram Mobile Cockpit</div>
             <div class="cockpit-sub">The Genesis Suite is accessible 24/7 via one-touch buttons directly in Commander SM.KANISH's Telegram bot:</div>
             <div class="cockpit-grid">
-              <div class="cockpit-btn"><span>📸</span> Eagle-Eye Chart</div>
-              <div class="cockpit-btn"><span>🔮</span> Quantum Cone</div>
-              <div class="cockpit-btn"><span>🌐</span> Crisis Sentinel</div>
-              <div class="cockpit-btn"><span>🎙️</span> Voice Briefing</div>
-              <div class="cockpit-btn"><span>📊</span> Full HUD</div>
-              <div class="cockpit-btn"><span>💰</span> Profit Check</div>
-              <div class="cockpit-btn btn-danger"><span>🚨</span> Clean Slate Protocol</div>
+              <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="cockpit-btn" aria-label="Trigger Eagle-Eye Chart on Telegram HUD"><span>📸</span> Eagle-Eye Chart</a>
+              <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="cockpit-btn" aria-label="Trigger Quantum Cone on Telegram HUD"><span>🔮</span> Quantum Cone</a>
+              <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="cockpit-btn" aria-label="Trigger Crisis Sentinel on Telegram HUD"><span>🌐</span> Crisis Sentinel</a>
+              <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="cockpit-btn" aria-label="Trigger Voice Briefing on Telegram HUD"><span>🎙️</span> Voice Briefing</a>
+              <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="cockpit-btn" aria-label="Open Full Institutional HUD on Telegram"><span>📊</span> Full HUD</a>
+              <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="cockpit-btn" aria-label="Run Real-Time Profit Check on Telegram"><span>💰</span> Profit Check</a>
+              <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="cockpit-btn btn-danger" aria-label="Trigger Clean Slate Protocol Kill-Switch on Telegram"><span>🚨</span> Clean Slate Protocol</a>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 3D Circular Spatial Ring: Syndicate Architecture Matrix (React Bits CircularCarousel) -->
-    <section class="section-carousel-showcase" id="syndicate-matrix" style="padding: 70px 0; position: relative;">
-      <div class="container">
-        <div class="section-title-wrap">
-          <div class="section-pre">Spatial 3D VisionOS Interface • React Bits</div>
-          <h3 class="section-title">Syndicate Intelligence Ring</h3>
-          <p class="section-desc">
-            An interactive 3D spatial cylinder showcasing the core quantitative models, neural vision engines, and autonomous trading agents commanded by <strong>SM.KANISH</strong>. Drag, fling, or spin with inertia to inspect each node.
-          </p>
-        </div>
-        <div class="carousel-container-outer apple-liquid-card" style="padding: 24px; border-radius: 24px; overflow: hidden; background: var(--apple-glass-bg); border: 1px solid var(--apple-glass-border); border-top: 1px solid var(--apple-glass-border-top); box-shadow: var(--apple-glass-shadow); position: relative;">
-          <div style="width: 100%; height: 560px; position: relative;" id="syndicate-carousel-mount"></div>
         </div>
       </div>
     </section>
@@ -3555,35 +3536,6 @@
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && mobileDrawer && mobileDrawer.classList.contains('open')) {
         toggleMobileMenu(false);
-      }
-    });
-  </script>
-
-  <!-- CircularCarousel 3D Spatial Cylinder Engine (React Bits Port) -->
-  <script src="js/circular-carousel.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var mount = document.getElementById('syndicate-carousel-mount');
-      if (mount && window.initCircularCarousel) {
-        window.initCircularCarousel(mount, {
-          preset: 'cylinder',
-          intro: 'rise',
-          cardWidth: 220,
-          aspectRatio: 1,
-          speed: 14,
-          captions: true,
-          direction: 'left',
-          items: [
-            { src: 'assets/eagle_eye_chart.png', alt: 'Project Eagle-Eye Multimodal Vision AI', title: 'Project Eagle-Eye', subtitle: 'Multimodal Vision AI' },
-            { src: 'assets/quantum_cone.png', alt: 'Project Quantum Twin 1,000-Path Monte Carlo', title: 'Project Quantum Twin', subtitle: '1,000-Path Monte Carlo' },
-            { src: 'assets/global_sentinel.png', alt: 'Project Global Sentinel Crisis Radar', title: 'Global Sentinel', subtitle: 'Geopolitical Crisis Radar' },
-            { src: 'assets/jarvis_neural.png', alt: 'Jarvis Neural Co-Pilot Voice Matrix', title: 'Jarvis Co-Pilot', subtitle: 'Full-Duplex Voice AI' },
-            { src: 'assets/don_aurelius.jpg', alt: 'Don Aurelius Sovereign Syndicate Core', title: 'Don Aurelius', subtitle: 'Autonomous Syndicate Core' },
-            { src: 'assets/war_room_hawk.png', alt: 'War Room Agent Hawk DXY Radar', title: 'Agent Hawk', subtitle: 'Macro DXY & Yield Radar' },
-            { src: 'assets/war_room_predator.png', alt: 'War Room Agent Predator Liquidity Hunter', title: 'Agent Predator', subtitle: 'Order Flow Sweeps' },
-            { src: 'assets/war_room_inquisitor.png', alt: 'War Room Agent Inquisitor Adversarial Armor', title: 'Agent Inquisitor', subtitle: 'Adversarial Risk Armor' }
-          ]
-        });
       }
     });
   </script>
