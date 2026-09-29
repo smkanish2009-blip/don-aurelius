@@ -1523,338 +1523,6 @@
     }
 
     /* ==========================================================================
-       Responsive Media Queries System
-       ========================================================================== */
-    @media (max-width: 1024px) {
-      .specs-grid { grid-template-columns: 1fr; gap: 20px; }
-      .genesis-grid { grid-template-columns: 1fr; gap: 24px; }
-      .founder-grid { grid-template-columns: 1fr; gap: 30px; }
-    }
-
-    @media (max-width: 768px) {
-      /* Global Layout & Padding */
-      .container {
-        padding: 0 16px;
-      }
-      header {
-        top: 10px;
-        left: 10px;
-        transform: none;
-        width: calc(100% - 20px);
-        padding: 7px 12px;
-        border-radius: 9999px;
-      }
-      .nav-links {
-        display: none;
-      }
-      .btn-mobile-menu {
-        display: flex;
-      }
-
-      /* Hero Fluid Scaling */
-      .hero {
-        padding: 95px 0 35px;
-      }
-      .hero h1, .hero h2 {
-        font-size: clamp(1.8rem, 6.4vw, 2.5rem) !important;
-        letter-spacing: 1px !important;
-        line-height: 1.16 !important;
-        word-break: break-word !important;
-      }
-      .badge-founder {
-        max-width: 100%;
-        white-space: normal;
-        text-align: center;
-        font-size: clamp(0.68rem, 2.7vw, 0.78rem);
-        padding: 6px 14px;
-        gap: 6px;
-      }
-      .hero p.tagline {
-        font-size: 0.98rem;
-        line-height: 1.6;
-        padding: 0 6px;
-        margin-bottom: 20px;
-      }
-      .founder-callout {
-        padding: 8px 18px;
-        max-width: 100%;
-        margin-bottom: 24px;
-      }
-      .founder-callout span.name {
-        font-size: 1.15rem;
-      }
-      .hero-3d-stage {
-        max-width: 100%;
-        height: 160px;
-        margin: 15px auto 25px;
-      }
-
-      /* Telemetry Grid & Borders */
-      .telemetry-bar {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 16px;
-        gap: 12px;
-        margin-top: 32px;
-      }
-      .stat-item {
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 10px 4px;
-      }
-      .stat-item:nth-last-child(-n+2) {
-        border-bottom: none;
-      }
-      .stat-val {
-        font-size: 1.25rem;
-      }
-
-      /* Sections & Cards */
-      .section-genesis, .section-specs, .section-google-preview, .section-founder, .section-war-room, .section-verification {
-        padding: 50px 0;
-      }
-      .section-title {
-        font-size: clamp(1.6rem, 5.5vw, 2.2rem);
-        word-break: break-word;
-      }
-      .section-desc {
-        font-size: 0.94rem;
-        padding: 0 8px;
-      }
-      .genesis-banner {
-        padding: 20px 16px;
-        margin-bottom: 24px;
-      }
-      .genesis-banner h3 {
-        font-size: 1.35rem;
-      }
-      .genesis-card {
-        padding: 22px 16px;
-        border-radius: 18px;
-      }
-      .genesis-title h4 {
-        font-size: 1.3rem;
-      }
-      .genesis-icon {
-        font-size: 1.6rem;
-      }
-      .cockpit-preview-box {
-        padding: 22px 16px;
-        margin-top: 30px;
-      }
-      .cockpit-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-      }
-      .cockpit-btn {
-        padding: 10px 12px;
-        font-size: 0.78rem;
-      }
-
-      /* Spec Cards */
-      .spec-card {
-        padding: 24px 18px;
-        border-radius: 18px;
-      }
-
-      /* Google Dossier */
-      .google-card {
-        padding: 24px 16px;
-        border-radius: 18px;
-      }
-      .google-search-mock {
-        font-size: 0.8rem;
-        padding: 8px 12px;
-        flex-wrap: wrap;
-        word-break: break-word;
-      }
-      .google-snippet {
-        font-size: 0.92rem;
-        line-height: 1.65;
-      }
-
-      /* Founder Section */
-      .founder-grid {
-        padding: 24px 16px;
-        border-radius: 18px;
-      }
-      .founder-bio h3 {
-        font-size: 1.8rem;
-      }
-      .founder-bio .role-subtitle {
-        font-size: 0.84rem;
-      }
-      .founder-attributes {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-      }
-
-      /* War Room Grid */
-      .agents-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-      .agent-card {
-        padding: 22px 18px;
-        border-radius: 18px;
-      }
-
-      /* Verification Form */
-      .verification-card {
-        padding: 24px 16px;
-        border-radius: 18px;
-      }
-      .form-grid-2 {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-      .form-input, .form-select {
-        font-size: 16px !important; /* Critical: Stops iOS Safari auto-zoom on focus */
-      }
-
-      /* Cookie Banner */
-      #cookie-consent-banner {
-        left: 10px !important;
-        right: 10px !important;
-        bottom: 12px !important;
-        transform: translateY(160px) !important;
-        width: calc(100% - 20px) !important;
-        max-width: none !important;
-        padding: 16px !important;
-        border-radius: 18px !important;
-        flex-direction: column !important;
-        gap: 14px !important;
-      }
-      #cookie-consent-banner.show {
-        transform: translateY(0) !important;
-      }
-      .cookie-actions {
-        width: 100% !important;
-        display: flex !important;
-        gap: 10px !important;
-      }
-      .cookie-actions .btn-cookie {
-        flex: 1 !important;
-        text-align: center !important;
-        padding: 10px 14px !important;
-      }
-
-      /* Footer */
-      .footer-grid-info {
-        grid-template-columns: 1fr;
-        gap: 28px;
-      }
-      .footer-cftc-box {
-        padding: 16px;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .brand-text span:not(.brand-title-text) {
-        display: none;
-      }
-      .btn-tg {
-        padding: 6px 12px;
-        font-size: 0.76rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      /* Hero CTA Stack */
-      .hero-cta {
-        flex-direction: column;
-        width: 100%;
-        gap: 10px;
-      }
-      .hero-cta a {
-        width: 100%;
-        justify-content: center;
-        text-align: center;
-      }
-
-      /* Telemetry Single Column */
-      .telemetry-bar {
-        grid-template-columns: 1fr;
-        padding: 14px;
-        gap: 6px;
-      }
-      .stat-item {
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 8px 4px;
-      }
-      .stat-item:last-child {
-        border-bottom: none;
-      }
-
-      /* Quantum Twin Controls Stack */
-      .quantum-controls-row {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-      }
-      .quantum-controls-row button {
-        width: 100%;
-        justify-content: center;
-      }
-      .quantum-win-prob {
-        text-align: center;
-        display: block;
-        padding: 4px 0;
-      }
-
-      /* Interactive Action Buttons Full Width */
-      .interactive-action-btn {
-        width: 100%;
-        justify-content: center;
-        text-align: center;
-        margin-top: 10px;
-      }
-
-      /* Benchmark Metric Rows Stack */
-      .m-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 2px;
-        padding-bottom: 8px;
-      }
-      .m-val {
-        font-size: 0.86rem;
-      }
-
-      /* Founder Image & Bio */
-      .founder-image-wrapper img {
-        max-width: 220px;
-      }
-      .founder-bio h3 {
-        text-align: center;
-      }
-      .founder-bio .role-subtitle {
-        text-align: center;
-      }
-
-      /* Verification Submit Button */
-      .btn-submit-form {
-        padding: 14px;
-        font-size: 0.92rem;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .btn-tg span:first-child {
-        display: none;
-      }
-      .btn-tg {
-        padding: 6px 10px;
-      }
-      .cockpit-grid {
-        grid-template-columns: 1fr;
-      }
-      .founder-attributes {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ==========================================================================
        WCAG 2.1 AA Accessibility & Keyboard Friendliness
        ========================================================================== */
     .skip-link {
@@ -2144,6 +1812,372 @@
     .footer-bottom-bar p {
       font-size: 0.82rem;
       color: #64748b;
+    }
+
+    /* ==========================================================================
+       Responsive Breakpoints & Mobile Optimization
+       ========================================================================== */
+
+    @media (max-width: 1024px) {
+      .specs-grid { grid-template-columns: 1fr; gap: 20px; }
+      .genesis-grid { grid-template-columns: 1fr; gap: 24px; }
+      .founder-grid { grid-template-columns: 1fr; gap: 30px; }
+      .footer-grid-info {
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      /* Global Layout & Padding */
+      .container {
+        padding: 0 16px;
+      }
+      header {
+        top: 10px;
+        left: 10px;
+        transform: none;
+        width: calc(100% - 20px);
+        padding: 7px 12px;
+        border-radius: 9999px;
+      }
+      .nav-links {
+        display: none;
+      }
+      .btn-mobile-menu {
+        display: flex;
+      }
+
+      /* Hero Fluid Scaling */
+      .hero {
+        padding: 95px 0 35px;
+      }
+      .hero h1, .hero h2 {
+        font-size: clamp(1.8rem, 6.4vw, 2.5rem) !important;
+        letter-spacing: 1px !important;
+        line-height: 1.16 !important;
+        word-break: break-word !important;
+      }
+      .badge-founder {
+        max-width: 100%;
+        white-space: normal;
+        text-align: center;
+        font-size: clamp(0.68rem, 2.7vw, 0.78rem);
+        padding: 6px 14px;
+        gap: 6px;
+      }
+      .hero p.tagline {
+        font-size: 0.98rem;
+        line-height: 1.6;
+        padding: 0 6px;
+        margin-bottom: 20px;
+      }
+      .founder-callout {
+        padding: 8px 18px;
+        max-width: 100%;
+        margin-bottom: 24px;
+      }
+      .founder-callout span.name {
+        font-size: 1.15rem;
+      }
+      .hero-3d-stage {
+        max-width: 100%;
+        height: 160px;
+        margin: 15px auto 25px;
+      }
+
+      /* Telemetry Grid & Borders */
+      .telemetry-bar {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 16px;
+        gap: 12px;
+        margin-top: 32px;
+      }
+      .stat-item {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 10px 4px;
+      }
+      .stat-item:nth-last-child(-n+2) {
+        border-bottom: none;
+      }
+      .stat-val {
+        font-size: 1.25rem;
+      }
+
+      /* Sections & Cards */
+      .section-genesis, .section-specs, .section-google-preview, .section-founder, .section-war-room, .section-verification {
+        padding: 50px 0;
+      }
+      .section-title {
+        font-size: clamp(1.6rem, 5.5vw, 2.2rem);
+        word-break: break-word;
+      }
+      .section-desc {
+        font-size: 0.94rem;
+        padding: 0 8px;
+      }
+      .genesis-banner {
+        padding: 20px 16px;
+        margin-bottom: 24px;
+      }
+      .genesis-banner h3 {
+        font-size: 1.35rem;
+      }
+      .genesis-card {
+        padding: 22px 16px;
+        border-radius: 18px;
+      }
+      .genesis-title h4 {
+        font-size: 1.3rem;
+      }
+      .genesis-icon {
+        font-size: 1.6rem;
+      }
+      .cockpit-preview-box {
+        padding: 22px 16px;
+        margin-top: 30px;
+      }
+      .cockpit-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      .cockpit-btn {
+        padding: 10px 12px;
+        font-size: 0.78rem;
+      }
+
+      /* Spec Cards */
+      .spec-card {
+        padding: 24px 18px;
+        border-radius: 18px;
+      }
+
+      /* Google Dossier */
+      .google-card {
+        padding: 24px 16px;
+        border-radius: 18px;
+      }
+      .google-search-mock {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+        flex-wrap: wrap;
+        word-break: break-word;
+      }
+      .google-snippet {
+        font-size: 0.92rem;
+        line-height: 1.65;
+      }
+
+      /* Founder Section */
+      .founder-grid {
+        padding: 24px 16px;
+        border-radius: 18px;
+      }
+      .founder-bio h3 {
+        font-size: 1.8rem;
+      }
+      .founder-bio .role-subtitle {
+        font-size: 0.84rem;
+      }
+      .founder-attributes {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      /* War Room Grid */
+      .agents-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .agent-card {
+        padding: 22px 18px;
+        border-radius: 18px;
+      }
+
+      /* Verification Form */
+      .verification-card {
+        padding: 24px 16px;
+        border-radius: 18px;
+      }
+      .form-grid-2 {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .form-input, .form-select {
+        font-size: 16px !important; /* Critical: Stops iOS Safari auto-zoom on focus */
+      }
+
+      /* Cookie Banner */
+      #cookie-consent-banner {
+        left: 10px !important;
+        right: 10px !important;
+        bottom: 12px !important;
+        transform: translateY(160px) !important;
+        width: calc(100% - 20px) !important;
+        max-width: none !important;
+        padding: 16px !important;
+        border-radius: 18px !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+      }
+      #cookie-consent-banner.show {
+        transform: translateY(0) !important;
+      }
+      .cookie-actions {
+        width: 100% !important;
+        display: flex !important;
+        gap: 10px !important;
+      }
+      .cookie-actions .btn-cookie {
+        flex: 1 !important;
+        text-align: center !important;
+        padding: 10px 14px !important;
+      }
+
+      /* Footer - Stacks into 1 single vertical column so Verified Desk is 100% visible */
+      .footer-grid-info {
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+      }
+      .footer-info-col {
+        min-width: 0 !important;
+        width: 100% !important;
+        word-break: break-word !important;
+      }
+      .footer-info-col h6 {
+        font-size: 1.05rem !important;
+        margin-bottom: 10px !important;
+        color: var(--gold-primary) !important;
+      }
+      .footer-info-col p {
+        font-size: 0.86rem !important;
+        line-height: 1.65 !important;
+      }
+      .footer-info-col ul li {
+        margin-bottom: 8px !important;
+        word-break: break-word !important;
+      }
+      .footer-info-col a {
+        word-break: break-word !important;
+      }
+      .footer-cftc-box {
+        padding: 16px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .brand-text span:not(.brand-title-text) {
+        display: none;
+      }
+      .btn-tg {
+        padding: 6px 12px;
+        font-size: 0.76rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      /* Hero CTA Stack */
+      .hero-cta {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+      }
+      .hero-cta a {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+
+      /* Telemetry Single Column */
+      .telemetry-bar {
+        grid-template-columns: 1fr;
+        padding: 14px;
+        gap: 6px;
+      }
+      .stat-item {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 8px 4px;
+      }
+      .stat-item:last-child {
+        border-bottom: none;
+      }
+
+      /* Quantum Twin Controls Stack */
+      .quantum-controls-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .quantum-controls-row button {
+        width: 100%;
+        justify-content: center;
+      }
+      .quantum-win-prob {
+        text-align: center;
+        display: block;
+        padding: 4px 0;
+      }
+
+      /* Interactive Action Buttons Full Width */
+      .interactive-action-btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      /* Benchmark Metric Rows Stack */
+      .m-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+        padding-bottom: 8px;
+      }
+      .m-val {
+        font-size: 0.86rem;
+      }
+
+      /* Founder Image & Bio */
+      .founder-image-wrapper img {
+        max-width: 220px;
+      }
+      .founder-bio h3 {
+        text-align: center;
+      }
+      .founder-bio .role-subtitle {
+        text-align: center;
+      }
+
+      /* Verification Submit Button */
+      .btn-submit-form {
+        padding: 14px;
+        font-size: 0.92rem;
+      }
+
+      /* Footer Micro Viewport */
+      .footer-grid-info {
+        gap: 24px !important;
+      }
+      .footer-info-col h6 {
+        font-size: 1rem !important;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .btn-tg span:first-child {
+        display: none;
+      }
+      .btn-tg {
+        padding: 6px 10px;
+      }
+      .cockpit-grid {
+        grid-template-columns: 1fr;
+      }
+      .founder-attributes {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
