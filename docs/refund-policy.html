@@ -13,7 +13,83 @@
   <meta name="description" content="Official Digital Software Licensing, Refund Policy, and EU Statutory Right of Withdrawal Notice for Don Aurelius, founded by SM.KANISH.">
   <meta name="author" content="SM.KANISH">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://smkanish2009-blip.github.io/don-aurelius/refund-policy.html">
+  <link rel="canonical" href="https://donaurelius.ai/refund-policy.html">
+
+  <!-- Favicons and App Icons -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#080a0f">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Don Aurelius Sovereign Syndicate">
+  <meta property="og:url" content="https://donaurelius.ai/refund-policy.html">
+  <meta property="og:title" content="Digital Software Licensing & Refund Policy | Don Aurelius">
+  <meta property="og:description" content="Official Digital Software Licensing, Refund Policy, and EU Statutory Right of Withdrawal Notice for Don Aurelius, founded by SM.KANISH.">
+  <meta property="og:image" content="https://donaurelius.ai/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="Don Aurelius Refund Policy">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://donaurelius.ai/refund-policy.html">
+  <meta name="twitter:title" content="Refund Policy | Don Aurelius Sovereign Syndicate">
+  <meta name="twitter:description" content="Official Digital Software Licensing and Refund Policy for Don Aurelius, founded by SM.KANISH.">
+  <meta name="twitter:image" content="https://donaurelius.ai/assets/og-image.png">
+
+  <!-- JSON-LD Breadcrumbs & Document Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://donaurelius.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Governance",
+            "item": "https://donaurelius.ai/#compliance"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Refund Policy",
+            "item": "https://donaurelius.ai/refund-policy.html"
+          }
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://donaurelius.ai/refund-policy.html",
+        "url": "https://donaurelius.ai/refund-policy.html",
+        "name": "Digital Software Licensing & Refund Policy",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "Don Aurelius",
+          "url": "https://donaurelius.ai/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Don Aurelius Sovereign Syndicate",
+          "founder": {
+            "@type": "Person",
+            "name": "SM.KANISH"
+          }
+        }
+      }
+    ]
+  }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -168,6 +244,33 @@
       padding-bottom: 24px;
       margin-bottom: 36px;
     }
+    .legal-breadcrumbs {
+      margin-bottom: 16px;
+    }
+    .legal-breadcrumbs ol {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+    .legal-breadcrumbs a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .legal-breadcrumbs a:hover {
+      color: var(--gold-primary);
+    }
+    .legal-breadcrumbs .separator {
+      color: rgba(255, 255, 255, 0.25);
+    }
+    .legal-breadcrumbs [aria-current="page"] {
+      color: var(--gold-primary);
+      font-weight: 600;
+    }
     .legal-badge {
       display: inline-block;
       font-family: var(--font-mono);
@@ -279,6 +382,24 @@
   <main id="main-content" class="container">
     <article class="legal-card">
       <header class="legal-header">
+        <nav aria-label="Breadcrumb" class="legal-breadcrumbs">
+          <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a itemprop="item" href="index.html"><span itemprop="name">Home</span></a>
+              <meta itemprop="position" content="1" />
+            </li>
+            <li class="separator" aria-hidden="true">/</li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a itemprop="item" href="index.html#compliance"><span itemprop="name">Governance</span></a>
+              <meta itemprop="position" content="2" />
+            </li>
+            <li class="separator" aria-hidden="true">/</li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+              <span itemprop="name">Refund Policy</span>
+              <meta itemprop="position" content="3" />
+            </li>
+          </ol>
+        </nav>
         <span class="legal-badge">Commercial Licensing Protocol</span>
         <h1 class="legal-title">Digital Software & Refund Policy</h1>
         <p class="legal-meta">Governing Digital Delivery & EULA • Strategic Leadership: SM.KANISH • Effective: September 29, 2026</p>

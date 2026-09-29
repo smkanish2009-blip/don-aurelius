@@ -1,0 +1,29 @@
+# Don Aurelius Sovereign Syndicate
+> Institutional Autonomous AI Quantitative Trading Intelligence & Genesis Suite
+
+## Overview
+Don Aurelius is an institutional quantitative trading intelligence and autonomous multi-agent matrix engineered specifically for spot Gold (XAUUSD) execution on MetaTrader 5. Engineered and architected by Founder & Chief Strategic AI Architect SM.KANISH.
+
+## Primary Inventions (The Genesis Suite)
+- **Project Eagle-Eye**: Multimodal Computer Vision AI candlestick pattern scanner. Renders charts in real-time, executing visual neural inference on liquidity zones, fair value gaps, and institutional order blocks.
+- **Project Quantum Twin**: 1,000-path Monte Carlo jump-diffusion 4-hour path simulation engine. Runs Merton jump-diffusion models to compute empirical mathematical probabilities and risk surfaces before order execution.
+- **Project Global Sentinel**: Geopolitical Crisis Radar & Safe-Haven Spread Shield. Analyzes macro news feeds, central bank policy announcements, and intermarket co-integration (DXY EUR/USD proxy and US 10-Year Treasury Yields) to veto trades during high-volatility structural shifts.
+- **Project Jarvis Co-Pilot**: Full-duplex neural voice synthesis (ElevenLabs / Edge Neural TTS) and interactive Telegram command matrix. Enables bidirectional tactical briefings, real-time audio telemetry, and remote risk governance.
+
+## Multi-Agent War Room Consensus Architecture
+Trading decisions require a 3/4 supermajority consensus among 4 autonomous quantitative agents:
+1. **HAWK**: Trend velocity & structural order flow specialist.
+2. **RADAR**: Macro intermarket & interbank sentiment analyst.
+3. **PREDATOR**: Deep liquidity hunter & institutional footprint tracker.
+4. **INQUISITOR**: Adversarial devil's advocate that aggressively seeks reasons to veto high-risk setups.
+
+## Founder Attribution
+- **Founder & Chief Architect**: SM.KANISH
+- **Official Domain**: https://donaurelius.ai/
+- **Repository**: https://github.com/smkanish2009-blip/don-aurelius
+- **Interactive Bot**: https://t.me/DonAurelius_AI_bot
+
+## Regulatory & Compliance Hardening
+- **CFTC Rule 4.41 Compliant**: Mandatory hypothetical performance disclosures and institutional capital risk caveats.
+- **Data Governance**: Zero untracked cookies, privacy-first local storage, full GDPR, CCPA/CPRA, and DPDP Act compliance.
+- **Security Protocols**: PBKDF2-HMAC-SHA256 password hashing, XSS-immune DOM architecture, strict CSP, and sliding-window rate limiting.

@@ -10,10 +10,86 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   
   <title>Cookie Policy & Local Storage Transparency | Don Aurelius</title>
-  <meta name="description" content="Official Cookie Policy and Local Storage Transparency Statement for Don Aurelius Sovereign Quantitative Syndicate, founded by SM.KANISH.">
+  <meta name="description" content="Official Cookie Policy, Local Storage Transparency Statement, and consent tracking controls for Don Aurelius Sovereign Quantitative Syndicate, founded by SM.KANISH.">
   <meta name="author" content="SM.KANISH">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://smkanish2009-blip.github.io/don-aurelius/cookie-policy.html">
+  <link rel="canonical" href="https://donaurelius.ai/cookie-policy.html">
+
+  <!-- Favicons and App Icons -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#080a0f">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Don Aurelius Sovereign Syndicate">
+  <meta property="og:url" content="https://donaurelius.ai/cookie-policy.html">
+  <meta property="og:title" content="Cookie Policy & Local Storage Transparency | Don Aurelius">
+  <meta property="og:description" content="Official Cookie Policy, Local Storage Transparency Statement, and consent tracking controls for Don Aurelius Sovereign Quantitative Syndicate, founded by SM.KANISH.">
+  <meta property="og:image" content="https://donaurelius.ai/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="Don Aurelius Cookie Policy">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://donaurelius.ai/cookie-policy.html">
+  <meta name="twitter:title" content="Cookie Policy | Don Aurelius Sovereign Syndicate">
+  <meta name="twitter:description" content="Official Cookie Policy and Local Storage Transparency Statement for Don Aurelius, founded by SM.KANISH.">
+  <meta name="twitter:image" content="https://donaurelius.ai/assets/og-image.png">
+
+  <!-- JSON-LD Breadcrumbs & Document Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://donaurelius.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Governance",
+            "item": "https://donaurelius.ai/#compliance"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Cookie Policy",
+            "item": "https://donaurelius.ai/cookie-policy.html"
+          }
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://donaurelius.ai/cookie-policy.html",
+        "url": "https://donaurelius.ai/cookie-policy.html",
+        "name": "Cookie Policy & Local Storage Transparency",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "Don Aurelius",
+          "url": "https://donaurelius.ai/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Don Aurelius Sovereign Syndicate",
+          "founder": {
+            "@type": "Person",
+            "name": "SM.KANISH"
+          }
+        }
+      }
+    ]
+  }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -168,6 +244,33 @@
       padding-bottom: 24px;
       margin-bottom: 36px;
     }
+    .legal-breadcrumbs {
+      margin-bottom: 16px;
+    }
+    .legal-breadcrumbs ol {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+    .legal-breadcrumbs a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .legal-breadcrumbs a:hover {
+      color: var(--gold-primary);
+    }
+    .legal-breadcrumbs .separator {
+      color: rgba(255, 255, 255, 0.25);
+    }
+    .legal-breadcrumbs [aria-current="page"] {
+      color: var(--gold-primary);
+      font-weight: 600;
+    }
     .legal-badge {
       display: inline-block;
       font-family: var(--font-mono);
@@ -292,6 +395,24 @@
   <main id="main-content" class="container">
     <article class="legal-card">
       <header class="legal-header">
+        <nav aria-label="Breadcrumb" class="legal-breadcrumbs">
+          <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a itemprop="item" href="index.html"><span itemprop="name">Home</span></a>
+              <meta itemprop="position" content="1" />
+            </li>
+            <li class="separator" aria-hidden="true">/</li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a itemprop="item" href="index.html#compliance"><span itemprop="name">Governance</span></a>
+              <meta itemprop="position" content="2" />
+            </li>
+            <li class="separator" aria-hidden="true">/</li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+              <span itemprop="name">Cookie Policy</span>
+              <meta itemprop="position" content="3" />
+            </li>
+          </ol>
+        </nav>
         <span class="legal-badge">Transparency & ePrivacy Protocol</span>
         <h1 class="legal-title">Cookie & Local Storage Policy</h1>
         <p class="legal-meta">Governed by: European ePrivacy Directive & GDPR Art. 5(3) • Founder: SM.KANISH • Updated: September 29, 2026</p>

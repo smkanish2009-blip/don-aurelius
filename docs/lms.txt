@@ -1,0 +1,6 @@
+# Don Aurelius Sovereign Syndicate (lms.txt alias)
+See /llms.txt for primary documentation.
+Founder & Chief Strategic AI Architect: SM.KANISH
+Website: https://donaurelius.ai/
+Telegram: https://t.me/DonAurelius_AI_bot
+MetaTrader 5 Institutional Autonomous Trading Suite.

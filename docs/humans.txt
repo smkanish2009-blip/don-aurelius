@@ -1,0 +1,17 @@
+/* TEAM */
+Founder & Chief Strategic AI Architect: SM.KANISH
+Contact: legal@donaurelius.ai
+Location: London, UK / Global Quantitative Matrix
+
+/* THANKS */
+Antigravity AI Architecture Team
+MetaTrader 5 Engineering Community
+Open-source quantitative finance researchers
+
+/* SITE */
+Standards: HTML5, CSS3, ES2024, WebGL, Web Audio API
+Typography: Apple SF Pro Display, JetBrains Mono
+Design: VisionOS Liquid Glassmorphism & High-Performance GPU Compositing
+Security: OWASP Top 10, Strict CSP, Subresource Integrity, Rate Limiting
+Hosting: GitHub Pages & Cloudflare Edge Enterprise
+Canonical Domain: https://donaurelius.ai/
