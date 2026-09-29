@@ -1,7 +1,7 @@
 # ==============================================================================
 # Don Aurelius Sovereign Syndicate - Robots & Crawler Directives
 # Founder & Chief Architect: SM.KANISH
-# Canonical Host: https://donaurelius.ai/
+# Production Host: https://smkanish2009-blip.github.io/don-aurelius/
 # ==============================================================================
 
 User-agent: *
@@ -13,6 +13,5 @@ Disallow: /*.json$
 Allow: /llms.txt
 Allow: /humans.txt
 
-# XML Sitemaps
-Sitemap: https://donaurelius.ai/sitemap.xml
+# XML Sitemap
 Sitemap: https://smkanish2009-blip.github.io/don-aurelius/sitemap.xml
