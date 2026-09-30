@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +25,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
-  <meta name="theme-color" content="#080a0f">
+  <meta name="theme-color" content="#030508">
 
   <!-- Open Graph / Facebook / LinkedIn / Discord -->
   <meta property="og:type" content="website">
@@ -145,55 +145,54 @@
   }
   </script>
 
-  <!-- Typography: Apple SF Pro Display / Inter & JetBrains Mono -->
+  <!-- Typography: Apple SF Pro Display / Syne / Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
   <!-- Three.js 3D WebGL Engine (Deferred to prevent render-blocking) -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
     /* ==========================================================================
-       Ultra-High-Performance Apple Liquid Glass (Zero-Lag 60 FPS Engine)
+       MotionSites.ai Tier — Sovereign Apple Liquid Glass Design System
+       Pure Dark Mode • 120 FPS GPU Accelerated • Zero Composite Lag
        ========================================================================== */
     :root {
-      /* Base Space Black */
-      --bg-dark: #020306;
+      /* Deep Midnight Space Black */
+      --bg-dark: #030508;
 
-      /* Authentic Apple Liquid Glass Tokens (Ultra-Smooth GPU Accelerated) */
+      /* MotionSites Authentic Apple Liquid Glass Tokens */
       --apple-glass-bg: linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.07) 0%,
         rgba(255, 255, 255, 0.02) 100%
-      ), rgba(8, 11, 18, 0.52);
+      ), rgba(10, 14, 24, 0.65);
       
-      --apple-glass-border: rgba(255, 255, 255, 0.14);
-      --apple-glass-border-top: rgba(255, 255, 255, 0.42);
-      --apple-glass-border-left: rgba(255, 255, 255, 0.22);
-      --apple-glass-border-bottom: rgba(255, 255, 255, 0.06);
-      --apple-glass-rim: inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
-      --apple-glass-occlusion: inset 0 -1px 1px 0 rgba(0, 0, 0, 0.35);
-      --apple-glass-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.5);
-      --apple-glass-blur: blur(6px);
-      --apple-glass-pod: rgba(255, 255, 255, 0.04);
+      --apple-glass-border: rgba(255, 255, 255, 0.12);
+      --apple-glass-border-top: rgba(255, 255, 255, 0.35);
+      --apple-glass-border-left: rgba(255, 255, 255, 0.20);
+      --apple-glass-border-bottom: rgba(255, 255, 255, 0.05);
+      --apple-glass-rim: inset 0 1px 1px 0 rgba(255, 255, 255, 0.45);
+      --apple-glass-occlusion: inset 0 -1px 1px 0 rgba(0, 0, 0, 0.45);
+      --apple-glass-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.65);
+      --apple-glass-blur: blur(16px);
+      --apple-glass-pod: rgba(0, 0, 0, 0.38);
 
       /* Sovereign Chromatic Accents */
-      --gold-primary: #f0c75e;
-      --gold-secondary: #c99e32;
-      --gold-glow: rgba(240, 199, 94, 0.3);
+      --gold-primary: #f5c542;
+      --gold-secondary: #d4a017;
+      --gold-glow: rgba(245, 197, 66, 0.28);
       --emerald-neon: #10b981;
       --emerald-glow: rgba(16, 185, 129, 0.25);
-      --cyan-neon: #00ffcc;
-      --cyan-glow: rgba(0, 255, 204, 0.25);
-      --purple-neon: #c084fc;
-      --purple-glow: rgba(192, 132, 252, 0.25);
+      --cyan-neon: #00f2ff;
+      --cyan-glow: rgba(0, 242, 255, 0.25);
+      --purple-neon: #a855f7;
+      --purple-glow: rgba(168, 85, 247, 0.25);
 
-      /* Apple Typography System */
-      --text-main: #ffffff;
-      --text-muted: #94a3b8;
-      --font-display: 'Cinzel', serif;
-      --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', -system-ui, sans-serif;
+      /* MotionSites Typography System */
+      --font-display: 'Syne', 'Cinzel', serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
 
       /* Doppelrand Concentric Squircles */
@@ -216,14 +215,7 @@
 
     body {
       background-color: var(--bg-dark);
-      /* Zero-GPU-Cost Hardware Static Aurora Gradients */
-      background-image: 
-        radial-gradient(circle at 20% 12%, rgba(240, 199, 94, 0.16) 0%, transparent 40%),
-        radial-gradient(circle at 85% 35%, rgba(0, 255, 204, 0.13) 0%, transparent 45%),
-        radial-gradient(circle at 12% 70%, rgba(168, 85, 247, 0.12) 0%, transparent 42%),
-        radial-gradient(circle at 75% 85%, rgba(244, 63, 94, 0.08) 0%, transparent 35%);
-      background-attachment: fixed;
-      color: var(--text-main);
+      color: #ffffff;
       font-family: var(--font-sans);
       line-height: 1.6;
       max-width: 100%;
@@ -238,16 +230,78 @@
       max-width: 100%;
     }
 
-    /* Full-Screen 3D WebGL Background Canvas (Optimized 60 FPS) */
-    #bg-canvas-3d {
+    /* MotionSites Hardware-Accelerated Ambient Chromatic Fluid Orbs (120 FPS Compositor Layer) */
+    .ambient-orbs-container {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      inset: 0;
+      overflow: hidden;
       pointer-events: none;
-      z-index: 1;
-      opacity: 0.75;
+      z-index: 0;
+      transform: translateZ(0);
+    }
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      -webkit-filter: blur(100px);
+      opacity: 0.26;
+      will-change: transform;
+      pointer-events: none;
+    }
+    .orb-gold {
+      width: 680px;
+      height: 680px;
+      background: radial-gradient(circle, #f5c542 0%, rgba(245, 197, 66, 0) 70%);
+      top: -140px;
+      left: 12%;
+      animation: orbFloat1 24s ease-in-out infinite alternate;
+    }
+    .orb-cyan {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, #00f2ff 0%, rgba(0, 242, 255, 0) 70%);
+      top: 36%;
+      right: -100px;
+      opacity: 0.20;
+      animation: orbFloat2 28s ease-in-out infinite alternate;
+    }
+    .orb-violet {
+      width: 640px;
+      height: 640px;
+      background: radial-gradient(circle, #8b5cf6 0%, rgba(139, 92, 246, 0) 70%);
+      bottom: 12%;
+      left: -90px;
+      opacity: 0.18;
+      animation: orbFloat3 32s ease-in-out infinite alternate;
+    }
+    .orb-rose {
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, #ec4899 0%, rgba(236, 72, 153, 0) 70%);
+      bottom: -100px;
+      right: 18%;
+      opacity: 0.15;
+      animation: orbFloat1 30s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes orbFloat1 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(60px, 80px, 0) scale(1.08); }
+      100% { transform: translate3d(-40px, 40px, 0) scale(0.95); }
+    }
+    @keyframes orbFloat2 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(-80px, 60px, 0) scale(1.12); }
+      100% { transform: translate3d(40px, -50px, 0) scale(0.92); }
+    }
+    @keyframes orbFloat3 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(70px, -60px, 0) scale(1.05); }
+      100% { transform: translate3d(-50px, 50px, 0) scale(1); }
+    }
+
+    /* Section Smooth Scroll Offset Guard */
+    section, #overview, #genesis, #architectural-specs, #google-dossier, #founder, #war-room, #faq, #terminal-access {
+      scroll-margin-top: 96px;
     }
 
     /* Top Glowing Laser Progress Bar (Zero-Reflow ScaleX) */
@@ -2231,127 +2285,48 @@
        10 Institutional Features: Theme, Shortcuts, FAQ, Back-To-Top, Skeleton
        ========================================================================== */
 
-    /* 1. Theme System (Dark Default + Apple Platinum Light Mode) */
-    [data-theme="light"] {
-      --bg-dark: #f6f8fb;
-      --apple-glass-bg: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.92) 0%,
-        rgba(241, 245, 249, 0.85) 100%
-      ), rgba(255, 255, 255, 0.94);
-      --apple-glass-border: rgba(15, 23, 42, 0.10);
-      --apple-glass-border-top: rgba(255, 255, 255, 1);
-      --apple-glass-border-left: rgba(255, 255, 255, 0.95);
-      --apple-glass-border-bottom: rgba(15, 23, 42, 0.08);
-      --apple-glass-rim: inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
-      --apple-glass-occlusion: inset 0 -1px 1px 0 rgba(15, 23, 42, 0.04);
-      --apple-glass-shadow: 0 16px 36px -10px rgba(15, 23, 42, 0.08);
-      --apple-glass-pod: rgba(15, 23, 42, 0.04);
-
-      --gold-primary: #b48518;
-      --gold-secondary: #8c640e;
-      --gold-glow: rgba(180, 133, 24, 0.18);
-      --emerald-neon: #059669;
-      --emerald-glow: rgba(5, 150, 105, 0.18);
-      --cyan-neon: #0284c7;
-      --cyan-glow: rgba(2, 132, 199, 0.18);
-      --purple-neon: #8b5cf6;
-      --purple-glow: rgba(139, 92, 246, 0.18);
-
-      --text-main: #0f172a;
-      --text-muted: #475569;
-    }
-
-    [data-theme="light"] body {
-      background-color: var(--bg-dark);
-      background-image: 
-        radial-gradient(circle at 20% 12%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 85% 35%, rgba(2, 132, 199, 0.06) 0%, transparent 45%),
-        radial-gradient(circle at 12% 70%, rgba(139, 92, 246, 0.05) 0%, transparent 42%),
-        radial-gradient(circle at 75% 85%, rgba(244, 63, 94, 0.04) 0%, transparent 35%);
-      color: var(--text-main);
-    }
-
-    [data-theme="light"] #bg-canvas-3d {
-      opacity: 0.18;
-      filter: invert(1);
-    }
-
-    [data-theme="light"] header,
-    [data-theme="light"] .nav-wrapper {
-      background: rgba(255, 255, 255, 0.88);
-      border-color: rgba(15, 23, 42, 0.09);
-      box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08);
-    }
-
-    [data-theme="light"] .brand-title-text,
-    [data-theme="light"] .section-title,
-    [data-theme="light"] h1, [data-theme="light"] h2, [data-theme="light"] h3,
-    [data-theme="light"] h4, [data-theme="light"] h5, [data-theme="light"] h6,
-    [data-theme="light"] .stat-val,
-    [data-theme="light"] .m-val,
-    [data-theme="light"] .founder-bio h3,
-    [data-theme="light"] .founder-callout span.name,
-    [data-theme="light"] .faq-q-text {
-      color: #0f172a !important;
-    }
-
-    [data-theme="light"] .section-pre,
-    [data-theme="light"] .section-desc,
-    [data-theme="light"] p.tagline,
-    [data-theme="light"] .stat-label,
-    [data-theme="light"] .m-label,
-    [data-theme="light"] .google-desc,
-    [data-theme="light"] .founder-bio p,
-    [data-theme="light"] .agent-desc,
-    [data-theme="light"] .faq-answer-panel p {
-      color: #475569 !important;
-    }
-
-    [data-theme="light"] .nav-links a {
-      color: #334155;
-    }
-    [data-theme="light"] .nav-links a:hover {
-      color: var(--gold-primary);
-    }
-
-    [data-theme="light"] .form-input,
-    [data-theme="light"] .form-select {
-      background: rgba(255, 255, 255, 0.95);
-      border-color: rgba(15, 23, 42, 0.15);
-      color: #0f172a;
-    }
-    [data-theme="light"] .form-input::placeholder {
-      color: #94a3b8;
-    }
-
-    [data-theme="light"] .mobile-nav-drawer {
-      background: rgba(255, 255, 255, 0.98);
-      border-left-color: rgba(15, 23, 42, 0.1);
-    }
-    [data-theme="light"] .mobile-nav-link {
-      color: #1e293b;
-    }
-    [data-theme="light"] .mobile-nav-link:hover {
-      background: rgba(15, 23, 42, 0.05);
-      color: var(--gold-primary);
-    }
-    [data-theme="light"] .shortcut-row {
-      background: rgba(15, 23, 42, 0.04);
-      border-color: rgba(15, 23, 42, 0.08);
-      color: #0f172a;
-    }
-    [data-theme="light"] .shortcut-row kbd {
-      background: rgba(15, 23, 42, 0.08);
-      border-color: rgba(15, 23, 42, 0.2);
-      color: #0f172a;
-    }
-
-    /* Header Control Buttons */
+    /* ==========================================================================
+       MotionSites Header Control Buttons & Command Center Pill
+       ========================================================================== */
     .header-controls {
       display: flex;
       align-items: center;
       gap: 8px;
+    }
+    .btn-header-shortcuts {
+      height: 38px;
+      padding: 0 12px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-top: 1px solid rgba(255, 255, 255, 0.28);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 0.84rem;
+      font-weight: 500;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .btn-header-shortcuts:hover {
+      background: rgba(255, 255, 255, 0.10);
+      border-color: var(--gold-primary);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px var(--gold-glow);
+    }
+    .header-kbd-badge {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 2px 6px;
+      border-radius: 5px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+      letter-spacing: 0.5px;
     }
     .btn-header-icon {
       width: 38px;
@@ -2761,8 +2736,13 @@
   <!-- Glowing Top Scroll Progress Indicator -->
   <div id="scroll-progress"></div>
 
-  <!-- Full-Screen 3D WebGL Background Canvas (Crystalline & Highly Optimized) -->
-  <canvas id="bg-canvas-3d"></canvas>
+  <!-- MotionSites Hardware-Accelerated Ambient Chromatic Fluid Orbs (Zero GPU Thrashing, 120 FPS) -->
+  <div class="ambient-orbs-container" aria-hidden="true">
+    <div class="ambient-orb orb-gold"></div>
+    <div class="ambient-orb orb-cyan"></div>
+    <div class="ambient-orb orb-violet"></div>
+    <div class="ambient-orb orb-rose"></div>
+  </div>
 
   <!-- Floating Apple VisionOS Dock Navigation -->
   <header>
@@ -2787,11 +2767,9 @@
       </ul>
       <div class="header-actions">
         <div class="header-controls">
-          <button id="btn-theme-toggle" class="btn-header-icon" aria-label="Toggle Dark and Light Mode" title="Toggle Theme (T)">
-            <span id="theme-toggle-icon">🌙</span>
-          </button>
-          <button id="btn-shortcuts-toggle" class="btn-header-icon" aria-label="Keyboard Shortcuts" title="Keyboard Shortcuts (? or Ctrl+K)">
+          <button id="btn-shortcuts-toggle" class="btn-header-shortcuts" aria-label="Keyboard Shortcuts Command Center" title="Shortcuts HUD (? or Ctrl+K)">
             <span>⌨️</span>
+            <kbd class="header-kbd-badge">⌘K</kbd>
           </button>
         </div>
         <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="btn-tg" aria-label="Open Don Aurelius Official Telegram Bot" title="Launch Telegram HUD (Press B)">
@@ -2825,12 +2803,9 @@
         <li><a href="#terminal-access" class="mobile-nav-link"><span>📜</span> Whitelist / Verification</a></li>
         <li><a href="#compliance" class="mobile-nav-link"><span>⚖️</span> Governance & Compliance</a></li>
       </ul>
-      <div style="display: flex; gap: 10px; margin: 16px 0; padding: 0 4px;">
-        <button id="btn-mobile-theme-toggle" class="btn-apple-primary" style="flex: 1; padding: 10px; font-size: 0.85rem;" aria-label="Toggle Light/Dark Theme">
-          <span id="mobile-theme-toggle-icon">🌙</span> <span id="mobile-theme-text">Toggle Theme</span>
-        </button>
-        <button id="btn-mobile-shortcuts-toggle" class="btn-apple-primary" style="flex: 1; padding: 10px; font-size: 0.85rem;" aria-label="Show Keyboard Shortcuts">
-          <span>⌨️</span> <span>Shortcuts</span>
+      <div style="margin: 16px 0; padding: 0 4px;">
+        <button id="btn-mobile-shortcuts-toggle" class="btn-apple-primary" style="width: 100%; padding: 12px; font-size: 0.88rem; display: flex; align-items: center; justify-content: center; gap: 8px;" aria-label="Show Keyboard Shortcuts">
+          <span>⌨️</span> <span>Shortcuts Command Center</span> <kbd class="header-kbd-badge" style="margin-left: 4px;">⌘K</kbd>
         </button>
       </div>
       <div class="mobile-nav-footer">
@@ -3612,12 +3587,8 @@
     </div>
     <div class="shortcuts-grid">
       <div class="shortcut-row">
-        <span>Toggle Dark / Light Theme</span>
-        <kbd>T</kbd>
-      </div>
-      <div class="shortcut-row">
         <span>Open / Close Shortcuts HUD</span>
-        <kbd>?</kbd>
+        <kbd>? / ⌘K</kbd>
       </div>
       <div class="shortcut-row">
         <span>Launch Telegram HUD Bot</span>
@@ -3742,107 +3713,7 @@
     });
 
     /* ==========================================================================
-       3. Three.js Full-Screen Background Hologram Engine (Scroll-Throttled)
-       ========================================================================== */
-    function initBackgroundCanvas() {
-      const canvas = document.getElementById('bg-canvas-3d');
-      if (!canvas || typeof THREE === 'undefined') return;
-
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.z = 85;
-
-      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false, powerPreference: 'low-power' });
-      renderer.setPixelRatio(1.0);
-      renderer.setSize(window.innerWidth, window.innerHeight);
-
-      const worldGroup = new THREE.Group();
-      scene.add(worldGroup);
-
-      // A. Golden Wireframe Icosahedron
-      const icoGeom = new THREE.IcosahedronGeometry(28, 1);
-      const icoMat = new THREE.MeshBasicMaterial({
-        color: 0xd4af37,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.18
-      });
-      const icoMesh = new THREE.Mesh(icoGeom, icoMat);
-      worldGroup.add(icoMesh);
-
-      // B. Inner Cyan Dodecahedron
-      const dodecGeom = new THREE.DodecahedronGeometry(17, 0);
-      const dodecMat = new THREE.MeshBasicMaterial({
-        color: 0x06b6d4,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.25
-      });
-      const dodecMesh = new THREE.Mesh(dodecGeom, dodecMat);
-      worldGroup.add(dodecMesh);
-
-      // C. Floating Stardust Particles (Lightweight 150 points)
-      const particleCount = 150;
-      const positions = new Float32Array(particleCount * 3);
-      const colors = new Float32Array(particleCount * 3);
-
-      for (let i = 0; i < particleCount; i++) {
-        const i3 = i * 3;
-        positions[i3] = (Math.random() - 0.5) * 220;
-        positions[i3 + 1] = (Math.random() - 0.5) * 220;
-        positions[i3 + 2] = (Math.random() - 0.5) * 160;
-
-        if (Math.random() > 0.4) {
-          colors[i3] = 0.95; colors[i3 + 1] = 0.78; colors[i3 + 2] = 0.25;
-        } else {
-          colors[i3] = 0.05; colors[i3 + 1] = 0.85; colors[i3 + 2] = 0.95;
-        }
-      }
-
-      const particleGeom = new THREE.BufferGeometry();
-      particleGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      particleGeom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-      const particleMat = new THREE.PointsMaterial({
-        size: 2.0,
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.75
-      });
-      const particleSystem = new THREE.Points(particleGeom, particleMat);
-      worldGroup.add(particleSystem);
-
-      let mouseX = 0;
-      let mouseY = 0;
-
-      window.addEventListener('mousemove', (e) => {
-        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-      }, { passive: true });
-
-      window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      }, { passive: true });
-
-      function animate() {
-        requestAnimationFrame(animate);
-        if (isScrolling) return; // Completely skip WebGL compute during active scroll for 60 FPS lock!
-
-        worldGroup.rotation.y += (mouseX * 0.18 - worldGroup.rotation.y) * 0.03 + 0.001;
-        worldGroup.rotation.x += (mouseY * 0.18 - worldGroup.rotation.x) * 0.03;
-
-        icoMesh.rotation.y += 0.0008;
-        dodecMesh.rotation.x -= 0.0015;
-
-        renderer.render(scene, camera);
-      }
-      animate();
-    }
-
-    /* ==========================================================================
-       4. Hero 3D Interactive Stage Canvas (Offscreen & Scroll Guarded)
+       3. Hero 3D Interactive Stage Canvas (Offscreen & Scroll Guarded)
        ========================================================================== */
     function initHeroStageCanvas() {
       const canvas = document.getElementById('stage-3d-canvas');
@@ -3964,7 +3835,6 @@
 
     function init3DEngines() {
       if (typeof THREE === 'undefined') return;
-      initBackgroundCanvas();
       initHeroStageCanvas();
     }
 
@@ -4356,38 +4226,13 @@
        - Skeleton Loader & Telemetry Ingestion Simulator
        ========================================================================== */
 
-    // 1. Dark & Light Mode Toggle
-    const themeToggleBtn = document.getElementById('btn-theme-toggle');
-    const mobileThemeToggleBtn = document.getElementById('btn-mobile-theme-toggle');
-    const themeIcon = document.getElementById('theme-toggle-icon');
-    const mobileThemeIcon = document.getElementById('mobile-theme-toggle-icon');
-    const mobileThemeText = document.getElementById('mobile-theme-text');
+    // 1. Permanent Sovereign Dark Theme Lock
+    document.documentElement.setAttribute('data-theme', 'dark');
+    try {
+      localStorage.setItem('da_theme', 'dark');
+    } catch(e) {}
 
-    function applyTheme(theme) {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('da_theme', theme);
-      const isLight = theme === 'light';
-      const icon = isLight ? '☀️' : '🌙';
-      if (themeIcon) themeIcon.textContent = icon;
-      if (mobileThemeIcon) mobileThemeIcon.textContent = icon;
-      if (mobileThemeText) mobileThemeText.textContent = isLight ? 'Light Mode' : 'Dark Mode';
-    }
-
-    function toggleTheme() {
-      const current = document.documentElement.getAttribute('data-theme') || 'dark';
-      const next = current === 'dark' ? 'light' : 'dark';
-      applyTheme(next);
-    }
-
-    if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
-    if (mobileThemeToggleBtn) mobileThemeToggleBtn.addEventListener('click', toggleTheme);
-
-    // Initial theme detection
-    const savedTheme = localStorage.getItem('da_theme') || 
-      (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-    applyTheme(savedTheme);
-
-    // 3. Back-To-Top Button
+    // 2. Back-To-Top Button
     const backToTopBtn = document.getElementById('btn-back-to-top');
     window.addEventListener('scroll', () => {
       const y = window.scrollY || document.documentElement.scrollTop;
@@ -4406,7 +4251,7 @@
       });
     }
 
-    // 5. Shortcuts Modal HUD
+    // 3. Shortcuts Modal Command Center HUD
     const shortcutsModal = document.getElementById('shortcuts-modal');
     const shortcutsBackdrop = document.getElementById('shortcuts-backdrop');
     const shortcutsToggleBtn = document.getElementById('btn-shortcuts-toggle');
@@ -4441,59 +4286,90 @@
     if (closeShortcutsBtn) closeShortcutsBtn.addEventListener('click', () => toggleShortcutsModal(false));
     if (shortcutsBackdrop) shortcutsBackdrop.addEventListener('click', () => toggleShortcutsModal(false));
 
-    // Global Keyboard Shortcuts Dispatcher
+    // 4. Global Keyboard Shortcuts Dispatcher (Bug-Free, Input-Protected, Repeat-Guarded)
     window.addEventListener('keydown', (e) => {
-      // Don't trigger navigation hotkeys if user is focused inside an input/textarea/select
-      const activeEl = document.activeElement;
-      const isInput = activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.tagName === 'SELECT');
+      // Guard against key repeat spam when a user holds down a key
+      if (e.repeat) return;
 
+      // Exhaustive input protection: do not trigger single-key actions when typing in inputs/textareas/selects/forms
+      const activeEl = document.activeElement;
+      const isInput = activeEl && (
+        activeEl.tagName === 'INPUT' || 
+        activeEl.tagName === 'TEXTAREA' || 
+        activeEl.tagName === 'SELECT' || 
+        activeEl.isContentEditable ||
+        (activeEl.getAttribute && activeEl.getAttribute('role') === 'textbox')
+      );
+
+      // Handle Escape anywhere
       if (e.key === 'Escape') {
+        if (isInput) {
+          activeEl.blur();
+          return;
+        }
         toggleShortcutsModal(false);
         toggleMobileMenu(false);
+        const cookieBanner = document.getElementById('cookie-consent-banner');
+        if (cookieBanner && cookieBanner.classList.contains('show')) {
+          handleCookieChoice('essential_only');
+        }
         return;
       }
 
-      if ((e.key === '?' || (e.key === 'k' && (e.metaKey || e.ctrlKey))) && !isInput) {
+      if (isInput) return;
+
+      // Toggle shortcuts modal HUD via: ? or Shift+/ or Ctrl+K / Cmd+K
+      const isCmdK = (e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey);
+      const isQuestion = e.key === '?' || (e.key === '/' && e.shiftKey);
+      if (isCmdK || isQuestion) {
         e.preventDefault();
         toggleShortcutsModal();
         return;
       }
 
-      if (!isInput && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      // Single-letter hotkeys (only without Ctrl/Alt/Meta modifiers)
+      if (!e.ctrlKey && !e.metaKey && !e.altKey) {
         const key = e.key.toLowerCase();
-        if (key === 't') {
-          toggleTheme();
-        } else if (key === 'h') {
+
+        const jumpTo = (id) => {
+          const el = document.getElementById(id);
+          if (el) {
+            toggleShortcutsModal(false);
+            toggleMobileMenu(false);
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        };
+
+        if (key === 'b') {
+          // Launch Telegram HUD Bot safely
+          const tgLink = document.querySelector('.btn-tg') || document.querySelector('.btn-motion-primary');
+          if (tgLink) {
+            tgLink.click();
+          } else {
+            window.open('https://t.me/DonAurelius_AI_bot', '_blank', 'noopener');
+          }
+        } else if (key === 'h' || key === 'o') {
+          toggleShortcutsModal(false);
+          toggleMobileMenu(false);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         } else if (key === 'g') {
-          const el = document.getElementById('genesis-suite') || document.getElementById('genesis');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          jumpTo('genesis');
         } else if (key === 's') {
-          const el = document.getElementById('architectural-specs');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          jumpTo('architectural-specs');
+        } else if (key === 'd') {
+          jumpTo('google-dossier');
+        } else if (key === 'a') {
+          jumpTo('founder');
         } else if (key === 'w') {
-          const el = document.getElementById('war-room');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          jumpTo('war-room');
         } else if (key === 'f') {
-          const el = document.getElementById('faq');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          jumpTo('faq');
         } else if (key === 'v') {
-          const el = document.getElementById('terminal-access') || document.getElementById('verification');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          jumpTo('terminal-access');
         } else if (key === 'm') {
           toggleMobileMenu();
         } else if (key === 'c') {
           showCookieBanner();
-        } else if (key === 'b') {
-          window.open('https://t.me/DonAurelius_AI_bot', '_blank', 'noopener');
-        } else if (key === 'd') {
-          const el = document.getElementById('google-dossier') || document.getElementById('dossier');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        } else if (key === 'a') {
-          const el = document.getElementById('founder');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        } else if (key === 'o') {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       }
     });
