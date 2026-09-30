@@ -1738,7 +1738,7 @@
       left: 50%;
       transform: translateX(-50%) translateY(140px);
       width: min(880px, calc(100% - 32px));
-      z-index: 9999;
+      z-index: 10005;
       background: rgba(11, 15, 24, 0.94);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
@@ -2421,8 +2421,14 @@
       max-height: 85vh;
       overflow-y: auto;
       z-index: 2250;
-      padding: 26px 22px;
-      border-radius: 20px;
+      padding: 26px 24px;
+      border-radius: 22px;
+      background: rgba(10, 14, 24, 0.96);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-top: 1px solid rgba(255, 255, 255, 0.45);
+      box-shadow: 0 32px 75px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.35);
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
@@ -2431,6 +2437,11 @@
       opacity: 1;
       visibility: visible;
       transform: translate(-50%, -50%) scale(1);
+    }
+    /* Strictly lock modal position on hover so it NEVER shifts or jitters */
+    .shortcuts-modal:hover,
+    .shortcuts-modal.open:hover {
+      transform: translate(-50%, -50%) scale(1) !important;
     }
     .shortcuts-header {
       display: flex;
@@ -2459,12 +2470,31 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 9px 14px;
+      padding: 10px 14px;
       background: var(--apple-glass-pod);
       border: 1px solid var(--apple-glass-border);
       border-radius: 12px;
       font-size: 0.88rem;
       color: var(--text-main);
+      cursor: pointer;
+      user-select: none;
+      outline: none;
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease;
+    }
+    .shortcut-row:hover,
+    .shortcut-row:focus-visible {
+      background: rgba(245, 197, 66, 0.12);
+      border-color: rgba(245, 197, 66, 0.45);
+      transform: translateX(4px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), 0 0 10px rgba(245, 197, 66, 0.15);
+    }
+    .shortcut-row:active {
+      transform: translateX(2px) scale(0.985);
+      background: rgba(245, 197, 66, 0.22);
+    }
+    .shortcut-row span {
+      pointer-events: none;
+      font-weight: 500;
     }
     .shortcut-row kbd {
       background: rgba(255, 255, 255, 0.12);
@@ -2477,6 +2507,14 @@
       font-size: 0.8rem;
       font-weight: 700;
       color: var(--gold-primary);
+      pointer-events: none;
+      transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+    }
+    .shortcut-row:hover kbd,
+    .shortcut-row:focus-visible kbd {
+      background: rgba(245, 197, 66, 0.2);
+      border-color: rgba(245, 197, 66, 0.6);
+      color: #ffffff;
     }
     .btn-close-modal {
       background: transparent;
@@ -3577,7 +3615,7 @@
 
   <!-- Apple Liquid Glass Keyboard Shortcuts Modal -->
   <div id="shortcuts-backdrop" class="shortcuts-backdrop" aria-hidden="true"></div>
-  <div id="shortcuts-modal" class="shortcuts-modal apple-liquid-card" role="dialog" aria-modal="true" aria-labelledby="shortcuts-title" hidden>
+  <div id="shortcuts-modal" class="shortcuts-modal" role="dialog" aria-modal="true" aria-labelledby="shortcuts-title" hidden>
     <div class="shortcuts-header">
       <div class="shortcuts-title-wrap">
         <span class="shortcuts-badge">COMMAND CENTER</span>
@@ -3586,61 +3624,61 @@
       <button id="btn-close-shortcuts" class="btn-close-modal" aria-label="Close shortcuts modal">✕</button>
     </div>
     <div class="shortcuts-grid">
-      <div class="shortcut-row">
+      <div class="shortcut-row" role="button" tabindex="0" data-action="toggle-hud" aria-label="Toggle Keyboard Shortcuts HUD">
         <span>Open / Close Shortcuts HUD</span>
         <kbd>? / ⌘K</kbd>
       </div>
-      <div class="shortcut-row">
+      <div class="shortcut-row" role="button" tabindex="0" data-action="telegram" aria-label="Launch Telegram HUD Bot">
         <span>Launch Telegram HUD Bot</span>
         <kbd>B</kbd>
       </div>
-      <div class="shortcut-row">
+      <div class="shortcut-row" role="button" tabindex="0" data-action="home" aria-label="Scroll to Overview (Home)">
         <span>Scroll to Overview (Home)</span>
         <kbd>H</kbd>
       </div>
-      <div class="shortcut-row">
+      <div class="shortcut-row" role="button" tabindex="0" data-action="genesis" aria-label="Jump to Genesis Suite">
         <span>Jump to Genesis Suite</span>
         <kbd>G</kbd>
       </div>
-      <div class="shortcut-row">
+      <div class="shortcut-row" role="button" tabindex="0" data-action="specs" aria-label="Jump to Benchmark Specs">
         <span>Jump to Benchmark Specs</span>
         <kbd>S</kbd>
       </div>
-      <div class="shortcut-row">
+      <div class="shortcut-row" role="button" tabindex="0" data-action="dossier" aria-label="Jump to Google Dossier">
         <span>Jump to Google Dossier</span>
         <kbd>D</kbd>
       </div>
-      <div class="shortcut-row">
+      <div class="shortcut-row" role="button" tabindex="0" data-action="founder" aria-label="Jump to Architect & Founder">
         <span>Jump to Architect & Founder</span>
         <kbd>A</kbd>
       </div>
-      <div class="shortcut-row">
+      <div class="shortcut-row" role="button" tabindex="0" data-action="warroom" aria-label="Jump to War Room">
         <span>Jump to War Room</span>
         <kbd>W</kbd>
       </div>
-      <div class="shortcut-row">
+      <div class="shortcut-row" role="button" tabindex="0" data-action="faq" aria-label="Jump to Expandable FAQs">
         <span>Jump to Expandable FAQs</span>
         <kbd>F</kbd>
       </div>
-      <div class="shortcut-row">
+      <div class="shortcut-row" role="button" tabindex="0" data-action="terminal" aria-label="Jump to Verification Desk">
         <span>Jump to Verification Desk</span>
         <kbd>V</kbd>
       </div>
-      <div class="shortcut-row">
+      <div class="shortcut-row" role="button" tabindex="0" data-action="mobile-nav" aria-label="Toggle Mobile Navigation">
         <span>Toggle Mobile Navigation</span>
         <kbd>M</kbd>
       </div>
-      <div class="shortcut-row">
+      <div class="shortcut-row" role="button" tabindex="0" data-action="cookies" aria-label="Open Cookie Transparency Banner">
         <span>Open Cookie Transparency Banner</span>
         <kbd>C</kbd>
       </div>
-      <div class="shortcut-row">
+      <div class="shortcut-row" role="button" tabindex="0" data-action="close" aria-label="Close Shortcuts Modal">
         <span>Close Modal / Drawer</span>
         <kbd>Esc</kbd>
       </div>
     </div>
     <div class="shortcuts-footer">
-      <span>Tip: Press <kbd>?</kbd> or <kbd>Ctrl+K</kbd> anywhere on the page to summon this HUD.</span>
+      <span>Tip: Click any shortcut row above or press its key on your keyboard to navigate instantly.</span>
     </div>
   </div>
 
@@ -4035,39 +4073,65 @@
       const banner = document.getElementById('cookie-consent-banner');
       if (banner) {
         banner.classList.add('show');
+        banner.setAttribute('aria-hidden', 'false');
       }
     }
     window.showCookieBanner = showCookieBanner;
 
     function resetCookieConsent() {
-      localStorage.removeItem('da_cookie_consent');
+      try {
+        localStorage.removeItem('da_cookie_consent_v2');
+        localStorage.removeItem('da_cookie_consent');
+      } catch (e) {}
       showCookieBanner();
     }
     window.resetCookieConsent = resetCookieConsent;
 
     function initCookieConsent() {
-      const consent = localStorage.getItem('da_cookie_consent');
       const banner = document.getElementById('cookie-consent-banner');
+      if (!banner) return;
+      let consent = null;
+      try {
+        consent = localStorage.getItem('da_cookie_consent_v2');
+      } catch (e) {
+        consent = null;
+      }
       const forceShow = window.location.hash === '#cookies' || window.location.search.includes('cookies=true');
-      if ((!consent || forceShow) && banner) {
+      if (!consent || forceShow) {
         setTimeout(() => {
           banner.classList.add('show');
-        }, 400);
+          banner.setAttribute('aria-hidden', 'false');
+        }, 750);
       }
     }
 
     function handleCookieChoice(choice) {
-      localStorage.setItem('da_cookie_consent', choice);
+      try {
+        localStorage.setItem('da_cookie_consent_v2', choice);
+        localStorage.setItem('da_cookie_consent', choice);
+      } catch (e) {}
       const banner = document.getElementById('cookie-consent-banner');
       if (banner) {
         banner.classList.remove('show');
+        banner.setAttribute('aria-hidden', 'true');
       }
     }
+    window.handleCookieChoice = handleCookieChoice;
 
     if (document.readyState === 'loading') {
       window.addEventListener('DOMContentLoaded', initCookieConsent);
     } else {
       initCookieConsent();
+    }
+
+    // Direct event listener binding for cookie banner buttons
+    const rejectCookieBtn = document.getElementById('btn-cookie-reject');
+    const acceptCookieBtn = document.getElementById('btn-cookie-accept');
+    if (rejectCookieBtn) {
+      rejectCookieBtn.addEventListener('click', () => handleCookieChoice('essential_only'));
+    }
+    if (acceptCookieBtn) {
+      acceptCookieBtn.addEventListener('click', () => handleCookieChoice('all'));
     }
 
     // Escape key closes cookie banner
@@ -4263,10 +4327,12 @@
       const isOpen = open !== undefined ? open : !shortcutsModal.classList.contains('open');
       if (isOpen) {
         shortcutsModal.removeAttribute('hidden');
+        shortcutsModal.setAttribute('aria-hidden', 'false');
         shortcutsModal.classList.add('open');
         if (shortcutsBackdrop) shortcutsBackdrop.classList.add('open');
       } else {
         shortcutsModal.classList.remove('open');
+        shortcutsModal.setAttribute('aria-hidden', 'true');
         if (shortcutsBackdrop) shortcutsBackdrop.classList.remove('open');
         setTimeout(() => {
           if (!shortcutsModal.classList.contains('open')) {
@@ -4285,6 +4351,90 @@
     }
     if (closeShortcutsBtn) closeShortcutsBtn.addEventListener('click', () => toggleShortcutsModal(false));
     if (shortcutsBackdrop) shortcutsBackdrop.addEventListener('click', () => toggleShortcutsModal(false));
+
+    // Unified Shortcut Action Executor (Click + Touch + Hotkey)
+    function executeShortcutAction(action) {
+      const jumpTo = (id) => {
+        const el = document.getElementById(id);
+        if (el) {
+          toggleShortcutsModal(false);
+          toggleMobileMenu(false);
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+
+      switch (action) {
+        case 'toggle-hud':
+        case 'close':
+          toggleShortcutsModal(false);
+          break;
+        case 'telegram':
+          toggleShortcutsModal(false);
+          const tgLink = document.querySelector('.btn-tg') || document.querySelector('.btn-motion-primary');
+          if (tgLink) {
+            tgLink.click();
+          } else {
+            window.open('https://t.me/DonAurelius_AI_bot', '_blank', 'noopener');
+          }
+          break;
+        case 'home':
+          toggleShortcutsModal(false);
+          toggleMobileMenu(false);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          break;
+        case 'genesis':
+          jumpTo('genesis');
+          break;
+        case 'specs':
+          jumpTo('architectural-specs');
+          break;
+        case 'dossier':
+          jumpTo('google-dossier');
+          break;
+        case 'founder':
+          jumpTo('founder');
+          break;
+        case 'warroom':
+          jumpTo('war-room');
+          break;
+        case 'faq':
+          jumpTo('faq');
+          break;
+        case 'terminal':
+          jumpTo('terminal-access');
+          break;
+        case 'mobile-nav':
+          toggleShortcutsModal(false);
+          toggleMobileMenu();
+          break;
+        case 'cookies':
+          toggleShortcutsModal(false);
+          showCookieBanner();
+          break;
+        default:
+          toggleShortcutsModal(false);
+          break;
+      }
+    }
+
+    // Attach click and keyboard events to every shortcut row (making every key row pressable)
+    document.querySelectorAll('.shortcut-row').forEach((row) => {
+      row.addEventListener('click', () => {
+        const action = row.getAttribute('data-action');
+        if (action) {
+          executeShortcutAction(action);
+        }
+      });
+      row.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const action = row.getAttribute('data-action');
+          if (action) {
+            executeShortcutAction(action);
+          }
+        }
+      });
+    });
 
     // 4. Global Keyboard Shortcuts Dispatcher (Bug-Free, Input-Protected, Repeat-Guarded)
     window.addEventListener('keydown', (e) => {
@@ -4330,46 +4480,22 @@
       // Single-letter hotkeys (only without Ctrl/Alt/Meta modifiers)
       if (!e.ctrlKey && !e.metaKey && !e.altKey) {
         const key = e.key.toLowerCase();
-
-        const jumpTo = (id) => {
-          const el = document.getElementById(id);
-          if (el) {
-            toggleShortcutsModal(false);
-            toggleMobileMenu(false);
-            el.scrollIntoView({ behavior: 'smooth' });
-          }
+        const keyActionMap = {
+          'b': 'telegram',
+          'h': 'home',
+          'o': 'home',
+          'g': 'genesis',
+          's': 'specs',
+          'd': 'dossier',
+          'a': 'founder',
+          'w': 'warroom',
+          'f': 'faq',
+          'v': 'terminal',
+          'm': 'mobile-nav',
+          'c': 'cookies'
         };
-
-        if (key === 'b') {
-          // Launch Telegram HUD Bot safely
-          const tgLink = document.querySelector('.btn-tg') || document.querySelector('.btn-motion-primary');
-          if (tgLink) {
-            tgLink.click();
-          } else {
-            window.open('https://t.me/DonAurelius_AI_bot', '_blank', 'noopener');
-          }
-        } else if (key === 'h' || key === 'o') {
-          toggleShortcutsModal(false);
-          toggleMobileMenu(false);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else if (key === 'g') {
-          jumpTo('genesis');
-        } else if (key === 's') {
-          jumpTo('architectural-specs');
-        } else if (key === 'd') {
-          jumpTo('google-dossier');
-        } else if (key === 'a') {
-          jumpTo('founder');
-        } else if (key === 'w') {
-          jumpTo('war-room');
-        } else if (key === 'f') {
-          jumpTo('faq');
-        } else if (key === 'v') {
-          jumpTo('terminal-access');
-        } else if (key === 'm') {
-          toggleMobileMenu();
-        } else if (key === 'c') {
-          showCookieBanner();
+        if (keyActionMap[key]) {
+          executeShortcutAction(keyActionMap[key]);
         }
       }
     });
