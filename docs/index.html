@@ -2184,6 +2184,531 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* ==========================================================================
+       10 Institutional Features: Theme, Shortcuts, FAQ, Back-To-Top, Skeleton
+       ========================================================================== */
+
+    /* 1. Theme System (Dark Default + Apple Platinum Light Mode) */
+    [data-theme="light"] {
+      --bg-dark: #f6f8fb;
+      --apple-glass-bg: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.92) 0%,
+        rgba(241, 245, 249, 0.85) 100%
+      ), rgba(255, 255, 255, 0.94);
+      --apple-glass-border: rgba(15, 23, 42, 0.10);
+      --apple-glass-border-top: rgba(255, 255, 255, 1);
+      --apple-glass-border-left: rgba(255, 255, 255, 0.95);
+      --apple-glass-border-bottom: rgba(15, 23, 42, 0.08);
+      --apple-glass-rim: inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
+      --apple-glass-occlusion: inset 0 -1px 1px 0 rgba(15, 23, 42, 0.04);
+      --apple-glass-shadow: 0 16px 36px -10px rgba(15, 23, 42, 0.08);
+      --apple-glass-pod: rgba(15, 23, 42, 0.04);
+
+      --gold-primary: #b48518;
+      --gold-secondary: #8c640e;
+      --gold-glow: rgba(180, 133, 24, 0.18);
+      --emerald-neon: #059669;
+      --emerald-glow: rgba(5, 150, 105, 0.18);
+      --cyan-neon: #0284c7;
+      --cyan-glow: rgba(2, 132, 199, 0.18);
+      --purple-neon: #8b5cf6;
+      --purple-glow: rgba(139, 92, 246, 0.18);
+
+      --text-main: #0f172a;
+      --text-muted: #475569;
+    }
+
+    [data-theme="light"] body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 20% 12%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 35%, rgba(2, 132, 199, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 12% 70%, rgba(139, 92, 246, 0.05) 0%, transparent 42%),
+        radial-gradient(circle at 75% 85%, rgba(244, 63, 94, 0.04) 0%, transparent 35%);
+      color: var(--text-main);
+    }
+
+    [data-theme="light"] #bg-canvas-3d {
+      opacity: 0.18;
+      filter: invert(1);
+    }
+
+    [data-theme="light"] header,
+    [data-theme="light"] .nav-wrapper {
+      background: rgba(255, 255, 255, 0.88);
+      border-color: rgba(15, 23, 42, 0.09);
+      box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08);
+    }
+
+    [data-theme="light"] .brand-title-text,
+    [data-theme="light"] .section-title,
+    [data-theme="light"] h1, [data-theme="light"] h2, [data-theme="light"] h3,
+    [data-theme="light"] h4, [data-theme="light"] h5, [data-theme="light"] h6,
+    [data-theme="light"] .stat-val,
+    [data-theme="light"] .m-val,
+    [data-theme="light"] .founder-bio h3,
+    [data-theme="light"] .founder-callout span.name,
+    [data-theme="light"] .faq-q-text {
+      color: #0f172a !important;
+    }
+
+    [data-theme="light"] .section-pre,
+    [data-theme="light"] .section-desc,
+    [data-theme="light"] p.tagline,
+    [data-theme="light"] .stat-label,
+    [data-theme="light"] .m-label,
+    [data-theme="light"] .google-desc,
+    [data-theme="light"] .founder-bio p,
+    [data-theme="light"] .agent-desc,
+    [data-theme="light"] .faq-answer-panel p {
+      color: #475569 !important;
+    }
+
+    [data-theme="light"] .nav-links a {
+      color: #334155;
+    }
+    [data-theme="light"] .nav-links a:hover {
+      color: var(--gold-primary);
+    }
+
+    [data-theme="light"] .form-input,
+    [data-theme="light"] .form-select {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: rgba(15, 23, 42, 0.15);
+      color: #0f172a;
+    }
+    [data-theme="light"] .form-input::placeholder {
+      color: #94a3b8;
+    }
+
+    [data-theme="light"] .mobile-nav-drawer {
+      background: rgba(255, 255, 255, 0.98);
+      border-left-color: rgba(15, 23, 42, 0.1);
+    }
+    [data-theme="light"] .mobile-nav-link {
+      color: #1e293b;
+    }
+    [data-theme="light"] .mobile-nav-link:hover {
+      background: rgba(15, 23, 42, 0.05);
+      color: var(--gold-primary);
+    }
+    [data-theme="light"] .shortcut-row {
+      background: rgba(15, 23, 42, 0.04);
+      border-color: rgba(15, 23, 42, 0.08);
+      color: #0f172a;
+    }
+    [data-theme="light"] .shortcut-row kbd {
+      background: rgba(15, 23, 42, 0.08);
+      border-color: rgba(15, 23, 42, 0.2);
+      color: #0f172a;
+    }
+
+    /* Header Control Buttons */
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-header-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--apple-glass-pod);
+      border: 1px solid var(--apple-glass-border);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-header-icon:hover {
+      transform: translateY(-2px) scale(1.05);
+      border-color: var(--gold-primary);
+      box-shadow: 0 4px 14px var(--gold-glow);
+    }
+
+    /* 3. Floating Back-to-Top Button */
+    .btn-back-to-top {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--apple-glass-bg);
+      border: 1px solid var(--apple-glass-border);
+      border-top: 1px solid var(--apple-glass-border-top);
+      backdrop-filter: var(--apple-glass-blur);
+      -webkit-backdrop-filter: var(--apple-glass-blur);
+      color: var(--gold-primary);
+      box-shadow: var(--apple-glass-shadow), 0 0 16px var(--gold-glow);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+      z-index: 1990;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px) scale(0.85);
+      transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s;
+    }
+    .btn-back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+    .btn-back-to-top:hover {
+      transform: translateY(-4px) scale(1.08);
+      border-color: var(--gold-primary);
+      box-shadow: 0 12px 28px var(--gold-glow);
+    }
+    @media (max-width: 768px) {
+      .btn-back-to-top {
+        bottom: 20px;
+        right: 18px;
+        width: 42px;
+        height: 42px;
+        font-size: 1.15rem;
+      }
+    }
+
+    /* 5. Shortcuts Modal & Backdrop */
+    .shortcuts-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 3, 6, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 2200;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s;
+    }
+    .shortcuts-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .shortcuts-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -46%) scale(0.94);
+      width: calc(100% - 32px);
+      max-width: 540px;
+      max-height: 85vh;
+      overflow-y: auto;
+      z-index: 2250;
+      padding: 26px 22px;
+      border-radius: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
+    }
+    .shortcuts-modal.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .shortcuts-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--apple-glass-border);
+    }
+    .shortcuts-badge {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold-primary);
+      display: block;
+      margin-bottom: 2px;
+      font-weight: 700;
+    }
+    .shortcuts-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 9px;
+    }
+    .shortcut-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 14px;
+      background: var(--apple-glass-pod);
+      border: 1px solid var(--apple-glass-border);
+      border-radius: 12px;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+    .shortcut-row kbd {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-bottom-width: 2px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+    }
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: color 0.2s ease;
+    }
+    .btn-close-modal:hover {
+      color: var(--text-main);
+    }
+    .shortcuts-footer {
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top: 1px solid var(--apple-glass-border);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* 6. Refined Hover Micro-Interactions */
+    .apple-liquid-card:hover, .tilt-card:hover {
+      transform: translate3d(0, -6px, 0);
+      border-top-color: rgba(255, 255, 255, 0.55);
+      box-shadow: 0 24px 50px -10px rgba(0, 0, 0, 0.75), var(--apple-glass-rim);
+    }
+    .btn-apple-primary:hover, .btn-tg:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px var(--gold-glow);
+    }
+    .stat-item {
+      transition: background 0.25s ease, transform 0.25s ease;
+      border-radius: 12px;
+    }
+    .stat-item:hover {
+      background: var(--apple-glass-pod);
+      transform: scale(1.02);
+    }
+
+    /* 8. Skeleton Loader */
+    #app-skeleton-overlay {
+      position: fixed;
+      inset: 0;
+      background: #020306;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.45s ease, visibility 0.45s;
+    }
+    #app-skeleton-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .skeleton-box {
+      width: 90%;
+      max-width: 440px;
+      padding: 32px 24px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    }
+    .skeleton-shimmer {
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.04) 0%,
+        rgba(240, 199, 94, 0.18) 50%,
+        rgba(255, 255, 255, 0.04) 100%
+      );
+      background-size: 200% 100%;
+      animation: skeletonPulse 1.4s ease-in-out infinite;
+      border-radius: 8px;
+    }
+    @keyframes skeletonPulse {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .skeleton-avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+    }
+    .skeleton-line-title {
+      width: 70%;
+      height: 22px;
+    }
+    .skeleton-line-sub {
+      width: 85%;
+      height: 14px;
+    }
+    .skeleton-status-text {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 9. Expandable FAQ Section */
+    .section-faq {
+      padding: 70px 0;
+      position: relative;
+    }
+    .faq-container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .faq-item {
+      border: 1px solid var(--apple-glass-border);
+      border-top: 1px solid var(--apple-glass-border-top);
+      border-radius: 18px;
+      background: var(--apple-glass-bg);
+      backdrop-filter: var(--apple-glass-blur);
+      -webkit-backdrop-filter: var(--apple-glass-blur);
+      box-shadow: var(--apple-glass-shadow);
+      overflow: hidden;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    }
+    .faq-item:hover {
+      border-color: rgba(240, 199, 94, 0.35);
+      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.6), 0 0 16px var(--gold-glow);
+    }
+    .faq-item.active {
+      border-color: var(--gold-primary);
+    }
+    .faq-question-btn {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 1.05rem;
+      font-weight: 600;
+      gap: 16px;
+    }
+    .faq-question-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .faq-number {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--gold-primary);
+      font-weight: 700;
+      background: rgba(240, 199, 94, 0.1);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(240, 199, 94, 0.25);
+    }
+    .faq-icon-chevron {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--apple-glass-pod);
+      border: 1px solid var(--apple-glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-primary);
+      font-size: 1rem;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+      flex-shrink: 0;
+    }
+    .faq-item.active .faq-icon-chevron {
+      transform: rotate(45deg);
+      background: var(--gold-primary);
+      color: #000;
+    }
+    .faq-answer-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), padding 0.35s ease;
+      padding: 0 24px;
+    }
+    .faq-item.active .faq-answer-panel {
+      max-height: 400px;
+      padding: 0 24px 22px;
+    }
+    .faq-answer-panel p {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      line-height: 1.7;
+    }
+    @media (max-width: 768px) {
+      .faq-question-btn {
+        padding: 16px 18px;
+        font-size: 0.96rem;
+      }
+      .faq-item.active .faq-answer-panel {
+        padding: 0 18px 18px;
+      }
+    }
+
+    /* 10. Password / Passkey Toggle Input */
+    .password-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .password-input-wrapper .form-input {
+      padding-right: 48px;
+      width: 100%;
+    }
+    .btn-toggle-password {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: var(--gold-primary);
+      cursor: pointer;
+      font-size: 1.15rem;
+      padding: 8px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .btn-toggle-password:hover {
+      transform: translateY(-50%) scale(1.15);
+      opacity: 0.9;
+    }
+
   </style>
 </head>
 <body>
@@ -2216,8 +2741,17 @@
         <li><a href="#google-dossier">Dossier</a></li>
         <li><a href="#founder">Founder</a></li>
         <li><a href="#war-room">War Room</a></li>
+        <li><a href="#faq">FAQs</a></li>
       </ul>
       <div class="header-actions">
+        <div class="header-controls">
+          <button id="btn-theme-toggle" class="btn-header-icon" aria-label="Toggle Dark and Light Mode" title="Toggle Theme (T)">
+            <span id="theme-toggle-icon">🌙</span>
+          </button>
+          <button id="btn-shortcuts-toggle" class="btn-header-icon" aria-label="Keyboard Shortcuts" title="Keyboard Shortcuts (?)">
+            <span>⌨️</span>
+          </button>
+        </div>
         <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="btn-tg" aria-label="Open Don Aurelius Official Telegram Bot">
           <span>Telegram HUD</span>
           <span class="btn-icon-bubble">↗</span>
@@ -2245,9 +2779,18 @@
         <li><a href="#google-dossier" class="mobile-nav-link"><span>🛡️</span> Strategic Dossier</a></li>
         <li><a href="#founder" class="mobile-nav-link"><span>👑</span> Founder: SM.KANISH</a></li>
         <li><a href="#war-room" class="mobile-nav-link"><span>⚔️</span> War Room Council</a></li>
+        <li><a href="#faq" class="mobile-nav-link"><span>❓</span> Expandable FAQs</a></li>
         <li><a href="#terminal-access" class="mobile-nav-link"><span>📜</span> Whitelist / Verification</a></li>
         <li><a href="#compliance" class="mobile-nav-link"><span>⚖️</span> Governance & Compliance</a></li>
       </ul>
+      <div style="display: flex; gap: 10px; margin: 16px 0; padding: 0 4px;">
+        <button id="btn-mobile-theme-toggle" class="btn-apple-primary" style="flex: 1; padding: 10px; font-size: 0.85rem;" aria-label="Toggle Light/Dark Theme">
+          <span id="mobile-theme-toggle-icon">🌙</span> <span id="mobile-theme-text">Toggle Theme</span>
+        </button>
+        <button id="btn-mobile-shortcuts-toggle" class="btn-apple-primary" style="flex: 1; padding: 10px; font-size: 0.85rem;" aria-label="Show Keyboard Shortcuts">
+          <span>⌨️</span> <span>Shortcuts</span>
+        </button>
+      </div>
       <div class="mobile-nav-footer">
         <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="btn-apple-primary btn-mobile-tg">
           <span>Launch Telegram HUD</span>
@@ -2743,6 +3286,103 @@
       </div>
     </section>
 
+    <!-- Section: Institutional Quantitative FAQ (Expandable Accordion) -->
+    <section class="section-faq" id="faq">
+      <div class="container">
+        <div class="section-title-wrap">
+          <div class="section-pre">Sovereign Intelligence • Inquiries & Clarifications</div>
+          <h3 class="section-title">Frequently Asked Questions</h3>
+          <p class="section-desc">Comprehensive architectural and operational guidance regarding Don Aurelius neural systems.</p>
+        </div>
+
+        <div class="faq-container">
+          <!-- FAQ 1 -->
+          <div class="faq-item">
+            <button class="faq-question-btn" aria-expanded="false" aria-controls="faq-ans-1">
+              <div class="faq-question-left">
+                <span class="faq-number">01</span>
+                <span class="faq-q-text">What fundamentally distinguishes Don Aurelius from retail MT5 Expert Advisors?</span>
+              </div>
+              <span class="faq-icon-chevron">+</span>
+            </button>
+            <div class="faq-answer-panel" id="faq-ans-1">
+              <p>Retail Expert Advisors rely on static, lagging technical indicators (RSI, MACD, moving averages) that fail during volatility shocks. Don Aurelius operates as an autonomous multi-agent neural syndicate: Project Eagle-Eye analyzes raw visual chart geometry via multimodal computer vision, Jarvis-Radar tracks global macro yield and liquidity velocity, Crisis Sentinel detects geopolitical black swans in real time, and the Quantum Twin runs thousands of predictive Monte Carlo paths before a single order is routed.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-item">
+            <button class="faq-question-btn" aria-expanded="false" aria-controls="faq-ans-2">
+              <div class="faq-question-left">
+                <span class="faq-number">02</span>
+                <span class="faq-q-text">How does the Quantum Twin Monte Carlo simulation compute survival probability?</span>
+              </div>
+              <span class="faq-icon-chevron">+</span>
+            </button>
+            <div class="faq-answer-panel" id="faq-ans-2">
+              <p>The Quantum Twin generates 5,000 synthetic future market trajectories across diverse volatility clusters, simulating slippage, spread widening, and flash drawdowns. Any proposed trade must demonstrate a 99.4% probability of remaining above maximum allowable drawdown thresholds before receiving supermajority voting clearance from the War Room Council.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-item">
+            <button class="faq-question-btn" aria-expanded="false" aria-controls="faq-ans-3">
+              <div class="faq-question-left">
+                <span class="faq-number">03</span>
+                <span class="faq-q-text">How does Agent Inquisitor protect against broker manipulation and flash crashes?</span>
+              </div>
+              <span class="faq-icon-chevron">+</span>
+            </button>
+            <div class="faq-answer-panel" id="faq-ans-3">
+              <p>Agent Inquisitor acts as an internal adversarial red-team auditor. It actively probes order routes for hidden toxic flow, sudden liquidity vacuums, asymmetric spread spikes, and anomalous tick latency. If an anomaly is identified, Inquisitor vetoes trade authorization and can trigger the Clean Slate Protocol to instantly flatten open exposure into cash.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-item">
+            <button class="faq-question-btn" aria-expanded="false" aria-controls="faq-ans-4">
+              <div class="faq-question-left">
+                <span class="faq-number">04</span>
+                <span class="faq-q-text">Is Don Aurelius compliant with proprietary trading firm rules (FTMO, FundedNext, etc.)?</span>
+              </div>
+              <span class="faq-icon-chevron">+</span>
+            </button>
+            <div class="faq-answer-panel" id="faq-ans-4">
+              <p>Yes. The architecture includes strict risk-governance constraints configured specifically to enforce prop-firm daily drawdown caps (e.g., 4% or 5%), maximum overall trailing limits, weekend flat mandates, and high-impact news blackout windows. No toxic martingale, grid, or unhedged averaging is ever deployed.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="faq-item">
+            <button class="faq-question-btn" aria-expanded="false" aria-controls="faq-ans-5">
+              <div class="faq-question-left">
+                <span class="faq-number">05</span>
+                <span class="faq-q-text">What infrastructure and VPS specifications are recommended for optimal execution?</span>
+              </div>
+              <span class="faq-icon-chevron">+</span>
+            </button>
+            <div class="faq-answer-panel" id="faq-ans-5">
+              <p>For institutional execution, we recommend an ultra-low latency Windows Server or Linux VPS situated in London (LD4) or New York (NY4), located within sub-2ms ping of major ECN liquidity hubs. The core Python neural engine connects seamlessly via zero-lag sockets to MetaTrader 5 terminal bridges.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 6 -->
+          <div class="faq-item">
+            <button class="faq-question-btn" aria-expanded="false" aria-controls="faq-ans-6">
+              <div class="faq-question-left">
+                <span class="faq-number">06</span>
+                <span class="faq-q-text">What role does Founder SM.KANISH play in system evolution?</span>
+              </div>
+              <span class="faq-icon-chevron">+</span>
+            </button>
+            <div class="faq-answer-panel" id="faq-ans-6">
+              <p>Founder SM.KANISH architects the continuous neural feedback loop, calibrating multi-agent reward policies, evaluating out-of-sample stress distributions, and curating sovereign weight checkpoints. Every algorithm and protective protocol in the Genesis Suite was conceived and deployed under his direct technical stewardship.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Section: Compliant Quantitative Access & Verification Dossier Request -->
     <section class="section-verification" id="terminal-access">
       <div class="container">
@@ -2795,6 +3435,20 @@
                   <option value="academic">Academic / Quantitative Researcher</option>
                 </select>
               </div>
+            </div>
+
+            <!-- Password / Private Passkey Input with Eye Visibility Toggle -->
+            <div class="form-group" style="margin-top: 14px;">
+              <label for="applicant-passkey">Private Terminal Passkey / Token <span style="color: var(--text-muted); font-size: 0.8rem; font-weight: 400;">(Optional for Whitelisted Access)</span></label>
+              <div class="password-input-wrapper">
+                <input type="password" id="applicant-passkey" name="applicant_passkey" class="form-input" placeholder="Enter syndicate passkey or secret credential" autocomplete="current-password">
+                <button type="button" id="btn-toggle-password" class="btn-toggle-password" aria-label="Toggle password visibility" title="Show/Hide Passkey">
+                  <span id="eye-icon">👁️</span>
+                </button>
+              </div>
+              <span style="display: block; margin-top: 6px; font-size: 0.76rem; color: var(--text-muted);">
+                Tap the eye icon to unmask or conceal your private authentication string.
+              </span>
             </div>
 
             <div class="form-consent-box">
@@ -3538,6 +4192,223 @@
         toggleMobileMenu(false);
       }
     });
-  </script>
+
+    /* ==========================================================================
+       10 Institutional Features Implementation:
+       - Dark/Light Theme Toggle (with persistent localStorage & matchMedia)
+       - Back-to-Top Button (scroll-triggered & smooth scroll)
+       - Shortcuts Modal & Global Keybindings (T, H, G, S, W, F, V, M, ?, Esc)
+       - Expandable Accordion FAQs (accessible & animated)
+       - Password Visibility Toggle (eye unmask / mask)
+       - Skeleton Loader & Telemetry Ingestion Simulator
+       ========================================================================== */
+
+    // 1. Dark & Light Mode Toggle
+    const themeToggleBtn = document.getElementById('btn-theme-toggle');
+    const mobileThemeToggleBtn = document.getElementById('btn-mobile-theme-toggle');
+    const themeIcon = document.getElementById('theme-toggle-icon');
+    const mobileThemeIcon = document.getElementById('mobile-theme-toggle-icon');
+    const mobileThemeText = document.getElementById('mobile-theme-text');
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('da_theme', theme);
+      const isLight = theme === 'light';
+      const icon = isLight ? '☀️' : '🌙';
+      if (themeIcon) themeIcon.textContent = icon;
+      if (mobileThemeIcon) mobileThemeIcon.textContent = icon;
+      if (mobileThemeText) mobileThemeText.textContent = isLight ? 'Light Mode' : 'Dark Mode';
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+    }
+
+    if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+    if (mobileThemeToggleBtn) mobileThemeToggleBtn.addEventListener('click', toggleTheme);
+
+    // Initial theme detection
+    const savedTheme = localStorage.getItem('da_theme') || 
+      (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    applyTheme(savedTheme);
+
+    // 3. Back-To-Top Button
+    const backToTopBtn = document.getElementById('btn-back-to-top');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY || document.documentElement.scrollTop;
+      if (backToTopBtn) {
+        if (y > 350) {
+          backToTopBtn.classList.add('visible');
+        } else {
+          backToTopBtn.classList.remove('visible');
+        }
+      }
+    }, { passive: true });
+
+    if (backToTopBtn) {
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // 5. Shortcuts Modal HUD
+    const shortcutsModal = document.getElementById('shortcuts-modal');
+    const shortcutsBackdrop = document.getElementById('shortcuts-backdrop');
+    const shortcutsToggleBtn = document.getElementById('btn-shortcuts-toggle');
+    const mobileShortcutsToggleBtn = document.getElementById('btn-mobile-shortcuts-toggle');
+    const closeShortcutsBtn = document.getElementById('btn-close-shortcuts');
+
+    function toggleShortcutsModal(open) {
+      if (!shortcutsModal) return;
+      const isOpen = open !== undefined ? open : !shortcutsModal.classList.contains('open');
+      if (isOpen) {
+        shortcutsModal.removeAttribute('hidden');
+        shortcutsModal.classList.add('open');
+        if (shortcutsBackdrop) shortcutsBackdrop.classList.add('open');
+      } else {
+        shortcutsModal.classList.remove('open');
+        if (shortcutsBackdrop) shortcutsBackdrop.classList.remove('open');
+        setTimeout(() => {
+          if (!shortcutsModal.classList.contains('open')) {
+            shortcutsModal.setAttribute('hidden', '');
+          }
+        }, 250);
+      }
+    }
+
+    if (shortcutsToggleBtn) shortcutsToggleBtn.addEventListener('click', () => toggleShortcutsModal());
+    if (mobileShortcutsToggleBtn) {
+      mobileShortcutsToggleBtn.addEventListener('click', () => {
+        toggleMobileMenu(false);
+        toggleShortcutsModal(true);
+      });
+    }
+    if (closeShortcutsBtn) closeShortcutsBtn.addEventListener('click', () => toggleShortcutsModal(false));
+    if (shortcutsBackdrop) shortcutsBackdrop.addEventListener('click', () => toggleShortcutsModal(false));
+
+    // Global Keyboard Shortcuts Dispatcher
+    window.addEventListener('keydown', (e) => {
+      // Don't trigger navigation hotkeys if user is focused inside an input/textarea/select
+      const activeEl = document.activeElement;
+      const isInput = activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.tagName === 'SELECT');
+
+      if (e.key === 'Escape') {
+        toggleShortcutsModal(false);
+        toggleMobileMenu(false);
+        return;
+      }
+
+      if ((e.key === '?' || (e.key === 'k' && (e.metaKey || e.ctrlKey))) && !isInput) {
+        e.preventDefault();
+        toggleShortcutsModal();
+        return;
+      }
+
+      if (!isInput && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        const key = e.key.toLowerCase();
+        if (key === 't') {
+          toggleTheme();
+        } else if (key === 'h') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (key === 'g') {
+          const el = document.getElementById('genesis-suite') || document.getElementById('genesis');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        } else if (key === 's') {
+          const el = document.getElementById('architectural-specs');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        } else if (key === 'w') {
+          const el = document.getElementById('war-room');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        } else if (key === 'f') {
+          const el = document.getElementById('faq');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        } else if (key === 'v') {
+          const el = document.getElementById('terminal-access') || document.getElementById('verification');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        } else if (key === 'm') {
+          toggleMobileMenu();
+        }
+      }
+    });
+
+    // 9. Expandable FAQ Accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const btn = item.querySelector('.faq-question-btn');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          const wasActive = item.classList.contains('active');
+          // Close others for clean accordion feel
+          faqItems.forEach(other => {
+            other.classList.remove('active');
+            const otherBtn = other.querySelector('.faq-question-btn');
+            if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+          });
+          if (!wasActive) {
+            item.classList.add('active');
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      }
+    });
+
+    // 10. Password Visibility Toggle
+    const togglePasswordBtn = document.getElementById('btn-toggle-password');
+    const passkeyInput = document.getElementById('applicant-passkey');
+    const eyeIcon = document.getElementById('eye-icon');
+
+    if (togglePasswordBtn && passkeyInput) {
+      togglePasswordBtn.addEventListener('click', () => {
+        const isPassword = passkeyInput.type === 'password';
+        passkeyInput.type = isPassword ? 'text' : 'password';
+        if (eyeIcon) {
+          eyeIcon.textContent = isPassword ? '🙈' : '👁️';
+        }
+        togglePasswordBtn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+      });
+    }
+
+    // 8. Skeleton Loader Handlers
+    window.addEventListener('load', () => {
+      const skeleton = document.getElementById('app-skeleton-overlay');
+      if (skeleton) {
+        setTimeout(() => {
+          skeleton.classList.add('hidden');
+        }, 350);
+      }
+    });
+
+    // Fallback dismiss after 1.5s in case load event was already consumed
+    setTimeout(() => {
+      const skeleton = document.getElementById('app-skeleton-overlay');
+      if (skeleton && !skeleton.classList.contains('hidden')) {
+        skeleton.classList.add('hidden');
+      }
+    }, 1500);
+
+    // Interactive Telemetry Skeleton Simulator
+    function simulateTelemetrySkeleton() {
+      const statVals = document.querySelectorAll('.stat-val');
+      const btnText = document.getElementById('telemetry-btn-text');
+      if (btnText) btnText.textContent = 'Ingesting Live Ticks...';
+      
+      statVals.forEach(val => {
+        val.style.opacity = '0.35';
+        val.classList.add('skeleton-shimmer');
+      });
+
+      setTimeout(() => {
+        statVals.forEach(val => {
+          val.style.opacity = '1';
+          val.classList.remove('skeleton-shimmer');
+        });
+        if (btnText) btnText.textContent = 'Simulate Live Telemetry Ingestion';
+      }, 900);
+    }
+    window.simulateTelemetrySkeleton = simulateTelemetrySkeleton;
+
+    </script>
 </body>
 </html>
