@@ -352,7 +352,7 @@
       top: 16px;
       left: 50%;
       transform: translateX(-50%);
-      width: min(1140px, calc(100% - 32px));
+      width: min(1220px, calc(100% - 24px));
       z-index: 1000;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -361,7 +361,7 @@
       border-top: 1px solid rgba(255, 255, 255, 0.45);
       border-radius: 9999px;
       box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.45);
-      padding: 8px 18px;
+      padding: 8px 16px;
       transition: all 0.3s ease;
     }
     .nav-wrapper {
@@ -369,12 +369,15 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
+      gap: 12px;
     }
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
       text-decoration: none;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
     .brand-avatar-box {
       width: 38px;
@@ -411,18 +414,24 @@
     }
     .nav-links {
       display: flex;
-      gap: 4px;
+      gap: 2px;
       list-style: none;
       align-items: center;
+      flex-wrap: nowrap;
+    }
+    .nav-links li {
+      flex-shrink: 0;
     }
     .nav-links a {
       color: #cbd5e1;
       text-decoration: none;
-      font-size: 0.85rem;
+      font-size: 0.83rem;
       font-weight: 500;
-      padding: 8px 14px;
+      padding: 7px 11px;
       border-radius: 9999px;
       transition: all 0.2s ease;
+      white-space: nowrap;
+      display: inline-block;
     }
     .nav-links a:hover {
       color: #ffffff;
@@ -432,7 +441,7 @@
     .btn-tg {
       background: linear-gradient(135deg, var(--gold-secondary), var(--gold-primary));
       color: #07080a;
-      padding: 8px 18px;
+      padding: 8px 16px;
       border-radius: 9999px;
       font-weight: 700;
       font-size: 0.82rem;
@@ -441,8 +450,13 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
       transition: transform 0.2s, box-shadow 0.2s;
       box-shadow: 0 4px 14px var(--gold-glow);
+    }
+    .btn-tg span {
+      white-space: nowrap;
     }
     .btn-tg:hover {
       transform: translateY(-2px);
@@ -1833,6 +1847,34 @@
       }
     }
 
+    /* Laptop & Scaled Display Navigation Safeguard (Zero Wrapping) */
+    @media (max-width: 1200px) and (min-width: 993px) {
+      .nav-links a {
+        padding: 6px 9px;
+        font-size: 0.79rem;
+      }
+      .nav-links {
+        gap: 1px;
+      }
+      .brand-text span {
+        display: none;
+      }
+      .btn-tg {
+        padding: 7px 13px;
+        font-size: 0.78rem;
+      }
+    }
+
+    /* Tablet & Compact Viewport Navigation Safeguard */
+    @media (max-width: 992px) {
+      .nav-links {
+        display: none !important;
+      }
+      .btn-mobile-menu {
+        display: flex !important;
+      }
+    }
+
     @media (max-width: 768px) {
       /* Global Layout & Padding */
       .container {
@@ -2748,11 +2790,11 @@
           <button id="btn-theme-toggle" class="btn-header-icon" aria-label="Toggle Dark and Light Mode" title="Toggle Theme (T)">
             <span id="theme-toggle-icon">🌙</span>
           </button>
-          <button id="btn-shortcuts-toggle" class="btn-header-icon" aria-label="Keyboard Shortcuts" title="Keyboard Shortcuts (?)">
+          <button id="btn-shortcuts-toggle" class="btn-header-icon" aria-label="Keyboard Shortcuts" title="Keyboard Shortcuts (? or Ctrl+K)">
             <span>⌨️</span>
           </button>
         </div>
-        <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="btn-tg" aria-label="Open Don Aurelius Official Telegram Bot">
+        <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="btn-tg" aria-label="Open Don Aurelius Official Telegram Bot" title="Launch Telegram HUD (Press B)">
           <span>Telegram HUD</span>
           <span class="btn-icon-bubble">↗</span>
         </a>
@@ -3578,7 +3620,11 @@
         <kbd>?</kbd>
       </div>
       <div class="shortcut-row">
-        <span>Scroll to Top (Home)</span>
+        <span>Launch Telegram HUD Bot</span>
+        <kbd>B</kbd>
+      </div>
+      <div class="shortcut-row">
+        <span>Scroll to Overview (Home)</span>
         <kbd>H</kbd>
       </div>
       <div class="shortcut-row">
@@ -3588,6 +3634,14 @@
       <div class="shortcut-row">
         <span>Jump to Benchmark Specs</span>
         <kbd>S</kbd>
+      </div>
+      <div class="shortcut-row">
+        <span>Jump to Google Dossier</span>
+        <kbd>D</kbd>
+      </div>
+      <div class="shortcut-row">
+        <span>Jump to Architect & Founder</span>
+        <kbd>A</kbd>
       </div>
       <div class="shortcut-row">
         <span>Jump to War Room</span>
@@ -4430,6 +4484,16 @@
           toggleMobileMenu();
         } else if (key === 'c') {
           showCookieBanner();
+        } else if (key === 'b') {
+          window.open('https://t.me/DonAurelius_AI_bot', '_blank', 'noopener');
+        } else if (key === 'd') {
+          const el = document.getElementById('google-dossier') || document.getElementById('dossier');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        } else if (key === 'a') {
+          const el = document.getElementById('founder');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        } else if (key === 'o') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       }
     });
