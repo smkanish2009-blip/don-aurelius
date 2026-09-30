@@ -3509,6 +3509,7 @@
             <li><a href="cookie-policy.html">Cookie & Storage Policy</a></li>
             <li><a href="refund-policy.html">Digital Software Refund Policy</a></li>
             <li><a href="terms.html#cftc-disclaimer">CFTC Rule 4.41 Disclosure</a></li>
+            <li><button type="button" onclick="showCookieBanner()" class="footer-cookie-btn" style="background:none;border:none;padding:0;font-family:inherit;font-size:inherit;color:var(--gold-primary);cursor:pointer;">🍪 Cookie Preferences</button></li>
           </ul>
         </div>
 
@@ -3551,6 +3552,85 @@
       </button>
     </div>
   </aside>
+
+  <!-- Floating Apple VisionOS Back-to-Top Button -->
+  <button id="btn-back-to-top" class="btn-back-to-top" aria-label="Back to top of page" title="Scroll to Top (H)">
+    <span>↑</span>
+  </button>
+
+  <!-- Apple Liquid Glass Keyboard Shortcuts Modal -->
+  <div id="shortcuts-backdrop" class="shortcuts-backdrop" aria-hidden="true"></div>
+  <div id="shortcuts-modal" class="shortcuts-modal apple-liquid-card" role="dialog" aria-modal="true" aria-labelledby="shortcuts-title" hidden>
+    <div class="shortcuts-header">
+      <div class="shortcuts-title-wrap">
+        <span class="shortcuts-badge">COMMAND CENTER</span>
+        <h4 id="shortcuts-title" style="font-family: var(--font-display); font-size: 1.25rem; color: var(--text-main);">Keyboard Shortcuts</h4>
+      </div>
+      <button id="btn-close-shortcuts" class="btn-close-modal" aria-label="Close shortcuts modal">✕</button>
+    </div>
+    <div class="shortcuts-grid">
+      <div class="shortcut-row">
+        <span>Toggle Dark / Light Theme</span>
+        <kbd>T</kbd>
+      </div>
+      <div class="shortcut-row">
+        <span>Open / Close Shortcuts HUD</span>
+        <kbd>?</kbd>
+      </div>
+      <div class="shortcut-row">
+        <span>Scroll to Top (Home)</span>
+        <kbd>H</kbd>
+      </div>
+      <div class="shortcut-row">
+        <span>Jump to Genesis Suite</span>
+        <kbd>G</kbd>
+      </div>
+      <div class="shortcut-row">
+        <span>Jump to Benchmark Specs</span>
+        <kbd>S</kbd>
+      </div>
+      <div class="shortcut-row">
+        <span>Jump to War Room</span>
+        <kbd>W</kbd>
+      </div>
+      <div class="shortcut-row">
+        <span>Jump to Expandable FAQs</span>
+        <kbd>F</kbd>
+      </div>
+      <div class="shortcut-row">
+        <span>Jump to Verification Desk</span>
+        <kbd>V</kbd>
+      </div>
+      <div class="shortcut-row">
+        <span>Toggle Mobile Navigation</span>
+        <kbd>M</kbd>
+      </div>
+      <div class="shortcut-row">
+        <span>Open Cookie Transparency Banner</span>
+        <kbd>C</kbd>
+      </div>
+      <div class="shortcut-row">
+        <span>Close Modal / Drawer</span>
+        <kbd>Esc</kbd>
+      </div>
+    </div>
+    <div class="shortcuts-footer">
+      <span>Tip: Press <kbd>?</kbd> or <kbd>Ctrl+K</kbd> anywhere on the page to summon this HUD.</span>
+    </div>
+  </div>
+
+  <!-- Initial Neural Core Skeleton Preloader -->
+  <div id="app-skeleton-overlay" aria-hidden="true">
+    <div class="skeleton-box">
+      <div class="skeleton-avatar skeleton-shimmer"></div>
+      <div class="skeleton-line-title skeleton-shimmer"></div>
+      <div class="skeleton-line-sub skeleton-shimmer"></div>
+      <div class="skeleton-status-text">
+        <span class="pulse"></span>
+        <span>INITIALIZING NEURAL WEIGHTS • DON AURELIUS CORE v4.1</span>
+      </div>
+    </div>
+  </div>
 
   <!-- 3D WebGL Engine, Debounced Glass Physics & Scroll Animations -->
   <script>
@@ -4027,13 +4107,28 @@
     /* ==========================================================================
        Cookie Transparency Consent Manager
        ========================================================================== */
+    function showCookieBanner() {
+      const banner = document.getElementById('cookie-consent-banner');
+      if (banner) {
+        banner.classList.add('show');
+      }
+    }
+    window.showCookieBanner = showCookieBanner;
+
+    function resetCookieConsent() {
+      localStorage.removeItem('da_cookie_consent');
+      showCookieBanner();
+    }
+    window.resetCookieConsent = resetCookieConsent;
+
     function initCookieConsent() {
       const consent = localStorage.getItem('da_cookie_consent');
       const banner = document.getElementById('cookie-consent-banner');
-      if (!consent && banner) {
+      const forceShow = window.location.hash === '#cookies' || window.location.search.includes('cookies=true');
+      if ((!consent || forceShow) && banner) {
         setTimeout(() => {
           banner.classList.add('show');
-        }, 1200);
+        }, 400);
       }
     }
 
@@ -4045,7 +4140,11 @@
       }
     }
 
-    window.addEventListener('DOMContentLoaded', initCookieConsent);
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', initCookieConsent);
+    } else {
+      initCookieConsent();
+    }
 
     // Escape key closes cookie banner
     window.addEventListener('keydown', (e) => {
@@ -4329,6 +4428,8 @@
           if (el) el.scrollIntoView({ behavior: 'smooth' });
         } else if (key === 'm') {
           toggleMobileMenu();
+        } else if (key === 'c') {
+          showCookieBanner();
         }
       }
     });
