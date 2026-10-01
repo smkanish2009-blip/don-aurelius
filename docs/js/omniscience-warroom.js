@@ -197,71 +197,297 @@
   const audio = new OmniscienceAudio();
 
   /* ============================================================================
-     2. Mode 1: Interactive 3D Tactical Planetary Liquidity Globe
+     2. Mode 1: Real 3D Photorealistic Earth Globe (Google Earth / Maps Engine)
+     Powered by Three.js WebGL • NASA Satellite Topography & Normal Relief
      ============================================================================ */
-  class TacticalGlobe {
+  class RealTacticalEarth {
     constructor(canvas, onCitySelect) {
       this.canvas = canvas;
-      this.ctx = canvas.getContext('2d');
       this.onCitySelect = onCitySelect;
-      this.rotX = 0.35;
-      this.rotY = 0;
-      this.velX = 0;
-      this.velY = 0.004; // Gentle autonomous rotation
+      this.viewMode = 'satellite';
+      this.autoRotate = true;
+      this.targetZoom = 25.0;
       this.isDragging = false;
       this.lastMouseX = 0;
       this.lastMouseY = 0;
-      this.points = [];
-      this.arcs = [];
+      this.velX = 0;
+      this.velY = 0.002;
+
       this.hubs = [
-        { name: 'London LBMA', lat: 51.5, lon: -0.12, status: 'OPEN • HIGH LIQUIDITY', spread: '0.9 pips', vol: '$42.8B/day', color: '#f5c542' },
-        { name: 'New York COMEX', lat: 40.7, lon: -74.0, status: 'PRE-MARKET ACTIVE', spread: '1.2 pips', vol: '$38.2B/day', color: '#00f0ff' },
-        { name: 'Zurich Vaults', lat: 47.4, lon: 8.5, status: 'SETTLEMENT LOCKED', spread: '0.8 pips', vol: '$19.5B/day', color: '#f5c542' },
-        { name: 'Tokyo Asia Core', lat: 35.7, lon: 139.7, status: 'SESSION HARVESTED', spread: '1.4 pips', vol: '$22.1B/day', color: '#10b981' },
-        { name: 'Shanghai SGE', lat: 31.2, lon: 121.5, status: 'PHYSICAL ARBITRAGE', spread: '+$14.20 premium', vol: '$26.4B/day', color: '#f5c542' }
+        { name: 'London LBMA', lat: 51.5074, lon: -0.1278, status: 'OPEN • HIGH LIQUIDITY', spread: '0.12 pips', vol: '$42.8B/day', color: '#f5c542' },
+        { name: 'New York COMEX', lat: 40.7128, lon: -74.0060, status: 'PRE-MARKET ACTIVE', spread: '0.18 pips', vol: '$38.2B/day', color: '#00f0ff' },
+        { name: 'Zurich Vaults', lat: 47.3769, lon: 8.5417, status: 'SETTLEMENT LOCKED', spread: '0.08 pips', vol: '$19.5B/day', color: '#f5c542' },
+        { name: 'Tokyo Asia Core', lat: 35.6762, lon: 139.6503, status: 'SESSION HARVESTED', spread: '0.24 pips', vol: '$22.1B/day', color: '#10b981' },
+        { name: 'Shanghai SGE', lat: 31.2304, lon: 121.4737, status: 'PHYSICAL ARBITRAGE', spread: '+$14.20 premium', vol: '$26.4B/day', color: '#f5c542' },
+        { name: 'Dubai DMCC', lat: 25.2048, lon: 55.2708, status: 'BULLION CLEARED', spread: '0.15 pips', vol: '$16.8B/day', color: '#00f0ff' },
+        { name: 'Singapore SGX', lat: 1.3521, lon: 103.8198, status: 'ACTIVE CORRIDOR', spread: '0.16 pips', vol: '$14.2B/day', color: '#10b981' }
       ];
-      this.hoveredHub = null;
-      this.initPoints();
-      this.initArcs();
-      this.bindEvents();
+      this.activeHub = this.hubs[0];
+      this.raycastTargets = [];
+      this.arcs = [];
+      this.rings = [];
+
+      this.initScene();
+      this.bindControls();
     }
 
-    initPoints() {
-      this.points = [];
-      // Fibonacci sphere distribution for uniform 3D Earth point cloud
-      const numPoints = 650;
-      const phi = Math.PI * (3 - Math.sqrt(5)); // Golden ratio angle
-      for (let i = 0; i < numPoints; i++) {
-        const y = 1 - (i / (numPoints - 1)) * 2; // y goes from 1 to -1
-        const radiusAtY = Math.sqrt(1 - y * y);
-        const theta = phi * i;
-        const x = Math.cos(theta) * radiusAtY;
-        const z = Math.sin(theta) * radiusAtY;
-        this.points.push({ x, y, z, lat: Math.asin(y), lon: Math.atan2(z, x) });
-      }
-    }
+    initScene() {
+      if (typeof THREE === 'undefined') return;
 
-    latLonToXYZ(latDeg, lonDeg) {
-      const lat = (latDeg * Math.PI) / 180;
-      const lon = (lonDeg * Math.PI) / 180;
-      return {
-        x: Math.cos(lat) * Math.sin(lon),
-        y: -Math.sin(lat),
-        z: Math.cos(lat) * Math.cos(lon)
+      const rect = this.canvas.parentElement ? this.canvas.parentElement.getBoundingClientRect() : { width: 800, height: 520 };
+      const w = rect.width || 800;
+      const h = rect.height || 520;
+
+      this.scene = new THREE.Scene();
+      this.camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000);
+      this.camera.position.set(0, 3, this.targetZoom);
+
+      this.renderer = new THREE.WebGLRenderer({
+        canvas: this.canvas,
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance'
+      });
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      this.renderer.setSize(w, h);
+
+      // Texture loader with local assets
+      const loader = new THREE.TextureLoader();
+      this.textures = {
+        day: loader.load('assets/earth_atmos.jpg'),
+        normal: loader.load('assets/earth_normal.jpg'),
+        specular: loader.load('assets/earth_specular.jpg'),
+        night: loader.load('assets/earth_night.jpg'),
+        clouds: loader.load('assets/earth_clouds.png')
       };
+
+      // Globe Group
+      this.globeGroup = new THREE.Group();
+      this.scene.add(this.globeGroup);
+
+      // 1. Earth Sphere (NASA Blue Marble Day)
+      const radius = 10;
+      this.earthGeometry = new THREE.SphereGeometry(radius, 64, 64);
+      this.earthMaterial = new THREE.MeshPhongMaterial({
+        map: this.textures.day,
+        normalMap: this.textures.normal,
+        normalScale: new THREE.Vector2(0.85, 0.85),
+        specularMap: this.textures.specular,
+        specular: new THREE.Color(0x333333),
+        shininess: 16
+      });
+      this.earthMesh = new THREE.Mesh(this.earthGeometry, this.earthMaterial);
+      this.globeGroup.add(this.earthMesh);
+
+      // 2. Realistic Cloud Deck Layer
+      this.cloudsGeometry = new THREE.SphereGeometry(radius * 1.014, 64, 64);
+      this.cloudsMaterial = new THREE.MeshPhongMaterial({
+        map: this.textures.clouds,
+        transparent: true,
+        opacity: 0.45,
+        blending: THREE.AdditiveBlending
+      });
+      this.cloudsMesh = new THREE.Mesh(this.cloudsGeometry, this.cloudsMaterial);
+      this.globeGroup.add(this.cloudsMesh);
+
+      // 3. Google Earth Atmospheric Limb Glow Shader
+      const atmosVertexShader = `
+        varying vec3 vNormal;
+        varying vec3 vPosition;
+        void main() {
+          vNormal = normalize(normalMatrix * normal);
+          vPosition = (modelViewMatrix * vec4(position, 1.0)).xyz;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `;
+      const atmosFragmentShader = `
+        varying vec3 vNormal;
+        varying vec3 vPosition;
+        void main() {
+          vec3 viewDir = normalize(-vPosition);
+          float rim = 1.0 - max(dot(vNormal, viewDir), 0.0);
+          float alpha = pow(rim, 2.6) * 0.9;
+          vec3 glowColor = mix(vec3(0.0, 0.75, 1.0), vec3(0.96, 0.77, 0.26), 0.15);
+          gl_FragColor = vec4(glowColor, alpha);
+        }
+      `;
+      const atmosMat = new THREE.ShaderMaterial({
+        vertexShader: atmosVertexShader,
+        fragmentShader: atmosFragmentShader,
+        side: THREE.BackSide,
+        blending: THREE.AdditiveBlending,
+        transparent: true
+      });
+      const atmosMesh = new THREE.Mesh(new THREE.SphereGeometry(radius * 1.045, 64, 64), atmosMat);
+      this.scene.add(atmosMesh);
+
+      // 4. Starfield Space Background
+      const starGeom = new THREE.BufferGeometry();
+      const starCount = 1000;
+      const starPositions = new Float32Array(starCount * 3);
+      for (let i = 0; i < starCount * 3; i += 3) {
+        const r = 200 + Math.random() * 150;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        starPositions[i] = r * Math.sin(phi) * Math.cos(theta);
+        starPositions[i + 1] = r * Math.sin(phi) * Math.sin(theta);
+        starPositions[i + 2] = r * Math.cos(phi);
+      }
+      starGeom.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+      const starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 1.1, transparent: true, opacity: 0.65 });
+      this.starfield = new THREE.Points(starGeom, starMat);
+      this.scene.add(this.starfield);
+
+      // 5. Lighting
+      this.sunLight = new THREE.DirectionalLight(0xfff8e8, 1.35);
+      this.sunLight.position.set(-35, 16, 25);
+      this.scene.add(this.sunLight);
+
+      this.ambientLight = new THREE.AmbientLight(0x162238, 0.65);
+      this.scene.add(this.ambientLight);
+
+      // 6. Financial Hub Pins & Beacons
+      this.buildHubs(radius);
+
+      // 7. Transcontinental 3D Bullion Arcs
+      this.buildArcs();
+
+      // Initial Earth Orientation (Tilt + Prime Meridian Facing)
+      this.earthMesh.rotation.x = 0.35;
+      this.earthMesh.rotation.y = -1.57;
+      this.updateCoordHud();
     }
 
-    initArcs() {
-      // Connect key bullion corridors: London-NY, London-Zurich, Tokyo-Shanghai, Zurich-Shanghai
-      this.arcs = [
-        { from: this.hubs[0], to: this.hubs[1], progress: 0.1, speed: 0.007 },
-        { from: this.hubs[0], to: this.hubs[2], progress: 0.5, speed: 0.010 },
-        { from: this.hubs[3], to: this.hubs[4], progress: 0.8, speed: 0.008 },
-        { from: this.hubs[2], to: this.hubs[4], progress: 0.3, speed: 0.005 }
+    latLonToVector3(lat, lon, r) {
+      const phi = (90 - lat) * (Math.PI / 180);
+      const theta = (lon + 180) * (Math.PI / 180);
+      const x = -r * Math.sin(phi) * Math.cos(theta);
+      const y = r * Math.cos(phi);
+      const z = r * Math.sin(phi) * Math.sin(theta);
+      return new THREE.Vector3(x, y, z);
+    }
+
+    buildHubs(radius) {
+      this.raycastTargets = [];
+      this.rings = [];
+
+      this.hubs.forEach((hub, idx) => {
+        const pos = this.latLonToVector3(hub.lat, hub.lon, radius);
+        const hubGroup = new THREE.Group();
+
+        const normal = pos.clone().normalize();
+        const hex = hub.color === '#00f0ff' ? 0x00f0ff : (hub.color === '#10b981' ? 0x10b981 : 0xf5c542);
+
+        // Ground Ripple Ring
+        const ringGeom = new THREE.RingGeometry(0.12, 0.42, 32);
+        const ringMat = new THREE.MeshBasicMaterial({ color: hex, side: THREE.DoubleSide, transparent: true, opacity: 0.8 });
+        const ringMesh = new THREE.Mesh(ringGeom, ringMat);
+        ringMesh.position.copy(pos.clone().multiplyScalar(1.003));
+        ringMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
+        hubGroup.add(ringMesh);
+        this.rings.push({ mesh: ringMesh, phase: idx * 0.8 });
+
+        // Beacon Core Sphere
+        const beaconGeom = new THREE.SphereGeometry(0.18, 16, 16);
+        const beaconMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        const beaconMesh = new THREE.Mesh(beaconGeom, beaconMat);
+        beaconMesh.position.copy(pos.clone().multiplyScalar(1.018));
+        hubGroup.add(beaconMesh);
+
+        // Vertical Laser Pillar
+        const laserGeom = new THREE.BufferGeometry().setFromPoints([
+          pos.clone().multiplyScalar(1.0),
+          pos.clone().multiplyScalar(1.22)
+        ]);
+        const laserMat = new THREE.LineBasicMaterial({ color: hex, transparent: true, opacity: 0.85 });
+        const laserLine = new THREE.Line(laserGeom, laserMat);
+        hubGroup.add(laserLine);
+
+        // Raycasting Hit Sphere
+        const hitGeom = new THREE.SphereGeometry(0.75, 8, 8);
+        const hitMat = new THREE.MeshBasicMaterial({ visible: false });
+        const hitMesh = new THREE.Mesh(hitGeom, hitMat);
+        hitMesh.position.copy(pos.clone().multiplyScalar(1.02));
+        hitMesh.userData = { hub: hub };
+        this.raycastTargets.push(hitMesh);
+        hubGroup.add(hitMesh);
+
+        this.earthMesh.add(hubGroup);
+      });
+    }
+
+    buildArcs() {
+      this.arcs = [];
+      const corridors = [
+        [0, 1, 0xf5c542], // London <-> New York
+        [0, 2, 0xf5c542], // London <-> Zurich
+        [2, 5, 0x00f0ff], // Zurich <-> Dubai
+        [5, 4, 0xf5c542], // Dubai <-> Shanghai
+        [4, 3, 0x10b981], // Shanghai <-> Tokyo
+        [0, 6, 0x00f0ff], // London <-> Singapore
+        [1, 3, 0xf5c542]  // New York <-> Tokyo
       ];
+
+      corridors.forEach(([fromIdx, toIdx, colorHex]) => {
+        const hubA = this.hubs[fromIdx];
+        const hubB = this.hubs[toIdx];
+        const pA = this.latLonToVector3(hubA.lat, hubA.lon, 10.02);
+        const pB = this.latLonToVector3(hubB.lat, hubB.lon, 10.02);
+
+        const dist = pA.distanceTo(pB);
+        const mid = pA.clone().add(pB).multiplyScalar(0.5);
+        const alt = 10.0 + Math.max(1.8, dist * 0.26);
+        const apex = mid.normalize().multiplyScalar(alt);
+
+        const curve = new THREE.QuadraticBezierCurve3(pA, apex, pB);
+        const pts = curve.getPoints(50);
+        const geom = new THREE.BufferGeometry().setFromPoints(pts);
+        const mat = new THREE.LineBasicMaterial({ color: colorHex, transparent: true, opacity: 0.45 });
+        const line = new THREE.Line(geom, mat);
+        this.earthMesh.add(line);
+
+        // Photon packet
+        const photonGeom = new THREE.SphereGeometry(0.16, 12, 12);
+        const photonMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff });
+        const photon = new THREE.Mesh(photonGeom, photonMat);
+        this.earthMesh.add(photon);
+
+        this.arcs.push({
+          curve: curve,
+          photon: photon,
+          progress: Math.random(),
+          speed: 0.005 + Math.random() * 0.004
+        });
+      });
     }
 
-    bindEvents() {
+    setMode(mode) {
+      this.viewMode = mode;
+      if (!this.earthMaterial) return;
+
+      if (mode === 'night') {
+        this.earthMaterial.map = this.textures.night;
+        this.earthMaterial.emissive = new THREE.Color(0xfff0bb);
+        this.earthMaterial.emissiveMap = this.textures.night;
+        this.earthMaterial.emissiveIntensity = 0.95;
+        this.earthMaterial.shininess = 6;
+        if (this.cloudsMesh) this.cloudsMesh.visible = false;
+        if (this.ambientLight) this.ambientLight.intensity = 0.85;
+        if (this.sunLight) this.sunLight.intensity = 0.25;
+      } else {
+        this.earthMaterial.map = this.textures.day;
+        this.earthMaterial.emissive = new THREE.Color(0x000000);
+        this.earthMaterial.emissiveMap = null;
+        this.earthMaterial.emissiveIntensity = 0;
+        this.earthMaterial.shininess = 16;
+        if (this.cloudsMesh) this.cloudsMesh.visible = true;
+        if (this.ambientLight) this.ambientLight.intensity = 0.65;
+        if (this.sunLight) this.sunLight.intensity = 1.35;
+      }
+      this.earthMaterial.needsUpdate = true;
+    }
+
+    bindControls() {
       const start = (x, y) => {
         this.isDragging = true;
         this.lastMouseX = x;
@@ -269,21 +495,24 @@
         this.velX = 0;
         this.velY = 0;
       };
+
       const move = (x, y) => {
-        if (this.isDragging) {
+        if (this.isDragging && this.earthMesh) {
           const dx = x - this.lastMouseX;
           const dy = y - this.lastMouseY;
-          this.rotY += dx * 0.006;
-          this.rotX += dy * 0.006;
-          this.rotX = Math.max(-1.2, Math.min(1.2, this.rotX));
-          this.velY = dx * 0.004;
-          this.velX = dy * 0.004;
+          this.earthMesh.rotation.y += dx * 0.005;
+          this.earthMesh.rotation.x += dy * 0.005;
+          this.earthMesh.rotation.x = Math.max(-1.1, Math.min(1.1, this.earthMesh.rotation.x));
+          this.velY = dx * 0.003;
+          this.velX = dy * 0.003;
           this.lastMouseX = x;
           this.lastMouseY = y;
+          this.updateCoordHud();
         } else {
-          this.checkHover(x, y);
+          this.checkRaycast(x, y);
         }
       };
+
       const end = () => {
         this.isDragging = false;
       };
@@ -306,6 +535,13 @@
       }, { passive: true });
       this.canvas.addEventListener('touchend', end);
 
+      this.canvas.addEventListener('wheel', e => {
+        e.preventDefault();
+        this.targetZoom += e.deltaY * 0.018;
+        this.targetZoom = Math.max(14.0, Math.min(42.0, this.targetZoom));
+        this.updateCoordHud();
+      }, { passive: false });
+
       this.canvas.addEventListener('click', e => {
         const rect = this.canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -314,179 +550,115 @@
       });
     }
 
-    checkHover(mx, my) {
-      const w = this.canvas.width;
-      const h = this.canvas.height;
-      const radius = Math.min(w, h) * 0.38;
-      const cx = w / 2;
-      const cy = h / 2;
+    checkRaycast(mx, my) {
+      if (!this.camera || !this.raycastTargets.length) return;
+      const rect = this.canvas.getBoundingClientRect();
+      const mouse = new THREE.Vector2(
+        (mx / rect.width) * 2 - 1,
+        -(my / rect.height) * 2 + 1
+      );
+      const raycaster = new THREE.Raycaster();
+      raycaster.setFromCamera(mouse, this.camera);
+      const intersects = raycaster.intersectObjects(this.raycastTargets);
 
-      let found = null;
-      for (const hub of this.hubs) {
-        const p = this.latLonToXYZ(hub.lat, hub.lon);
-        const rot = this.project3D(p.x, p.y, p.z, radius, cx, cy);
-        if (rot.z > 0) { // Front face only
-          const dist = Math.hypot(rot.x - mx, rot.y - my);
-          if (dist < 18) {
-            found = hub;
-            break;
-          }
+      if (intersects.length > 0) {
+        const hit = intersects[0].object.userData.hub;
+        this.canvas.style.cursor = 'pointer';
+        if (hit !== this.hoveredHub) {
+          this.hoveredHub = hit;
+          audio.playClick();
         }
-      }
-      if (found !== this.hoveredHub) {
-        this.hoveredHub = found;
-        this.canvas.style.cursor = found ? 'pointer' : 'grab';
-        if (found) audio.playClick();
+      } else {
+        this.canvas.style.cursor = 'grab';
+        this.hoveredHub = null;
       }
     }
 
     handleClick(mx, my) {
       if (this.hoveredHub) {
-        audio.playSonar();
-        if (this.onCitySelect) this.onCitySelect(this.hoveredHub);
+        this.flyToHub(this.hoveredHub);
       }
     }
 
-    project3D(x, y, z, radius, cx, cy) {
-      // Rotate around X axis
-      const cosX = Math.cos(this.rotX);
-      const sinX = Math.sin(this.rotX);
-      const y1 = y * cosX - z * sinX;
-      const z1 = y * sinX + z * cosX;
+    flyToHub(hub) {
+      this.activeHub = hub;
+      audio.playSonar();
+      audio.speak(`Orbiting ${hub.name}. Interbank bullion liquidity cleared.`);
+      if (this.onCitySelect) this.onCitySelect(hub);
 
-      // Rotate around Y axis
-      const cosY = Math.cos(this.rotY);
-      const sinY = Math.sin(this.rotY);
-      const x2 = x * cosY + z1 * sinY;
-      const z2 = -x * sinY + z1 * cosY;
+      const targetY = -((hub.lon - 90) * Math.PI / 180);
+      const targetX = (hub.lat * Math.PI / 180) * 0.45;
 
-      return {
-        x: cx + x2 * radius,
-        y: cy + y1 * radius,
-        z: z2,
-        scale: (z2 + 1.6) / 2.6
-      };
+      let step = 0;
+      const startY = this.earthMesh.rotation.y;
+      const startX = this.earthMesh.rotation.x;
+      const startZoom = this.targetZoom;
+      const destZoom = 18.0;
+
+      const flyInterval = setInterval(() => {
+        step += 0.04;
+        const ease = Math.sin(step * Math.PI / 2);
+        this.earthMesh.rotation.y = startY + (targetY - startY) * ease;
+        this.earthMesh.rotation.x = startX + (targetX - startX) * ease;
+        this.targetZoom = startZoom + (destZoom - startZoom) * ease;
+        this.updateCoordHud();
+        if (step >= 1.0) {
+          clearInterval(flyInterval);
+        }
+      }, 16);
+    }
+
+    updateCoordHud() {
+      const coordEl = document.getElementById('canvas-coord-hud');
+      if (!coordEl) return;
+      const altKm = Math.round((this.camera.position.z - 10) * 35);
+      if (this.activeHub) {
+        coordEl.textContent = `TARGET: ${this.activeHub.name} • ${Math.abs(this.activeHub.lat).toFixed(2)}°${this.activeHub.lat >= 0 ? 'N' : 'S'} ${Math.abs(this.activeHub.lon).toFixed(2)}°${this.activeHub.lon >= 0 ? 'E' : 'W'} • ALT: ${altKm} KM`;
+      }
+    }
+
+    resize(w, h) {
+      if (!this.renderer || !this.camera) return;
+      this.camera.aspect = w / h;
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize(w, h);
     }
 
     render() {
-      const ctx = this.ctx;
-      const w = this.canvas.width;
-      const h = this.canvas.height;
-      ctx.clearRect(0, 0, w, h);
+      if (!this.renderer || !this.scene || !this.camera) return;
 
-      if (!this.isDragging) {
-        this.rotY += this.velY;
-        this.rotX += this.velX;
-        this.velY *= 0.96;
-        this.velX *= 0.96;
-        if (Math.abs(this.velY) < 0.0015) this.velY = 0.0025; // Continuous gentle drift
+      if (!this.isDragging && this.earthMesh) {
+        if (this.autoRotate) {
+          this.earthMesh.rotation.y += 0.0018;
+        } else {
+          this.earthMesh.rotation.y += this.velY;
+          this.earthMesh.rotation.x += this.velX;
+          this.velY *= 0.95;
+          this.velX *= 0.95;
+        }
       }
 
-      const radius = Math.min(w, h) * 0.36;
-      const cx = w / 2;
-      const cy = h / 2;
-
-      // Draw Globe Ambient Atmospheres
-      const atmGrad = ctx.createRadialGradient(cx, cy, radius * 0.6, cx, cy, radius * 1.25);
-      atmGrad.addColorStop(0, 'rgba(0, 240, 255, 0.04)');
-      atmGrad.addColorStop(0.7, 'rgba(245, 197, 66, 0.03)');
-      atmGrad.addColorStop(1, 'transparent');
-      ctx.fillStyle = atmGrad;
-      ctx.beginPath();
-      ctx.arc(cx, cy, radius * 1.25, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Draw Globe Rim Silhouette
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-      ctx.stroke();
-
-      // Render 3D Point Cloud
-      for (const p of this.points) {
-        const pr = this.project3D(p.x, p.y, p.z, radius, cx, cy);
-        const alpha = Math.max(0.06, (pr.z + 1) / 2);
-        ctx.fillStyle = pr.z > 0 ? `rgba(245, 197, 66, ${alpha * 0.85})` : `rgba(255, 255, 255, ${alpha * 0.25})`;
-        ctx.beginPath();
-        const ptSize = pr.z > 0 ? Math.max(1, 1.8 * pr.scale) : 1;
-        ctx.arc(pr.x, pr.y, ptSize, 0, Math.PI * 2);
-        ctx.fill();
+      if (this.cloudsMesh) {
+        this.cloudsMesh.rotation.y += 0.0006;
       }
 
-      // Render Parabolic Liquidity Arcs
-      const time = performance.now() * 0.001;
+      this.camera.position.z += (this.targetZoom - this.camera.position.z) * 0.08;
+
       for (const arc of this.arcs) {
-        arc.progress = (arc.progress + arc.speed) % 1;
-        const p1 = this.latLonToXYZ(arc.from.lat, arc.from.lon);
-        const p2 = this.latLonToXYZ(arc.to.lat, arc.to.lon);
-
-        const r1 = this.project3D(p1.x, p1.y, p1.z, radius, cx, cy);
-        const r2 = this.project3D(p2.x, p2.y, p2.z, radius, cx, cy);
-
-        // Control point lifted in 3D space
-        const mx = (p1.x + p2.x) * 0.5 * 1.45;
-        const my = (p1.y + p2.y) * 0.5 * 1.45;
-        const mz = (p1.z + p2.z) * 0.5 * 1.45;
-        const rm = this.project3D(mx, my, mz, radius, cx, cy);
-
-        if (r1.z > -0.2 || r2.z > -0.2) {
-          ctx.strokeStyle = 'rgba(245, 197, 66, 0.28)';
-          ctx.lineWidth = 1.2;
-          ctx.beginPath();
-          ctx.moveTo(r1.x, r1.y);
-          ctx.quadraticCurveTo(rm.x, rm.y, r2.x, r2.y);
-          ctx.stroke();
-
-          // Traveling Gold Photon on Arc
-          const t = arc.progress;
-          const px = (1 - t) * (1 - t) * r1.x + 2 * (1 - t) * t * rm.x + t * t * r2.x;
-          const py = (1 - t) * (1 - t) * r1.y + 2 * (1 - t) * t * rm.y + t * t * r2.y;
-
-          ctx.fillStyle = '#00f0ff';
-          ctx.shadowColor = '#00f0ff';
-          ctx.shadowBlur = 10;
-          ctx.beginPath();
-          ctx.arc(px, py, 3.5, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.shadowBlur = 0;
-        }
+        arc.progress = (arc.progress + arc.speed) % 1.0;
+        const pt = arc.curve.getPoint(arc.progress);
+        arc.photon.position.copy(pt);
       }
 
-      // Render Bullion Hub Nodes
-      for (const hub of this.hubs) {
-        const p = this.latLonToXYZ(hub.lat, hub.lon);
-        const pr = this.project3D(p.x, p.y, p.z, radius, cx, cy);
-
-        if (pr.z > -0.15) {
-          const isHovered = this.hoveredHub === hub;
-          const pulse = (Math.sin(time * 4) + 1) / 2;
-
-          // Pulsing Ring
-          ctx.strokeStyle = hub.color;
-          ctx.lineWidth = 1.5;
-          ctx.beginPath();
-          ctx.arc(pr.x, pr.y, 6 + pulse * 8, 0, Math.PI * 2);
-          ctx.stroke();
-
-          // Core Node Dot
-          ctx.fillStyle = isHovered ? '#ffffff' : hub.color;
-          ctx.shadowColor = hub.color;
-          ctx.shadowBlur = 14;
-          ctx.beginPath();
-          ctx.arc(pr.x, pr.y, isHovered ? 5.5 : 4, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.shadowBlur = 0;
-
-          // Hub Label
-          ctx.font = '600 11px JetBrains Mono, monospace';
-          ctx.fillStyle = isHovered ? '#ffffff' : '#cbd5e1';
-          ctx.fillText(hub.name, pr.x + 12, pr.y + 4);
-        }
+      const t = performance.now() * 0.003;
+      for (const ring of this.rings) {
+        const scale = 1.0 + (Math.sin(t + ring.phase) * 0.5 + 0.5) * 0.6;
+        ring.mesh.scale.set(scale, scale, scale);
       }
+
+      this.renderer.render(this.scene, this.camera);
     }
   }
-
   /* ============================================================================
      3. Mode 2: Interactive 3D Neural Synapse Cortex (Aureus Brain)
      ============================================================================ */
@@ -974,8 +1146,14 @@
      ============================================================================ */
   function initCockpit() {
     const deck = document.getElementById('omniscience-deck');
-    const canvas = document.getElementById('cockpit-canvas');
-    if (!deck || !canvas) return;
+    const canvas2d = document.getElementById('cockpit-canvas');
+    const webglCanvas = document.getElementById('cockpit-webgl-canvas');
+    const gmapsOverlay = document.getElementById('cockpit-gmaps-container');
+    const globeSubnav = document.getElementById('globe-subnav');
+    const coordHud = document.getElementById('canvas-coord-hud');
+    const badgeText = document.getElementById('cockpit-status-badge-text');
+
+    if (!deck || !canvas2d || !webglCanvas) return;
 
     let currentMode = 'globe';
     let globeEngine = null;
@@ -984,31 +1162,54 @@
     let spacetimeEngine = null;
 
     // High-DPI Canvas Resizing
-    function resizeCanvas() {
-      const rect = canvas.parentElement.getBoundingClientRect();
+    function resizeCanvases() {
+      const rect = webglCanvas.parentElement ? webglCanvas.parentElement.getBoundingClientRect() : { width: 800, height: 520 };
+      const w = rect.width;
+      const h = rect.height;
+
+      // 2D Canvas Resize
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      const ctx = canvas.getContext('2d');
-      ctx.scale(dpr, dpr);
+      canvas2d.width = w * dpr;
+      canvas2d.height = h * dpr;
+      const ctx = canvas2d.getContext('2d');
+      if (ctx) ctx.scale(dpr, dpr);
+
+      // WebGL Canvas Resize
+      if (globeEngine) {
+        globeEngine.resize(w, h);
+      }
     }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    resizeCanvases();
+    window.addEventListener('resize', resizeCanvases);
 
-    // Initialize Sub-Engines
-    globeEngine = new TacticalGlobe(canvas, hub => {
-      const cityEl = document.getElementById('telemetry-hub-name');
-      const spreadEl = document.getElementById('telemetry-hub-spread');
-      const volEl = document.getElementById('telemetry-hub-vol');
-      const statusEl = document.getElementById('telemetry-hub-status');
-      if (cityEl) cityEl.textContent = hub.name;
-      if (spreadEl) spreadEl.textContent = hub.spread;
-      if (volEl) volEl.textContent = hub.vol;
-      if (statusEl) statusEl.textContent = hub.status;
-    });
+    // Initialize Real 3D Tactical Earth Engine
+    const initGlobe = () => {
+      globeEngine = new RealTacticalEarth(webglCanvas, hub => {
+        const cityEl = document.getElementById('telemetry-hub-name');
+        const spreadEl = document.getElementById('telemetry-hub-spread');
+        const volEl = document.getElementById('telemetry-hub-vol');
+        const statusEl = document.getElementById('telemetry-hub-status');
+        if (cityEl) cityEl.textContent = hub.name;
+        if (spreadEl) spreadEl.textContent = hub.spread;
+        if (volEl) volEl.textContent = hub.vol;
+        if (statusEl) statusEl.textContent = hub.status;
+      });
+      resizeCanvases();
+    };
 
-    neuralEngine = new NeuralSynapse(canvas);
-    sniperEngine = new VisionSniper(canvas, pnl => {
+    if (typeof THREE !== 'undefined') {
+      initGlobe();
+    } else {
+      const waitThree = setInterval(() => {
+        if (typeof THREE !== 'undefined') {
+          clearInterval(waitThree);
+          initGlobe();
+        }
+      }, 50);
+    }
+
+    neuralEngine = new NeuralSynapse(canvas2d);
+    sniperEngine = new VisionSniper(canvas2d, pnl => {
       const pnlVal = document.getElementById('live-pnl-val');
       if (pnlVal) {
         let current = 0;
@@ -1025,7 +1226,64 @@
       }
     });
 
-    spacetimeEngine = new GravitationalSpacetime(canvas);
+    spacetimeEngine = new GravitationalSpacetime(canvas2d);
+
+    // Wire Globe Subnav Controls (Satellite / Night / Google Maps)
+    const btnSatellite = document.getElementById('btn-view-satellite');
+    const btnNight = document.getElementById('btn-view-night');
+    const btnGmaps = document.getElementById('btn-view-gmaps');
+    const btnAutoRotate = document.getElementById('btn-view-autorotate');
+    const hint = document.getElementById('canvas-hint-text');
+
+    const setSubnavActive = (activeBtn) => {
+      [btnSatellite, btnNight, btnGmaps].forEach(b => {
+        if (b) b.classList.remove('active');
+      });
+      if (activeBtn) activeBtn.classList.add('active');
+    };
+
+    if (btnSatellite) {
+      btnSatellite.addEventListener('click', () => {
+        audio.playClick();
+        setSubnavActive(btnSatellite);
+        if (gmapsOverlay) gmapsOverlay.style.display = 'none';
+        webglCanvas.style.display = 'block';
+        if (globeEngine) globeEngine.setMode('satellite');
+        if (hint) hint.textContent = 'Photorealistic NASA Satellite Earth • Drag to rotate • Scroll to zoom';
+      });
+    }
+
+    if (btnNight) {
+      btnNight.addEventListener('click', () => {
+        audio.playClick();
+        setSubnavActive(btnNight);
+        if (gmapsOverlay) gmapsOverlay.style.display = 'none';
+        webglCanvas.style.display = 'block';
+        if (globeEngine) globeEngine.setMode('night');
+        if (hint) hint.textContent = 'NASA Black Marble Night Lights • Metropolitan liquidity constellations';
+      });
+    }
+
+    if (btnGmaps) {
+      btnGmaps.addEventListener('click', () => {
+        audio.playClick();
+        setSubnavActive(btnGmaps);
+        webglCanvas.style.display = 'none';
+        if (gmapsOverlay) gmapsOverlay.style.display = 'block';
+        if (hint) hint.textContent = 'Google Maps Satellite HUD • LBMA Bullion Vaults (88 Wood St, London)';
+      });
+    }
+
+    if (btnAutoRotate) {
+      btnAutoRotate.addEventListener('click', () => {
+        audio.playClick();
+        if (globeEngine) {
+          globeEngine.autoRotate = !globeEngine.autoRotate;
+          btnAutoRotate.classList.toggle('active', globeEngine.autoRotate);
+          btnAutoRotate.textContent = globeEngine.autoRotate ? '🔄 AUTO-ROTATE: ON' : '⏸️ AUTO-ROTATE: OFF';
+        }
+      });
+    }
 
     // Mode Tab Buttons
     const tabButtons = document.querySelectorAll('.cockpit-tab-btn');
@@ -1036,11 +1294,33 @@
         btn.classList.add('active');
         currentMode = btn.getAttribute('data-mode');
 
-        const hint = document.getElementById('canvas-hint-text');
-        if (currentMode === 'globe' && hint) hint.textContent = 'Drag to rotate 3D Earth • Click financial hubs to inspect';
-        else if (currentMode === 'neural' && hint) hint.textContent = 'Move cursor to warp neural gravity • Click to fire synapses';
-        else if (currentMode === 'sniper' && hint) hint.textContent = 'Gemini Vision AI scanning Asian range stop-loss clusters';
-        else if (currentMode === 'spacetime' && hint) hint.textContent = 'Drag cursor across 4D mesh to perturb market spacetime';
+        if (currentMode === 'globe') {
+          webglCanvas.style.display = 'block';
+          canvas2d.style.display = 'none';
+          if (globeSubnav) globeSubnav.style.display = 'flex';
+          if (coordHud) coordHud.style.display = 'block';
+          if (gmapsOverlay) gmapsOverlay.style.display = 'none';
+          if (badgeText) badgeText.textContent = '120 FPS REAL 3D EARTH MATRIX';
+          if (hint) hint.textContent = 'Drag to rotate Real 3D Earth • Scroll to zoom • Click hubs to inspect';
+        } else {
+          webglCanvas.style.display = 'none';
+          canvas2d.style.display = 'block';
+          if (globeSubnav) globeSubnav.style.display = 'none';
+          if (coordHud) coordHud.style.display = 'none';
+          if (gmapsOverlay) gmapsOverlay.style.display = 'none';
+
+          if (currentMode === 'neural') {
+            if (badgeText) badgeText.textContent = '1,200 BIOLUMINESCENT NEURONS ACTIVE';
+            if (hint) hint.textContent = 'Move cursor to warp neural gravity • Click to fire synapses';
+          } else if (currentMode === 'sniper') {
+            if (badgeText) badgeText.textContent = 'GEMINI MULTIMODAL VISION SCANNING';
+            if (hint) hint.textContent = 'Gemini Vision AI scanning Asian range stop-loss clusters';
+          } else if (currentMode === 'spacetime') {
+            if (badgeText) badgeText.textContent = '4D EINSTEINIAN GRAVITY MESH';
+            if (hint) hint.textContent = 'Drag cursor across 4D mesh to perturb market spacetime';
+          }
+        }
+        resizeCanvases();
       });
     });
 
@@ -1050,7 +1330,7 @@
       fullscreenBtn.addEventListener('click', () => {
         audio.playBreach();
         deck.classList.toggle('fullscreen-mode');
-        resizeCanvas();
+        resizeCanvases();
       });
     }
 
@@ -1080,7 +1360,6 @@
     if (execBtn) {
       execBtn.addEventListener('click', () => {
         if (currentMode !== 'sniper') {
-          // Switch to sniper tab automatically
           const sniperTab = document.querySelector('[data-mode="sniper"]');
           if (sniperTab) sniperTab.click();
         }
@@ -1117,7 +1396,7 @@
     window.addEventListener('keydown', e => {
       if (e.key === 'Escape' && deck.classList.contains('fullscreen-mode')) {
         deck.classList.remove('fullscreen-mode');
-        resizeCanvas();
+        resizeCanvases();
       }
     });
 
@@ -1128,8 +1407,8 @@
       deck.scrollIntoView({ behavior: 'smooth', block: 'center' });
       setTimeout(() => {
         deck.classList.add('fullscreen-mode');
-        resizeCanvas();
-        audio.speak('Commander SM.KANISH authenticated. Sovereign Quantum Cockpit breached. All neural arrays active.');
+        resizeCanvases();
+        audio.speak('Commander SM.KANISH authenticated. Sovereign Quantum Cockpit breached. Real 3D Earth matrix active.');
       }, 350);
     };
 
@@ -1145,10 +1424,10 @@
 
     // Master 120 FPS Animation Loop
     function renderLoop() {
-      if (currentMode === 'globe') globeEngine.render();
-      else if (currentMode === 'neural') neuralEngine.render();
-      else if (currentMode === 'sniper') sniperEngine.render();
-      else if (currentMode === 'spacetime') spacetimeEngine.render();
+      if (currentMode === 'globe' && globeEngine) globeEngine.render();
+      else if (currentMode === 'neural' && neuralEngine) neuralEngine.render();
+      else if (currentMode === 'sniper' && sniperEngine) sniperEngine.render();
+      else if (currentMode === 'spacetime' && spacetimeEngine) spacetimeEngine.render();
 
       requestAnimationFrame(renderLoop);
     }

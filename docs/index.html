@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Enterprise Security & Content Protection Headers -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-src 'self' https://www.google.com https://maps.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="X-Frame-Options" content="DENY">
   <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -3374,7 +3374,7 @@
 
             <!-- Mode Switcher Tabs -->
             <div class="cockpit-tabs-bar" role="tablist" aria-label="Cockpit Visualization Modes">
-              <button type="button" class="cockpit-tab-btn active" data-mode="globe" role="tab" aria-selected="true">🌐 3D PLANETARY LIQUIDITY GLOBE</button>
+              <button type="button" class="cockpit-tab-btn active" data-mode="globe" role="tab" aria-selected="true">🌐 3D REAL EARTH GLOBE</button>
               <button type="button" class="cockpit-tab-btn" data-mode="neural" role="tab" aria-selected="false">🌌 3D NEURAL SYNAPSE CORTEX</button>
               <button type="button" class="cockpit-tab-btn" data-mode="sniper" role="tab" aria-selected="false">🎯 AUREUS VISION AI SNIPER</button>
               <button type="button" class="cockpit-tab-btn" data-mode="spacetime" role="tab" aria-selected="false">🪐 4D SPACETIME LIQUIDITY WELL</button>
@@ -3391,12 +3391,33 @@
                 
                 <div class="canvas-live-badge">
                   <span class="badge-dot"></span>
-                  <span>120 FPS GPU MATRIX ACTIVE</span>
+                  <span id="cockpit-status-badge-text">120 FPS REAL 3D EARTH MATRIX</span>
                 </div>
 
-                <canvas id="cockpit-canvas" role="img" aria-label="Don Aurelius Quantum Omniscience Cockpit rendering 3D planetary liquidity globe, neural synapses, visual AI orderbook, and gravitational spacetime mesh."></canvas>
+                <!-- Globe View Controls (Satellite / Night / Google Maps) -->
+                <div class="globe-subnav" id="globe-subnav">
+                  <button type="button" class="globe-sub-btn active" id="btn-view-satellite" title="Photorealistic NASA Satellite Earth">🛰️ SATELLITE</button>
+                  <button type="button" class="globe-sub-btn" id="btn-view-night" title="NASA Black Marble Night Lights">🌃 NIGHT LIGHTS</button>
+                  <button type="button" class="globe-sub-btn" id="btn-view-gmaps" title="Google Maps Satellite HUD of Bullion Vaults">🗺️ GOOGLE MAPS HUD</button>
+                  <button type="button" class="globe-sub-btn" id="btn-view-autorotate" title="Toggle Auto-Rotation">🔄 AUTO-ROTATE</button>
+                </div>
 
-                <div class="canvas-interaction-hint" id="canvas-hint-text">Drag to rotate 3D Earth • Click financial hubs to inspect</div>
+                <!-- Real 3D WebGL Earth Globe Canvas -->
+                <canvas id="cockpit-webgl-canvas" role="img" aria-label="Real 3D Photorealistic Earth Globe rendered with Three.js WebGL and NASA satellite topography."></canvas>
+
+                <!-- 2D Canvas for Neural, AI Sniper, and Spacetime Well -->
+                <canvas id="cockpit-canvas" style="display:none;" role="img" aria-label="Don Aurelius Quantum Omniscience Cockpit rendering neural synapses, visual AI orderbook, and gravitational spacetime mesh."></canvas>
+
+                <!-- Google Maps Interactive Satellite Frame -->
+                <div id="cockpit-gmaps-container" class="cockpit-gmaps-overlay" style="display:none;">
+                  <iframe id="cockpit-gmaps-iframe" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2482.909062635439!2d-0.0934149234208493!3d51.51486071016834!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761cab08202517%3A0xb355152843efc60a!2s88%20Wood%20St%2C%20London%20EC2V%207RS%2C%20UK!5e1!3m2!1sen!2suk!4v1727789400000!5m2!1sen!2suk" 
+                    width="100%" height="100%" style="border:0; border-radius:18px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Google Maps Satellite HUD of LBMA Bullion Vaults">
+                  </iframe>
+                </div>
+
+                <div class="canvas-interaction-hint" id="canvas-hint-text">Drag to rotate Real 3D Earth • Scroll to zoom • Click hubs to inspect</div>
+                <div class="canvas-coord-hud" id="canvas-coord-hud">LAT: 51.5074° N • LON: 0.1278° W • ALT: 420 KM</div>
               </div>
 
               <!-- Live Telemetry & Control Sidebar -->
