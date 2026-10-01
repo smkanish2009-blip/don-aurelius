@@ -153,6 +153,9 @@
   <!-- Three.js 3D WebGL Engine (Deferred to prevent render-blocking) -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
+  <!-- Quantum Omniscience War Room & 3D Neural Cockpit v5.0 -->
+  <link rel="stylesheet" href="css/omniscience-warroom.css">
+
   <style>
     /* ==========================================================================
        MotionSites.ai Tier — Sovereign Apple Liquid Glass Design System
@@ -2892,6 +2895,10 @@
         </div>
 
         <div class="hero-cta">
+          <a href="#war-room" class="btn-apple-gold" onclick="if(window.breachCockpit) window.breachCockpit();">
+            <span>⚡ Breach Quantum Cockpit</span>
+            <span class="btn-icon-bubble">⛶</span>
+          </a>
           <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="btn-apple-primary">
             <span>Connect Mobile Telegram HUD</span>
             <span class="btn-icon-bubble">↗</span>
@@ -3338,6 +3345,117 @@
             </div>
           </div>
         </div>
+
+        <!-- Quantum Omniscience 3D Cockpit & Tactical Hologram Station -->
+        <div class="omniscience-section reveal-3d">
+          <div class="omniscience-deck" id="omniscience-deck">
+            <!-- Cockpit Header -->
+            <div class="cockpit-header">
+              <div class="cockpit-branding">
+                <div class="cockpit-status-beacon" title="System Operational • 120 FPS Master Core"></div>
+                <div class="cockpit-title-group">
+                  <h4>✦ QUANTUM OMNISCIENCE WAR ROOM ✦</h4>
+                  <div class="cockpit-subtitle">Sovereign 3D Neural Cockpit • Commander SM.KANISH</div>
+                </div>
+              </div>
+
+              <div class="cockpit-telemetry-strip">
+                <span>SUPERMAJORITY: <strong>4/4 UNANIMOUS</strong></span>
+                <span>DEFCON: <strong style="color:var(--war-emerald, #10b981);">LEVEL 4 (TACTICAL PROWESS)</strong></span>
+                <span>LATENCY: <strong>0.38 MS</strong></span>
+              </div>
+
+              <div class="cockpit-controls">
+                <button type="button" class="cockpit-btn" id="btn-cockpit-sound" title="Toggle Procedural Audio Synthesizer">🔊 SOUND: ON</button>
+                <button type="button" class="cockpit-btn" id="btn-transmit-briefing" title="Jarvis Synthetic Speech Tactical Transmission">🎙️ BRIEFING</button>
+                <button type="button" class="cockpit-btn" id="btn-cockpit-fullscreen" title="Expand Borderless Military Cockpit Station">⛶ EXPAND</button>
+              </div>
+            </div>
+
+            <!-- Mode Switcher Tabs -->
+            <div class="cockpit-tabs-bar" role="tablist" aria-label="Cockpit Visualization Modes">
+              <button type="button" class="cockpit-tab-btn active" data-mode="globe" role="tab" aria-selected="true">🌐 3D PLANETARY LIQUIDITY GLOBE</button>
+              <button type="button" class="cockpit-tab-btn" data-mode="neural" role="tab" aria-selected="false">🌌 3D NEURAL SYNAPSE CORTEX</button>
+              <button type="button" class="cockpit-tab-btn" data-mode="sniper" role="tab" aria-selected="false">🎯 AUREUS VISION AI SNIPER</button>
+              <button type="button" class="cockpit-tab-btn" data-mode="spacetime" role="tab" aria-selected="false">🪐 4D SPACETIME LIQUIDITY WELL</button>
+            </div>
+
+            <!-- Stage & Telemetry Sidebar -->
+            <div class="cockpit-stage-container">
+              <!-- Visual Viewport Stage -->
+              <div class="cockpit-canvas-wrapper">
+                <div class="canvas-hud-corner top-left"></div>
+                <div class="canvas-hud-corner top-right"></div>
+                <div class="canvas-hud-corner bottom-left"></div>
+                <div class="canvas-hud-corner bottom-right"></div>
+                
+                <div class="canvas-live-badge">
+                  <span class="badge-dot"></span>
+                  <span>120 FPS GPU MATRIX ACTIVE</span>
+                </div>
+
+                <canvas id="cockpit-canvas" role="img" aria-label="Don Aurelius Quantum Omniscience Cockpit rendering 3D planetary liquidity globe, neural synapses, visual AI orderbook, and gravitational spacetime mesh."></canvas>
+
+                <div class="canvas-interaction-hint" id="canvas-hint-text">Drag to rotate 3D Earth • Click financial hubs to inspect</div>
+              </div>
+
+              <!-- Live Telemetry & Control Sidebar -->
+              <div class="cockpit-sidebar">
+                <!-- Pod 1: Global Hub Telemetry -->
+                <div class="sidebar-glass-pod">
+                  <div class="sidebar-pod-header">
+                    <span>GLOBAL HUB TELEMETRY</span>
+                    <span style="color:var(--war-emerald, #10b981);">LIVE FEED</span>
+                  </div>
+                  <div class="telemetry-row">
+                    <span class="label">Active Hub</span>
+                    <span class="val gold" id="telemetry-hub-name">London LBMA</span>
+                  </div>
+                  <div class="telemetry-row">
+                    <span class="label">Spot Spread</span>
+                    <span class="val cyan" id="telemetry-hub-spread">0.12 pips</span>
+                  </div>
+                  <div class="telemetry-row">
+                    <span class="label">Bullion Vol (24h)</span>
+                    <span class="val green" id="telemetry-hub-vol">$38.4B</span>
+                  </div>
+                  <div class="telemetry-row">
+                    <span class="label">Clearance Tier</span>
+                    <span class="val" id="telemetry-hub-status">Interbank Cleared</span>
+                  </div>
+                  <div class="telemetry-row">
+                    <span class="label">Regime</span>
+                    <span class="val gold">Dynamic Compression</span>
+                  </div>
+                </div>
+
+                <!-- Pod 2: AI Sniper Tactical Simulation -->
+                <div class="sidebar-glass-pod">
+                  <div class="sidebar-pod-header">
+                    <span>GEMINI VISION AI SNIPER</span>
+                    <span style="color:var(--war-gold, #f5c542);">ARMED</span>
+                  </div>
+                  <button type="button" class="sidebar-action-btn" id="btn-simulate-sweep">⚡ SIMULATE SWEEP EXECUTION</button>
+                  <button type="button" class="sidebar-action-btn" id="btn-trigger-singularity" style="margin-top:8px; background:linear-gradient(135deg, rgba(0,240,255,0.2) 0%, rgba(0,240,255,0.05) 100%); border-color:var(--war-cyan, #00f0ff); box-shadow:0 4px 18px rgba(0,240,255,0.2);">🪐 TRIGGER GRAVITATIONAL WELL</button>
+
+                  <div class="pnl-ticker-display">
+                    <span class="pnl-label">SIMULATED ALPHA:</span>
+                    <span class="pnl-amount" id="live-pnl-val">+$0.00</span>
+                  </div>
+                </div>
+
+                <!-- Pod 3: Emergency Defense Protocol -->
+                <div class="sidebar-glass-pod clean-slate-box">
+                  <div class="sidebar-pod-header">
+                    <span style="color:var(--war-crimson, #ef4444);">DEFENSE OVERRIDE</span>
+                    <span style="color:var(--war-crimson, #ef4444);">KEY-LOCK</span>
+                  </div>
+                  <button type="button" class="clean-slate-btn" id="btn-cockpit-clean-slate">🚨 EMERGENCY CLEAN SLATE PROTOCOL</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -3651,6 +3769,10 @@
       <div class="shortcut-row" role="button" tabindex="0" data-action="founder" aria-label="Jump to Architect & Founder">
         <span>Jump to Architect & Founder</span>
         <kbd>A</kbd>
+      </div>
+      <div class="shortcut-row" role="button" tabindex="0" data-action="omniscience" aria-label="Breach Quantum Omniscience Cockpit">
+        <span>Breach Quantum Cockpit</span>
+        <kbd>O</kbd>
       </div>
       <div class="shortcut-row" role="button" tabindex="0" data-action="warroom" aria-label="Jump to War Room">
         <span>Jump to War Room</span>
@@ -4394,6 +4516,15 @@
         case 'founder':
           jumpTo('founder');
           break;
+        case 'omniscience':
+          toggleShortcutsModal(false);
+          toggleMobileMenu(false);
+          if (window.breachCockpit) {
+            window.breachCockpit();
+          } else {
+            jumpTo('omniscience-deck');
+          }
+          break;
         case 'warroom':
           jumpTo('war-room');
           break;
@@ -4483,7 +4614,7 @@
         const keyActionMap = {
           'b': 'telegram',
           'h': 'home',
-          'o': 'home',
+          'o': 'omniscience',
           'g': 'genesis',
           's': 'specs',
           'd': 'dossier',
@@ -4577,5 +4708,8 @@
     window.simulateTelemetrySkeleton = simulateTelemetrySkeleton;
 
     </script>
+
+    <!-- Don Aurelius Quantum Omniscience War Room & 3D Neural Cockpit v5.0 -->
+    <script src="js/omniscience-warroom.js"></script>
 </body>
 </html>

@@ -1,0 +1,549 @@
+/* ==============================================================================
+   DON AURELIUS • OMNISCIENCE TACTICAL COCKPIT & QUANTUM WAR ROOM (v5.0)
+   Architect: SM.KANISH • Sovereign AI Quantitative Syndicate
+   Authentic Apple Liquid Glass & VisionOS Spatial Architecture
+   ============================================================================== */
+
+:root {
+  --war-gold: #f5c542;
+  --war-gold-glow: rgba(245, 197, 66, 0.45);
+  --war-cyan: #00f0ff;
+  --war-cyan-glow: rgba(0, 240, 255, 0.4);
+  --war-emerald: #10b981;
+  --war-crimson: #ef4444;
+  --war-dark-bg: rgba(6, 9, 16, 0.94);
+  --war-glass-border: rgba(255, 255, 255, 0.14);
+  --war-glass-top: rgba(255, 255, 255, 0.45);
+  --war-font-display: 'Cinzel', serif;
+  --war-font-mono: 'JetBrains Mono', monospace;
+  --war-font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* 1. Cockpit Section Container */
+.omniscience-section {
+  position: relative;
+  width: 100%;
+  margin: 40px 0 60px 0;
+}
+
+.omniscience-deck {
+  position: relative;
+  width: 100%;
+  background: var(--war-dark-bg);
+  backdrop-filter: blur(28px) saturate(190%) contrast(105%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%) contrast(105%);
+  border: 1px solid var(--war-glass-border);
+  border-top: 1px solid var(--war-glass-top);
+  border-radius: 28px;
+  box-shadow: 
+    0 32px 80px -12px rgba(0, 0, 0, 0.85),
+    0 18px 36px -18px rgba(0, 0, 0, 0.9),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.6);
+  padding: 24px;
+  overflow: hidden;
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Cockpit Fullscreen Overlay Mode */
+.omniscience-deck.fullscreen-mode {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  border-radius: 0 !important;
+  z-index: 9998 !important;
+  padding: 18px 24px 24px 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow-y: auto !important;
+  background: rgba(3, 5, 10, 0.98) !important;
+}
+
+/* 2. Cockpit Top Command Bar */
+.cockpit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.cockpit-branding {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cockpit-status-beacon {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--war-emerald);
+  box-shadow: 0 0 14px var(--war-emerald);
+}
+
+.cockpit-status-beacon::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--war-emerald);
+  opacity: 0.6;
+  animation: beaconPulse 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes beaconPulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.cockpit-title-group h4 {
+  font-family: var(--war-font-display);
+  font-size: 1.15rem;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cockpit-title-group .cockpit-subtitle {
+  font-family: var(--war-font-mono);
+  font-size: 0.72rem;
+  color: var(--war-gold);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.cockpit-telemetry-strip {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--war-font-mono);
+  font-size: 0.76rem;
+  color: #94a3b8;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cockpit-telemetry-strip span strong {
+  color: #ffffff;
+}
+
+.cockpit-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cockpit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-top-color: rgba(255, 255, 255, 0.35);
+  color: #e2e8f0;
+  padding: 7px 14px;
+  border-radius: 12px;
+  font-family: var(--war-font-mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cockpit-btn:hover {
+  background: rgba(245, 197, 66, 0.15);
+  border-color: var(--war-gold);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(245, 197, 66, 0.25);
+}
+
+.cockpit-btn:active {
+  transform: scale(0.97);
+}
+
+.cockpit-btn.active {
+  background: var(--war-gold);
+  color: #030508;
+  border-color: var(--war-gold);
+  box-shadow: 0 0 16px var(--war-gold-glow);
+}
+
+/* 3. Mode Switcher Tabs */
+.cockpit-tabs-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.cockpit-tabs-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.cockpit-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  color: #94a3b8;
+  font-family: var(--war-font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cockpit-tab-btn:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.cockpit-tab-btn.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(245, 197, 66, 0.2) 0%, rgba(245, 197, 66, 0.05) 100%);
+  border-color: var(--war-gold);
+  box-shadow: 0 0 16px rgba(245, 197, 66, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+/* 4. The Visual Stage (Canvas Viewport) */
+.cockpit-stage-container {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+  min-height: 480px;
+}
+
+.fullscreen-mode .cockpit-stage-container {
+  flex: 1;
+  min-height: 0;
+}
+
+.cockpit-canvas-wrapper {
+  position: relative;
+  background: radial-gradient(circle at center, rgba(10, 16, 30, 0.8) 0%, rgba(2, 4, 8, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cockpit-canvas-wrapper canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Canvas HUD Corner Reticles */
+.canvas-hud-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  border-color: var(--war-gold);
+  opacity: 0.6;
+}
+.canvas-hud-corner.top-left { top: 12px; left: 12px; border-top: 2px solid; border-left: 2px solid; }
+.canvas-hud-corner.top-right { top: 12px; right: 12px; border-top: 2px solid; border-right: 2px solid; }
+.canvas-hud-corner.bottom-left { bottom: 12px; left: 12px; border-bottom: 2px solid; border-left: 2px solid; }
+.canvas-hud-corner.bottom-right { bottom: 12px; right: 12px; border-bottom: 2px solid; border-right: 2px solid; }
+
+.canvas-live-badge {
+  position: absolute;
+  top: 14px;
+  left: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  font-family: var(--war-font-mono);
+  font-size: 0.68rem;
+  color: #cbd5e1;
+  pointer-events: none;
+}
+
+.canvas-live-badge .badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--war-cyan);
+  box-shadow: 0 0 8px var(--war-cyan);
+}
+
+.canvas-interaction-hint {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--war-font-mono);
+  font-size: 0.72rem;
+  color: #94a3b8;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 4px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* 5. Cockpit Side Telemetry Pod */
+.cockpit-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidebar-glass-pod {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+  padding: 16px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-pod-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-family: var(--war-font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--war-gold);
+  text-transform: uppercase;
+}
+
+/* Live Telemetry List */
+.telemetry-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.8rem;
+  font-family: var(--war-font-mono);
+}
+
+.telemetry-row:last-child {
+  border-bottom: none;
+}
+
+.telemetry-row .label {
+  color: #94a3b8;
+}
+
+.telemetry-row .val {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.telemetry-row .val.gold {
+  color: var(--war-gold);
+}
+
+.telemetry-row .val.cyan {
+  color: var(--war-cyan);
+}
+
+.telemetry-row .val.green {
+  color: var(--war-emerald);
+}
+
+/* Interactive Action Buttons inside Sidebar */
+.sidebar-action-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  background: linear-gradient(135deg, rgba(245, 197, 66, 0.22) 0%, rgba(245, 197, 66, 0.08) 100%);
+  border: 1px solid var(--war-gold);
+  border-top-color: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  color: #ffffff;
+  font-family: var(--war-font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 4px 18px rgba(245, 197, 66, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-top: 10px;
+}
+
+.sidebar-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--war-gold-glow);
+  background: linear-gradient(135deg, rgba(245, 197, 66, 0.35) 0%, rgba(245, 197, 66, 0.15) 100%);
+}
+
+.sidebar-action-btn:active {
+  transform: scale(0.98);
+}
+
+/* 6. Clean Slate Protocol Emergency Key Box */
+.clean-slate-box {
+  margin-top: auto;
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.clean-slate-btn {
+  width: 100%;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid var(--war-crimson);
+  color: #fca5a5;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-family: var(--war-font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.clean-slate-btn:hover {
+  background: var(--war-crimson);
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+}
+
+/* 7. Live P&L Rollup Widget */
+.pnl-ticker-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+.pnl-ticker-display .pnl-label {
+  font-family: var(--war-font-mono);
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.pnl-ticker-display .pnl-amount {
+  font-family: var(--war-font-mono);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--war-emerald);
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
+/* Audio Visualizer Bar */
+.audio-visualizer-canvas {
+  width: 100%;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  margin-top: 8px;
+}
+
+/* 8. Mobile Responsiveness */
+@media (max-width: 992px) {
+  .cockpit-stage-container {
+    grid-template-columns: 1fr;
+  }
+  .cockpit-canvas-wrapper {
+    height: 420px;
+  }
+}
+
+@media (max-width: 768px) {
+  .omniscience-deck {
+    padding: 16px;
+    border-radius: 20px;
+  }
+  .cockpit-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .cockpit-controls {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .cockpit-canvas-wrapper {
+    height: 340px;
+  }
+  .cockpit-tab-btn {
+    padding: 8px 14px;
+    font-size: 0.76rem;
+  }
+}
+
+/* 9. Golden Button for Hero Cockpit Trigger */
+.btn-apple-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #f5c542 0%, #d49e1a 100%);
+  color: #030508 !important;
+  font-family: var(--war-font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 12px 22px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 20px rgba(245, 197, 66, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-apple-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(245, 197, 66, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  filter: brightness(1.08);
+}
+
+.btn-apple-gold .btn-icon-bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: rgba(3, 5, 8, 0.15);
+  border-radius: 50%;
+  font-size: 0.75rem;
+}
