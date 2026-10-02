@@ -1156,7 +1156,7 @@
     const coordHud = document.getElementById('canvas-coord-hud');
     const badgeText = document.getElementById('cockpit-status-badge-text');
 
-    if (!deck || !canvas2d || !webglCanvas) return;
+    if (!deck || !webglCanvas) return;
 
     let currentMode = 'globe';
     let globeEngine = null;
@@ -1170,12 +1170,14 @@
       const w = rect.width;
       const h = rect.height;
 
-      // 2D Canvas Resize
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas2d.width = w * dpr;
-      canvas2d.height = h * dpr;
-      const ctx = canvas2d.getContext('2d');
-      if (ctx) ctx.scale(dpr, dpr);
+      // 2D Canvas Resize (if present)
+      if (canvas2d) {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas2d.width = w * dpr;
+        canvas2d.height = h * dpr;
+        const ctx = canvas2d.getContext('2d');
+        if (ctx) ctx.scale(dpr, dpr);
+      }
 
       // WebGL Canvas Resize
       if (globeEngine) {
@@ -1211,25 +1213,18 @@
       }, 50);
     }
 
-    neuralEngine = new NeuralSynapse(canvas2d);
-    sniperEngine = new VisionSniper(canvas2d, pnl => {
-      const pnlVal = document.getElementById('live-pnl-val');
-      if (pnlVal) {
-        let current = 0;
-        const target = pnl;
-        const step = target / 30;
-        const timer = setInterval(() => {
-          current += step;
-          if (current >= target) {
-            current = target;
-            clearInterval(timer);
+    if (canvas2d) {
+      if (typeof NeuralSynapse !== 'undefined') neuralEngine = new NeuralSynapse(canvas2d);
+      if (typeof VisionSniper !== 'undefined') {
+        sniperEngine = new VisionSniper(canvas2d, pnl => {
+          const pnlVal = document.getElementById('live-pnl-val');
+          if (pnlVal) {
+            pnlVal.textContent = `+$${pnl.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
           }
-          pnlVal.textContent = `+$${current.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-        }, 20);
+        });
       }
-    });
-
-    spacetimeEngine = new GravitationalSpacetime(canvas2d);
+      if (typeof GravitationalSpacetime !== 'undefined') spacetimeEngine = new GravitationalSpacetime(canvas2d);
+    }
 
     // Wire Globe Subnav Controls (Satellite / Night / Google Maps)
     const btnSatellite = document.getElementById('btn-view-satellite');
@@ -1299,7 +1294,7 @@
 
         if (currentMode === 'globe') {
           webglCanvas.style.display = 'block';
-          canvas2d.style.display = 'none';
+          if (canvas2d) canvas2d.style.display = 'none';
           if (chartOverlay) chartOverlay.style.display = 'none';
           if (calcOverlay) calcOverlay.style.display = 'none';
           if (globeSubnav) globeSubnav.style.display = 'flex';
@@ -1307,19 +1302,9 @@
           if (gmapsOverlay) gmapsOverlay.style.display = 'none';
           if (badgeText) badgeText.textContent = '120 FPS REAL 3D EARTH MATRIX';
           if (hint) hint.textContent = 'Drag to rotate Real 3D Earth • Scroll to zoom • Click hubs to inspect';
-        } else if (currentMode === 'neural') {
-          webglCanvas.style.display = 'none';
-          canvas2d.style.display = 'block';
-          if (chartOverlay) chartOverlay.style.display = 'none';
-          if (calcOverlay) calcOverlay.style.display = 'none';
-          if (globeSubnav) globeSubnav.style.display = 'none';
-          if (coordHud) coordHud.style.display = 'none';
-          if (gmapsOverlay) gmapsOverlay.style.display = 'none';
-          if (badgeText) badgeText.textContent = '1,200 BIOLUMINESCENT NEURONS ACTIVE';
-          if (hint) hint.textContent = 'Move cursor to warp neural gravity • Click to fire synapses';
         } else if (currentMode === 'chart') {
           webglCanvas.style.display = 'none';
-          canvas2d.style.display = 'none';
+          if (canvas2d) canvas2d.style.display = 'none';
           if (chartOverlay) chartOverlay.style.display = 'flex';
           if (calcOverlay) calcOverlay.style.display = 'none';
           if (globeSubnav) globeSubnav.style.display = 'none';
@@ -1329,7 +1314,7 @@
           if (hint) hint.textContent = 'Official TradingView Institutional Feed • Live Price Action & Order Flow';
         } else if (currentMode === 'calculator') {
           webglCanvas.style.display = 'none';
-          canvas2d.style.display = 'none';
+          if (canvas2d) canvas2d.style.display = 'none';
           if (chartOverlay) chartOverlay.style.display = 'none';
           if (calcOverlay) calcOverlay.style.display = 'block';
           if (globeSubnav) globeSubnav.style.display = 'none';
@@ -1339,7 +1324,7 @@
           if (hint) hint.textContent = 'Adjust balance, risk tolerance & targets to calculate exact MT5 lot size';
         } else {
           webglCanvas.style.display = 'none';
-          canvas2d.style.display = 'block';
+          if (canvas2d) canvas2d.style.display = 'none';
           if (chartOverlay) chartOverlay.style.display = 'none';
           if (calcOverlay) calcOverlay.style.display = 'none';
           if (globeSubnav) globeSubnav.style.display = 'none';
@@ -1731,10 +1716,6 @@ Founder: SM.KANISH • Sovereign AI Syndicate`;
     // Master 120 FPS Animation Loop
     function renderLoop() {
       if (currentMode === 'globe' && globeEngine) globeEngine.render();
-      else if (currentMode === 'neural' && neuralEngine) neuralEngine.render();
-      else if (currentMode === 'sniper' && sniperEngine) sniperEngine.render();
-      else if (currentMode === 'spacetime' && spacetimeEngine) spacetimeEngine.render();
-
       requestAnimationFrame(renderLoop);
     }
     requestAnimationFrame(renderLoop);
