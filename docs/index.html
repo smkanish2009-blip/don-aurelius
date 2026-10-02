@@ -406,19 +406,21 @@
        ========================================================================== */
     header {
       position: fixed;
-      top: 16px;
+      top: 14px;
       left: 50%;
       transform: translateX(-50%);
-      width: min(1220px, calc(100% - 24px));
+      width: min(1320px, calc(100% - 24px));
+      max-width: calc(100% - 24px);
       z-index: 1000;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      background: rgba(12, 16, 24, 0.65);
+      background: rgba(12, 16, 24, 0.72);
       border: 1px solid rgba(255, 255, 255, 0.16);
       border-top: 1px solid rgba(255, 255, 255, 0.45);
       border-radius: 9999px;
       box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.45);
-      padding: 8px 16px;
+      padding: 6px 14px 6px 16px;
+      box-sizing: border-box;
       transition: all 0.3s ease;
     }
     .nav-wrapper {
@@ -426,7 +428,7 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      gap: 12px;
+      gap: 10px;
     }
     .brand {
       display: flex;
@@ -475,6 +477,8 @@
       list-style: none;
       align-items: center;
       flex-wrap: nowrap;
+      margin: 0;
+      padding: 0;
     }
     .nav-links li {
       flex-shrink: 0;
@@ -482,9 +486,9 @@
     .nav-links a {
       color: #cbd5e1;
       text-decoration: none;
-      font-size: 0.83rem;
+      font-size: 0.81rem;
       font-weight: 500;
-      padding: 7px 11px;
+      padding: 6px 9px;
       border-radius: 9999px;
       transition: all 0.2s ease;
       white-space: nowrap;
@@ -498,12 +502,12 @@
     .btn-tg {
       background: linear-gradient(135deg, var(--gold-secondary), var(--gold-primary));
       color: #07080a;
-      padding: 8px 16px;
+      padding: 7px 15px;
       border-radius: 9999px;
       font-weight: 700;
-      font-size: 0.82rem;
+      font-size: 0.80rem;
       text-decoration: none;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -1395,7 +1399,8 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      flex-shrink: 0;
     }
     .brand-title-text {
       font-family: var(--font-display);
@@ -1905,10 +1910,10 @@
     }
 
     /* Laptop & Scaled Display Navigation Safeguard (Zero Wrapping) */
-    @media (max-width: 1200px) and (min-width: 993px) {
+    @media (max-width: 1260px) and (min-width: 1081px) {
       .nav-links a {
-        padding: 6px 9px;
-        font-size: 0.79rem;
+        padding: 5px 7px;
+        font-size: 0.77rem;
       }
       .nav-links {
         gap: 1px;
@@ -1917,13 +1922,17 @@
         display: none;
       }
       .btn-tg {
-        padding: 7px 13px;
-        font-size: 0.78rem;
+        padding: 6px 11px;
+        font-size: 0.77rem;
+      }
+      .btn-header-shortcuts {
+        height: 34px;
+        padding: 0 8px;
       }
     }
 
     /* Tablet & Compact Viewport Navigation Safeguard */
-    @media (max-width: 992px) {
+    @media (max-width: 1080px) {
       .nav-links {
         display: none !important;
       }
@@ -2799,12 +2808,12 @@
       </a>
       <ul class="nav-links">
         <li><a href="#overview">Overview</a></li>
-        <li><a href="#genesis">Genesis Suite</a></li>
+        <li><a href="#genesis">Genesis</a></li>
         <li><a href="#architectural-specs">Benchmark</a></li>
         <li><a href="#google-dossier">Dossier</a></li>
         <li><a href="#founder">Founder</a></li>
         <li><a href="#war-room">War Room</a></li>
-        <li><a href="#installation-theater">3D Theater</a></li>
+        <li><a href="#installation-theater">Theater</a></li>
         <li><a href="#faq">FAQs</a></li>
       </ul>
       <div class="header-actions">
