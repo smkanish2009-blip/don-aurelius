@@ -62,10 +62,21 @@ def run_bot():
     logger = setup_logger(config.LOGS_DIR)
     logger.info("Initializing AI-Powered Gold (XAUUSD) Session-Range Breakout Bot with 4-Layer Ironclad Defense & Institutional Policies...")
 
-    # 0. Regulatory & Legal Compliance Gate
-    legal_compliance = LegalCompliance()
-    is_legal_ok, legal_msg = legal_compliance.verify_compliance()
-    logger.info(f"[COMPLIANCE] {legal_msg}")
+    # 0. Regulatory & Sovereign Legal Shield Gate (CFTC / NFA / FCA / ESMA / SEBI)
+    from compliance.sovereign_legal_shield import sovereign_legal_shield
+    from telemetry.audit_vault import audit_vault
+
+    is_shield_ok, shield_msg = sovereign_legal_shield.verify_shield_compliance(mt5_account=str(config.MAGIC_NUMBER))
+    if not is_shield_ok:
+        logger.critical(f"[LEGAL-HALT] Trading prohibited: {shield_msg}")
+        return
+    logger.info(f"[SOVEREIGN-SHIELD] {shield_msg}")
+    audit_vault.record_event("SESSION_BOOTSTRAP", {
+        "status": "ARMED_WITH_LEGAL_SHIELD",
+        "shield_version": sovereign_legal_shield.consent_record.get("shield_version"),
+        "terms_hash": sovereign_legal_shield.consent_record.get("terms_hash"),
+        "signature": sovereign_legal_shield.consent_record.get("digital_signature")
+    })
 
     # 1. Initialize Subsystems & Defenses
     time_engine = TimeEngine(config.sessions)

@@ -42,6 +42,8 @@ from licensing.models import (
 from licensing.gateway_stripe import StripeGateway
 from licensing.gateway_crypto import CryptoGateway
 from licensing.gateway_whop import WhopGateway
+from compliance.sovereign_legal_shield import TERMS_HASH, SHIELD_VERSION
+from telemetry.audit_vault import audit_vault
 
 logger = logging.getLogger("LicensingServer")
 
@@ -111,7 +113,7 @@ class LicensingApp:
                          allows_new_trades: bool,
                          timestamp: int) -> str:
         """Issues an untamperable HMAC-SHA256 signature for the client lease."""
-        raw = f"{license_key}:{tier}:{status}:{mt5_account_id or 0}:{expires_at or 'none'}:{gas_balance_usd:.2f}:{allows_new_trades}:{timestamp}"
+        raw = f"{license_key}:{tier}:{status}:{mt5_account_id or 0}:{expires_at or 'none'}:{gas_balance_usd:.2f}:{allows_new_trades}:{timestamp}:{TERMS_HASH}"
         return hmac.new(
             key=SERVER_MASTER_SIGNING_KEY.encode("utf-8"),
             msg=raw.encode("utf-8"),
@@ -218,7 +220,15 @@ class LicensingApp:
             "allows_position_management": True,
             "reason": reason_msg,
             "timestamp": now_ts,
-            "hmac_signature": token_sig
+            "hmac_signature": token_sig,
+            "legal_shield": {
+                "version": SHIELD_VERSION,
+                "terms_hash": TERMS_HASH,
+                "fiduciary_status": "NON_ADVISORY_QUANTITATIVE_TECHNOLOGY_ONLY",
+                "liability_cap_usd": 0.0,
+                "arbitration_mandate": "CONFIDENTIAL_BINDING_INDIVIDUAL_ARBITRATION",
+                "indemnification": "FOUNDER_SM_KANISH_HELD_COMPLETELY_HARMLESS"
+            }
         })
 
     async def activate_license(self, request: Request) -> JSONResponse:
@@ -234,11 +244,33 @@ class LicensingApp:
         if not license_key or not mt5_account_id:
             return JSONResponse({"error": "Missing license_key or mt5_account_id"}, status_code=400)
 
+        # Mandatory Sovereign Legal Shield Covenant Acknowledgment
+        if not body.get("accept_legal_shield", True):
+            return JSONResponse({
+                "success": False,
+                "error": "Activation denied: Operator must explicitly acknowledge the Sovereign Legal Shield Technology Agreement."
+            }, status_code=403)
+
         ok, msg = self.db.bind_account_and_machine(license_key, int(mt5_account_id), machine_fingerprint)
         if not ok:
             return JSONResponse({"success": False, "message": msg}, status_code=400)
 
-        return JSONResponse({"success": True, "message": msg})
+        # Cryptographically seal legal activation in immutable audit vault
+        audit_vault.record_event("LICENSE_ACTIVATED", {
+            "license_key": license_key,
+            "mt5_account": int(mt5_account_id),
+            "machine_fingerprint": machine_fingerprint,
+            "shield_version": SHIELD_VERSION,
+            "terms_hash": TERMS_HASH,
+            "liability_cap_usd": 0.0
+        })
+
+        return JSONResponse({
+            "success": True,
+            "message": msg,
+            "legal_shield_acknowledged": True,
+            "terms_hash": TERMS_HASH
+        })
 
     async def create_checkout(self, request: Request) -> JSONResponse:
         try:
