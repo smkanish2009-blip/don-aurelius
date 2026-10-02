@@ -3668,23 +3668,31 @@
         <div class="theater-stage-wrapper">
           <!-- Theater Top Bar -->
           <div class="theater-top-bar">
-            <div class="theater-live-tag">
-              <span class="pulse-dot"></span>
-              <span>AVATAR-3D HOLOGRAPHIC SIMULATION • 60 FPS</span>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+              <div class="theater-live-tag">
+                <span class="pulse-dot"></span>
+                <span>AVATAR-3D CINEMA THEATER</span>
+              </div>
+              <div style="display: flex; gap: 6px;">
+                <button type="button" class="theater-mode-toggle active" id="btn-theater-mode-video">🎬 1080P CINEMATIC AD</button>
+                <button type="button" class="theater-mode-toggle" id="btn-theater-mode-canvas">⚡ 3D HOLOGRAPHIC CANVAS</button>
+              </div>
             </div>
 
             <!-- Chapter Navigation Pills -->
             <div class="theater-chapter-pills" id="theater-chapter-pills">
-              <button type="button" class="theater-chapter-pill active" data-chapter="0">01. INGESTION</button>
-              <button type="button" class="theater-chapter-pill" data-chapter="1">02. CLEARANCE</button>
-              <button type="button" class="theater-chapter-pill" data-chapter="2">03. AGENT SYNC</button>
-              <button type="button" class="theater-chapter-pill" data-chapter="3">04. CLOUD WARP</button>
+              <button type="button" class="theater-chapter-pill active" data-chapter="0">01. CHAOS &amp; HOOK</button>
+              <button type="button" class="theater-chapter-pill" data-chapter="1">02. AURELIUS REVEAL</button>
+              <button type="button" class="theater-chapter-pill" data-chapter="2">03. MT5 INGESTION</button>
+              <button type="button" class="theater-chapter-pill" data-chapter="3">04. 4-AGENT ORBIT</button>
+              <button type="button" class="theater-chapter-pill" data-chapter="4">05. 24/7 EXECUTION</button>
             </div>
           </div>
 
-          <!-- Theater Screen Frame with Canvas & HUD -->
+          <!-- Theater Screen Frame with Video & Canvas & HUD -->
           <div class="theater-screen-frame">
-            <canvas id="cinema-theater-canvas"></canvas>
+            <video id="cinema-theater-video" src="assets/don_aurelius_tutorial.mp4" poster="assets/scene1_chaos.jpg" playsinline muted loop autoplay style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; inset: 0; z-index: 2; border-radius: inherit;"></video>
+            <canvas id="cinema-theater-canvas" style="display: none; position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%;"></canvas>
 
             <!-- Avatar Corner Reticles -->
             <div class="hud-reticle tl"></div>

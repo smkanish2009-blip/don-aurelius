@@ -658,12 +658,69 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
+    const videoElem = document.getElementById('cinema-theater-video');
+    const modeVideoBtn = document.getElementById('btn-theater-mode-video');
+    const modeCanvasBtn = document.getElementById('btn-theater-mode-canvas');
+
+    // Switch between 1080p Video and 3D Canvas
+    if (modeVideoBtn && modeCanvasBtn && videoElem && canvas) {
+      modeVideoBtn.addEventListener('click', () => {
+        modeVideoBtn.classList.add('active');
+        modeCanvasBtn.classList.remove('active');
+        videoElem.style.display = 'block';
+        canvas.style.display = 'none';
+        videoElem.play().catch(() => {});
+        sfx.playClick();
+      });
+
+      modeCanvasBtn.addEventListener('click', () => {
+        modeCanvasBtn.classList.add('active');
+        modeVideoBtn.classList.remove('active');
+        videoElem.style.display = 'none';
+        canvas.style.display = 'block';
+        videoElem.pause();
+        sfx.playTransition();
+      });
+    }
+
+    // Video timeupdate sync with scrubber & timecode
+    if (videoElem) {
+      videoElem.addEventListener('timeupdate', () => {
+        if (videoElem.style.display !== 'none' && videoElem.duration) {
+          const pct = (videoElem.currentTime / videoElem.duration) * 100;
+          const scrubberBar = document.getElementById('cinema-progress-fill');
+          if (scrubberBar) scrubberBar.style.width = `${pct}%`;
+          const tcElem = document.getElementById('cinema-timecode');
+          if (tcElem) {
+            const curM = Math.floor(videoElem.currentTime / 60);
+            const curS = Math.floor(videoElem.currentTime % 60);
+            const totM = Math.floor(videoElem.duration / 60);
+            const totS = Math.floor(videoElem.duration % 60);
+            tcElem.textContent = `${String(curM).padStart(2, '0')}:${String(curS).padStart(2, '0')} / ${String(totM).padStart(2, '0')}:${String(totS).padStart(2, '0')}`;
+          }
+
+          // Sync active chapter pill and step card based on video current time (22s total, ~4.4s per chapter)
+          const chapterIdx = Math.min(4, Math.floor(videoElem.currentTime / 4.4));
+          document.querySelectorAll('.theater-chapter-pill').forEach((pill, idx) => {
+            pill.classList.toggle('active', idx === chapterIdx);
+          });
+          document.querySelectorAll('.theater-step-card').forEach((card, idx) => {
+            card.classList.toggle('active', idx === chapterIdx);
+          });
+        }
+      });
+    }
+
     // Controls: Play / Pause
     const playBtn = document.getElementById('btn-cinema-play');
     if (playBtn) {
       playBtn.addEventListener('click', () => {
         isPlaying = !isPlaying;
         playBtn.textContent = isPlaying ? '⏸ PAUSE' : '▶ PLAY';
+        if (videoElem && videoElem.style.display !== 'none') {
+          if (isPlaying) videoElem.play().catch(() => {});
+          else videoElem.pause();
+        }
         sfx.playClick();
       });
     }
@@ -676,6 +733,9 @@
         sfx.isMuted = !sfx.isMuted;
         audioBtn.textContent = sfx.isMuted ? '🔇 AUDIO OFF' : '🔊 AUDIO ON';
         audioBtn.classList.toggle('active', !sfx.isMuted);
+        if (videoElem) {
+          videoElem.muted = sfx.isMuted;
+        }
         if (!sfx.isMuted) sfx.playTransition();
       });
     }
@@ -683,8 +743,12 @@
     // Chapter Pills Click
     document.querySelectorAll('.theater-chapter-pill').forEach((pill, idx) => {
       pill.addEventListener('click', () => {
-        currentTimeSec = idx * 20;
-        currentChapterIndex = idx;
+        if (videoElem && videoElem.style.display !== 'none' && videoElem.duration) {
+          videoElem.currentTime = (idx / 5) * videoElem.duration;
+        } else {
+          currentTimeSec = idx * 16;
+          currentChapterIndex = idx;
+        }
         sfx.playTransition();
       });
     });
@@ -692,8 +756,12 @@
     // Step Cards Click
     document.querySelectorAll('.theater-step-card').forEach((card, idx) => {
       card.addEventListener('click', () => {
-        currentTimeSec = idx * 20;
-        currentChapterIndex = idx;
+        if (videoElem && videoElem.style.display !== 'none' && videoElem.duration) {
+          videoElem.currentTime = (idx / 4) * videoElem.duration;
+        } else {
+          currentTimeSec = idx * 20;
+          currentChapterIndex = idx;
+        }
         sfx.playTransition();
       });
     });
@@ -704,7 +772,11 @@
       scrubberTrack.addEventListener('click', (e) => {
         const rect = scrubberTrack.getBoundingClientRect();
         const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-        currentTimeSec = pos * TOTAL_DURATION_SEC;
+        if (videoElem && videoElem.style.display !== 'none' && videoElem.duration) {
+          videoElem.currentTime = pos * videoElem.duration;
+        } else {
+          currentTimeSec = pos * TOTAL_DURATION_SEC;
+        }
         sfx.playClick();
       });
     }

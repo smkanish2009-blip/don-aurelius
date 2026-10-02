@@ -1644,6 +1644,32 @@
   animation: pulseCyan 1.8s infinite;
 }
 
+.theater-mode-toggle {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #94a3b8;
+  font-family: var(--war-font-mono, monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.theater-mode-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.theater-mode-toggle.active {
+  background: linear-gradient(135deg, rgba(245, 197, 66, 0.25) 0%, rgba(245, 197, 66, 0.1) 100%);
+  border-color: var(--war-gold, #f5c542);
+  color: var(--war-gold, #f5c542);
+  box-shadow: 0 0 12px rgba(245, 197, 66, 0.3);
+}
+
 @keyframes pulseCyan {
   0% { transform: scale(0.95); opacity: 0.7; }
   50% { transform: scale(1.2); opacity: 1; }
