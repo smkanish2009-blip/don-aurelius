@@ -2804,6 +2804,7 @@
         <li><a href="#google-dossier">Dossier</a></li>
         <li><a href="#founder">Founder</a></li>
         <li><a href="#war-room">War Room</a></li>
+        <li><a href="#installation-theater">3D Theater</a></li>
         <li><a href="#faq">FAQs</a></li>
       </ul>
       <div class="header-actions">
@@ -2840,6 +2841,7 @@
         <li><a href="#google-dossier" class="mobile-nav-link"><span>🛡️</span> Strategic Dossier</a></li>
         <li><a href="#founder" class="mobile-nav-link"><span>👑</span> Founder: SM.KANISH</a></li>
         <li><a href="#war-room" class="mobile-nav-link"><span>⚔️</span> War Room Council</a></li>
+        <li><a href="#installation-theater" class="mobile-nav-link"><span>🎬</span> 3D Installation Theater</a></li>
         <li><a href="#faq" class="mobile-nav-link"><span>❓</span> Expandable FAQs</a></li>
         <li><a href="#terminal-access" class="mobile-nav-link"><span>📜</span> Whitelist / Verification</a></li>
         <li><a href="#compliance" class="mobile-nav-link"><span>⚖️</span> Governance & Compliance</a></li>
@@ -3648,6 +3650,180 @@
         </div>
       </div>
     </section>
+
+    <!-- ==============================================================================
+         Section 14: Cinematic Avatar-Grade MT5 Installation Theater & Walkthrough
+         Architected by SM.KANISH • 60 FPS Canvas Holographic Engine & Video Studio
+         ============================================================================== -->
+    <section class="section-installation-theater" id="installation-theater">
+      <div class="container">
+        <div class="section-title-wrap" style="text-align: center; margin-bottom: 32px;">
+          <div class="section-pre" style="color: var(--war-cyan, #00f0ff); font-family: var(--war-font-mono, monospace); font-size: 0.8rem; font-weight: 700; letter-spacing: 2px;">✦ CINEMATIC AVATAR-GRADE HOLOGRAPHIC WALKTHROUGH • BY SM.KANISH ✦</div>
+          <h3 class="section-title" style="font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin: 8px 0;">MetaTrader 5 Master Deployment Theater</h3>
+          <p class="section-desc" style="max-width: 760px; margin: 0 auto; color: #94a3b8; font-size: 0.95rem;">
+            Experience the full deployment lifecycle rendered in 60 FPS Avatar-grade holographic motion graphics. Follow the 4-step sequence from file ingestion to 24/7 cloud execution.
+          </p>
+        </div>
+
+        <div class="theater-stage-wrapper">
+          <!-- Theater Top Bar -->
+          <div class="theater-top-bar">
+            <div class="theater-live-tag">
+              <span class="pulse-dot"></span>
+              <span>AVATAR-3D HOLOGRAPHIC SIMULATION • 60 FPS</span>
+            </div>
+
+            <!-- Chapter Navigation Pills -->
+            <div class="theater-chapter-pills" id="theater-chapter-pills">
+              <button type="button" class="theater-chapter-pill active" data-chapter="0">01. INGESTION</button>
+              <button type="button" class="theater-chapter-pill" data-chapter="1">02. CLEARANCE</button>
+              <button type="button" class="theater-chapter-pill" data-chapter="2">03. AGENT SYNC</button>
+              <button type="button" class="theater-chapter-pill" data-chapter="3">04. CLOUD WARP</button>
+            </div>
+          </div>
+
+          <!-- Theater Screen Frame with Canvas & HUD -->
+          <div class="theater-screen-frame">
+            <canvas id="cinema-theater-canvas"></canvas>
+
+            <!-- Avatar Corner Reticles -->
+            <div class="hud-reticle tl"></div>
+            <div class="hud-reticle tr"></div>
+            <div class="hud-reticle bl"></div>
+            <div class="hud-reticle br"></div>
+
+            <!-- Dynamic HUD Top Overlay -->
+            <div class="cinema-hud-overlay">
+              <div class="hud-caption-card">
+                <div class="hud-caption-badge" id="cinema-hud-badge">STEP 01 / 04</div>
+                <div class="hud-caption-title" id="cinema-hud-title">BINARY DEPLOYMENT &amp; MT5 INGESTION</div>
+                <div class="hud-caption-sub" id="cinema-hud-sub">Drop Don_Aurelius.ex5 directly into the MQL5 Experts Navigator tree onto Gold M15.</div>
+              </div>
+              <div class="hud-telemetry-pill">
+                <span>FPS: <strong>60</strong> • LATENCY: <strong>1.2ms</strong></span>
+              </div>
+            </div>
+
+            <!-- Cinema Playback Bar -->
+            <div class="cinema-playback-bar">
+              <button type="button" class="cinema-btn" id="btn-cinema-play">⏸ PAUSE</button>
+              <button type="button" class="cinema-btn" id="btn-cinema-audio">🔇 AUDIO OFF</button>
+              <div class="cinema-scrubber-track" id="cinema-scrubber-track" title="Click to seek">
+                <div class="cinema-progress-fill" id="cinema-progress-fill"></div>
+              </div>
+              <div class="cinema-timecode" id="cinema-timecode">00:00 / 01:20</div>
+            </div>
+          </div>
+
+          <!-- 4 Step Dossier Cards -->
+          <div class="theater-step-cards">
+            <!-- Step 1 -->
+            <div class="theater-step-card active" data-step="0">
+              <div class="tsc-header">
+                <span class="tsc-num">PHASE 01</span>
+                <span class="tsc-icon">📁</span>
+              </div>
+              <h4 class="tsc-title">MT5 Binary Ingestion</h4>
+              <p class="tsc-desc">Open MetaTrader 5 &rarr; <code>File</code> &rarr; <code>Open Data Folder</code> &rarr; <code>MQL5/Experts</code>. Paste <code>Don_Aurelius.ex5</code> and refresh Navigator (<code>Ctrl+N</code>).</p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="theater-step-card" data-step="1">
+              <div class="tsc-header">
+                <span class="tsc-num">PHASE 02</span>
+                <span class="tsc-icon">🛡️</span>
+              </div>
+              <h4 class="tsc-title">Security &amp; WebRequest</h4>
+              <p class="tsc-desc">Toggle <strong style="color:var(--war-cyan, #00f0ff);">Allow Algorithmic Trading</strong> on top ribbon. In Options &rarr; Expert Advisors, allow DLL imports and whitelist Telegram API URLs.</p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="theater-step-card" data-step="2">
+              <div class="tsc-header">
+                <span class="tsc-num">PHASE 03</span>
+                <span class="tsc-icon">⚡</span>
+              </div>
+              <h4 class="tsc-title">4-Agent Neural Sync</h4>
+              <p class="tsc-desc">Attach bot to <strong>XAUUSD M15</strong>. Hawk (Macro), Radar (ICT), Predator (Execution), and Inquisitor (Risk) verify chart feed and lock gold parameters.</p>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="theater-step-card" data-step="3">
+              <div class="tsc-header">
+                <span class="tsc-num">PHASE 04</span>
+                <span class="tsc-icon">☁️</span>
+              </div>
+              <h4 class="tsc-title">24/7 Cloud Warp VPS</h4>
+              <p class="tsc-desc">Right-click MT5 Navigator &rarr; <code>Register a Virtual Server</code>. Migrate Expert Advisors &amp; Signals to run with sub-millisecond execution 24/7 without laptop uptime.</p>
+            </div>
+          </div>
+
+          <!-- Bottom Action Deck: Higgsfield AI Prompt Studio Button -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 22px; flex-wrap: wrap; gap: 14px;">
+            <div style="font-family: var(--war-font-mono, monospace); font-size: 0.74rem; color: #94a3b8;">
+              <span style="color: var(--war-gold, #f5c542);">FOUNDER ARCHITECTURE:</span> Built by <strong>SM.KANISH</strong> • Ready for MetaTrader 5 Desktop &amp; Ultra-Low Latency Cloud Nodes
+            </div>
+            <button type="button" class="btn-apple-gold" id="btn-open-higgsfield-prompts">
+              <span class="btn-icon-bubble">🎬</span>
+              <span>OPEN HIGGSFIELD AI / RUNWAY PROMPT STUDIO</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Higgsfield AI / Runway Gen-3 4K Prompt Studio Modal -->
+    <div class="higgsfield-modal" id="higgsfield-prompts-modal">
+      <div class="higgsfield-modal-shell">
+        <div class="hm-header">
+          <div>
+            <div style="font-family: var(--war-font-mono, monospace); font-size: 0.68rem; color: var(--war-cyan, #00f0ff); font-weight: 700; letter-spacing: 1px;">HIGGSFIELD AI • RUNWAY GEN-3 • MIDJOURNEY V6 PRODUCTION SUITE</div>
+            <h3 class="hm-title">Avatar-Grade Motion Graphics Video Prompts</h3>
+          </div>
+          <button type="button" class="hm-close-btn" id="btn-close-higgsfield-prompts">&times;</button>
+        </div>
+
+        <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 20px; line-height: 1.5;">
+          Use these handcrafted production prompts in <strong>Higgsfield AI</strong>, <strong>Runway Gen-3 Alpha</strong>, <strong>Luma Dream Machine</strong>, or <strong>Sora</strong> to render cinematic 4K video cuts with James Cameron <em>Avatar</em> bioluminescence, holographic HUD overlays, and photorealistic 3D laptop hardware.
+        </p>
+
+        <!-- Prompt Card 1 -->
+        <div class="hm-prompt-card">
+          <div class="hm-prompt-header">
+            <span class="hm-prompt-title">SCENE 01: 3D HARDWARE INGESTION &amp; MT5 HOLOGRAPHIC LAUNCH</span>
+            <button type="button" class="cinema-btn btn-copy-prompt" data-target="prompt-scene-1">📋 COPY PROMPT</button>
+          </div>
+          <div class="hm-prompt-body" id="prompt-scene-1">Macro cinematic 8K shot, hyper-realistic dark futuristic trading command desk, sleek titanium matte black laptop running MetaTrader 5. Floating translucent cyan and gold 3D holographic wireframes rising from the screen. A glowing gold crystal file icon labeled "Don_Aurelius.ex5" floats gracefully into the MT5 Experts Navigator tree. Bioluminescent particles drifting like Avatar Pandora flora, anamorphic blue lens flare, shallow depth of field, Octane Render 8K, Raytraced reflections, highly detailed, photorealistic, 60 fps smooth pan.</div>
+        </div>
+
+        <!-- Prompt Card 2 -->
+        <div class="hm-prompt-card">
+          <div class="hm-prompt-header">
+            <span class="hm-prompt-title">SCENE 02: BIOMETRIC SECURITY CLEARANCE &amp; ALGO PROTOCOL ENGAGED</span>
+            <button type="button" class="cinema-btn btn-copy-prompt" data-target="prompt-scene-2">📋 COPY PROMPT</button>
+          </div>
+          <div class="hm-prompt-body" id="prompt-scene-2">Extreme close-up 3D UI animation, futuristic glass modal sliding onto MT5 workspace. A glowing golden toggle switch flipping to "ALLOW ALGORITHMIC TRADING". Neon cyan electric circuit conduits illuminating along the motherboard traces. Emerald green security shields locking into place with holographic lock icons. Cyberpunk financial HUD interface, volumetric lighting, optical chromatic aberration, photorealistic sci-fi aesthetic, James Cameron Avatar HUD design, ultra-crisp typography.</div>
+        </div>
+
+        <!-- Prompt Card 3 -->
+        <div class="hm-prompt-card">
+          <div class="hm-prompt-header">
+            <span class="hm-prompt-title">SCENE 03: 4-AGENT NEURAL ORBIT &amp; REAL-TIME GOLD CANDLESTICK SURGE</span>
+            <button type="button" class="cinema-btn btn-copy-prompt" data-target="prompt-scene-3">📋 COPY PROMPT</button>
+          </div>
+          <div class="hm-prompt-body" id="prompt-scene-3">Epic wide cinematic shot, glowing 3D holographic sphere representing Don Aurelius AI Core. Four distinct energy orbs orbit the core: Hawk (radiant eagle eye cyan), Radar (pulsing sonar rings), Predator (electric crimson lightning), and Inquisitor (pure white mathematical laser grid). They converge simultaneously onto an M15 XAUUSD gold candlestick chart. Golden buy order arrows ignite the screen, trailing stop loss rings dynamically snapping upward, intense particle flow, dark ambient obsidian studio, Avatar bioluminescence style, IMAX quality.</div>
+        </div>
+
+        <!-- Prompt Card 4 -->
+        <div class="hm-prompt-card">
+          <div class="hm-prompt-header">
+            <span class="hm-prompt-title">SCENE 04: MQL5 CLOUD VPS WARP &amp; UNSTOPPABLE 24/7 EXECUTION</span>
+            <button type="button" class="cinema-btn btn-copy-prompt" data-target="prompt-scene-4">📋 COPY PROMPT</button>
+          </div>
+          <div class="hm-prompt-body" id="prompt-scene-4">Cinematic camera pull-back transitioning from the laptop to a global orbital network grid. Glowing fiber optic light beams shooting from the laptop into an orbiting low-earth satellite server bank. Neon text reads "0.4ms Execution • MQL5 Cloud Active • 100% Autonomous". Deep space bioluminescent nebula background, high-contrast gold and deep space navy, 8k resolution, cinematic color grading, Unreal Engine 5 render, epic documentary scale.</div>
+        </div>
+      </div>
+    </div>
 
     <!-- Section: Institutional Quantitative FAQ (Expandable Accordion) -->
     <section class="section-faq" id="faq">
@@ -4905,5 +5081,8 @@
 
     <!-- Don Aurelius Quantum Omniscience War Room & 3D Neural Cockpit v5.0 -->
     <script src="js/omniscience-warroom.js"></script>
+
+    <!-- Don Aurelius Avatar-Grade 3D Holographic Installation Theater & Higgsfield AI Studio -->
+    <script src="js/cinema-theater.js"></script>
 </body>
 </html>

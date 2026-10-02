@@ -1586,3 +1586,456 @@
   border-radius: 50%;
   font-size: 0.75rem;
 }
+
+/* ==============================================================================
+   14. Cinematic Avatar-Grade MT5 Installation Theater & Walkthrough
+   ============================================================================== */
+.section-installation-theater {
+  position: relative;
+  padding: 100px 0 110px 0;
+  background: radial-gradient(circle at 50% 20%, rgba(0, 240, 255, 0.05) 0%, rgba(5, 8, 17, 0.98) 70%);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.theater-stage-wrapper {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  backdrop-filter: blur(28px) saturate(190%) contrast(105%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%) contrast(105%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 28px;
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.75), inset 0 1px 1px 0 rgba(255, 255, 255, 0.35);
+  padding: 24px;
+  position: relative;
+}
+
+.theater-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.theater-live-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--war-font-mono, monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--war-cyan, #00f0ff);
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  padding: 5px 12px;
+  border-radius: 9999px;
+  letter-spacing: 0.5px;
+}
+
+.theater-live-tag .pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--war-cyan, #00f0ff);
+  box-shadow: 0 0 10px var(--war-cyan, #00f0ff);
+  animation: pulseCyan 1.8s infinite;
+}
+
+@keyframes pulseCyan {
+  0% { transform: scale(0.95); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.7; }
+}
+
+.theater-chapter-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.theater-chapter-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+  font-family: var(--war-font-mono, monospace);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.theater-chapter-pill:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.theater-chapter-pill.active {
+  background: rgba(245, 197, 66, 0.2);
+  border-color: var(--war-gold, #f5c542);
+  color: var(--war-gold, #f5c542);
+  box-shadow: 0 0 14px rgba(245, 197, 66, 0.25);
+}
+
+.theater-screen-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 480px;
+  background: #03050a;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 240, 255, 0.15);
+}
+
+#cinema-theater-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Corner Targeting Reticles (Avatar / Sci-fi styling) */
+.hud-reticle {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: var(--war-cyan, #00f0ff);
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 10;
+}
+.hud-reticle.tl { top: 12px; left: 12px; border-top: 2px solid; border-left: 2px solid; }
+.hud-reticle.tr { top: 12px; right: 12px; border-top: 2px solid; border-right: 2px solid; }
+.hud-reticle.bl { bottom: 62px; left: 12px; border-bottom: 2px solid; border-left: 2px solid; }
+.hud-reticle.br { bottom: 62px; right: 12px; border-bottom: 2px solid; border-right: 2px solid; }
+
+/* Cinema HUD Top Overlay */
+.cinema-hud-overlay {
+  position: absolute;
+  top: 14px;
+  left: 36px;
+  right: 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+  z-index: 10;
+  gap: 16px;
+}
+
+.hud-caption-card {
+  background: rgba(3, 7, 18, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 10px 14px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  max-width: 580px;
+}
+
+.hud-caption-badge {
+  font-family: var(--war-font-mono, monospace);
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--war-gold, #f5c542);
+  letter-spacing: 1.5px;
+  margin-bottom: 3px;
+}
+
+.hud-caption-title {
+  font-family: var(--war-font-display, 'Cinzel', serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.8px;
+  margin-bottom: 3px;
+}
+
+.hud-caption-sub {
+  font-family: var(--war-font-sans, 'Inter', sans-serif);
+  font-size: 0.74rem;
+  color: #94a3b8;
+  line-height: 1.35;
+}
+
+.hud-telemetry-pill {
+  background: rgba(3, 7, 18, 0.75);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--war-font-mono, monospace);
+  font-size: 0.65rem;
+  color: var(--war-cyan, #00f0ff);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  white-space: nowrap;
+}
+
+/* Playback Control Bar */
+.cinema-playback-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: rgba(6, 11, 25, 0.88);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  z-index: 10;
+}
+
+.cinema-scrubber-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.cinema-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--war-cyan, #00f0ff) 0%, var(--war-gold, #f5c542) 100%);
+  box-shadow: 0 0 10px var(--war-gold, #f5c542);
+  border-radius: 3px;
+  transition: width 0.1s linear;
+}
+
+.cinema-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-family: var(--war-font-mono, monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.cinema-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.cinema-btn.active {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: var(--war-emerald, #10b981);
+  color: #34d399;
+}
+
+.cinema-timecode {
+  font-family: var(--war-font-mono, monospace);
+  font-size: 0.7rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+/* 4 Step Dossier Cards */
+.theater-step-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.theater-step-card {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.theater-step-card:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.theater-step-card.active {
+  background: linear-gradient(135deg, rgba(245, 197, 66, 0.12) 0%, rgba(0, 0, 0, 0.5) 100%);
+  border-color: var(--war-gold, #f5c542);
+  box-shadow: 0 10px 24px -6px rgba(245, 197, 66, 0.25);
+}
+
+.tsc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tsc-num {
+  font-family: var(--war-font-mono, monospace);
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--war-gold, #f5c542);
+}
+
+.tsc-icon {
+  font-size: 1.1rem;
+}
+
+.tsc-title {
+  font-family: var(--war-font-mono, monospace);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.tsc-desc {
+  font-family: var(--war-font-sans, 'Inter', sans-serif);
+  font-size: 0.7rem;
+  color: #94a3b8;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Prompt Studio Drawer Modal */
+.higgsfield-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 5, 12, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.higgsfield-modal.active {
+  display: flex;
+}
+
+.higgsfield-modal-shell {
+  background: #060b17;
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  border-radius: 24px;
+  max-width: 820px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 240, 255, 0.2);
+  padding: 28px;
+}
+
+.hm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.hm-title {
+  font-family: var(--war-font-display, 'Cinzel', serif);
+  font-size: 1.25rem;
+  color: var(--war-gold, #f5c542);
+  margin: 0;
+}
+
+.hm-close-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+.hm-prompt-card {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.hm-prompt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.hm-prompt-title {
+  font-family: var(--war-font-mono, monospace);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--war-cyan, #00f0ff);
+}
+
+.hm-prompt-body {
+  font-family: var(--war-font-mono, monospace);
+  font-size: 0.72rem;
+  color: #cbd5e1;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 12px;
+  border-radius: 8px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Responsive Rules for Installation Theater */
+@media (max-width: 992px) {
+  .theater-step-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .theater-screen-frame {
+    min-height: 380px;
+  }
+}
+
+@media (max-width: 640px) {
+  .theater-step-cards {
+    grid-template-columns: 1fr;
+  }
+  .theater-top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .theater-chapter-pills {
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+  }
+  .cinema-hud-overlay {
+    flex-direction: column;
+    gap: 8px;
+    left: 16px;
+    right: 16px;
+  }
+  .theater-screen-frame {
+    min-height: 320px;
+  }
+}
+
