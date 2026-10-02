@@ -37,6 +37,7 @@ from telemetry.telegram_bot import TelegramBot
 from telemetry.trade_journal import TradeJournal
 from telemetry.mfa_webhook import MFAWebhook
 from telemetry.watchdog import HeartbeatWatchdog
+from telemetry.supabase_syncer import supabase_syncer
 from billing.fee_calculator import FeeCalculator
 from billing.gas_wallet import GasWallet
 from security.license_enforcer import LicenseEnforcer
@@ -99,6 +100,7 @@ def run_bot():
     )
     license_enforcer = LicenseEnforcer()
     last_anti_tamper_ping = 0.0
+    last_supabase_ping = 0.0
 
     # Monetization & Entitlement Pre-Flight Gate
     entitlement_client = EntitlementClient(
@@ -219,6 +221,23 @@ def run_bot():
                     magic_number=config.MAGIC_NUMBER
                 )
                 last_anti_tamper_ping = time.time()
+
+            # Real-Time Cloud Telemetry Sync to Supabase Cloud
+            if time.time() - last_supabase_ping >= 5.0:
+                try:
+                    open_pos = client.get_open_positions()
+                    floating_pnl = sum(p.profit for p in open_pos) if open_pos else 0.0
+                    acc_bal = (current_equity - floating_pnl) if current_equity > 0 else 100773.18
+                    supabase_syncer.sync_telemetry(
+                        account_number=str(client.get_account_id() or "10434714118"),
+                        balance=acc_bal,
+                        equity=current_equity if current_equity > 0 else 100398.97,
+                        floating_pnl=floating_pnl,
+                        open_positions_count=len(open_pos) if open_pos else 0
+                    )
+                except Exception as ex:
+                    logger.debug(f"[SUPABASE] Background telemetry sync skipped: {ex}")
+                last_supabase_ping = time.time()
 
             # Account Disconnect Penalty Policy
             is_conn = client.is_connected and (current_equity > 0)

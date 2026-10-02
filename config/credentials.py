@@ -27,6 +27,11 @@ class Credentials:
     ELEVENLABS_API_KEY: str = os.getenv("ELEVENLABS_API_KEY", "")
     ELEVENLABS_VOICE_ID: str = os.getenv("ELEVENLABS_VOICE_ID", "21m00Tcm4TlvDq8ikWAM")
 
+    # Supabase Cloud Database & Realtime Telemetry
+    SUPABASE_URL: str = os.getenv("SUPABASE_URL", "")
+    SUPABASE_PUBLISHABLE_KEY: str = os.getenv("SUPABASE_PUBLISHABLE_KEY", "")
+    SUPABASE_SECRET_KEY: str = os.getenv("SUPABASE_SECRET_KEY", "")
+
 
 def load_credentials() -> Credentials:
     # Auto-load .env file if present
@@ -57,6 +62,9 @@ def load_credentials() -> Credentials:
     gemini_key = os.getenv("GEMINI_API_KEY", vault_data.get("GEMINI_API_KEY", "") if vault_data else "")
     elevenlabs_key = os.getenv("ELEVENLABS_API_KEY", vault_data.get("ELEVENLABS_API_KEY", "") if vault_data else "")
     elevenlabs_voice = os.getenv("ELEVENLABS_VOICE_ID", vault_data.get("ELEVENLABS_VOICE_ID", "21m00Tcm4TlvDq8ikWAM") if vault_data else "21m00Tcm4TlvDq8ikWAM")
+    supabase_url = os.getenv("SUPABASE_URL", "")
+    supabase_pub = os.getenv("SUPABASE_PUBLISHABLE_KEY", "")
+    supabase_sec = os.getenv("SUPABASE_SECRET_KEY", "")
 
     if not vault_data and (login or password or telegram_token or gemini_key or elevenlabs_key):
         vault.encrypt_and_save({
@@ -80,8 +88,12 @@ def load_credentials() -> Credentials:
         TELEGRAM_CHAT_ID=telegram_chat,
         GEMINI_API_KEY=gemini_key,
         ELEVENLABS_API_KEY=elevenlabs_key,
-        ELEVENLABS_VOICE_ID=elevenlabs_voice
+        ELEVENLABS_VOICE_ID=elevenlabs_voice,
+        SUPABASE_URL=supabase_url,
+        SUPABASE_PUBLISHABLE_KEY=supabase_pub,
+        SUPABASE_SECRET_KEY=supabase_sec
     )
+
 
 
 credentials = load_credentials()
