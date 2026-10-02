@@ -1040,6 +1040,101 @@
   transform: scale(0.98);
 }
 
+.calc-copy-btn.compact {
+  padding: 8px 14px;
+  font-size: 0.74rem;
+}
+
+/* Compact Calculator Overlay & Layout Rules */
+.calc-shell.compact {
+  max-width: 920px;
+}
+
+.calc-top-header.compact {
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+  gap: 8px;
+}
+
+.calc-top-header.compact .calc-header-title h5 {
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+.calc-body-grid.compact {
+  gap: 14px;
+}
+
+.calc-group.compact {
+  gap: 3px;
+}
+
+.calc-group.compact label {
+  font-size: 0.7rem;
+}
+
+.calc-group.compact .calc-text-input {
+  padding: 6px 10px;
+  font-size: 0.82rem;
+}
+
+.calc-preset-pills.compact {
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.calc-preset-pills.compact .calc-preset-pill {
+  padding: 2px 7px;
+  font-size: 0.64rem;
+}
+
+.calc-risk-buttons.compact {
+  gap: 4px;
+}
+
+.calc-risk-buttons.compact .calc-risk-pill {
+  padding: 4px 6px;
+  font-size: 0.65rem;
+  min-width: 75px;
+}
+
+.calc-trade-specs-grid.compact {
+  gap: 6px;
+}
+
+.calc-hero-metric-card.compact {
+  padding: 8px 12px;
+}
+
+.calc-hero-metric-card.compact .calc-metric-sub {
+  font-size: 0.62rem;
+  margin-bottom: 2px;
+}
+
+.calc-hero-metric-card.compact .calc-lot-hero {
+  font-size: 1.85rem;
+}
+
+.calc-metrics-grid.compact {
+  gap: 6px;
+}
+
+.calc-stat-card.compact {
+  padding: 5px 8px;
+}
+
+.calc-stat-card.compact .stat-name {
+  font-size: 0.62rem;
+}
+
+.calc-stat-card.compact .stat-val {
+  font-size: 0.82rem;
+}
+
+.calc-stat-card.compact .stat-sub {
+  font-size: 0.58rem;
+}
+
 .calc-copy-toast,
 .signal-copy-toast {
   display: none;
@@ -1291,6 +1386,121 @@
   font-size: 0.68rem;
   line-height: 1.4;
   color: #fca5a5;
+}
+
+/* Compact Consensus Pod Styles */
+.consensus-pod.compact {
+  padding: 11px 13px;
+}
+
+.consensus-pod.compact .sidebar-pod-header {
+  margin-bottom: 6px;
+}
+
+.consensus-action-banner.compact {
+  margin-bottom: 6px;
+}
+
+.consensus-action-banner.compact .direction-badge {
+  font-size: 0.72rem;
+  padding: 3px 8px;
+}
+
+.consensus-action-banner.compact .edge-rating {
+  font-size: 0.65rem;
+  padding: 2px 6px;
+}
+
+.consensus-agent-pills {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-bottom: 7px;
+}
+
+.c-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 4px;
+  border-radius: 6px;
+  font-family: var(--war-font-mono);
+  font-size: 0.63rem;
+  font-weight: 700;
+  text-align: center;
+  cursor: default;
+}
+
+.c-pill.buy {
+  background: rgba(16, 185, 129, 0.18);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #34d399;
+}
+
+.c-pill.pass {
+  background: rgba(0, 240, 255, 0.15);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  color: var(--war-cyan);
+}
+
+.consensus-specs-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 5px 8px;
+  margin-bottom: 7px;
+  font-family: var(--war-font-mono);
+  font-size: 0.66rem;
+  color: #94a3b8;
+}
+
+.consensus-specs-compact strong.gold { color: var(--war-gold); }
+.consensus-specs-compact strong.red { color: var(--war-crimson); }
+.consensus-specs-compact strong.green { color: var(--war-emerald); }
+
+.sidebar-action-btn.compact {
+  padding: 7px 12px;
+  font-size: 0.74rem;
+  margin-top: 0;
+}
+
+/* Compact News Shield Pod Styles */
+.news-shield-pod.compact {
+  padding: 9px 13px;
+}
+
+.news-shield-pod.compact .sidebar-pod-header {
+  margin-bottom: 5px;
+}
+
+.countdown-timer-mini {
+  font-family: var(--war-font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--war-gold);
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px rgba(245, 197, 66, 0.4);
+}
+
+.news-event-compact {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--war-font-mono);
+  font-size: 0.67rem;
+  color: #cbd5e1;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.news-event-compact .news-impact-dot {
+  width: 6px;
+  height: 6px;
 }
 
 /* ==============================================================================

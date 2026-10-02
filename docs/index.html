@@ -3443,32 +3443,30 @@
 
                 <!-- Quarter-Kelly Risk Armor & Lot Size Engine (Interactive Calculator) -->
                 <div id="cockpit-calc-container" class="cockpit-calc-overlay" style="display:none;">
-                  <div class="calc-shell">
-                    <div class="calc-top-header">
+                  <div class="calc-shell compact">
+                    <div class="calc-top-header compact">
                       <div class="calc-header-title">
-                        <h5>✦ QUARTER-KELLY RISK ARMOR &amp; LOT SIZING ENGINE ✦</h5>
-                        <p>Institutional capital defense mathematics for Spot Gold (XAUUSD • 100 oz contract) by Commander SM.KANISH</p>
+                        <h5>✦ QUARTER-KELLY LOT SIZER (XAUUSD) ✦</h5>
                       </div>
                       <div class="calc-formula-badge" title="Fractional Kelly Criterion: f* = (p*b - q) / b * 0.25">
-                        <span>FORMULA: QUARTER-KELLY (f*/4)</span>
+                        <span>KELLY f*/4</span>
                       </div>
                     </div>
 
-                    <div class="calc-body-grid">
+                    <div class="calc-body-grid compact">
                       <!-- Input Column -->
-                      <div class="calc-input-column">
+                      <div class="calc-input-column compact">
                         <!-- Account Balance Input & Presets -->
-                        <div class="calc-group">
+                        <div class="calc-group compact">
                           <div class="calc-label-row">
-                            <label for="calc-balance-input">Account Balance (USD)</label>
+                            <label for="calc-balance-input">Account Balance</label>
                             <span class="calc-hint" id="calc-balance-display">$10,000.00</span>
                           </div>
                           <div class="calc-input-wrapper">
                             <span class="currency-prefix">$</span>
                             <input type="number" id="calc-balance-input" value="10000" min="100" max="10000000" step="500" class="calc-text-input">
                           </div>
-                          <div class="calc-preset-pills" id="calc-balance-presets">
-                            <button type="button" class="calc-preset-pill" data-val="1000">$1K</button>
+                          <div class="calc-preset-pills compact" id="calc-balance-presets">
                             <button type="button" class="calc-preset-pill" data-val="5000">$5K</button>
                             <button type="button" class="calc-preset-pill active" data-val="10000">$10K</button>
                             <button type="button" class="calc-preset-pill" data-val="25000">$25K</button>
@@ -3478,15 +3476,15 @@
                         </div>
 
                         <!-- Risk Percentage & Kelly Presets -->
-                        <div class="calc-group">
+                        <div class="calc-group compact">
                           <div class="calc-label-row">
-                            <label for="calc-risk-slider">Risk Tolerance per Trade</label>
+                            <label for="calc-risk-slider">Risk %</label>
                             <span class="calc-hint" id="calc-risk-pct-label">0.50% (Quarter-Kelly)</span>
                           </div>
-                          <div class="calc-risk-buttons" id="calc-risk-presets">
-                            <button type="button" class="calc-risk-pill active" data-risk="0.5" title="Recommended institutional hedge fund risk ceiling">🛡️ 0.5% (Quarter-Kelly)</button>
-                            <button type="button" class="calc-risk-pill" data-risk="1.0" title="Standard balanced growth risk">⚖️ 1.0% (Half-Kelly)</button>
-                            <button type="button" class="calc-risk-pill" data-risk="2.0" title="Aggressive tactical maximum">🔥 2.0% (Max Ceiling)</button>
+                          <div class="calc-risk-buttons compact" id="calc-risk-presets">
+                            <button type="button" class="calc-risk-pill active" data-risk="0.5">0.5% (Kelly/4)</button>
+                            <button type="button" class="calc-risk-pill" data-risk="1.0">1.0% (Half)</button>
+                            <button type="button" class="calc-risk-pill" data-risk="2.0">2.0% (Max)</button>
                           </div>
                           <div class="calc-slider-wrapper">
                             <input type="range" id="calc-risk-slider" min="0.1" max="3.0" step="0.1" value="0.5" class="calc-range-slider">
@@ -3494,73 +3492,63 @@
                         </div>
 
                         <!-- Trade Setup Parameters (Entry, SL, TP) -->
-                        <div class="calc-trade-specs-grid">
-                          <div class="calc-group">
-                            <label for="calc-entry-price">Entry Price ($)</label>
+                        <div class="calc-trade-specs-grid compact">
+                          <div class="calc-group compact">
+                            <label for="calc-entry-price">Entry ($)</label>
                             <input type="number" id="calc-entry-price" value="2664.50" step="0.10" class="calc-text-input">
                           </div>
-                          <div class="calc-group">
-                            <label for="calc-sl-price">Stop Loss ($)</label>
+                          <div class="calc-group compact">
+                            <label for="calc-sl-price">Stop ($)</label>
                             <input type="number" id="calc-sl-price" value="2658.00" step="0.10" class="calc-text-input">
                           </div>
-                          <div class="calc-group">
-                            <label for="calc-tp-price">Take Profit ($)</label>
+                          <div class="calc-group compact">
+                            <label for="calc-tp-price">Target ($)</label>
                             <input type="number" id="calc-tp-price" value="2684.00" step="0.10" class="calc-text-input">
                           </div>
                         </div>
                       </div>
 
                       <!-- Output / Result Cards Column -->
-                      <div class="calc-output-column">
+                      <div class="calc-output-column compact">
                         <!-- Main Lot Size Hero Metric -->
-                        <div class="calc-hero-metric-card">
-                          <span class="calc-metric-sub">RECOMMENDED POSITION SIZE</span>
+                        <div class="calc-hero-metric-card compact">
+                          <span class="calc-metric-sub">RECOMMENDED LOT SIZE</span>
                           <div class="calc-lot-value-row">
                             <span class="calc-lot-hero" id="calc-result-lots">0.08</span>
-                            <span class="calc-lot-unit">STANDARD LOTS</span>
+                            <span class="calc-lot-unit">LOTS</span>
                           </div>
-                          <span class="calc-lot-contract-note" id="calc-result-contract-note">Gold Contract: 8.0 oz • $8.00 per pip</span>
+                          <span class="calc-lot-contract-note" id="calc-result-contract-note">Gold Contract: 8.0 oz • $8.00/pip</span>
                         </div>
 
                         <!-- Detailed Quantitative Metrics Grid -->
-                        <div class="calc-metrics-grid">
-                          <div class="calc-stat-card">
-                            <span class="stat-name">Cash at Risk</span>
+                        <div class="calc-metrics-grid compact">
+                          <div class="calc-stat-card compact">
+                            <span class="stat-name">Cash Risk</span>
                             <span class="stat-val red" id="calc-result-risk-usd">-$50.00</span>
-                            <span class="stat-sub" id="calc-result-risk-pct">0.50% of balance</span>
+                            <span class="stat-sub" id="calc-result-risk-pct">0.50%</span>
                           </div>
-                          <div class="calc-stat-card">
-                            <span class="stat-name">Projected Profit</span>
+                          <div class="calc-stat-card compact">
+                            <span class="stat-name">Profit (TP)</span>
                             <span class="stat-val green" id="calc-result-reward-usd">+$156.00</span>
-                            <span class="stat-sub" id="calc-result-reward-pct">+1.56% return</span>
+                            <span class="stat-sub" id="calc-result-reward-pct">+1.56%</span>
                           </div>
-                          <div class="calc-stat-card">
-                            <span class="stat-name">Risk / Reward Ratio</span>
+                          <div class="calc-stat-card compact">
+                            <span class="stat-name">Risk / Reward</span>
                             <span class="stat-val gold" id="calc-result-rr">1 : 3.00</span>
-                            <span class="stat-sub">High Edge Expected</span>
+                            <span class="stat-sub" id="calc-result-pips">65.0 Pips</span>
                           </div>
-                          <div class="calc-stat-card">
-                            <span class="stat-name">Stop Distance</span>
-                            <span class="stat-val" id="calc-result-pips">65.0 Pips</span>
-                            <span class="stat-sub" id="calc-result-dollars">$6.50 / oz</span>
-                          </div>
-                          <div class="calc-stat-card">
-                            <span class="stat-name">Estimated Margin (1:200)</span>
+                          <div class="calc-stat-card compact">
+                            <span class="stat-name">Req Margin (1:200)</span>
                             <span class="stat-val cyan" id="calc-result-margin">$106.58</span>
-                            <span class="stat-sub" id="calc-result-margin-pct">1.07% Account Margin</span>
-                          </div>
-                          <div class="calc-stat-card">
-                            <span class="stat-name">Defense Rating</span>
-                            <span class="stat-val green" id="calc-result-rating">OPTIMAL (99.4%)</span>
-                            <span class="stat-sub">Ruined Risk &lt; 0.01%</span>
+                            <span class="stat-sub" id="calc-result-margin-pct">1.07% Acct</span>
                           </div>
                         </div>
 
                         <!-- 1-Click Clipboard Export Action -->
-                        <button type="button" class="calc-copy-btn" id="btn-calc-copy-mt5">
-                          <span>📋 COPY MT5 ORDER PARAMETERS</span>
+                        <button type="button" class="calc-copy-btn compact" id="btn-calc-copy-mt5">
+                          <span>📋 COPY MT5 PARAMETERS</span>
                         </button>
-                        <div class="calc-copy-toast" id="calc-copy-toast">✓ MT5 Parameters Copied to Clipboard!</div>
+                        <div class="calc-copy-toast" id="calc-copy-toast">✓ MT5 Parameters Copied!</div>
                       </div>
                     </div>
                   </div>
@@ -3600,89 +3588,49 @@
                   </div>
                 </div>
 
-                <!-- Pod 2: Live 4-Agent War Room Consensus Signal Card -->
-                <div class="sidebar-glass-pod consensus-pod">
+                <!-- Pod 2: Live 4-Agent War Room Consensus Signal Card (Compact) -->
+                <div class="sidebar-glass-pod consensus-pod compact">
                   <div class="sidebar-pod-header">
-                    <span>4-AGENT WAR ROOM</span>
-                    <span class="consensus-status-pill">4/4 UNANIMOUS</span>
+                    <span>4-AGENT CONSENSUS</span>
+                    <span class="consensus-status-pill">4/4 BUY</span>
                   </div>
                   
-                  <div class="consensus-action-banner">
-                    <span class="direction-badge buy">BUY / LONG XAUUSD</span>
+                  <div class="consensus-action-banner compact">
+                    <span class="direction-badge buy">BUY XAUUSD</span>
                     <span class="edge-rating">A+ SETUP</span>
                   </div>
 
-                  <!-- 4 Agent Individual Votes -->
-                  <div class="consensus-agents-list">
-                    <div class="consensus-agent-row">
-                      <span class="c-agent-name">🦅 HAWK</span>
-                      <span class="c-agent-badge buy">BUY</span>
-                      <span class="c-agent-reason">DXY -0.32% • Yields Fall</span>
-                    </div>
-                    <div class="consensus-agent-row">
-                      <span class="c-agent-name">📡 RADAR</span>
-                      <span class="c-agent-badge buy">BUY</span>
-                      <span class="c-agent-reason">Asian Liquidity Swept</span>
-                    </div>
-                    <div class="consensus-agent-row">
-                      <span class="c-agent-name">🐅 PREDATOR</span>
-                      <span class="c-agent-badge buy">BUY</span>
-                      <span class="c-agent-reason">Bullish FVG Retest</span>
-                    </div>
-                    <div class="consensus-agent-row">
-                      <span class="c-agent-name">⚔️ INQUISITOR</span>
-                      <span class="c-agent-badge pass">PASS</span>
-                      <span class="c-agent-reason">Spread 0.12p &le; 5.0p Cap</span>
-                    </div>
+                  <!-- 4 Agent Compact Votes -->
+                  <div class="consensus-agent-pills">
+                    <span class="c-pill buy" title="Hawk: DXY -0.32% • Yields Fall">🦅 BUY</span>
+                    <span class="c-pill buy" title="Radar: Asian Liquidity Swept">📡 BUY</span>
+                    <span class="c-pill buy" title="Predator: Bullish FVG Retest">🐅 BUY</span>
+                    <span class="c-pill pass" title="Inquisitor: Spread 0.12p <= 5.0p Cap">⚔️ PASS</span>
                   </div>
 
-                  <!-- Trade Specs -->
-                  <div class="consensus-specs-box">
-                    <div class="cs-row">
-                      <span>ENTRY ZONE</span>
-                      <strong class="gold">2662.50 – 2664.50</strong>
-                    </div>
-                    <div class="cs-row">
-                      <span>STOP LOSS</span>
-                      <strong class="red">2658.00 (-65 pips)</strong>
-                    </div>
-                    <div class="cs-row">
-                      <span>TARGET (TP1 / TP2)</span>
-                      <strong class="green">2678.00 / 2685.50</strong>
-                    </div>
+                  <!-- Compact Trade Specs -->
+                  <div class="consensus-specs-compact">
+                    <span>ENTRY: <strong class="gold">2662.5–2664.5</strong></span>
+                    <span>SL: <strong class="red">2658.0 (-65p)</strong></span>
+                    <span>TP: <strong class="green">2678.0 / 2685.5</strong></span>
                   </div>
 
-                  <button type="button" class="sidebar-action-btn" id="btn-copy-consensus-signal">
-                    📋 COPY CONSENSUS SIGNAL
+                  <button type="button" class="sidebar-action-btn compact" id="btn-copy-consensus-signal">
+                    📋 COPY SIGNAL
                   </button>
-                  <div class="signal-copy-toast" id="signal-copy-toast">✓ Consensus Signal Copied!</div>
+                  <div class="signal-copy-toast" id="signal-copy-toast">✓ Signal Copied!</div>
                 </div>
 
-                <!-- Pod 3: Economic News Shield & Catalyst Radar -->
-                <div class="sidebar-glass-pod news-shield-pod">
+                <!-- Pod 3: Economic News Shield & Catalyst Radar (Compact) -->
+                <div class="sidebar-glass-pod news-shield-pod compact">
                   <div class="sidebar-pod-header">
-                    <span>NEWS SHIELD RADAR</span>
-                    <span style="color:var(--war-emerald, #10b981);">DEFENSE ARMED</span>
+                    <span>NEWS SHIELD</span>
+                    <span class="countdown-timer-mini" id="news-countdown-timer">03:42:18</span>
                   </div>
 
-                  <div class="news-event-box">
-                    <div class="news-event-title">
-                      <span class="news-impact-dot high"></span>
-                      <strong>US Non-Farm Payrolls (NFP)</strong>
-                    </div>
-                    <div class="news-countdown-box">
-                      <span class="countdown-label">TIME UNTIL IMPACT:</span>
-                      <span class="countdown-timer" id="news-countdown-timer">03:42:18</span>
-                    </div>
-                    <div class="news-details-row">
-                      <span>IMPACT LEVEL: <strong style="color:var(--war-crimson);">CRITICAL (HIGH)</strong></span>
-                      <span>AUTO-FREEZE: <strong>±15 MINS</strong></span>
-                    </div>
-                  </div>
-
-                  <div class="news-directive-alert">
-                    <span class="directive-icon">🛡️</span>
-                    <span class="directive-text">Auto-freeze triggers 15m prior to catalyst. Limit orders purged to prevent interbank slippage.</span>
+                  <div class="news-event-compact">
+                    <span class="news-impact-dot high"></span>
+                    <span class="news-event-text"><strong>US NFP &amp; Unemployment</strong> • Auto-Freeze ±15m</span>
                   </div>
                 </div>
 
