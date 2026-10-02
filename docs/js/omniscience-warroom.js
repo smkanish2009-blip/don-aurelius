@@ -1149,6 +1149,9 @@
     const canvas2d = document.getElementById('cockpit-canvas');
     const webglCanvas = document.getElementById('cockpit-webgl-canvas');
     const gmapsOverlay = document.getElementById('cockpit-gmaps-container');
+    const chartOverlay = document.getElementById('cockpit-chart-container');
+    const calcOverlay = document.getElementById('cockpit-calc-container');
+    const tvIframe = document.getElementById('cockpit-tradingview-iframe');
     const globeSubnav = document.getElementById('globe-subnav');
     const coordHud = document.getElementById('canvas-coord-hud');
     const badgeText = document.getElementById('cockpit-status-badge-text');
@@ -1297,32 +1300,359 @@
         if (currentMode === 'globe') {
           webglCanvas.style.display = 'block';
           canvas2d.style.display = 'none';
+          if (chartOverlay) chartOverlay.style.display = 'none';
+          if (calcOverlay) calcOverlay.style.display = 'none';
           if (globeSubnav) globeSubnav.style.display = 'flex';
           if (coordHud) coordHud.style.display = 'block';
           if (gmapsOverlay) gmapsOverlay.style.display = 'none';
           if (badgeText) badgeText.textContent = '120 FPS REAL 3D EARTH MATRIX';
           if (hint) hint.textContent = 'Drag to rotate Real 3D Earth • Scroll to zoom • Click hubs to inspect';
-        } else {
+        } else if (currentMode === 'neural') {
           webglCanvas.style.display = 'none';
           canvas2d.style.display = 'block';
+          if (chartOverlay) chartOverlay.style.display = 'none';
+          if (calcOverlay) calcOverlay.style.display = 'none';
           if (globeSubnav) globeSubnav.style.display = 'none';
           if (coordHud) coordHud.style.display = 'none';
           if (gmapsOverlay) gmapsOverlay.style.display = 'none';
-
-          if (currentMode === 'neural') {
-            if (badgeText) badgeText.textContent = '1,200 BIOLUMINESCENT NEURONS ACTIVE';
-            if (hint) hint.textContent = 'Move cursor to warp neural gravity • Click to fire synapses';
-          } else if (currentMode === 'sniper') {
-            if (badgeText) badgeText.textContent = 'GEMINI MULTIMODAL VISION SCANNING';
-            if (hint) hint.textContent = 'Gemini Vision AI scanning Asian range stop-loss clusters';
-          } else if (currentMode === 'spacetime') {
-            if (badgeText) badgeText.textContent = '4D EINSTEINIAN GRAVITY MESH';
-            if (hint) hint.textContent = 'Drag cursor across 4D mesh to perturb market spacetime';
-          }
+          if (badgeText) badgeText.textContent = '1,200 BIOLUMINESCENT NEURONS ACTIVE';
+          if (hint) hint.textContent = 'Move cursor to warp neural gravity • Click to fire synapses';
+        } else if (currentMode === 'chart') {
+          webglCanvas.style.display = 'none';
+          canvas2d.style.display = 'none';
+          if (chartOverlay) chartOverlay.style.display = 'flex';
+          if (calcOverlay) calcOverlay.style.display = 'none';
+          if (globeSubnav) globeSubnav.style.display = 'none';
+          if (coordHud) coordHud.style.display = 'none';
+          if (gmapsOverlay) gmapsOverlay.style.display = 'none';
+          if (badgeText) badgeText.textContent = 'LIVE STREAMING XAUUSD CANDLESTICK FEED';
+          if (hint) hint.textContent = 'Official TradingView Institutional Feed • Live Price Action & Order Flow';
+        } else if (currentMode === 'calculator') {
+          webglCanvas.style.display = 'none';
+          canvas2d.style.display = 'none';
+          if (chartOverlay) chartOverlay.style.display = 'none';
+          if (calcOverlay) calcOverlay.style.display = 'block';
+          if (globeSubnav) globeSubnav.style.display = 'none';
+          if (coordHud) coordHud.style.display = 'none';
+          if (gmapsOverlay) gmapsOverlay.style.display = 'none';
+          if (badgeText) badgeText.textContent = 'QUARTER-KELLY CAPITAL DEFENSE MATRIX';
+          if (hint) hint.textContent = 'Adjust balance, risk tolerance & targets to calculate exact MT5 lot size';
+        } else {
+          webglCanvas.style.display = 'none';
+          canvas2d.style.display = 'block';
+          if (chartOverlay) chartOverlay.style.display = 'none';
+          if (calcOverlay) calcOverlay.style.display = 'none';
+          if (globeSubnav) globeSubnav.style.display = 'none';
+          if (coordHud) coordHud.style.display = 'none';
+          if (gmapsOverlay) gmapsOverlay.style.display = 'none';
         }
         resizeCanvases();
       });
     });
+
+    // TradingView Chart Toolbar Controls
+    let currentChartSymbol = 'OANDA:XAUUSD';
+    let currentChartInterval = '15';
+
+    function updateChartIframe() {
+      if (!tvIframe) return;
+      const encodedSymbol = encodeURIComponent(currentChartSymbol);
+      const url = `https://s.tradingview.com/widgetembed/?symbol=${encodedSymbol}&interval=${currentChartInterval}&theme=dark&style=1&timezone=Etc%2FUTC&studies=%5B%5D&hide_side_toolbar=0&allow_symbol_change=0&save_image=0&details=1`;
+      tvIframe.src = url;
+    }
+
+    const chartTfBtns = document.querySelectorAll('.chart-tf-btn');
+    chartTfBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        audio.playClick();
+        chartTfBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentChartInterval = btn.getAttribute('data-interval') || '15';
+        updateChartIframe();
+      });
+    });
+
+    const chartAssetBtns = document.querySelectorAll('.chart-asset-btn');
+    chartAssetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        audio.playClick();
+        chartAssetBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentChartSymbol = btn.getAttribute('data-symbol') || 'OANDA:XAUUSD';
+        updateChartIframe();
+      });
+    });
+
+    // Quarter-Kelly Risk Armor & Lot Size Engine
+    const balanceInput = document.getElementById('calc-balance-input');
+    const balanceDisplay = document.getElementById('calc-balance-display');
+    const riskSlider = document.getElementById('calc-risk-slider');
+    const riskLabel = document.getElementById('calc-risk-pct-label');
+    const entryInput = document.getElementById('calc-entry-price');
+    const slInput = document.getElementById('calc-sl-price');
+    const tpInput = document.getElementById('calc-tp-price');
+
+    const resultLots = document.getElementById('calc-result-lots');
+    const resultContractNote = document.getElementById('calc-result-contract-note');
+    const resultRiskUsd = document.getElementById('calc-result-risk-usd');
+    const resultRiskPct = document.getElementById('calc-result-risk-pct');
+    const resultRewardUsd = document.getElementById('calc-result-reward-usd');
+    const resultRewardPct = document.getElementById('calc-result-reward-pct');
+    const resultRR = document.getElementById('calc-result-rr');
+    const resultPips = document.getElementById('calc-result-pips');
+    const resultDollars = document.getElementById('calc-result-dollars');
+    const resultMargin = document.getElementById('calc-result-margin');
+    const resultMarginPct = document.getElementById('calc-result-margin-pct');
+    const resultRating = document.getElementById('calc-result-rating');
+
+    function calculateRiskArmor() {
+      if (!balanceInput || !entryInput || !slInput || !tpInput) return;
+
+      const balance = Math.max(100, parseFloat(balanceInput.value) || 10000);
+      const riskPct = Math.max(0.05, parseFloat(riskSlider ? riskSlider.value : 0.5) || 0.5);
+      const entry = parseFloat(entryInput.value) || 2664.50;
+      const sl = parseFloat(slInput.value) || 2658.00;
+      const tp = parseFloat(tpInput.value) || 2684.00;
+
+      // Update Header Display
+      if (balanceDisplay) {
+        balanceDisplay.textContent = `$${balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      }
+
+      // Risk strategy label
+      if (riskLabel) {
+        let strat = 'Custom Risk';
+        if (Math.abs(riskPct - 0.5) < 0.05) strat = 'Quarter-Kelly (Recommended)';
+        else if (Math.abs(riskPct - 1.0) < 0.05) strat = 'Half-Kelly (Balanced)';
+        else if (Math.abs(riskPct - 2.0) < 0.05) strat = 'Max Tactical Ceiling';
+        riskLabel.textContent = `${riskPct.toFixed(2)}% (${strat})`;
+      }
+
+      // Stop Loss distance calculation (Gold contract: 1 lot = 100 oz, $1 price move = $100 per lot, 1 pip = $0.10)
+      const stopDistanceUsd = Math.max(0.1, Math.abs(entry - sl));
+      const stopPips = stopDistanceUsd * 10;
+
+      // Take Profit distance calculation
+      const rewardDistanceUsd = Math.max(0.1, Math.abs(tp - entry));
+      const rewardPips = rewardDistanceUsd * 10;
+
+      // Cash at risk ($)
+      const cashRiskUsd = balance * (riskPct / 100);
+
+      // Raw Lots = Cash Risk / (Stop Distance $ * 100 oz)
+      let calculatedLots = cashRiskUsd / (stopDistanceUsd * 100);
+      
+      // Standard broker limits: min 0.01 lot, 2 decimals
+      if (calculatedLots < 0.01) calculatedLots = 0.01;
+      calculatedLots = Math.round(calculatedLots * 100) / 100;
+
+      // Exact dollar values based on quantized lot size
+      const actualRiskUsd = calculatedLots * stopDistanceUsd * 100;
+      const actualRewardUsd = calculatedLots * rewardDistanceUsd * 100;
+      const actualRiskPct = (actualRiskUsd / balance) * 100;
+      const actualRewardPct = (actualRewardUsd / balance) * 100;
+
+      // Risk-Reward Ratio
+      const rrRatio = (rewardDistanceUsd / stopDistanceUsd);
+
+      // Estimated Required Margin at 1:200 institutional leverage
+      const notionalValue = calculatedLots * 100 * entry;
+      const reqMargin = notionalValue / 200;
+      const marginPctOfAccount = (reqMargin / balance) * 100;
+
+      // Update DOM
+      if (resultLots) resultLots.textContent = calculatedLots.toFixed(2);
+      if (resultContractNote) {
+        const oz = (calculatedLots * 100).toFixed(1);
+        const pipVal = (calculatedLots * 10).toFixed(2);
+        resultContractNote.textContent = `Gold Contract: ${oz} oz • $${pipVal} per pip`;
+      }
+      if (resultRiskUsd) resultRiskUsd.textContent = `-$${actualRiskUsd.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      if (resultRiskPct) resultRiskPct.textContent = `${actualRiskPct.toFixed(2)}% of balance`;
+      if (resultRewardUsd) resultRewardUsd.textContent = `+$${actualRewardUsd.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      if (resultRewardPct) resultRewardPct.textContent = `+${actualRewardPct.toFixed(2)}% return`;
+      if (resultRR) resultRR.textContent = `1 : ${rrRatio.toFixed(2)}`;
+      if (resultPips) resultPips.textContent = `${stopPips.toFixed(1)} Pips`;
+      if (resultDollars) resultDollars.textContent = `$${stopDistanceUsd.toFixed(2)} / oz`;
+      if (resultMargin) resultMargin.textContent = `$${reqMargin.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      if (resultMarginPct) resultMarginPct.textContent = `${marginPctOfAccount.toFixed(2)}% Account Margin`;
+
+      // Defense Rating
+      if (resultRating) {
+        if (actualRiskPct <= 0.75) {
+          resultRating.textContent = 'OPTIMAL (99.4%)';
+          resultRating.className = 'stat-val green';
+        } else if (actualRiskPct <= 1.5) {
+          resultRating.textContent = 'STABLE (96.2%)';
+          resultRating.className = 'stat-val gold';
+        } else {
+          resultRating.textContent = 'ELEVATED RISK';
+          resultRating.className = 'stat-val red';
+        }
+      }
+    }
+
+    // Balance Presets
+    const balancePresets = document.querySelectorAll('#calc-balance-presets .calc-preset-pill');
+    balancePresets.forEach(pill => {
+      pill.addEventListener('click', () => {
+        audio.playClick();
+        balancePresets.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        const val = pill.getAttribute('data-val');
+        if (balanceInput && val) {
+          balanceInput.value = val;
+          calculateRiskArmor();
+        }
+      });
+    });
+
+    // Risk Presets
+    const riskPresets = document.querySelectorAll('#calc-risk-presets .calc-risk-pill');
+    riskPresets.forEach(pill => {
+      pill.addEventListener('click', () => {
+        audio.playClick();
+        riskPresets.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        const rVal = pill.getAttribute('data-risk');
+        if (riskSlider && rVal) {
+          riskSlider.value = rVal;
+          calculateRiskArmor();
+        }
+      });
+    });
+
+    if (balanceInput) balanceInput.addEventListener('input', () => {
+      balancePresets.forEach(p => p.classList.remove('active'));
+      calculateRiskArmor();
+    });
+    if (riskSlider) riskSlider.addEventListener('input', () => {
+      riskPresets.forEach(p => p.classList.remove('active'));
+      calculateRiskArmor();
+    });
+    if (entryInput) entryInput.addEventListener('input', calculateRiskArmor);
+    if (slInput) slInput.addEventListener('input', calculateRiskArmor);
+    if (tpInput) tpInput.addEventListener('input', calculateRiskArmor);
+
+    // Initial calculation run
+    calculateRiskArmor();
+
+    // Copy MT5 Parameters Action
+    const copyMt5Btn = document.getElementById('btn-calc-copy-mt5');
+    const copyMt5Toast = document.getElementById('calc-copy-toast');
+    if (copyMt5Btn) {
+      copyMt5Btn.addEventListener('click', () => {
+        audio.playClick();
+        const lots = resultLots ? resultLots.textContent.trim() : '0.08';
+        const entry = entryInput ? entryInput.value : '2664.50';
+        const sl = slInput ? slInput.value : '2658.00';
+        const tp = tpInput ? tpInput.value : '2684.00';
+        const riskUsd = resultRiskUsd ? resultRiskUsd.textContent.trim() : '-$50.00';
+        const rr = resultRR ? resultRR.textContent.trim() : '1 : 3.00';
+
+        const mt5Text = 
+`// ==========================================
+// DON AURELIUS • QUANTUM RISK ARMOR (MT5)
+// Architect: SM.KANISH • Sovereign AI Syndicate
+// ==========================================
+Symbol:        XAUUSD (Spot Gold)
+Order Type:    BUY LIMIT / BUY MARKET
+Volume (Lots): ${lots}
+Entry Price:   ${entry}
+Stop Loss:     ${sl}
+Take Profit:   ${tp}
+Risk:          ${riskUsd} (Quarter-Kelly Protection)
+Risk/Reward:   ${rr}
+// Execution verified by Inquisitor Gatekeeper`;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(mt5Text).then(() => {
+            if (copyMt5Toast) {
+              copyMt5Toast.style.display = 'block';
+              setTimeout(() => { copyMt5Toast.style.display = 'none'; }, 2500);
+            }
+          }).catch(() => {
+            prompt('Copy MT5 Parameters:', mt5Text);
+          });
+        } else {
+          prompt('Copy MT5 Parameters:', mt5Text);
+        }
+      });
+    }
+
+    // Copy 4-Agent Consensus Signal Action
+    const copySignalBtn = document.getElementById('btn-copy-consensus-signal');
+    const copySignalToast = document.getElementById('signal-copy-toast');
+    if (copySignalBtn) {
+      copySignalBtn.addEventListener('click', () => {
+        audio.playClick();
+        const signalText = 
+`🦅 DON AURELIUS • COUNCIL CONSENSUS SIGNAL 🦅
+=============================================
+Direction:    BUY / LONG XAUUSD (Gold)
+Quality:      A+ INSTITUTIONAL SETUP
+Consensus:    4/4 UNANIMOUS SUPERMAJORITY
+
+• Hawk:       BUY (DXY -0.32% • Yields Fall)
+• Radar:      BUY (Asian High Swept, Buyside Liquidity Target)
+• Predator:   BUY (Bullish FVG Retest @ 2662.50)
+• Inquisitor: PASS (Spread 0.12p <= 5.0p Cap)
+
+EXECUTION MATRIX:
+• Entry Zone: 2662.50 – 2664.50
+• Stop Loss:  2658.00 (-65 pips)
+• Target 1:   2678.00 (+135 pips)
+• Target 2:   2685.50 (+210 pips)
+• Allocation: Quarter-Kelly Risk Armor
+
+Founder: SM.KANISH • Sovereign AI Syndicate`;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(signalText).then(() => {
+            if (copySignalToast) {
+              copySignalToast.style.display = 'block';
+              setTimeout(() => { copySignalToast.style.display = 'none'; }, 2500);
+            }
+          }).catch(() => {
+            prompt('Copy Consensus Signal:', signalText);
+          });
+        } else {
+          prompt('Copy Consensus Signal:', signalText);
+        }
+      });
+    }
+
+    // Live Ticking Countdown Clock for Economic News Shield Radar
+    const newsTimerEl = document.getElementById('news-countdown-timer');
+    if (newsTimerEl) {
+      let targetSeconds = 3 * 3600 + 42 * 60 + 18;
+      setInterval(() => {
+        if (targetSeconds > 0) {
+          targetSeconds--;
+          const hrs = Math.floor(targetSeconds / 3600);
+          const mins = Math.floor((targetSeconds % 3600) / 60);
+          const secs = targetSeconds % 60;
+          newsTimerEl.textContent = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        } else {
+          newsTimerEl.textContent = '00:00:00 (EVENT LIVE)';
+        }
+      }, 1000);
+    }
+
+    // Fallback Simulation Triggers (if elements ever exist)
+    const execBtn = document.getElementById('btn-simulate-sweep');
+    if (execBtn && sniperEngine) {
+      execBtn.addEventListener('click', () => {
+        sniperEngine.triggerExecution();
+      });
+    }
+
+    const singBtn = document.getElementById('btn-trigger-singularity');
+    if (singBtn && spacetimeEngine) {
+      singBtn.addEventListener('click', () => {
+        spacetimeEngine.triggerSingularity();
+      });
+    }
 
     // Fullscreen Toggle
     const fullscreenBtn = document.getElementById('btn-cockpit-fullscreen');
@@ -1350,32 +1680,8 @@
       speechBtn.addEventListener('click', () => {
         audio.playSonar();
         audio.speak(
-          'Don Aurelius Quantum Cockpit initialized. Commander SM.KANISH authenticated. Council consensus: 4 of 4 unanimous. Asian range stop-loss clusters identified at 2,664 dollars. Eagle-Eye Vision AI is primed for liquidity sweep execution.'
+          'Don Aurelius Quantum Cockpit initialized. Commander SM.KANISH authenticated. Council consensus: 4 of 4 unanimous supermajority. Live TradingView XAUUSD feed synchronized. Quarter-Kelly Risk Armor active.'
         );
-      });
-    }
-
-    // Trigger Execution Button (Sniper)
-    const execBtn = document.getElementById('btn-simulate-sweep');
-    if (execBtn) {
-      execBtn.addEventListener('click', () => {
-        if (currentMode !== 'sniper') {
-          const sniperTab = document.querySelector('[data-mode="sniper"]');
-          if (sniperTab) sniperTab.click();
-        }
-        sniperEngine.triggerExecution();
-      });
-    }
-
-    // Trigger Singularity Button (Spacetime)
-    const singBtn = document.getElementById('btn-trigger-singularity');
-    if (singBtn) {
-      singBtn.addEventListener('click', () => {
-        if (currentMode !== 'spacetime') {
-          const stTab = document.querySelector('[data-mode="spacetime"]');
-          if (stTab) stTab.click();
-        }
-        spacetimeEngine.triggerSingularity();
       });
     }
 

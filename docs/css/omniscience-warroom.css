@@ -558,13 +558,753 @@
   margin-top: 8px;
 }
 
-/* 8. Mobile Responsiveness */
+/* ==============================================================================
+   10. Institutional Trader Station: Real Chart & Quarter-Kelly Risk Engine
+   ============================================================================== */
+
+/* Chart Overlay (TradingView Pro Dark) */
+.cockpit-chart-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #03050a;
+  z-index: 15;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: rgba(10, 15, 26, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chart-symbol-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--war-font-mono);
+}
+
+.chart-pair-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--war-gold);
+  letter-spacing: 0.5px;
+}
+
+.chart-broker-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: var(--war-emerald);
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.chart-controls-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.chart-tf-selector,
+.chart-asset-selector {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 3px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.chart-tf-btn,
+.chart-asset-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94a3b8;
+  font-family: var(--war-font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chart-tf-btn:hover,
+.chart-asset-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.chart-tf-btn.active,
+.chart-asset-btn.active {
+  background: rgba(245, 197, 66, 0.2);
+  color: var(--war-gold);
+  border-color: rgba(245, 197, 66, 0.5);
+  box-shadow: 0 0 10px rgba(245, 197, 66, 0.2);
+}
+
+.chart-iframe-wrapper {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #03050a;
+}
+
+.chart-iframe-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Calculator Overlay (Quarter-Kelly Risk Armor & Lot Sizing) */
+.cockpit-calc-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(5, 8, 15, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 15;
+  padding: 20px;
+  border-radius: 20px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.cockpit-calc-overlay::-webkit-scrollbar {
+  width: 6px;
+}
+.cockpit-calc-overlay::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+.cockpit-calc-overlay::-webkit-scrollbar-thumb {
+  background: rgba(245, 197, 66, 0.3);
+  border-radius: 3px;
+}
+
+.calc-shell {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.calc-top-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.calc-header-title h5 {
+  font-family: var(--war-font-display);
+  font-size: 1.05rem;
+  letter-spacing: 1.2px;
+  color: var(--war-gold);
+  margin: 0 0 4px 0;
+}
+
+.calc-header-title p {
+  font-family: var(--war-font-sans);
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.calc-formula-badge {
+  font-family: var(--war-font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  color: var(--war-cyan);
+  letter-spacing: 0.5px;
+}
+
+.calc-body-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.calc-input-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.calc-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.calc-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calc-group label {
+  font-family: var(--war-font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.calc-hint {
+  font-family: var(--war-font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--war-gold);
+}
+
+.calc-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.calc-input-wrapper .currency-prefix {
+  position: absolute;
+  left: 14px;
+  font-family: var(--war-font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.calc-text-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  color: #ffffff;
+  font-family: var(--war-font-mono);
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 10px 14px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.calc-input-wrapper .calc-text-input {
+  padding-left: 28px;
+}
+
+.calc-text-input:focus {
+  outline: none;
+  border-color: var(--war-gold);
+  box-shadow: 0 0 14px rgba(245, 197, 66, 0.3);
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.calc-preset-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.calc-preset-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+  font-family: var(--war-font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.calc-preset-pill:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.calc-preset-pill.active {
+  background: rgba(245, 197, 66, 0.2);
+  border-color: var(--war-gold);
+  color: var(--war-gold);
+}
+
+.calc-risk-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.calc-risk-pill {
+  flex: 1;
+  min-width: 110px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+  font-family: var(--war-font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.calc-risk-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.calc-risk-pill.active {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(16, 185, 129, 0.08) 100%);
+  border-color: var(--war-emerald);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+}
+
+.calc-slider-wrapper {
+  margin-top: 4px;
+}
+
+.calc-range-slider {
+  width: 100%;
+  accent-color: var(--war-gold);
+  cursor: pointer;
+}
+
+.calc-trade-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+/* Calculator Output Column */
+.calc-output-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.calc-hero-metric-card {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(6, 9, 16, 0.8) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  border-radius: 16px;
+  padding: 16px 20px;
+  text-align: center;
+  box-shadow: 0 10px 28px -10px rgba(16, 185, 129, 0.35);
+}
+
+.calc-metric-sub {
+  font-family: var(--war-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 1.5px;
+  color: var(--war-emerald);
+  text-transform: uppercase;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.calc-lot-value-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+}
+
+.calc-lot-hero {
+  font-family: var(--war-font-mono);
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.7);
+  letter-spacing: -1px;
+}
+
+.calc-lot-unit {
+  font-family: var(--war-font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--war-gold);
+  letter-spacing: 1px;
+}
+
+.calc-lot-contract-note {
+  font-family: var(--war-font-mono);
+  font-size: 0.7rem;
+  color: #94a3b8;
+  display: block;
+  margin-top: 2px;
+}
+
+.calc-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.calc-stat-card {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.calc-stat-card .stat-name {
+  font-family: var(--war-font-mono);
+  font-size: 0.66rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.calc-stat-card .stat-val {
+  font-family: var(--war-font-mono);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.calc-stat-card .stat-val.red { color: var(--war-crimson); }
+.calc-stat-card .stat-val.green { color: var(--war-emerald); }
+.calc-stat-card .stat-val.gold { color: var(--war-gold); }
+.calc-stat-card .stat-val.cyan { color: var(--war-cyan); }
+
+.calc-stat-card .stat-sub {
+  font-family: var(--war-font-mono);
+  font-size: 0.62rem;
+  color: #64748b;
+}
+
+.calc-copy-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(245, 197, 66, 0.25) 0%, rgba(245, 197, 66, 0.08) 100%);
+  border: 1px solid var(--war-gold);
+  border-top-color: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  color: #ffffff;
+  font-family: var(--war-font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 18px rgba(245, 197, 66, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.calc-copy-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgba(245, 197, 66, 0.4) 0%, rgba(245, 197, 66, 0.15) 100%);
+  box-shadow: 0 8px 24px var(--war-gold-glow);
+}
+
+.calc-copy-btn:active {
+  transform: scale(0.98);
+}
+
+.calc-copy-toast,
+.signal-copy-toast {
+  display: none;
+  font-family: var(--war-font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--war-emerald);
+  text-align: center;
+  padding: 6px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: 8px;
+  animation: fadeInToast 0.3s ease;
+}
+
+@keyframes fadeInToast {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==============================================================================
+   11. Sidebar: 4-Agent Consensus Signal Card & News Shield
+   ============================================================================== */
+
+/* Consensus Pod */
+.consensus-pod {
+  border-color: rgba(245, 197, 66, 0.25);
+}
+
+.consensus-status-pill {
+  font-family: var(--war-font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  background: rgba(16, 185, 129, 0.18);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: var(--war-emerald);
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+}
+
+.consensus-action-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.direction-badge {
+  font-family: var(--war-font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+.direction-badge.buy {
+  background: rgba(16, 185, 129, 0.25);
+  border: 1px solid var(--war-emerald);
+  color: #34d399;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+}
+
+.edge-rating {
+  font-family: var(--war-font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--war-gold);
+  background: rgba(245, 197, 66, 0.15);
+  border: 1px solid rgba(245, 197, 66, 0.3);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.consensus-agents-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.consensus-agent-row {
+  display: grid;
+  grid-template-columns: 88px 46px 1fr;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--war-font-mono);
+  font-size: 0.7rem;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.c-agent-name {
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.c-agent-badge {
+  text-align: center;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 800;
+}
+
+.c-agent-badge.buy {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--war-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.c-agent-badge.pass {
+  background: rgba(0, 240, 255, 0.2);
+  color: var(--war-cyan);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+}
+
+.c-agent-reason {
+  color: #94a3b8;
+  font-size: 0.63rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.consensus-specs-box {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+}
+
+.cs-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  font-family: var(--war-font-mono);
+  font-size: 0.72rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cs-row:last-child {
+  border-bottom: none;
+}
+
+.cs-row span {
+  color: #94a3b8;
+}
+
+.cs-row strong {
+  font-weight: 700;
+}
+
+.cs-row strong.gold { color: var(--war-gold); }
+.cs-row strong.red { color: var(--war-crimson); }
+.cs-row strong.green { color: var(--war-emerald); }
+
+/* News Shield Pod */
+.news-shield-pod {
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.news-event-box {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+
+.news-event-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-family: var(--war-font-mono);
+  font-size: 0.75rem;
+  color: #ffffff;
+}
+
+.news-impact-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.news-impact-dot.high {
+  background: var(--war-crimson);
+  box-shadow: 0 0 10px var(--war-crimson);
+  animation: beaconPulse 1.8s infinite;
+}
+
+.news-countdown-box {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 6px;
+}
+
+.countdown-label {
+  font-family: var(--war-font-mono);
+  font-size: 0.65rem;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+}
+
+.countdown-timer {
+  font-family: var(--war-font-mono);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--war-gold);
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 12px rgba(245, 197, 66, 0.4);
+}
+
+.news-details-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--war-font-mono);
+  font-size: 0.65rem;
+  color: #94a3b8;
+}
+
+.news-directive-alert {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 8px 10px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 10px;
+}
+
+.directive-icon {
+  font-size: 0.85rem;
+}
+
+.directive-text {
+  font-family: var(--war-font-sans);
+  font-size: 0.68rem;
+  line-height: 1.4;
+  color: #fca5a5;
+}
+
+/* ==============================================================================
+   12. Responsive Refinements
+   ============================================================================== */
 @media (max-width: 992px) {
   .cockpit-stage-container {
     grid-template-columns: 1fr;
   }
   .cockpit-canvas-wrapper {
-    height: 420px;
+    height: 480px;
+  }
+  .calc-body-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -582,15 +1322,25 @@
     justify-content: flex-end;
   }
   .cockpit-canvas-wrapper {
-    height: 340px;
+    height: 400px;
   }
   .cockpit-tab-btn {
     padding: 8px 14px;
-    font-size: 0.76rem;
+    font-size: 0.74rem;
+  }
+  .calc-trade-specs-grid {
+    grid-template-columns: 1fr;
+  }
+  .calc-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  .chart-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
-/* 9. Golden Button for Hero Cockpit Trigger */
+/* 13. Golden Button for Hero Cockpit Trigger */
 .btn-apple-gold {
   display: inline-flex;
   align-items: center;
