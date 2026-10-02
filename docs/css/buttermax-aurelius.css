@@ -1,0 +1,725 @@
+/**
+ * BUTTERMAX ARCHITECTURE DESIGN SYSTEM • DON AURELIUS SOVEREIGN SYNDICATE
+ * Replicating buttermax.net's exact typography, liquid pill physics,
+ * difference blending, 1:1 hairline bento grid, and Lenis scroll dynamics.
+ * Architected by SM.KANISH.
+ */
+
+:root {
+  --color0: #FFD600; /* Vibrant Electric Buttery Gold */
+  --color1: #101010; /* Brutalist Matte Obsidian Black */
+  --color2: #868686; /* Editorial Mid-Grey */
+  --color3: #1a1a1a; /* Subtle Surface Grey */
+  --color-cyan: #00f0ff; /* Quant Telemetry Cyan */
+  --color-emerald: #10b981; /* Execution Green */
+  --color-crimson: #ef4444; /* Stop-Loss Red */
+
+  --font-base: 'Syne', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Syne', 'Cinzel', serif;
+
+  --tracking-hero: -0.07em;
+  --tracking-tight: -0.05em;
+  --tracking-loose: 0.12em;
+
+  --cubic-butter: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --cubic-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ==============================================================================
+   01. Base Reset & Lenis Smooth Scroll Foundation
+   ============================================================================== */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+html, body {
+  background-color: var(--color1) !important;
+  color: #f1f5f9;
+  font-family: var(--font-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  selection-background-color: var(--color0);
+  selection-color: var(--color1);
+}
+
+::selection {
+  background: var(--color0);
+  color: var(--color1);
+}
+
+/* ==============================================================================
+   02. Buttermax Floating Difference-Blend Header
+   ============================================================================== */
+.bx-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  z-index: 999999;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  color: var(--color0);
+  transition: color 0.45s var(--cubic-butter);
+}
+
+.bx-header a,
+.bx-header button {
+  pointer-events: auto;
+}
+
+.bx-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.bx-logo-mark {
+  font-family: var(--font-base);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bx-logo-mark .bx-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+  display: inline-block;
+}
+
+.bx-header-center {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.bx-header-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bx-header-link {
+  font-family: var(--font-base);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.bx-header-link:hover {
+  opacity: 0.65;
+}
+
+.bx-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ==============================================================================
+   03. Buttermax Liquid-Fill Pill Button Physics
+   ============================================================================== */
+.bx-btn-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 22px;
+  border-radius: 20px;
+  border: 2.5px solid var(--color0);
+  background: transparent;
+  color: var(--color0) !important;
+  font-family: var(--font-base);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: color 0.45s var(--cubic-butter), border-color 0.45s var(--cubic-butter);
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.bx-btn-pill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color0);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.45s var(--cubic-butter);
+  z-index: -1;
+}
+
+.bx-btn-pill:hover {
+  color: var(--color1) !important;
+  border-color: var(--color0);
+}
+
+.bx-btn-pill:hover::before {
+  transform: scaleY(1);
+  transform-origin: bottom;
+}
+
+.bx-btn-pill.bx-btn-black {
+  border-color: var(--color0);
+  background: var(--color0);
+  color: var(--color1) !important;
+}
+
+.bx-btn-pill.bx-btn-black::before {
+  background: var(--color1);
+}
+
+.bx-btn-pill.bx-btn-black:hover {
+  color: var(--color0) !important;
+}
+
+/* ==============================================================================
+   04. Buttermax Interactive Circular Menu Dot
+   ============================================================================== */
+.bx-menu-circle-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: transform 0.35s var(--cubic-butter), background 0.35s ease;
+  position: relative;
+}
+
+.bx-menu-circle-btn .bx-menu-line {
+  width: 14px;
+  height: 2px;
+  background: currentColor;
+  transition: transform 0.35s var(--cubic-butter);
+}
+
+.bx-menu-circle-btn.open {
+  transform: scale(1.15);
+  background: currentColor;
+}
+
+.bx-menu-circle-btn.open .bx-menu-line:first-child {
+  background: var(--color1);
+  transform: translateY(3px) rotate(45deg);
+}
+
+.bx-menu-circle-btn.open .bx-menu-line:last-child {
+  background: var(--color1);
+  transform: translateY(-3px) rotate(-45deg);
+}
+
+/* Buttermax Curtain Fullscreen Menu Overlay */
+.bx-curtain-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--color1);
+  color: var(--color0);
+  z-index: 999998;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 120px 60px 60px;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.75s var(--cubic-butter);
+  pointer-events: none;
+}
+
+.bx-curtain-overlay.open {
+  clip-path: inset(0 0 0 0);
+  pointer-events: auto;
+}
+
+.bx-curtain-links {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.bx-curtain-link {
+  font-family: var(--font-base);
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: var(--tracking-hero);
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: var(--color0);
+  text-decoration: none;
+  transition: transform 0.3s ease, color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.bx-curtain-link:hover {
+  transform: translateX(20px);
+  color: #ffffff;
+}
+
+.bx-curtain-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid rgba(255, 214, 0, 0.2);
+  padding-top: 24px;
+}
+
+/* ==============================================================================
+   05. Buttermax Hero Section (Monumental Typography)
+   ============================================================================== */
+.bx-hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 140px 40px 60px;
+  background: var(--color1);
+  border-bottom: 1px solid rgba(255, 214, 0, 0.18);
+  overflow: hidden;
+}
+
+.bx-hero-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.bx-hero-badge {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--color0);
+  background: rgba(255, 214, 0, 0.1);
+  border: 1px solid rgba(255, 214, 0, 0.35);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bx-hero-badge .bx-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color0);
+  box-shadow: 0 0 10px var(--color0);
+  animation: bxPulse 1.8s infinite;
+}
+
+@keyframes bxPulse {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+.bx-hero-title {
+  font-family: var(--font-base);
+  font-size: clamp(3.2rem, 9.2vw, 9.8rem);
+  font-weight: 800;
+  letter-spacing: var(--tracking-hero);
+  line-height: 0.84;
+  text-transform: uppercase;
+  color: var(--color0);
+  margin-bottom: 32px;
+}
+
+.bx-hero-title .bx-white-text {
+  color: #ffffff;
+}
+
+.bx-hero-bottom-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: flex-end;
+  gap: 40px;
+}
+
+.bx-hero-desc {
+  font-family: var(--font-base);
+  font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  color: #cbd5e1;
+  max-width: 760px;
+}
+
+.bx-hero-cta-deck {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* ==============================================================================
+   06. Colossal Kinetic Marquee Ticker
+   ============================================================================== */
+.bx-marquee-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--color0);
+  color: var(--color1);
+  padding: 18px 0;
+  border-top: 1px solid var(--color0);
+  border-bottom: 1px solid var(--color0);
+  white-space: nowrap;
+}
+
+.bx-marquee-track {
+  display: inline-flex;
+  animation: bxMarqueeScroll 26s linear infinite;
+}
+
+.bx-marquee-text {
+  font-family: var(--font-base);
+  font-size: clamp(2.4rem, 5.5vw, 5.2rem);
+  font-weight: 800;
+  letter-spacing: var(--tracking-hero);
+  text-transform: uppercase;
+  line-height: 0.85;
+  padding-right: 4vw;
+}
+
+@keyframes bxMarqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ==============================================================================
+   07. The 1:1 Hairline Bento Grid (.bx-grid-root)
+   ============================================================================== */
+.bx-section-title-wrap {
+  padding: 100px 40px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid rgba(255, 214, 0, 0.15);
+}
+
+.bx-section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--color0);
+  margin-bottom: 8px;
+}
+
+.bx-section-h2 {
+  font-family: var(--font-base);
+  font-size: clamp(2.5rem, 6vw, 6.2rem);
+  font-weight: 800;
+  letter-spacing: var(--tracking-hero);
+  line-height: 0.88;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0;
+}
+
+.bx-grid-root {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 214, 0, 0.15);
+}
+
+.bx-grid-item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-right: 1px solid rgba(255, 214, 0, 0.15);
+  border-bottom: 1px solid rgba(255, 214, 0, 0.15);
+  background: var(--color1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 32px;
+  transition: background 0.4s var(--cubic-butter);
+  text-decoration: none;
+  color: inherit;
+}
+
+.bx-grid-item:nth-child(3n) {
+  border-right: none;
+}
+
+.bx-grid-item:hover {
+  background: #181818;
+}
+
+.bx-grid-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 2;
+}
+
+.bx-grid-item-num {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--color0);
+}
+
+.bx-grid-item-badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: rgba(255, 214, 0, 0.12);
+  border: 1px solid rgba(255, 214, 0, 0.3);
+  color: var(--color0);
+}
+
+.bx-grid-item-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.bx-grid-media-texture {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  transition: transform 0.5s var(--cubic-butter);
+}
+
+.bx-grid-item:hover .bx-grid-media-texture {
+  transform: scale(1.08);
+}
+
+.bx-grid-item-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 2;
+}
+
+.bx-grid-item-title {
+  font-family: var(--font-base);
+  font-size: clamp(1.4rem, 2.2vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+}
+
+.bx-grid-item-sub {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color2);
+  margin: 0;
+  line-height: 1.35;
+}
+
+.bx-grid-item-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 214, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color0);
+  font-size: 1.1rem;
+  transition: transform 0.35s var(--cubic-butter), background 0.35s ease;
+}
+
+.bx-grid-item:hover .bx-grid-item-icon {
+  transform: rotate(45deg);
+  background: var(--color0);
+  color: var(--color1);
+}
+
+/* ==============================================================================
+   08. Colossal Impact Footer
+   ============================================================================== */
+.bx-colossal-footer {
+  position: relative;
+  background: var(--color1);
+  color: var(--color0);
+  padding: 120px 40px 60px;
+  border-top: 1px solid rgba(255, 214, 0, 0.2);
+  overflow: hidden;
+}
+
+.bx-footer-mega-title {
+  font-family: var(--font-base);
+  font-size: clamp(3.5rem, 11vw, 12rem);
+  font-weight: 800;
+  letter-spacing: var(--tracking-hero);
+  line-height: 0.84;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  color: var(--color0);
+}
+
+.bx-footer-deck-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  align-items: flex-end;
+  margin-bottom: 60px;
+}
+
+.bx-footer-bot-stats {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.bx-stat-box {
+  border-left: 2px solid var(--color0);
+  padding-left: 14px;
+}
+
+.bx-stat-val {
+  font-family: var(--font-base);
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  color: #ffffff;
+}
+
+.bx-stat-lbl {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color2);
+  text-transform: uppercase;
+}
+
+.bx-footer-bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 30px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.bx-footer-legal-text {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--color2);
+}
+
+.bx-footer-legal-links {
+  display: flex;
+  gap: 16px;
+}
+
+.bx-footer-legal-links a {
+  color: var(--color2);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  transition: color 0.2s ease;
+}
+
+.bx-footer-legal-links a:hover {
+  color: var(--color0);
+}
+
+/* ==============================================================================
+   09. Responsive Rules
+   ============================================================================== */
+@media (max-width: 1024px) {
+  .bx-grid-root {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .bx-grid-item:nth-child(2n) {
+    border-right: none;
+  }
+  .bx-grid-item:nth-child(3n) {
+    border-right: 1px solid rgba(255, 214, 0, 0.15);
+  }
+  .bx-header {
+    padding: 0 24px;
+  }
+  .bx-header-links {
+    display: none;
+  }
+  .bx-hero-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+  .bx-footer-deck-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .bx-grid-root {
+    grid-template-columns: 1fr;
+  }
+  .bx-grid-item {
+    border-right: none !important;
+  }
+  .bx-hero-section {
+    padding: 120px 20px 40px;
+  }
+  .bx-section-title-wrap {
+    padding: 60px 20px 30px;
+  }
+  .bx-colossal-footer {
+    padding: 80px 20px 40px;
+  }
+}

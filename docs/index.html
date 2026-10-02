@@ -156,6 +156,10 @@
   <!-- Quantum Omniscience War Room & 3D Neural Cockpit v5.0 -->
   <link rel="stylesheet" href="css/omniscience-warroom.css">
 
+  <!-- Buttermax Architecture Design System (Exact buttermax.net tokens & typography) -->
+  <link rel="stylesheet" href="css/buttermax-aurelius.css">
+
+
   <style>
     /* ==========================================================================
        MotionSites.ai Tier — Sovereign Apple Liquid Glass Design System
@@ -2774,6 +2778,9 @@
   <!-- WCAG 2.1 AA Accessible Skip Navigation -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
+  <!-- Buttermax GPU Interactive Background Stage (#Stage) -->
+  <canvas id="Stage" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; pointer-events:none;" aria-hidden="true"></canvas>
+
   <!-- Glowing Top Scroll Progress Indicator -->
   <div id="scroll-progress"></div>
 
@@ -2785,47 +2792,66 @@
     <div class="ambient-orb orb-rose"></div>
   </div>
 
-  <!-- Floating Apple VisionOS Dock Navigation -->
-  <header>
-    <div class="nav-wrapper">
-      <a href="index.html" class="brand" aria-label="Don Aurelius Home">
-        <div class="brand-avatar-box">
-          <img src="assets/don_aurelius.jpg" alt="Don Aurelius Official Emblem">
-        </div>
-        <div class="brand-text">
-          <span class="brand-title-text" style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 800; letter-spacing: 1px; color: #ffffff;">DON AURELIUS</span>
-          <span>Autonomous AI Syndicate</span>
-        </div>
-      </a>
-      <ul class="nav-links">
-        <li><a href="#overview">Overview</a></li>
-        <li><a href="#genesis">Genesis Suite</a></li>
-        <li><a href="#architectural-specs">Benchmark</a></li>
-        <li><a href="#google-dossier">Dossier</a></li>
-        <li><a href="#founder">Founder</a></li>
-        <li><a href="#war-room">War Room</a></li>
-        <li><a href="#installation-theater">3D Theater</a></li>
-        <li><a href="#faq">FAQs</a></li>
+  <!-- Buttermax Floating Difference-Blend Header -->
+  <header class="bx-header" id="bx-header" role="banner">
+    <a href="index.html" class="bx-brand-logo" aria-label="Don Aurelius Sovereign Syndicate Home">
+      <span class="bx-logo-mark"><span class="bx-dot"></span>DON AURELIUS</span>
+    </a>
+    <nav class="bx-header-center" aria-label="Primary Navigation">
+      <ul class="bx-header-links">
+        <li><a href="#overview" class="bx-header-link">OVERVIEW</a></li>
+        <li><a href="#genesis" class="bx-header-link">GENESIS SUITE</a></li>
+        <li><a href="#architectural-specs" class="bx-header-link">BENCHMARK</a></li>
+        <li><a href="#google-dossier" class="bx-header-link">DOSSIER</a></li>
+        <li><a href="#founder" class="bx-header-link">FOUNDER</a></li>
+        <li><a href="#war-room" class="bx-header-link">WAR ROOM</a></li>
+        <li><a href="#installation-theater" class="bx-header-link">3D THEATER</a></li>
+        <li><a href="#faq" class="bx-header-link">FAQS</a></li>
       </ul>
-      <div class="header-actions">
-        <div class="header-controls">
-          <button id="btn-shortcuts-toggle" class="btn-header-shortcuts" aria-label="Keyboard Shortcuts Command Center" title="Shortcuts HUD (? or Ctrl+K)">
-            <span>⌨️</span>
-            <kbd class="header-kbd-badge">⌘K</kbd>
-          </button>
-        </div>
-        <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="btn-tg" aria-label="Open Don Aurelius Official Telegram Bot" title="Launch Telegram HUD (Press B)">
-          <span>Telegram HUD</span>
-          <span class="btn-icon-bubble">↗</span>
-        </a>
-        <button id="btn-mobile-menu" class="btn-mobile-menu" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-nav-drawer">
-          <span class="hamburger-bar"></span>
-          <span class="hamburger-bar"></span>
-          <span class="hamburger-bar"></span>
-        </button>
-      </div>
+    </nav>
+    <div class="bx-header-actions">
+      <button id="btn-shortcuts-toggle" class="btn-header-shortcuts" aria-label="Keyboard Shortcuts Command Center" title="Shortcuts HUD (? or Ctrl+K)" style="background:transparent; border:1.5px solid currentColor; color:inherit; border-radius:20px; padding:6px 14px; cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
+        <span>⌨️</span>
+        <kbd class="header-kbd-badge" style="font-family:var(--font-mono); font-size:0.72rem; border:1px solid currentColor; padding:1px 5px; border-radius:4px;">⌘K</kbd>
+      </button>
+      <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="bx-btn-pill" aria-label="Open Don Aurelius Official Telegram Bot" title="Launch Telegram HUD (Press B)">
+        <span>TELEGRAM HUD ↗</span>
+      </a>
+      <button id="bx-menu-btn" class="bx-menu-circle-btn" aria-label="Toggle Fullscreen Menu" aria-expanded="false" aria-controls="bx-curtain-overlay">
+        <span class="bx-menu-line"></span>
+        <span class="bx-menu-line"></span>
+      </button>
+      <button id="btn-mobile-menu" class="btn-mobile-menu" style="display:none;" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-nav-drawer">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
     </div>
   </header>
+
+  <!-- Buttermax Fullscreen Curtain Navigation Overlay -->
+  <div id="bx-curtain-overlay" class="bx-curtain-overlay" role="dialog" aria-modal="true" aria-label="Fullscreen Navigation Menu">
+    <div class="bx-curtain-links">
+      <a href="#overview" class="bx-curtain-link">01 / OVERVIEW</a>
+      <a href="#genesis" class="bx-curtain-link">02 / GENESIS SUITE</a>
+      <a href="#architectural-specs" class="bx-curtain-link">03 / BENCHMARK</a>
+      <a href="#google-dossier" class="bx-curtain-link">04 / STRATEGIC DOSSIER</a>
+      <a href="#founder" class="bx-curtain-link">05 / FOUNDER: SM.KANISH</a>
+      <a href="#war-room" class="bx-curtain-link">06 / WAR ROOM COUNCIL</a>
+      <a href="#installation-theater" class="bx-curtain-link">07 / 3D THEATER</a>
+      <a href="#terminal-access" class="bx-curtain-link">08 / VERIFIED ACCESS</a>
+      <a href="#faq" class="bx-curtain-link">09 / EXPANDABLE FAQS</a>
+    </div>
+    <div class="bx-curtain-footer">
+      <div>
+        <span style="font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; color: var(--color2);">FOUNDED & DIRECTED BY</span>
+        <div style="font-family: var(--font-base); font-size: 1.5rem; font-weight: 800; color: #ffffff;">SM.KANISH</div>
+      </div>
+      <div style="display: flex; gap: 16px;">
+        <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="bx-btn-pill bx-btn-black">TELEGRAM HUD ↗</a>
+      </div>
+    </div>
+  </div>
 
   <!-- Apple VisionOS Liquid Glass Mobile Navigation Drawer -->
   <nav id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="Mobile Navigation Menu">
@@ -2868,70 +2894,83 @@
   <div id="mobile-nav-backdrop" class="mobile-nav-backdrop" aria-hidden="true"></div>
 
   <main id="main-content">
-    <!-- Hero Section -->
-    <section class="hero" id="overview">
-      <div class="container">
-        <div class="badge-founder">
-          <span class="pulse"></span>
+    <!-- Buttermax Monumental Hero Section -->
+    <section class="bx-hero-section" id="overview">
+      <div class="bx-hero-eyebrow">
+        <div class="bx-hero-badge">
+          <span class="bx-pulse-dot"></span>
           <span>AUREUS MATRIX • CONCEIVED & DIRECTED BY SM.KANISH</span>
         </div>
-
-        <h1 class="hero-main-title">
-          <span class="titanium-gradient">DON AURELIUS</span><br>
-          <span class="gold-gradient">SOVEREIGN QUANTUM AI SYNDICATE</span>
-        </h1>
-
-        <p class="tagline">
-          The institutional multi-agent autonomous algorithmic matrix designed for high-frequency spot Gold (XAUUSD) execution on MetaTrader 5 with mathematical risk armor.
-        </p>
-
-        <div class="founder-callout">
-          <span class="label">Founder & Chief Strategic AI Architect</span>
-          <span class="name">SM.KANISH</span>
+        <div style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--color0); font-weight: 700; text-transform: uppercase;">
+          AUTONOMOUS QUANTUM EXECUTION • SPOT GOLD (XAUUSD)
         </div>
+      </div>
 
-        <!-- 3D Interactive Quantum Hologram Stage -->
-        <div class="hero-3d-stage" id="hero-stage">
-          <canvas id="stage-3d-canvas" class="stage-canvas" role="img" aria-label="Interactive 3D Holographic Model of Don Aurelius Algorithmic Core. Click and drag to inspect geometry."></canvas>
-          <div class="stage-label">✦ 3D QUANTUM AUREUS CORE • DRAG OR HOVER ✦</div>
+      <h1 class="bx-hero-title">
+        DON AURELIUS<br>
+        <span class="bx-white-text">SOVEREIGN QUANTUM</span><br>
+        AI SYNDICATE
+      </h1>
+
+      <div class="bx-hero-bottom-grid">
+        <div>
+          <p class="bx-hero-desc">
+            The institutional multi-agent autonomous algorithmic matrix designed for high-frequency spot Gold (XAUUSD) execution on MetaTrader 5 with mathematical risk armor. Conceived, directed, and engineered by <strong>SM.KANISH</strong>.
+          </p>
+          <div style="margin-top: 18px; font-family: var(--font-mono); font-size: 0.85rem; color: var(--color2);">
+            FOUNDER: <strong style="color: var(--color0);">SM.KANISH</strong> • 4 GENESIS BREAKTHROUGHS • NET IMPERIAL EQUITY $102,625+
+          </div>
         </div>
-
-        <div class="hero-cta">
-          <a href="#war-room" class="btn-apple-gold" onclick="if(window.breachCockpit) window.breachCockpit();">
-            <span>⚡ Breach Quantum Cockpit</span>
-            <span class="btn-icon-bubble">⛶</span>
+        <div class="bx-hero-cta-deck">
+          <a href="#war-room" class="bx-btn-pill bx-btn-black" onclick="if(window.breachCockpit) window.breachCockpit();">
+            BREACH COCKPIT ⛶
           </a>
-          <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="btn-apple-primary">
-            <span>Connect Mobile Telegram HUD</span>
-            <span class="btn-icon-bubble">↗</span>
+          <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="bx-btn-pill">
+            TELEGRAM HUD ↗
           </a>
-          <a href="#genesis" class="btn-apple-glass">Explore Genesis Suite</a>
+          <a href="#genesis" class="bx-btn-pill">
+            EXPLORE SUITE ↓
+          </a>
         </div>
+      </div>
 
-        <!-- Live Telemetry Stats Bar in Apple Liquid Glass Capsule -->
-        <div class="telemetry-bar apple-liquid-card tilt-card reveal-3d">
-          <div class="card-sheen"></div>
-          <div class="tilt-content" style="display:contents;">
-            <div class="stat-item">
-              <div class="stat-label">Net Imperial Equity</div>
-              <div class="stat-val emerald">$102,625+ USD</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-label">Genesis Inventions</div>
-              <div class="stat-val gold">4 Breakthroughs</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-label">Target Asset</div>
-              <div class="stat-val">XAUUSD (Spot Gold)</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-label">Consensus Protocol</div>
-              <div class="stat-val">3/4 Supermajority</div>
-            </div>
+      <!-- 3D Interactive Quantum Hologram Stage -->
+      <div class="hero-3d-stage" id="hero-stage" style="margin-top: 40px;">
+        <canvas id="stage-3d-canvas" class="stage-canvas" role="img" aria-label="Interactive 3D Holographic Model of Don Aurelius Algorithmic Core. Click and drag to inspect geometry."></canvas>
+        <div class="stage-label" style="color: var(--color0); font-family: var(--font-mono);">✦ 3D QUANTUM AUREUS CORE • DRAG OR HOVER ✦</div>
+      </div>
+
+      <!-- Live Telemetry Stats Bar in Buttermax Brutalist Capsule -->
+      <div class="telemetry-bar apple-liquid-card tilt-card reveal-3d" style="margin-top: 30px; border-color: rgba(255, 214, 0, 0.25);">
+        <div class="card-sheen"></div>
+        <div class="tilt-content" style="display:contents;">
+          <div class="stat-item">
+            <div class="stat-label">Net Imperial Equity</div>
+            <div class="stat-val emerald" style="color: var(--color0); font-family: var(--font-base); font-size: 1.8rem; font-weight: 800;">$102,625+ USD</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Genesis Inventions</div>
+            <div class="stat-val gold" style="color: var(--color0); font-family: var(--font-base); font-size: 1.8rem; font-weight: 800;">4 Breakthroughs</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Target Asset</div>
+            <div class="stat-val" style="color: #ffffff; font-family: var(--font-base); font-size: 1.8rem; font-weight: 800;">XAUUSD (Spot Gold)</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Consensus Protocol</div>
+            <div class="stat-val" style="color: var(--color0); font-family: var(--font-base); font-size: 1.8rem; font-weight: 800;">3/4 Supermajority</div>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- Buttermax Colossal Kinetic Marquee Ticker -->
+    <div class="bx-marquee-wrap" aria-hidden="true">
+      <div class="bx-marquee-track">
+        <span class="bx-marquee-text">AUTONOMOUS QUANTUM EXECUTION • FOUNDER SM.KANISH • 4 GENESIS BREAKTHROUGHS • SPOT GOLD (XAUUSD) • 3/4 SUPERMAJORITY CONSENSUS • MULTI-AGENT WAR ROOM • SUB-SECOND MT5 EXECUTION • </span>
+        <span class="bx-marquee-text">AUTONOMOUS QUANTUM EXECUTION • FOUNDER SM.KANISH • 4 GENESIS BREAKTHROUGHS • SPOT GOLD (XAUUSD) • 3/4 SUPERMAJORITY CONSENSUS • MULTI-AGENT WAR ROOM • SUB-SECOND MT5 EXECUTION • </span>
+      </div>
+    </div>
 
     <!-- Genesis Suite: 4 Revolutionary Inventions by SM.KANISH -->
     <section class="section-genesis" id="genesis">
@@ -2949,6 +2988,128 @@
               Four revolutionary algorithmic breakthroughs that transcend conventional quantitative trading platforms. Conceived, designed, and deployed by founder SM.KANISH to provide institutional multimodal computer vision, quantum future simulation, geopolitical crisis telemetry, and conversational neural voice command on MetaTrader 5.
             </p>
           </div>
+        </div>
+
+        <!-- Buttermax 1:1 Hairline Bento Grid Showcase -->
+        <div class="bx-section-title-wrap" style="padding: 60px 0 30px; margin-bottom: 24px;">
+          <div>
+            <div class="bx-section-eyebrow">THE 1:1 BENTO MATRIX • CONCEIVED BY SM.KANISH</div>
+            <h2 class="bx-section-h2" style="font-size: clamp(2rem, 5vw, 4.5rem);">GENESIS SUITE</h2>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--color2); text-align: right;">
+            04 BREAKTHROUGHS<br>
+            INSTITUTIONAL METATRADER 5
+          </div>
+        </div>
+
+        <div class="bx-grid-root" style="margin-bottom: 60px; border-top: 1px solid rgba(255, 214, 0, 0.15);">
+          <!-- 01: Eagle Eye Vision -->
+          <a href="#eagle-preview-box" class="bx-grid-item" aria-label="Jump to Project Eagle-Eye details">
+            <div class="bx-grid-item-top">
+              <span class="bx-grid-item-num">01</span>
+              <span class="bx-grid-item-badge">MULTIMODAL VISION</span>
+            </div>
+            <div class="bx-grid-item-center">
+              <img src="assets/eagle_eye_chart.png" alt="Project Eagle-Eye" class="bx-grid-media-texture">
+            </div>
+            <div class="bx-grid-item-bottom">
+              <div>
+                <h3 class="bx-grid-item-title">PROJECT EAGLE-EYE</h3>
+                <p class="bx-grid-item-sub">Gemini Vision AI Candlestick Liquidity Inspector</p>
+              </div>
+              <div class="bx-grid-item-icon">↗</div>
+            </div>
+          </a>
+
+          <!-- 02: Quantum Twin -->
+          <a href="#monte-carlo-live-canvas" class="bx-grid-item" aria-label="Jump to Project Quantum Twin details">
+            <div class="bx-grid-item-top">
+              <span class="bx-grid-item-num">02</span>
+              <span class="bx-grid-item-badge">MONTE CARLO</span>
+            </div>
+            <div class="bx-grid-item-center">
+              <img src="assets/quantum_cone.png" alt="Project Quantum Twin" class="bx-grid-media-texture">
+            </div>
+            <div class="bx-grid-item-bottom">
+              <div>
+                <h3 class="bx-grid-item-title">PROJECT QUANTUM TWIN</h3>
+                <p class="bx-grid-item-sub">1,000-Path Jump-Diffusion Probability Cone</p>
+              </div>
+              <div class="bx-grid-item-icon">↗</div>
+            </div>
+          </a>
+
+          <!-- 03: Global Sentinel -->
+          <a href="#radar-live-score" class="bx-grid-item" aria-label="Jump to Project Global Sentinel details">
+            <div class="bx-grid-item-top">
+              <span class="bx-grid-item-num">03</span>
+              <span class="bx-grid-item-badge">CRISIS RADAR</span>
+            </div>
+            <div class="bx-grid-item-center">
+              <img src="assets/don_aurelius.jpg" alt="Project Global Sentinel" class="bx-grid-media-texture" style="border-radius: 50%;">
+            </div>
+            <div class="bx-grid-item-bottom">
+              <div>
+                <h3 class="bx-grid-item-title">PROJECT GLOBAL SENTINEL</h3>
+                <p class="bx-grid-item-sub">Geopolitical Crisis Radar & Panic Index (0-100)</p>
+              </div>
+              <div class="bx-grid-item-icon">↗</div>
+            </div>
+          </a>
+
+          <!-- 04: Jarvis Co-Pilot -->
+          <a href="#voice-quote-text" class="bx-grid-item" aria-label="Jump to Project Jarvis details">
+            <div class="bx-grid-item-top">
+              <span class="bx-grid-item-num">04</span>
+              <span class="bx-grid-item-badge">NEURAL VOICE</span>
+            </div>
+            <div class="bx-grid-item-center">
+              <img src="assets/scene4_hud.jpg" alt="Project Jarvis Co-Pilot" class="bx-grid-media-texture">
+            </div>
+            <div class="bx-grid-item-bottom">
+              <div>
+                <h3 class="bx-grid-item-title">PROJECT JARVIS</h3>
+                <p class="bx-grid-item-sub">Full-Duplex Neural Voice & Audio Memo Cockpit</p>
+              </div>
+              <div class="bx-grid-item-icon">↗</div>
+            </div>
+          </a>
+
+          <!-- 05: War Room Consensus -->
+          <a href="#war-room" class="bx-grid-item" aria-label="Jump to War Room Consensus">
+            <div class="bx-grid-item-top">
+              <span class="bx-grid-item-num">05</span>
+              <span class="bx-grid-item-badge">CONSENSUS</span>
+            </div>
+            <div class="bx-grid-item-center">
+              <img src="assets/scene2_reveal.jpg" alt="War Room Consensus" class="bx-grid-media-texture">
+            </div>
+            <div class="bx-grid-item-bottom">
+              <div>
+                <h3 class="bx-grid-item-title">WAR ROOM CONSENSUS</h3>
+                <p class="bx-grid-item-sub">HAWK • RADAR • PREDATOR • INQUISITOR</p>
+              </div>
+              <div class="bx-grid-item-icon">↗</div>
+            </div>
+          </a>
+
+          <!-- 06: Sovereign MT5 Terminal -->
+          <a href="#installation-theater" class="bx-grid-item" aria-label="Jump to 3D Installation Theater">
+            <div class="bx-grid-item-top">
+              <span class="bx-grid-item-num">06</span>
+              <span class="bx-grid-item-badge">METATRADER 5</span>
+            </div>
+            <div class="bx-grid-item-center">
+              <img src="assets/scene3_install.jpg" alt="MetaTrader 5 Engine" class="bx-grid-media-texture">
+            </div>
+            <div class="bx-grid-item-bottom">
+              <div>
+                <h3 class="bx-grid-item-title">SOVEREIGN MT5</h3>
+                <p class="bx-grid-item-sub">Zero Lag Bridge & Sub-Second Execution</p>
+              </div>
+              <div class="bx-grid-item-icon">↗</div>
+            </div>
+          </a>
         </div>
 
         <div class="genesis-grid">
@@ -4024,8 +4185,9 @@
   </main>
 
   <!-- Regulatory Compliance & Comprehensive Legal Footer -->
-  <footer id="compliance">
+  <footer id="compliance" class="bx-colossal-footer">
     <div class="container">
+      <div class="bx-footer-mega-title">DON AURELIUS</div>
       <!-- CFTC Rule 4.41 Mandatory Regulatory Disclosure -->
       <div class="footer-cftc-box" id="footer-cftc-warning">
         <h5>COMMODITY FUTURES TRADING COMMISSION (CFTC) RULE 4.41 STATUTORY DISCLAIMER</h5>
@@ -5092,5 +5254,8 @@
 
     <!-- Don Aurelius Avatar-Grade 3D Holographic Installation Theater & Higgsfield AI Studio -->
     <script src="js/cinema-theater.js"></script>
+
+    <!-- Buttermax Physics, Lenis Smooth Scroll & Interactive Background Stage Engine -->
+    <script src="js/buttermax-engine.js"></script>
 </body>
 </html>
