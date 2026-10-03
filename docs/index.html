@@ -1948,11 +1948,23 @@
       }
       header {
         top: 10px;
-        left: 10px;
-        transform: none;
+        left: 50%;
+        transform: translateX(-50%);
         width: calc(100% - 20px);
+        max-width: calc(100% - 20px);
+        box-sizing: border-box;
         padding: 7px 12px;
         border-radius: 9999px;
+      }
+      .nav-wrapper {
+        gap: 8px;
+        width: 100%;
+      }
+      .header-controls {
+        display: none !important;
+      }
+      .header-actions {
+        gap: 6px;
       }
       .nav-links {
         display: none;
@@ -1978,6 +1990,9 @@
         font-size: clamp(0.68rem, 2.7vw, 0.78rem);
         padding: 6px 14px;
         gap: 6px;
+        line-height: 1.35;
+        word-break: break-word;
+        box-sizing: border-box;
       }
       .hero p.tagline {
         font-size: 0.98rem;
@@ -2184,12 +2199,25 @@
         display: none;
       }
       .btn-tg {
-        padding: 6px 12px;
-        font-size: 0.76rem;
+        padding: 6px 11px;
+        font-size: 0.74rem;
+        gap: 4px;
       }
     }
 
     @media (max-width: 480px) {
+      .brand-avatar-box {
+        width: 32px;
+        height: 32px;
+      }
+      .brand-title-text {
+        font-size: 0.88rem !important;
+      }
+      .btn-mobile-menu {
+        width: 36px;
+        height: 36px;
+      }
+
       /* Hero CTA Stack */
       .hero-cta {
         flex-direction: column;
@@ -2252,7 +2280,15 @@
         font-size: 0.86rem;
       }
 
-      /* Founder Image & Bio */
+      /* Cockpit Telegram Buttons Single Column */
+      .cockpit-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* Founder Section Responsive */
+      .founder-attributes {
+        grid-template-columns: 1fr;
+      }
       .founder-image-wrapper img {
         max-width: 220px;
       }
@@ -2263,10 +2299,13 @@
         text-align: center;
       }
 
-      /* Verification Submit Button */
+      /* Verification Submit Button & Mobile Inputs */
       .btn-submit-form {
         padding: 14px;
         font-size: 0.92rem;
+      }
+      input, select, textarea, .form-input, .form-select, .calc-text-input {
+        font-size: 16px !important;
       }
 
       /* Footer Micro Viewport */
@@ -2279,11 +2318,20 @@
     }
 
     @media (max-width: 380px) {
+      header {
+        padding: 6px 8px;
+      }
+      .brand {
+        gap: 6px;
+      }
+      .brand-title-text {
+        font-size: 0.82rem !important;
+      }
       .btn-tg span:first-child {
         display: none;
       }
       .btn-tg {
-        padding: 6px 10px;
+        padding: 6px 9px;
       }
       .cockpit-grid {
         grid-template-columns: 1fr;

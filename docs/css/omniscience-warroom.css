@@ -1520,23 +1520,67 @@
 
 @media (max-width: 768px) {
   .omniscience-deck {
-    padding: 16px;
+    padding: 16px 12px;
     border-radius: 20px;
   }
   .cockpit-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
+  }
+  .cockpit-title-group h4 {
+    font-size: 0.96rem;
+    letter-spacing: 0.8px;
+  }
+  .cockpit-telemetry-strip {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 12px;
+    border-radius: 12px;
+    font-size: 0.70rem;
+    padding: 8px 10px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
   }
   .cockpit-controls {
     width: 100%;
-    justify-content: flex-end;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
   }
-  .cockpit-canvas-wrapper {
-    height: 400px;
+  .cockpit-btn {
+    flex: 1 1 auto;
+    text-align: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    padding: 8px 10px;
+  }
+  .cockpit-tabs-bar {
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 6px;
+    gap: 6px;
   }
   .cockpit-tab-btn {
-    padding: 8px 14px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 8px 12px;
     font-size: 0.74rem;
+  }
+  .cockpit-stage-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    min-height: auto;
+  }
+  .cockpit-canvas-wrapper {
+    height: 380px;
+    min-height: 380px;
+    border-radius: 16px;
   }
   .calc-trade-specs-grid {
     grid-template-columns: 1fr;
@@ -2046,22 +2090,156 @@
   }
   .theater-top-bar {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    gap: 10px;
   }
   .theater-chapter-pills {
     width: 100%;
     overflow-x: auto;
     flex-wrap: nowrap;
     padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .theater-chapter-pills::-webkit-scrollbar {
+    display: none;
+  }
+  .theater-chapter-pill {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 0.68rem;
+    padding: 5px 10px;
+  }
+  .theater-stage-wrapper {
+    padding: 14px 10px;
+    border-radius: 18px;
+  }
+  .theater-screen-frame {
+    min-height: 200px;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
   }
   .cinema-hud-overlay {
     flex-direction: column;
+    gap: 6px;
+    left: 10px;
+    right: 10px;
+    top: 8px;
+  }
+  .hud-caption-card {
+    padding: 8px 10px;
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  .hud-caption-title {
+    font-size: 0.85rem;
+  }
+  .hud-caption-sub {
+    font-size: 0.68rem;
+    line-height: 1.3;
+  }
+  .hud-telemetry-pill {
+    align-self: flex-start;
+    padding: 5px 9px;
+    font-size: 0.60rem;
+  }
+  .cinema-playback-bar {
+    height: 42px;
+    padding: 0 10px;
     gap: 8px;
-    left: 16px;
-    right: 16px;
+  }
+  .cinema-btn {
+    padding: 4px 8px;
+    font-size: 0.64rem;
+  }
+  .cinema-timecode {
+    font-size: 0.64rem;
+  }
+  .hud-reticle.bl, .hud-reticle.br {
+    bottom: 50px;
+  }
+
+  /* Cockpit canvas HUD responsiveness on mobile */
+  .canvas-live-badge {
+    top: 10px;
+    left: 10px;
+    font-size: 0.62rem;
+    padding: 3px 8px;
+  }
+  .globe-subnav {
+    top: 38px;
+    left: 10px;
+    right: 10px;
+    justify-content: flex-start;
+    gap: 4px;
+    z-index: 25;
+  }
+  .globe-sub-btn {
+    font-size: 0.64rem;
+    padding: 4px 8px;
+  }
+  .canvas-coord-hud {
+    bottom: 8px;
+    right: 8px;
+    font-size: 0.60rem;
+    padding: 3px 6px;
+  }
+  .canvas-interaction-hint {
+    bottom: 8px;
+    left: 8px;
+    transform: none;
+    font-size: 0.60rem;
+    padding: 3px 8px;
+    max-width: 55%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Calculator Mobile Safeguards */
+  .cockpit-calc-overlay {
+    padding: 14px 10px;
+    border-radius: 16px;
+  }
+  .calc-risk-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .calc-risk-pill {
+    min-width: 0 !important;
+    flex: 1 1 30%;
+    font-size: 0.66rem;
+    padding: 6px 4px;
+    text-align: center;
+  }
+  .calc-preset-pill {
+    font-size: 0.65rem;
+    padding: 4px 8px;
+  }
+  .calc-text-input {
+    font-size: 16px !important;
+  }
+  .calc-hero-metric-card {
+    padding: 14px 12px;
+  }
+  .calc-hero-val {
+    font-size: 1.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .cockpit-canvas-wrapper {
+    height: 320px;
+    min-height: 320px;
+  }
+  .calc-top-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
   .theater-screen-frame {
-    min-height: 320px;
+    min-height: 180px;
   }
 }
 
