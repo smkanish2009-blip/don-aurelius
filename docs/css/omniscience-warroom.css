@@ -1647,12 +1647,19 @@
     left: 10px;
     right: 10px;
     justify-content: flex-start;
-    gap: 4px;
+    gap: 6px;
     z-index: 25;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
   }
   .globe-sub-btn {
-    font-size: 0.64rem;
-    padding: 4px 8px;
+    font-size: 0.65rem;
+    padding: 5px 10px;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
   .canvas-coord-hud {
     bottom: 8px;
