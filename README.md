@@ -81,7 +81,15 @@ Open `docs/index.html` in your browser or visit [https://smkanish.github.io/don-
 
 ---
 
-## 📜 Intellectual Property & Attribution
+## 📜 Intellectual Property, Trademark & Legal Notice
 
-**Don Aurelius** is the intellectual creation of **SM.KANISH**.  
-Copyright &copy; 2026 Don Aurelius Sovereign Syndicate. All rights reserved.
+* **Proprietary Trademarks**: **Don Aurelius™**, **Genesis Suite™**, **Eagle-Eye Multimodal Vision™**, **Quantum Twin™**, **Global Sentinel™**, and **Jarvis Co-Pilot™** are exclusive proprietary trademarks of founder **SM.KANISH**.
+* **Copyright**: Copyright &copy; 2026 **SM.KANISH**. All Rights Reserved.
+* **Proprietary Software License**: All underlying algorithms, multi-agent consensus heuristics, neural weights, and visual designs are proprietary trade secrets. Unauthorized duplication, decompilation, resale, or distribution is strictly prohibited under international copyright treaties.
+* **Full License**: For complete terms, see [LICENSE](LICENSE).
+
+---
+
+> **Founder & Sovereign Architect**: **SM.KANISH**  
+> **Official Web Register**: [https://smkanish2009-blip.github.io/don-aurelius/](https://smkanish2009-blip.github.io/don-aurelius/)
+
