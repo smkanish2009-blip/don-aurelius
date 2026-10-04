@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Enterprise Security & Content Protection Headers -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-src 'self' https://s.tradingview.com https://www.tradingview.com https://www.google.com https://maps.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https: wss:; frame-src 'self' https://s.tradingview.com https://www.tradingview.com https://www.google.com https://maps.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="X-Frame-Options" content="DENY">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   
@@ -164,7 +164,7 @@
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <!-- Quantum Omniscience War Room & 3D Neural Cockpit v5.0 -->
-  <link rel="stylesheet" href="css/omniscience-warroom.css">
+  <link rel="stylesheet" href="css/omniscience-warroom.css?v=20261004b">
 
   <style>
     /* ==========================================================================
@@ -5493,9 +5493,9 @@
 
     <!-- Supabase Realtime Cloud Database & Live Telemetry SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-telemetry.js"></script>
+    <script src="js/supabase-telemetry.js?v=20261004b"></script>
 
     <!-- Don Aurelius Quantum Omniscience War Room & 3D Neural Cockpit v5.0 -->
-    <script src="js/omniscience-warroom.js"></script>
+    <script src="js/omniscience-warroom.js?v=20261004b"></script>
 </body>
 </html>
