@@ -3,10 +3,15 @@ Comprehensive Automated Unit Test Suite.
 Validates TimeEngine, PositionSizer, Asian Range Detector, and RiskManager.
 """
 
+import os
+import sys
 import unittest
 from datetime import datetime, timezone, time
 import pandas as pd
 import numpy as np
+
+# Ensure repository root is in Python path for direct execution
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from config.settings import SessionSettings, StrategyParameters, RiskParameters, BotConfig
 from core.time_engine import TimeEngine

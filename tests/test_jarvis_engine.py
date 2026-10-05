@@ -6,6 +6,13 @@ Comprehensive Unit Test Suite for JARVIS Autonomous Algorithmic Matrix:
 4. Interactive Telegram HUD & Inline Button Actions (Clean Slate Kill).
 """
 
+import os
+import sys
+
+_root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if _root_dir not in sys.path:
+    sys.path.insert(0, _root_dir)
+
 import unittest
 import numpy as np
 import pandas as pd

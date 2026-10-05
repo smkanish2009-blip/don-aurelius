@@ -5,6 +5,13 @@ Unit Test Suite for TITAN-X:
 - TitanWarRoom (3/4 Supermajority Consensus Council & Fractional Kelly Sizing)
 """
 
+import os
+import sys
+
+_root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if _root_dir not in sys.path:
+    sys.path.insert(0, _root_dir)
+
 import unittest
 import numpy as np
 import pandas as pd

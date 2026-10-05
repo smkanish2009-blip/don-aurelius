@@ -27,10 +27,14 @@ class TitanSessionReporter:
         if not os.path.exists(self.db_path):
             return []
         trades = []
+        conn = None
         try:
-            conn = sqlite3.connect(self.db_path)
+            conn = sqlite3.connect(self.db_path, timeout=5.0)
             cursor = conn.cursor()
-            cursor.execute("SELECT ticket_id, direction, volume, entry_price, sl, tp, status, timestamp FROM trades ORDER BY id DESC")
+            cursor.execute(
+                "SELECT ticket_id, direction, volume, entry_price, stop_loss, take_profit, status, timestamp, profit "
+                "FROM trades ORDER BY id DESC"
+            )
             rows = cursor.fetchall()
             for r in rows:
                 trades.append({
@@ -41,11 +45,17 @@ class TitanSessionReporter:
                     "sl": r[4],
                     "tp": r[5],
                     "status": r[6],
-                    "time": r[7]
+                    "time": r[7],
+                    "profit": r[8] if len(r) > 8 else 0.0
                 })
-            conn.close()
         except Exception:
             pass
+        finally:
+            if conn is not None:
+                try:
+                    conn.close()
+                except Exception:
+                    pass
         return trades
 
     def fetch_live_mt5_metrics(self) -> Dict[str, Any]:

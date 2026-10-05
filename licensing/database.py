@@ -51,6 +51,12 @@ class LicensingDatabase:
             self._local.conn = None
             self._local.conn_path = None
 
+    def __del__(self):
+        try:
+            self.close()
+        except Exception:
+            pass
+
     def _init_db(self) -> None:
         conn = self._get_connection()
         with conn:

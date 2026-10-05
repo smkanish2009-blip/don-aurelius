@@ -96,11 +96,11 @@ class JarvisOrchestrator:
             orchestrator=self
         )
         self.reporter = TitanSessionReporter(db_path=db_path)
-        self._last_report_time = 0.0
+        self._last_report_time = time.time()
 
         self.running = False
         self._last_signal_time = 0.0
-        self._last_telegram_heartbeat = 0.0  # Fire immediately on startup, then every 15 mins
+        self._last_telegram_heartbeat = time.time()
         self.telegram_interval_seconds = 15 * 60  # 15 minutes
         self.backup_dispatched_this_week = False
 
@@ -346,29 +346,60 @@ class JarvisOrchestrator:
         if not self.hud or not self.hud.chat_id or not self.hud.token:
             return
 
-        equity = self.bridge.get_account_equity()
+        equity_raw = self.bridge.get_account_equity() if self.bridge else 0.0
+        try:
+            equity = float(equity_raw)
+        except (TypeError, ValueError):
+            equity = 0.0
+
+        try:
+            xau_val = float(current_xau)
+        except (TypeError, ValueError):
+            xau_val = 0.0
+
+        try:
+            spread_val = float(current_spread_pips)
+        except (TypeError, ValueError):
+            spread_val = 0.0
+
         open_positions = mt5.positions_get(symbol=self.symbol) if mt5 else None
         pos_count = len(open_positions) if open_positions else 0
-        floating_pl = sum(p.profit for p in open_positions) if open_positions else 0.0
+        try:
+            floating_pl = sum(float(getattr(p, 'profit', 0.0)) for p in open_positions) if open_positions else 0.0
+        except (TypeError, ValueError):
+            floating_pl = 0.0
         pl_sign = "+" if floating_pl >= 0 else ""
 
         pos_str = ""
         if open_positions:
             for p in open_positions:
-                dir_label = "BUY" if p.type == 0 else "SELL"
-                p_sign = "+" if p.profit >= 0 else ""
-                pos_str += (
-                    f"\n   • 📋 `#{p.ticket}`: **{dir_label} {p.volume:.2f}L** @ `${p.price_open:.2f}`\n"
-                    f"     Current: `${p.price_current:.2f}` | P&L: `{p_sign}${p.profit:,.2f}`\n"
-                    f"     🛡️ SL: `${p.sl:.2f}` | 🎯 TP: `${p.tp:.2f}`"
-                )
+                try:
+                    p_type = getattr(p, "type", 0)
+                    dir_label = "BUY" if p_type == 0 else "SELL"
+                    p_vol = float(getattr(p, "volume", 0.0))
+                    p_open = float(getattr(p, "price_open", 0.0))
+                    p_curr = float(getattr(p, "price_current", 0.0))
+                    p_prof = float(getattr(p, "profit", 0.0))
+                    p_sl = float(getattr(p, "sl", 0.0))
+                    p_tp = float(getattr(p, "tp", 0.0))
+                    p_sign = "+" if p_prof >= 0 else ""
+                    pos_str += (
+                        f"\n   • 📋 `#{getattr(p, 'ticket', 'N/A')}`: **{dir_label} {p_vol:.2f}L** @ `${p_open:.2f}`\n"
+                        f"     Current: `${p_curr:.2f}` | P&L: `{p_sign}${p_prof:,.2f}`\n"
+                        f"     🛡️ SL: `${p_sl:.2f}` | 🎯 TP: `${p_tp:.2f}`"
+                    )
+                except Exception:
+                    continue
 
-        v_hawk = getattr(consensus.votes.get("HAWK"), "vote", "N/A")
-        v_radar = getattr(consensus.votes.get("RADAR"), "vote", "N/A")
-        v_predator = getattr(consensus.votes.get("PREDATOR"), "vote", "N/A")
-        v_inquisitor = getattr(consensus.votes.get("INQUISITOR"), "vote", "N/A")
+        v_hawk = getattr(consensus.votes.get("HAWK"), "vote", "N/A") if hasattr(consensus, "votes") and consensus.votes else "N/A"
+        v_radar = getattr(consensus.votes.get("RADAR"), "vote", "N/A") if hasattr(consensus, "votes") and consensus.votes else "N/A"
+        v_predator = getattr(consensus.votes.get("PREDATOR"), "vote", "N/A") if hasattr(consensus, "votes") and consensus.votes else "N/A"
+        v_inquisitor = getattr(consensus.votes.get("INQUISITOR"), "vote", "N/A") if hasattr(consensus, "votes") and consensus.votes else "N/A"
 
         now_str = datetime.now().strftime("%I:%M %p")
+        ratio_str = getattr(consensus, "supermajority_ratio", "N/A")
+        decision_str = getattr(consensus, "final_decision", "N/A")
+        rationale_str = str(getattr(consensus, "rationale", "Scanning markets..."))[:140]
 
         briefing_msg = (
             f"👑 **DON AURELIUS • 15-MIN SYNDICATE BRIEFING** ({now_str})\n"
@@ -376,15 +407,15 @@ class JarvisOrchestrator:
             f"💰 **Treasury Equity**: `${equity:,.2f} USD`\n"
             f"⚡ **Active Contracts**: `{pos_count}` | Floating P&L: `{pl_sign}${floating_pl:,.2f}`"
             f"{pos_str}\n"
-            f"🥇 **XAUUSD (Gold)**: `${current_xau:.2f}` (Spread: `{current_spread_pips:.1f} pips`)\n"
+            f"🥇 **XAUUSD (Gold)**: `${xau_val:.2f}` (Spread: `{spread_val:.1f} pips`)\n"
             f"━━━━━━━━━━━━━━━━━━━━\n"
-            f"🏛️ **Council Radar** ({consensus.supermajority_ratio}):\n"
+            f"🏛️ **Council Radar** ({ratio_str}):\n"
             f"   - 🦅 HAWK: `{v_hawk}`\n"
             f"   - 📡 RADAR: `{v_radar}`\n"
             f"   - 🦈 PREDATOR: `{v_predator}`\n"
             f"   - ⚔️ INQUISITOR: `{v_inquisitor}`\n"
-            f"🎯 **Consensus State**: **{consensus.final_decision}**\n"
-            f"📝 *Directive*: {consensus.rationale[:140]}..."
+            f"🎯 **Consensus State**: **{decision_str}**\n"
+            f"📝 *Directive*: {rationale_str}..."
         )
 
         inline_keyboard = {

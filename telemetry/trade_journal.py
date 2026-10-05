@@ -6,6 +6,7 @@ Records all trade setups, entry/exit prices, slippage, and AI probability output
 import os
 import sqlite3
 import logging
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from typing import Dict, Any
 
@@ -18,8 +19,20 @@ class TradeJournal:
         os.makedirs(os.path.dirname(db_path), exist_ok=True)
         self._init_db()
 
+    @contextmanager
+    def _get_connection(self):
+        """Thread-safe SQLite connection manager with WAL mode and guaranteed closure."""
+        conn = sqlite3.connect(self.db_path, timeout=10.0)
+        conn.execute("PRAGMA journal_mode=WAL;")
+        conn.execute("PRAGMA busy_timeout=5000;")
+        try:
+            with conn:
+                yield conn
+        finally:
+            conn.close()
+
     def _init_db(self) -> None:
-        with sqlite3.connect(self.db_path) as conn:
+        with self._get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
             CREATE TABLE IF NOT EXISTS trades (
@@ -39,11 +52,10 @@ class TradeJournal:
                 exit_reason TEXT
             )
             """)
-            conn.commit()
 
     def record_entry(self, ticket: int, setup_type: str, direction: str,
                      entry: float, sl: float, tp: float, lots: float, ai_confidence: float) -> None:
-        with sqlite3.connect(self.db_path) as conn:
+        with self._get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
             INSERT OR REPLACE INTO trades (
@@ -60,10 +72,9 @@ class TradeJournal:
                 lots,
                 ai_confidence
             ))
-            conn.commit()
 
     def record_exit(self, ticket: int, exit_price: float, pnl_usd: float, pnl_r: float, exit_reason: str) -> None:
-        with sqlite3.connect(self.db_path) as conn:
+        with self._get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
             UPDATE trades SET
@@ -81,4 +92,3 @@ class TradeJournal:
                 exit_reason,
                 ticket
             ))
-            conn.commit()
