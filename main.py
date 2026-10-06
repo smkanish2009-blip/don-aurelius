@@ -205,6 +205,14 @@ def run_bot():
 
             # New day reset
             if last_day != current_day:
+                if last_day is not None:
+                    try:
+                        from scripts.backup_321_engine import backup_trading_bot
+                        logger.info("[BACKUP-321] Market day rollover: executing automated 3-2-1 state backup...")
+                        backup_trading_bot()
+                    except Exception as bex:
+                        logger.warning(f"[BACKUP-321] Rollover backup deferred: {bex}")
+
                 last_day = current_day
                 equity = client.get_account_equity()
                 risk_mgr.on_new_day(equity)
@@ -551,6 +559,12 @@ def run_bot():
     except KeyboardInterrupt:
         logger.info("Termination signal received. Shutting down gracefully...")
     finally:
+        try:
+            from scripts.backup_321_engine import backup_trading_bot
+            logger.info("[BACKUP-321] Clean shutdown triggered: securing final 3-2-1 state snapshot...")
+            backup_trading_bot()
+        except Exception as bex:
+            logger.warning(f"[BACKUP-321] Shutdown backup deferred: {bex}")
         client.shutdown()
 
 
