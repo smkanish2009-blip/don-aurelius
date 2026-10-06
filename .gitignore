@@ -8,6 +8,7 @@ vault.key
 # Runtime locks, Data & Logs
 data/
 logs/
+backups/
 *.log
 *.pid
 *.png
