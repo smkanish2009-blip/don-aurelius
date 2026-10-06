@@ -164,7 +164,7 @@
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <!-- Quantum Omniscience War Room & 3D Neural Cockpit v5.0 -->
-  <link rel="stylesheet" href="css/omniscience-warroom.css?v=composer_ultra_20261006_v8">
+  <link rel="stylesheet" href="css/omniscience-warroom.css?v=composer_ultra_20261006_v9">
 
   <style>
     /* ==========================================================================
@@ -259,12 +259,14 @@
       pointer-events: none;
     }
     .orb-gold {
-      width: 680px;
-      height: 680px;
-      background: radial-gradient(circle, #f5c542 0%, rgba(245, 197, 66, 0) 70%);
-      top: -140px;
-      left: 12%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(245, 197, 66, 0.16) 0%, rgba(245, 197, 66, 0) 70%);
+      top: -240px;
+      left: 15%;
+      opacity: 0.15;
       animation: orbFloat1 24s ease-in-out infinite alternate;
+      pointer-events: none;
     }
     .orb-cyan {
       width: 600px;
@@ -1857,19 +1859,22 @@
     .skip-link {
       position: absolute;
       top: -100px;
-      left: 20px;
-      background: var(--gold-primary);
-      color: #000000;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.9rem;
+      left: 24px;
+      background: #0a0f1d;
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-primary);
+      padding: 8px 18px;
       z-index: 99999;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      border-radius: 8px;
       text-decoration: none;
       transition: top 0.2s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
     }
     .skip-link:focus {
-      top: 20px;
+      top: 14px;
     }
 
     a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
@@ -4518,6 +4523,127 @@
   border-right: 1px dashed rgba(255, 255, 255, 0.22) !important;
 }
 
+  
+/* ==========================================================================
+   NAVIGATION & BANNER OVERFLOW ELIMINATION FIXES (v9.0)
+   ========================================================================== */
+header {
+  position: fixed !important;
+  top: 14px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: min(1140px, calc(100% - 32px)) !important;
+  max-width: calc(100% - 32px) !important;
+  z-index: 1000 !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  background: rgba(12, 16, 24, 0.88) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.40) !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
+  padding: 6px 14px 6px 16px !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+
+.nav-wrapper {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+  gap: 12px !important;
+  flex-wrap: nowrap !important;
+}
+
+.brand {
+  flex-shrink: 0 !important;
+}
+
+.nav-links {
+  display: flex !important;
+  gap: 4px !important;
+  list-style: none !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex-shrink: 1 !important;
+}
+
+.nav-links li {
+  flex-shrink: 0 !important;
+}
+
+.nav-links a {
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif) !important;
+  font-size: 0.86rem !important;
+  font-weight: 600 !important;
+  color: #cbd5e1 !important;
+  padding: 6px 12px !important;
+  border-radius: 9999px !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+  white-space: nowrap !important;
+}
+
+.nav-links a:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.header-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
+
+.btn-tg {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+  background: linear-gradient(135deg, var(--gold-secondary, #d4a017) 0%, var(--gold-primary, #f5c542) 100%) !important;
+  color: #07080a !important;
+  padding: 8px 16px 8px 18px !important;
+  border-radius: 9999px !important;
+  font-weight: 700 !important;
+  font-size: 0.82rem !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 14px var(--gold-glow, rgba(245, 197, 66, 0.25)) !important;
+}
+
+.btn-tg span {
+  color: #07080a !important;
+  font-weight: 700 !important;
+}
+
+.composer-top-banner {
+  background: rgba(12, 16, 26, 0.90) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.24) !important;
+  padding: 8px 18px !important;
+  font-size: 0.82rem !important;
+  color: #cbd5e1 !important;
+  text-align: center !important;
+  border-radius: 9999px !important;
+  max-width: fit-content !important;
+  margin: 0 auto 24px auto !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+@media (max-width: 960px) {
+  .nav-links {
+    display: none !important;
+  }
+  .btn-mobile-menu {
+    display: flex !important;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -4534,15 +4660,7 @@
     <div class="ambient-orb orb-slate"></div>
   </div>
 
-  <!-- Composer-Style Top Announcement Banner -->
-  <div class="composer-top-banner">
-    <div class="banner-inner">
-      <span class="banner-shimmer">AUREUS-VII MATRIX LIVE</span>
-      <span class="banner-sep">•</span>
-      <span>Autonomous Multi-Agent AI for Spot Gold (XAUUSD) on MetaTrader 5</span>
-      <a href="#symphony-studio" class="banner-link">Explore Symphony Studio &rarr;</a>
-    </div>
-  </div>
+
 
   <!-- Floating Apple VisionOS Dock Navigation -->
   <header>
@@ -4558,15 +4676,10 @@
       </a>
       <ul class="nav-links">
         <li><a href="#overview">Overview</a></li>
-        <li><a href="#symphony-studio">Symphony Studio</a></li>
+        <li><a href="#symphony-studio">Studio</a></li>
         <li><a href="#discover-symphonies">Discover</a></li>
-        <li><a href="#market-reaction">Market Reaction</a></li>
         <li><a href="#performance-backtest">Performance</a></li>
-        <li><a href="#genesis">Genesis Suite</a></li>
-        <li><a href="#war-room">War Room</a></li>
-        <li><a href="#non-custodial-security">Security</a></li>
-        <li><a href="#founder">Founder</a></li>
-        <li><a href="#faq">FAQs</a></li>
+        <li><a href="#war-room">Cockpit</a></li>
       </ul>
       <div class="header-actions">
         <div class="header-controls">
@@ -4633,12 +4746,14 @@
     <!-- Hero Section -->
     <section class="hero" id="overview">
       <div class="container">
-        <div class="hero-status-kicker" role="status">
-          <span class="kicker-lead">AUREUS-VII MATRIX</span>
-          <span class="kicker-sep">/</span>
-          <span>SOVEREIGN QUANTITATIVE INTELLIGENCE</span>
-          <span class="kicker-sep">/</span>
-          <span class="kicker-status">MT5 LIVE ARMED</span>
+                <!-- Composer-Style Top Announcement Ribbon -->
+        <div class="composer-top-banner" role="banner" style="margin-bottom: 24px;">
+          <div class="banner-inner">
+            <span class="banner-shimmer">AUREUS-VII LIVE</span>
+            <span class="banner-sep">•</span>
+            <span>Autonomous Multi-Agent AI for Spot Gold (XAUUSD) on MetaTrader 5</span>
+            <a href="#symphony-studio" class="banner-link">Explore Symphony Studio &rarr;</a>
+          </div>
         </div>
 
         <h1 class="hero-headline-composer">
