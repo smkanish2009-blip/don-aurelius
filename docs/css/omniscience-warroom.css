@@ -2218,3 +2218,530 @@
     align-items: flex-start;
   }
 }
+
+
+/* ==========================================================================
+   COMPOSER.TRADE AUTHENTIC UX DESIGN SYSTEM (v7.0)
+   - Dual-Arrow Slide Primary Buttons (.composer-btn-primary)
+   - Monolithic Hero Layout & Giga Typography (.giga-title)
+   - Architectural Grid & Dotted Dividers (.c-divider-vert-dotted)
+   - Interactive Conversational Strategy Creation Demo (.composer-ai-demo)
+   - Pre-Built Symphonies Showcase Cards (.symphony-card)
+   - "A Portfolio That Reacts to the Market" Conditional Visualizer
+   ========================================================================== */
+
+/* 1. Top Announcement Ribbon */
+.composer-top-banner {
+  background: #060911;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  padding: 10px 16px;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  text-align: center;
+  position: relative;
+  z-index: 100;
+}
+.banner-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.banner-shimmer {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--gold-primary, #f5c542);
+  background: rgba(245, 197, 66, 0.12);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.banner-sep {
+  opacity: 0.35;
+}
+.banner-link {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+.banner-link:hover {
+  color: var(--gold-primary, #f5c542);
+}
+
+/* 2. Composer Signature Dual-Arrow Button Interaction */
+.composer-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #ffffff;
+  color: #05070c !important;
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 9999px;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, background 0.22s ease;
+}
+.composer-btn-primary:hover {
+  transform: translateY(-2px);
+  background: var(--gold-primary, #f5c542);
+  box-shadow: 0 12px 32px rgba(245, 197, 66, 0.4);
+}
+.composer-btn-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+.composer-arrow-box {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.composer-arrow-left, .composer-arrow-right {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.composer-arrow-left {
+  transform: translateX(-24px);
+  opacity: 0;
+}
+.composer-arrow-right {
+  transform: translateX(0);
+  opacity: 1;
+}
+.composer-btn-primary:hover .composer-arrow-right {
+  transform: translateX(24px);
+  opacity: 0;
+}
+.composer-btn-primary:hover .composer-arrow-left {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Secondary Composer Pill Button */
+.composer-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
+  font-size: 1.02rem;
+  font-weight: 600;
+  padding: 14px 26px;
+  border-radius: 9999px;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  transition: all 0.22s ease;
+}
+.composer-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+/* 3. Composer Hero Typography */
+.hero-headline-composer {
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: clamp(2.8rem, 6.2vw, 5.2rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: #ffffff;
+  margin-bottom: 24px;
+}
+.hero-headline-composer .giga-title {
+  color: var(--gold-primary, #f5c542);
+  display: block;
+}
+
+/* 4. Composer Hero Metrics Band (Dotted Dividers) */
+.composer-hero-metrics {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 32px;
+  padding: 32px 0 24px;
+  margin-top: 36px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.c-metric-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.c-metric-num {
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.c-metric-num.gold {
+  color: var(--gold-primary, #f5c542);
+}
+.c-metric-num.emerald {
+  color: var(--emerald-neon, #10b981);
+}
+.c-metric-lbl {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+  margin-top: 6px;
+}
+.c-divider-vert-dotted {
+  width: 1px;
+  height: 48px;
+  border-right: 1px dashed rgba(255, 255, 255, 0.18);
+}
+
+/* 5. Composer AI Strategy Creation Demo Component */
+.composer-ai-demo-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 40px;
+  align-items: center;
+  margin-top: 40px;
+  background: #070a12;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-top: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 24px;
+  padding: 44px;
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.85);
+}
+.c-ai-info h3 {
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.15;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.02em;
+}
+.c-ai-info p {
+  font-size: 1rem;
+  color: #94a3b8;
+  line-height: 1.65;
+  margin: 0 0 24px 0;
+}
+.c-prompt-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.c-suggestion-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 10px;
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.86rem;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.c-suggestion-btn:hover, .c-suggestion-btn.active {
+  background: rgba(245, 197, 66, 0.08);
+  border-color: rgba(245, 197, 66, 0.35);
+  color: #ffffff;
+}
+.c-suggestion-btn span.arrow {
+  color: var(--gold-primary);
+  font-weight: 700;
+}
+
+/* Chat & Compiler Mockup (Right Column) */
+.c-chat-window {
+  background: #0c101d;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+}
+.c-chat-header {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.74rem;
+  color: #94a3b8;
+}
+.c-chat-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.c-msg-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.c-msg-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.c-msg-avatar.user { background: #1e293b; color: #94a3b8; }
+.c-msg-avatar.ai { background: rgba(245, 197, 66, 0.15); color: var(--gold-primary); border: 1px solid rgba(245, 197, 66, 0.4); }
+.c-msg-bubble {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  color: #e2e8f0;
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* 6. Discover Symphonies Marketplace (Pre-built Strategies Grid) */
+.section-discover {
+  padding: 90px 0;
+  position: relative;
+}
+.symphonies-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 36px;
+}
+.symphony-card {
+  background: #080c16;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-top: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 18px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.symphony-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.85);
+}
+.symphony-card.featured {
+  border-color: rgba(245, 197, 66, 0.35);
+  border-top-color: rgba(245, 197, 66, 0.85);
+  background: linear-gradient(180deg, rgba(245, 197, 66, 0.04) 0%, rgba(8, 12, 22, 0.95) 100%);
+}
+.s-card-badge {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.70rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  width: fit-content;
+  margin-bottom: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.s-card-badge.gold {
+  background: rgba(245, 197, 66, 0.12);
+  color: var(--gold-primary);
+  border-color: rgba(245, 197, 66, 0.35);
+}
+.s-card-title {
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+}
+.s-card-desc {
+  font-size: 0.86rem;
+  color: #94a3b8;
+  line-height: 1.55;
+  margin: 0 0 20px 0;
+}
+.s-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 20px;
+}
+.s-stat-unit {
+  text-align: center;
+}
+.s-stat-val {
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+.s-stat-val.emerald { color: #10b981; }
+.s-stat-val.gold { color: var(--gold-primary); }
+.s-stat-lbl {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+.s-btn-inspect {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.s-btn-inspect:hover {
+  background: rgba(245, 197, 66, 0.15);
+  border-color: rgba(245, 197, 66, 0.5);
+  color: var(--gold-primary);
+}
+
+/* 7. "A Portfolio That Reacts to the Market" Conditional Split */
+.section-reacts {
+  padding: 90px 0;
+  position: relative;
+}
+.reacts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-top: 36px;
+}
+.react-pod {
+  background: #080c16;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 20px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+}
+.react-pod-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.react-tag {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+.react-tag.bull { background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+.react-tag.crisis { background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+.react-pod h4 {
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: 1.35rem;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+}
+.react-pod p {
+  font-size: 0.90rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+}
+.react-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.react-step-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.78rem;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.react-step-item .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.react-step-item .dot.emerald { background: #10b981; box-shadow: 0 0 6px #10b981; }
+.react-step-item .dot.red { background: #ef4444; box-shadow: 0 0 6px #ef4444; }
+
+/* Responsive Adjustments for Composer System */
+@media (max-width: 992px) {
+  .composer-ai-demo-wrap {
+    grid-template-columns: 1fr;
+    padding: 28px 20px;
+  }
+  .symphonies-grid {
+    grid-template-columns: 1fr;
+  }
+  .reacts-grid {
+    grid-template-columns: 1fr;
+  }
+  .composer-hero-metrics {
+    gap: 20px;
+  }
+  .c-divider-vert-dotted {
+    display: none;
+  }
+}
