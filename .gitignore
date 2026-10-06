@@ -11,7 +11,10 @@ logs/
 *.log
 *.pid
 *.png
+!docs/*.png
 !docs/assets/*.png
+!docs/*.webmanifest
+!docs/*.json
 *.wav
 *.sqlite
 
