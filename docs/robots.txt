@@ -6,8 +6,16 @@
 
 User-agent: *
 Allow: /
-Disallow: /_headers
-Disallow: /*.json$
+Allow: /manifest.json
+Allow: /site.webmanifest
+Allow: /assets/
+Allow: /favicon*
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
 
 # LLM & AI Discovery Files
 Allow: /llms.txt
