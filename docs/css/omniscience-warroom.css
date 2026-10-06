@@ -30,8 +30,8 @@
   position: relative;
   width: 100%;
   background: var(--war-dark-bg);
-  backdrop-filter: blur(28px) saturate(190%) contrast(105%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%) contrast(105%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--war-glass-border);
   border-top: 1px solid var(--war-glass-top);
   border-radius: 28px;
