@@ -600,30 +600,89 @@
       alert('⚡ DON AURELIUS • DEEP QUANTUM SURVEILLANCE:\nChameleon Market Regime active.\nStealth micro-order slicing locked at 0.05 lot clips.');
     };
 
-    // 7. Mobile Dock Navigation
+    // 7. Mobile Dock Navigation (5 Native Screens)
     window.switchOpalTab = function (tabName) {
       playTactileHapticSound(1200, 0.03);
       if (navigator.vibrate) navigator.vibrate([25]);
+
+      // Update all dock button states (in native view and simulator)
       document.querySelectorAll('.opal-dock-item').forEach(item => {
         item.classList.toggle('active', item.getAttribute('data-tab') === tabName);
       });
 
-      if (tabName === 'shield') {
-        const el = document.getElementById('mobile-opal-app');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      } else if (tabName === 'market') {
-        const el = document.getElementById('performance-backtest') || document.getElementById('overview');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      } else if (tabName === 'jarvis') {
-        window.open('https://t.me/DonAurelius_AI_bot', '_blank');
-      } else if (tabName === 'vault') {
-        if (typeof window.triggerBiometricCleanSlate === 'function') {
-          window.triggerBiometricCleanSlate();
+      // Toggle 5 screens: shield, sessions, market, jarvis, vault
+      const targetScreenId = 'opal-screen-' + tabName;
+      document.querySelectorAll('.opal-screen').forEach(screen => {
+        const isMatch = screen.id === targetScreenId || screen.id.endsWith(targetScreenId);
+        if (isMatch) {
+          screen.classList.add('active');
+          screen.style.display = 'flex';
+        } else {
+          screen.classList.remove('active');
+          screen.style.display = 'none';
         }
+      });
+
+      // Smooth scroll back to top of viewport
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const simViewport = document.querySelector('.iphone-screen-viewport');
+      if (simViewport) {
+        simViewport.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
 
-    // 8. Desktop iPhone 16 Pro Simulator frame toggle
+    // 8. Jarvis Tactical Procedural Audio Transmission
+    window.playJarvisDemoAudio = function () {
+      const waveform = document.getElementById('jarvis-waveform');
+      const playIcon = document.getElementById('jarvis-play-icon');
+      const playText = document.getElementById('jarvis-play-text');
+
+      if (waveform && waveform.classList.contains('playing')) {
+        waveform.classList.remove('playing');
+        if (playIcon) playIcon.textContent = '▶';
+        if (playText) playText.textContent = 'PLAY TACTICAL BRIEFING';
+        return;
+      }
+
+      if (waveform) waveform.classList.add('playing');
+      if (playIcon) playIcon.textContent = '⏸';
+      if (playText) playText.textContent = 'TRANSMITTING BRIEFING...';
+
+      // Synthesize tactical sound sequence via Web Audio API
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) {
+          const ctx = new AudioCtx();
+          const freqs = [880, 1174, 1318, 1760, 2093];
+          freqs.forEach((freq, idx) => {
+            setTimeout(() => {
+              if (ctx.state === 'suspended') ctx.resume();
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              osc.type = 'sine';
+              osc.frequency.setValueAtTime(freq, ctx.currentTime);
+              gain.gain.setValueAtTime(0.05, ctx.currentTime);
+              gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.16);
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              osc.start();
+              osc.stop(ctx.currentTime + 0.16);
+            }, idx * 110);
+          });
+        }
+        if (navigator.vibrate) navigator.vibrate([25, 45, 30, 70, 40]);
+      } catch (err) {
+        console.warn('[Jarvis Audio]: Audio playback handled gracefully', err);
+      }
+
+      setTimeout(() => {
+        if (waveform) waveform.classList.remove('playing');
+        if (playIcon) playIcon.textContent = '▶';
+        if (playText) playText.textContent = 'REPLAY BRIEFING';
+      }, 4000);
+    };
+
+    // 9. Desktop iPhone 16 Pro Simulator frame toggle
     window.toggleIphoneSimulator = function (show) {
       playTactileHapticSound(800, 0.04);
       const modal = document.getElementById('ios-device-simulator-modal');
@@ -638,6 +697,7 @@
           const clone = mobileApp.cloneNode(true);
           clone.id = 'mobile-opal-app-sim-clone';
           mount.appendChild(clone);
+          initOpalMobileSuite();
         }
       } else {
         modal.style.display = 'none';

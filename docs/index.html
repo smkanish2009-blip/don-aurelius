@@ -4968,8 +4968,8 @@ body {
          OPAL iOS NATIVE MOBILE SUITE (Bespoke Mobile Architecture)
          Exclusively Active on Viewports <= 768px (Desktop retains Cockpit)
          ==================================================================== -->
-    <div class="mobile-opal-app-view" id="mobile-opal-app" aria-label="Don Aurelius iOS Opal Mobile Interface">
-      <!-- iOS Opal Top Dynamic Header -->
+    <div class="mobile-opal-app-view" id="mobile-opal-app" aria-label="Don Aurelius Sovereign Apple iOS Application">
+      <!-- iOS Dynamic Top Status Bar -->
       <div class="opal-top-bar">
         <div class="opal-profile-pill">
           <div class="opal-avatar-wrapper">
@@ -4987,211 +4987,370 @@ body {
         </div>
       </div>
 
-      <!-- iOS 18 Liquid Glass Segmented Control -->
-      <div class="opal-segmented-control" role="tablist" aria-label="Opal Navigation Tabs">
-        <button type="button" class="opal-seg-btn active" id="seg-btn-shield" data-view="shield" onclick="window.switchOpalSegment('shield')">🛡️ SHIELD</button>
-        <button type="button" class="opal-seg-btn" id="seg-btn-sessions" data-view="sessions" onclick="window.switchOpalSegment('sessions')">⚡ SESSIONS</button>
-        <button type="button" class="opal-seg-btn" id="seg-btn-consensus" data-view="consensus" onclick="window.switchOpalSegment('consensus')">🐅 WAR ROOM</button>
-      </div>
-
-      <!-- Opal Centerpiece Hero: Chameleon Alpha Shield Dial (Swiss Chronometer Calibrated) -->
-      <div class="opal-hero-dial-card" id="opal-panel-shield">
-        <div class="opal-dial-ambient-halo"></div>
-        <div class="opal-dial-svg-wrap">
-          <svg class="opal-dial-svg" viewBox="0 0 280 200" width="100%" height="200" aria-label="Chameleon Alpha Shield Dial">
-            <defs>
-              <linearGradient id="opalGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#fff0b3" />
-                <stop offset="50%" stop-color="#f5c542" />
-                <stop offset="100%" stop-color="#d4a017" />
-              </linearGradient>
-              <filter id="opalGlow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="6" result="blur" />
-                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-              </filter>
-            </defs>
-            <!-- Background Arc Track -->
-            <path d="M 40 170 A 100 100 0 1 1 240 170" fill="none" stroke="rgba(255, 215, 0, 0.12)" stroke-width="12" stroke-linecap="round" />
-            <!-- Calibrated Swiss Radial Precision Ticks -->
-            <g class="opal-dial-ticks" stroke="rgba(255, 215, 0, 0.28)" stroke-width="1.5" stroke-linecap="round">
-              <line x1="40" y1="170" x2="48" y2="164" />
-              <line x1="48" y1="140" x2="57" y2="137" />
-              <line x1="62" y1="112" x2="71" y2="112" />
-              <line x1="82" y1="88" x2="91" y2="92" />
-              <line x1="108" y1="70" x2="115" y2="78" />
-              <line x1="138" y1="62" x2="140" y2="72" />
-              <line x1="168" y1="64" x2="165" y2="74" />
-              <line x1="198" y1="74" x2="191" y2="82" />
-              <line x1="222" y1="94" x2="213" y2="98" />
-              <line x1="238" y1="120" x2="229" y2="120" />
-              <line x1="242" y1="148" x2="233" y2="145" />
-              <line x1="240" y1="170" x2="232" y2="164" />
-            </g>
-            <!-- Glowing Foreground Arc Progress -->
-            <path class="opal-dial-progress-arc" id="opal-dial-arc" d="M 40 170 A 100 100 0 1 1 240 170" fill="none" stroke="url(#opalGoldGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="415" stroke-dashoffset="24" filter="url(#opalGlow)" />
-            <!-- Micro Needle Indicator -->
-            <circle cx="232" cy="155" r="5" fill="#ffffff" filter="drop-shadow(0 0 6px #fff0b3)" />
-          </svg>
-          <div class="opal-dial-inner-content">
-            <span class="opal-dial-tag">CHAMELEON ALPHA SHIELD</span>
-            <div class="opal-dial-number-group">
-              <span class="opal-dial-number" id="opal-alpha-score">99.4</span><span class="opal-dial-percent">%</span>
+      <!-- ====================================================================
+           SCREEN 1: SHIELD (Core Alpha & Telemetry)
+           ==================================================================== -->
+      <div class="opal-screen active" id="opal-screen-shield">
+        <!-- Opal Centerpiece Hero: Chameleon Alpha Shield Dial (Swiss Chronometer Calibrated) -->
+        <div class="opal-hero-dial-card" id="opal-panel-shield">
+          <div class="opal-dial-ambient-halo"></div>
+          <div class="opal-dial-svg-wrap">
+            <svg class="opal-dial-svg" viewBox="0 0 280 200" width="100%" height="200" aria-label="Chameleon Alpha Shield Dial">
+              <defs>
+                <linearGradient id="opalGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#fff0b3" />
+                  <stop offset="50%" stop-color="#f5c542" />
+                  <stop offset="100%" stop-color="#d4a017" />
+                </linearGradient>
+                <filter id="opalGlow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="6" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+              </defs>
+              <!-- Background Arc Track -->
+              <path d="M 40 170 A 100 100 0 1 1 240 170" fill="none" stroke="rgba(255, 215, 0, 0.12)" stroke-width="12" stroke-linecap="round" />
+              <!-- Calibrated Swiss Radial Precision Ticks -->
+              <g class="opal-dial-ticks" stroke="rgba(255, 215, 0, 0.28)" stroke-width="1.5" stroke-linecap="round">
+                <line x1="40" y1="170" x2="48" y2="164" />
+                <line x1="48" y1="140" x2="57" y2="137" />
+                <line x1="62" y1="112" x2="71" y2="112" />
+                <line x1="82" y1="88" x2="91" y2="92" />
+                <line x1="108" y1="70" x2="115" y2="78" />
+                <line x1="138" y1="62" x2="140" y2="72" />
+                <line x1="168" y1="64" x2="165" y2="74" />
+                <line x1="198" y1="74" x2="191" y2="82" />
+                <line x1="222" y1="94" x2="213" y2="98" />
+                <line x1="238" y1="120" x2="229" y2="120" />
+                <line x1="242" y1="148" x2="233" y2="145" />
+                <line x1="240" y1="170" x2="232" y2="164" />
+              </g>
+              <!-- Glowing Foreground Arc Progress -->
+              <path class="opal-dial-progress-arc" id="opal-dial-arc" d="M 40 170 A 100 100 0 1 1 240 170" fill="none" stroke="url(#opalGoldGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="415" stroke-dashoffset="24" filter="url(#opalGlow)" />
+              <!-- Micro Needle Indicator -->
+              <circle cx="232" cy="155" r="5" fill="#ffffff" filter="drop-shadow(0 0 6px #fff0b3)" />
+            </svg>
+            <div class="opal-dial-inner-content">
+              <span class="opal-dial-tag">CHAMELEON ALPHA SHIELD</span>
+              <div class="opal-dial-number-group">
+                <span class="opal-dial-number" id="opal-alpha-score">99.4</span><span class="opal-dial-percent">%</span>
+              </div>
+              <span class="opal-dial-regime-label" id="opal-regime-label">BULLISH EXPANSION • KELLY 0.25</span>
             </div>
-            <span class="opal-dial-regime-label" id="opal-regime-label">BULLISH EXPANSION • KELLY 0.25</span>
           </div>
-        </div>
 
-        <!-- Dial Mode Switcher Micro Pills -->
-        <div class="opal-dial-modes">
-          <button type="button" class="dial-mode-pill active" onclick="window.switchDialMetric('stability')">STABILITY</button>
-          <button type="button" class="dial-mode-pill" onclick="window.switchDialMetric('volatility')">VOL 0.42%</button>
-          <button type="button" class="dial-mode-pill" onclick="window.switchDialMetric('kelly')">KELLY 0.25</button>
-        </div>
-
-        <!-- Tactile Glass Quick Action Capsule -->
-        <button type="button" class="opal-tactile-capsule-btn" id="opal-btn-deep-focus" onclick="window.pulseOpalDeepFocus()">
-          <span class="opal-capsule-icon">⚡</span>
-          <span>DEEP QUANTUM SURVEILLANCE</span>
-        </button>
-      </div>
-
-      <!-- Concentric Squircle Card 1: Live Alpha Position with Interactive Scrubber -->
-      <div class="opal-concentric-card" id="opal-card-position">
-        <div class="opal-card-sheen"></div>
-        <div class="opal-card-header">
-          <div class="opal-card-title-group">
-            <span class="opal-card-eyebrow">ACTIVE EXPOSURE</span>
-            <h4 class="opal-card-title">LIVE XAU/USD ALPHA</h4>
+          <!-- Dial Mode Switcher Micro Pills -->
+          <div class="opal-dial-modes">
+            <button type="button" class="dial-mode-pill active" onclick="window.switchDialMetric('stability')">STABILITY</button>
+            <button type="button" class="dial-mode-pill" onclick="window.switchDialMetric('volatility')">VOL 0.42%</button>
+            <button type="button" class="dial-mode-pill" onclick="window.switchDialMetric('kelly')">KELLY 0.25</button>
           </div>
-          <span class="opal-card-badge positive">PROFITING</span>
-        </div>
-        
-        <div class="opal-metric-banner">
-          <div class="opal-pnl-headline" id="opal-live-pnl">+$18,420.00</div>
-          <span class="opal-pnl-sub green" id="opal-live-pnl-pct">+6.14% RETURN</span>
+
+          <!-- Tactile Glass Quick Action Capsule -->
+          <button type="button" class="opal-tactile-capsule-btn" id="opal-btn-deep-focus" onclick="window.pulseOpalDeepFocus()">
+            <span class="opal-capsule-icon">⚡</span>
+            <span>DEEP QUANTUM SURVEILLANCE</span>
+          </button>
         </div>
 
-        <!-- Interactive Golden Neon Sparkline with Live Touch Scrubber -->
-        <div class="opal-sparkline-wrap" id="opal-sparkline-wrap">
-          <div class="opal-scrub-tooltip" id="opal-scrub-tooltip">
-            <span class="scrub-time" id="scrub-time">14:40 UTC</span> • <strong class="scrub-price" id="scrub-price">$2,654.80</strong> <span class="scrub-pips green" id="scrub-pips">(+18.4p)</span>
-          </div>
-          <svg viewBox="0 0 320 60" class="opal-sparkline-svg" id="opal-sparkline-svg" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="sparklineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="rgba(245, 197, 66, 0.45)" />
-                <stop offset="100%" stop-color="rgba(245, 197, 66, 0.0)" />
-              </linearGradient>
-            </defs>
-            <path d="M 0 50 Q 40 45, 80 32 T 160 38 T 240 18 T 320 8 L 320 60 L 0 60 Z" fill="url(#sparklineGrad)" />
-            <path d="M 0 50 Q 40 45, 80 32 T 160 38 T 240 18 T 320 8" fill="none" stroke="#f5c542" stroke-width="2.5" stroke-linecap="round" />
-            <!-- Dynamic Interactive Scrubber Line & Dot -->
-            <line id="opal-scrub-line" x1="240" y1="0" x2="240" y2="60" stroke="rgba(255, 255, 255, 0.4)" stroke-width="1.5" stroke-dasharray="3 3" />
-            <circle id="opal-scrub-dot" cx="240" cy="18" r="4.5" fill="#ffffff" stroke="#f5c542" stroke-width="2" />
-          </svg>
-        </div>
-
-        <div class="opal-card-chips">
-          <span class="opal-chip"><span class="chip-dot green"></span> STEALTH TRAILING: ON</span>
-          <span class="opal-chip"><span class="chip-dot gold"></span> SPREAD: 0.12p</span>
-          <span class="opal-chip"><span class="chip-dot cyan"></span> LOTS: 2.50</span>
-        </div>
-      </div>
-
-      <!-- Concentric Squircle Card 2: Regime Defense Sessions (Opal Session Blocker Pattern) -->
-      <div class="opal-concentric-card" id="opal-panel-sessions">
-        <div class="opal-card-sheen"></div>
-        <div class="opal-card-header">
-          <div class="opal-card-title-group">
-            <span class="opal-card-eyebrow">VOLATILITY BUFFERS</span>
-            <h4 class="opal-card-title">REGIME DEFENSE SESSIONS</h4>
-          </div>
-          <span class="opal-card-timer" id="opal-session-timer">03:42:15 REMAINING</span>
-        </div>
-
-        <div class="opal-toggle-list">
-          <div class="opal-toggle-item">
-            <div class="opal-toggle-meta">
-              <span class="opal-toggle-name">London Breakout Guard</span>
-              <span class="opal-toggle-desc">Filters pre-market liquidity traps</span>
+        <!-- Concentric Squircle Card: Live Alpha Position with Interactive Scrubber -->
+        <div class="opal-concentric-card" id="opal-card-position">
+          <div class="opal-card-sheen"></div>
+          <div class="opal-card-header">
+            <div class="opal-card-title-group">
+              <span class="opal-card-eyebrow">ACTIVE EXPOSURE</span>
+              <h4 class="opal-card-title">LIVE XAU/USD ALPHA</h4>
             </div>
-            <label class="opal-switch">
-              <input type="checkbox" checked id="toggle-london-guard" onchange="window.handleOpalToggle('London Guard', this.checked)">
-              <span class="opal-slider"></span>
-            </label>
+            <span class="opal-card-badge positive">PROFITING</span>
+          </div>
+          
+          <div class="opal-metric-banner">
+            <div class="opal-pnl-headline" id="opal-live-pnl">+$18,420.00</div>
+            <span class="opal-pnl-sub green" id="opal-live-pnl-pct">+6.14% RETURN</span>
           </div>
 
-          <div class="opal-toggle-item">
-            <div class="opal-toggle-meta">
-              <span class="opal-toggle-name">NY CPI Volatility Buffer</span>
-              <span class="opal-toggle-desc">Auto-widens stop ceilings &plusmn;15m</span>
+          <!-- Interactive Golden Neon Sparkline with Live Touch Scrubber -->
+          <div class="opal-sparkline-wrap" id="opal-sparkline-wrap">
+            <div class="opal-scrub-tooltip" id="opal-scrub-tooltip">
+              <span class="scrub-time" id="scrub-time">14:40 UTC</span> • <strong class="scrub-price" id="scrub-price">$2,654.80</strong> <span class="scrub-pips green" id="scrub-pips">(+18.4p)</span>
             </div>
-            <label class="opal-switch">
-              <input type="checkbox" checked id="toggle-cpi-buffer" onchange="window.handleOpalToggle('CPI Buffer', this.checked)">
-              <span class="opal-slider"></span>
-            </label>
+            <svg viewBox="0 0 320 60" class="opal-sparkline-svg" id="opal-sparkline-svg" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="sparklineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="rgba(245, 197, 66, 0.45)" />
+                  <stop offset="100%" stop-color="rgba(245, 197, 66, 0.0)" />
+                </linearGradient>
+              </defs>
+              <path d="M 0 50 Q 40 45, 80 32 T 160 38 T 240 18 T 320 8 L 320 60 L 0 60 Z" fill="url(#sparklineGrad)" />
+              <path d="M 0 50 Q 40 45, 80 32 T 160 38 T 240 18 T 320 8" fill="none" stroke="#f5c542" stroke-width="2.5" stroke-linecap="round" />
+              <!-- Dynamic Interactive Scrubber Line & Dot -->
+              <line id="opal-scrub-line" x1="240" y1="0" x2="240" y2="60" stroke="rgba(255, 255, 255, 0.4)" stroke-width="1.5" stroke-dasharray="3 3" />
+              <circle id="opal-scrub-dot" cx="240" cy="18" r="4.5" fill="#ffffff" stroke="#f5c542" stroke-width="2" />
+            </svg>
           </div>
 
-          <div class="opal-toggle-item">
-            <div class="opal-toggle-meta">
-              <span class="opal-toggle-name">Weekend Gap Shield</span>
-              <span class="opal-toggle-desc">Enforces Friday 21:00 UTC flat book</span>
+          <div class="opal-card-chips">
+            <span class="opal-chip"><span class="chip-dot green"></span> STEALTH TRAILING: ON</span>
+            <span class="opal-chip"><span class="chip-dot gold"></span> SPREAD: 0.12p</span>
+            <span class="opal-chip"><span class="chip-dot cyan"></span> LOTS: 2.50</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SCREEN 2: SESSIONS (Regime Defense & Risk Blackouts)
+           ==================================================================== -->
+      <div class="opal-screen" id="opal-screen-sessions" style="display:none;">
+        <div class="opal-concentric-card">
+          <div class="opal-card-sheen"></div>
+          <div class="opal-card-header">
+            <div class="opal-card-title-group">
+              <span class="opal-card-eyebrow">VOLATILITY SHIELD</span>
+              <h4 class="opal-card-title">REGIME DEFENSE SESSIONS</h4>
             </div>
-            <label class="opal-switch">
-              <input type="checkbox" checked id="toggle-weekend-shield" onchange="window.handleOpalToggle('Weekend Shield', this.checked)">
-              <span class="opal-slider"></span>
-            </label>
+            <span class="opal-card-timer" id="opal-session-timer">03:42:15 REMAINING</span>
+          </div>
+
+          <div class="opal-toggle-list">
+            <div class="opal-toggle-item">
+              <div class="opal-toggle-meta">
+                <span class="opal-toggle-name">London Breakout Guard</span>
+                <span class="opal-toggle-desc">Filters pre-market liquidity traps</span>
+              </div>
+              <label class="opal-switch">
+                <input type="checkbox" checked id="toggle-london-guard" onchange="window.handleOpalToggle('London Guard', this.checked)">
+                <span class="opal-slider"></span>
+              </label>
+            </div>
+
+            <div class="opal-toggle-item">
+              <div class="opal-toggle-meta">
+                <span class="opal-toggle-name">NY CPI Volatility Buffer</span>
+                <span class="opal-toggle-desc">Auto-widens stop ceilings &plusmn;15m</span>
+              </div>
+              <label class="opal-switch">
+                <input type="checkbox" checked id="toggle-cpi-buffer" onchange="window.handleOpalToggle('CPI Buffer', this.checked)">
+                <span class="opal-slider"></span>
+              </label>
+            </div>
+
+            <div class="opal-toggle-item">
+              <div class="opal-toggle-meta">
+                <span class="opal-toggle-name">Weekend Gap Shield</span>
+                <span class="opal-toggle-desc">Enforces Friday 21:00 UTC flat book</span>
+              </div>
+              <label class="opal-switch">
+                <input type="checkbox" checked id="toggle-weekend-shield" onchange="window.handleOpalToggle('Weekend Shield', this.checked)">
+                <span class="opal-slider"></span>
+              </label>
+            </div>
+
+            <div class="opal-toggle-item">
+              <div class="opal-toggle-meta">
+                <span class="opal-toggle-name">Toxic Spread Ceiling Veto</span>
+                <span class="opal-toggle-desc">Automatic hard freeze if spread &gt; 1.2p</span>
+              </div>
+              <label class="opal-switch">
+                <input type="checkbox" checked id="toggle-spread-veto" onchange="window.handleOpalToggle('Spread Ceiling', this.checked)">
+                <span class="opal-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Opal Deliberate Friction Action: Hold-to-Flatten (Emergency Clean Slate) -->
+        <div class="opal-emergency-section">
+          <button type="button" class="opal-hold-friction-btn" id="opal-hold-flatten-btn" aria-label="Hold 3 Seconds to Flatten All Positions">
+            <div class="opal-hold-progress-fill" id="opal-hold-progress"></div>
+            <div class="opal-hold-btn-content">
+              <svg class="opal-shield-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span class="opal-hold-btn-text" id="opal-hold-text">HOLD 3s TO ENGAGE CLEAN SLATE (FLATTEN ALL)</span>
+            </div>
+          </button>
+          <span class="opal-hold-hint">3-second safety friction • Biometric Touch ID authentication required</span>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SCREEN 3: MARKET (Live Chart & Microstructure Depth)
+           ==================================================================== -->
+      <div class="opal-screen" id="opal-screen-market" style="display:none;">
+        <div class="opal-concentric-card">
+          <div class="opal-card-sheen"></div>
+          <div class="opal-card-header">
+            <div class="opal-card-title-group">
+              <span class="opal-card-eyebrow">XAU/USD SPOT GOLD</span>
+              <h4 class="opal-card-title">LIVE CHART STREAM</h4>
+            </div>
+            <span class="opal-card-badge positive">120 FPS</span>
+          </div>
+
+          <div class="opal-chart-embed-wrap">
+            <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_market_mini&symbol=OANDA%3AXAUUSD&interval=15&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=0a0d14&studies=%5B%5D&theme=dark&style=1&timezone=Etc%2FUTC&studies_overrides=%7B%7D&overrides=%7B%22mainSeriesProperties.candleStyle.upColor%22%3A%22%23f5c542%22%2C%22mainSeriesProperties.candleStyle.downColor%22%3A%22%23ef4444%22%2C%22mainSeriesProperties.candleStyle.borderUpColor%22%3A%22%23f5c542%22%2C%22mainSeriesProperties.candleStyle.borderDownColor%22%3A%22%23ef4444%22%2C%22mainSeriesProperties.candleStyle.wickUpColor%22%3A%22%23f5c542%22%2C%22mainSeriesProperties.candleStyle.wickDownColor%22%3A%22%23ef4444%22%2C%22paneProperties.background%22%3A%22%2306080c%22%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=en" style="width:100%;height:320px;border:none;border-radius:18px;"></iframe>
+          </div>
+
+          <div class="opal-orderbook-bar">
+            <div class="depth-header">
+              <span>BUY DEPTH: <strong>68.4%</strong></span>
+              <span>SELL DEPTH: <strong>31.6%</strong></span>
+            </div>
+            <div class="depth-bar-track">
+              <div class="depth-bar-fill buy" style="width:68.4%;"></div>
+              <div class="depth-bar-fill sell" style="width:31.6%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-Agent Consensus Grid -->
+        <div class="opal-concentric-card">
+          <div class="opal-card-sheen"></div>
+          <div class="opal-card-header">
+            <div class="opal-card-title-group">
+              <span class="opal-card-eyebrow">INSTITUTIONAL COUNCIL</span>
+              <h4 class="opal-card-title">WAR ROOM CONSENSUS</h4>
+            </div>
+            <span class="opal-card-badge positive" id="opal-consensus-badge">4/4 UNANIMOUS BUY</span>
+          </div>
+          <div class="opal-consensus-grid">
+            <div class="opal-agent-chip buy">
+              <span class="agent-icon">🦅</span>
+              <div class="agent-text"><strong>HAWK</strong><span>DXY -0.32%</span></div>
+            </div>
+            <div class="opal-agent-chip buy">
+              <span class="agent-icon">📡</span>
+              <div class="agent-text"><strong>RADAR</strong><span>Range Swept</span></div>
+            </div>
+            <div class="opal-agent-chip buy">
+              <span class="agent-icon">🐅</span>
+              <div class="agent-text"><strong>PREDATOR</strong><span>FVG Retest</span></div>
+            </div>
+            <div class="opal-agent-chip pass">
+              <span class="agent-icon">⚔️</span>
+              <div class="agent-text"><strong>INQUISITOR</strong><span>Spread 0.12p</span></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Concentric Squircle Card 3: 4-Agent War Room Consensus -->
-      <div class="opal-concentric-card" id="opal-panel-consensus">
-        <div class="opal-card-sheen"></div>
-        <div class="opal-card-header">
-          <div class="opal-card-title-group">
-            <span class="opal-card-eyebrow">INSTITUTIONAL COUNCIL</span>
-            <h4 class="opal-card-title">4-AGENT WAR ROOM</h4>
+      <!-- ====================================================================
+           SCREEN 4: JARVIS (Neural Audio Intelligence & Telegram Dispatch)
+           ==================================================================== -->
+      <div class="opal-screen" id="opal-screen-jarvis" style="display:none;">
+        <div class="opal-concentric-card">
+          <div class="opal-card-sheen"></div>
+          <div class="opal-card-header">
+            <div class="opal-card-title-group">
+              <span class="opal-card-eyebrow">NEURAL VOICE CO-PILOT</span>
+              <h4 class="opal-card-title">JARVIS AUDIO TRANSMISSION</h4>
+            </div>
+            <span class="opal-card-badge positive">ONLINE</span>
           </div>
-          <span class="opal-card-badge positive" id="opal-consensus-badge">4/4 UNANIMOUS BUY</span>
+
+          <div class="opal-audio-player-card">
+            <div class="audio-waveform-vis" id="jarvis-waveform">
+              <span class="wave-bar h-1"></span>
+              <span class="wave-bar h-3"></span>
+              <span class="wave-bar h-5"></span>
+              <span class="wave-bar h-8"></span>
+              <span class="wave-bar h-10"></span>
+              <span class="wave-bar h-7"></span>
+              <span class="wave-bar h-4"></span>
+              <span class="wave-bar h-2"></span>
+              <span class="wave-bar h-6"></span>
+              <span class="wave-bar h-9"></span>
+              <span class="wave-bar h-5"></span>
+              <span class="wave-bar h-3"></span>
+            </div>
+            <div class="audio-meta">
+              <strong>TRANSMISSION #042 • LONDON OPEN</strong>
+              <span>Eagle-Eye vision confirmed Asian liquidity sweep. Trailing stops active in local RAM.</span>
+            </div>
+            <button type="button" class="btn-audio-play" onclick="window.playJarvisDemoAudio()">
+              <span id="jarvis-play-icon">▶</span> <span id="jarvis-play-text">PLAY TACTICAL BRIEFING</span>
+            </button>
+          </div>
         </div>
-        <div class="opal-consensus-grid">
-          <div class="opal-agent-chip buy">
-            <span class="agent-icon">🦅</span>
-            <div class="agent-text"><strong>HAWK</strong><span>DXY -0.32%</span></div>
+
+        <div class="opal-concentric-card">
+          <div class="opal-card-sheen"></div>
+          <div class="opal-card-header">
+            <div class="opal-card-title-group">
+              <span class="opal-card-eyebrow">COMMAND CENTER</span>
+              <h4 class="opal-card-title">TELEGRAM 2-WAY HUD</h4>
+            </div>
           </div>
-          <div class="opal-agent-chip buy">
-            <span class="agent-icon">📡</span>
-            <div class="agent-text"><strong>RADAR</strong><span>Range Swept</span></div>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.7);line-height:1.5;margin-bottom:12px;">
+            Execute /regime, /risk, and /flatten commands directly via end-to-end encrypted Telegram bot.
+          </p>
+          <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="btn-apple-primary" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:14px;text-decoration:none;font-weight:700;">
+            <span>LAUNCH TELEGRAM CO-PILOT</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SCREEN 5: VAULT (Biometrics, Risk Allocation & Legal Dossier)
+           ==================================================================== -->
+      <div class="opal-screen" id="opal-screen-vault" style="display:none;">
+        <div class="opal-concentric-card">
+          <div class="opal-card-sheen"></div>
+          <div class="opal-card-header">
+            <div class="opal-card-title-group">
+              <span class="opal-card-eyebrow">HARDWARE DEFENSE</span>
+              <h4 class="opal-card-title">BIOMETRIC SECURITY</h4>
+            </div>
+            <span class="opal-card-badge positive">ACTIVE</span>
           </div>
-          <div class="opal-agent-chip buy">
-            <span class="agent-icon">🐅</span>
-            <div class="agent-text"><strong>PREDATOR</strong><span>FVG Retest</span></div>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.7);line-height:1.4;margin-bottom:12px;">
+            Touch ID and WebAuthn Passkeys are armed. Clean slate panic flattening requires biometric confirmation.
+          </p>
+          <button type="button" class="btn-apple-primary" style="width:100%;padding:12px;border-radius:14px;font-weight:700;" onclick="window.triggerBiometricCleanSlate()">
+            AUTHENTICATE PASSKEY PROTOCOL
+          </button>
+        </div>
+
+        <div class="opal-concentric-card">
+          <div class="opal-card-sheen"></div>
+          <div class="opal-card-header">
+            <div class="opal-card-title-group">
+              <span class="opal-card-eyebrow">RESILIENCE ARCHITECTURE</span>
+              <h4 class="opal-card-title">3-2-1 DATA VAULT</h4>
+            </div>
+            <span class="opal-card-badge positive">VERIFIED</span>
           </div>
-          <div class="opal-agent-chip pass">
-            <span class="agent-icon">⚔️</span>
-            <div class="agent-text"><strong>INQUISITOR</strong><span>Spread 0.12p</span></div>
+          <div class="opal-card-chips">
+            <span class="opal-chip"><span class="chip-dot green"></span> 3 INDEPENDENT COPIES</span>
+            <span class="opal-chip"><span class="chip-dot gold"></span> 2 PHYSICAL MEDIA TYPES</span>
+            <span class="opal-chip"><span class="chip-dot cyan"></span> 1 OFFSITE CLOUD GCS</span>
+          </div>
+        </div>
+
+        <div class="opal-concentric-card">
+          <div class="opal-card-sheen"></div>
+          <div class="opal-card-header">
+            <div class="opal-card-title-group">
+              <span class="opal-card-eyebrow">INSTITUTIONAL GOVERNANCE</span>
+              <h4 class="opal-card-title">SOVEREIGN DOSSIER</h4>
+            </div>
+          </div>
+          <div class="opal-legal-list">
+            <a href="terms.html" class="opal-legal-link">Terms of Service <span>&rarr;</span></a>
+            <a href="privacy-policy.html" class="opal-legal-link">Privacy Policy <span>&rarr;</span></a>
+            <a href="cookie-policy.html" class="opal-legal-link">Cookie Policy <span>&rarr;</span></a>
+            <a href="refund-policy.html" class="opal-legal-link">Refund Policy <span>&rarr;</span></a>
           </div>
         </div>
       </div>
 
-      <!-- Opal Deliberate Friction Action: Hold-to-Flatten (Emergency Clean Slate) -->
-      <div class="opal-emergency-section">
-        <button type="button" class="opal-hold-friction-btn" id="opal-hold-flatten-btn" aria-label="Hold 3 Seconds to Flatten All Positions">
-          <div class="opal-hold-progress-fill" id="opal-hold-progress"></div>
-          <div class="opal-hold-btn-content">
-            <svg class="opal-shield-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span class="opal-hold-btn-text" id="opal-hold-text">HOLD TO ENGAGE CLEAN SLATE (FLATTEN ALL)</span>
-          </div>
-        </button>
-        <span class="opal-hold-hint">3-second safety friction • Biometric Touch ID authentication required</span>
-      </div>
-
-      <!-- Floating Apple VisionOS Liquid Glass Bottom Dock -->
+      <!-- Floating Apple VisionOS Liquid Glass Bottom Dock (5 Native Tabs) -->
       <nav class="opal-floating-dock" aria-label="Mobile Navigation Dock">
         <button type="button" class="opal-dock-item active" data-tab="shield" onclick="window.switchOpalTab('shield')">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           <span>Shield</span>
+        </button>
+        <button type="button" class="opal-dock-item" data-tab="sessions" onclick="window.switchOpalTab('sessions')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span>Sessions</span>
         </button>
         <button type="button" class="opal-dock-item" data-tab="market" onclick="window.switchOpalTab('market')">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
