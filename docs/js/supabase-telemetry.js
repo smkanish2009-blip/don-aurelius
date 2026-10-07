@@ -164,6 +164,22 @@
       regimeElem.textContent = String(telem.regime).replace('_', ' ');
     }
 
+    // Opal Mobile HUD bindings
+    const opalScore = document.getElementById('opal-alpha-score');
+    if (opalScore && telem.regime_confidence !== undefined) {
+      opalScore.textContent = Number(telem.regime_confidence).toFixed(1);
+    }
+    const opalRegime = document.getElementById('opal-regime-label');
+    if (opalRegime && telem.regime) {
+      opalRegime.textContent = `${String(telem.regime).replace('_', ' ')} • KELLY 0.25`;
+    }
+    const opalPnl = document.getElementById('opal-live-pnl');
+    if (opalPnl && telem.floating_pnl !== undefined) {
+      const pnlNum = Number(telem.floating_pnl);
+      opalPnl.textContent = `${pnlNum >= 0 ? '+' : '-'}$${Math.abs(pnlNum).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+      opalPnl.style.color = pnlNum >= 0 ? '#f5c542' : '#ef4444';
+    }
+
     // Hub metrics
     const spreadElem = document.getElementById('telemetry-hub-spread');
     if (spreadElem) spreadElem.textContent = '0.12 pips';
@@ -371,10 +387,272 @@
     };
   };
 
+  // --- Opal iOS Native Mobile Suite Interactions ---
+  let audioCtx = null;
+  function playTactileHapticSound(freq = 1200, duration = 0.04) {
+    try {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      if (audioCtx) {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      }
+    } catch (e) {}
+  }
+
+  function initOpalMobileSuite() {
+    // 1. Hold-to-Flatten deliberate friction action
+    const holdBtn = document.getElementById('opal-hold-flatten-btn');
+    const progressBar = document.getElementById('opal-hold-progress');
+    const holdText = document.getElementById('opal-hold-text');
+    let holdProgress = 0;
+    let intervalTimer = null;
+
+    if (holdBtn && progressBar) {
+      function startHold(e) {
+        if (e.cancelable && e.type === 'touchstart') e.preventDefault();
+        holdProgress = 0;
+        progressBar.style.width = '0%';
+        if (holdText) holdText.textContent = 'HOLDING... (ARMING CLEAN SLATE)';
+        playTactileHapticSound(800, 0.06);
+        if (navigator.vibrate) navigator.vibrate([30]);
+
+        if (intervalTimer) clearInterval(intervalTimer);
+        intervalTimer = setInterval(() => {
+          holdProgress += 100 / 30; // 30 ticks of 100ms = 3000ms
+          if (holdProgress > 100) holdProgress = 100;
+          progressBar.style.width = holdProgress + '%';
+
+          if (holdProgress >= 100) {
+            cancelHold();
+            playTactileHapticSound(400, 0.15);
+            if (navigator.vibrate) navigator.vibrate([50, 70, 90]);
+            if (holdText) holdText.textContent = 'CLEAN SLATE ENGAGED!';
+            if (typeof window.triggerBiometricCleanSlate === 'function') {
+              window.triggerBiometricCleanSlate();
+            }
+          }
+        }, 100);
+      }
+
+      function cancelHold() {
+        if (intervalTimer) {
+          clearInterval(intervalTimer);
+          intervalTimer = null;
+        }
+        holdProgress = 0;
+        progressBar.style.width = '0%';
+        if (holdText) holdText.textContent = 'HOLD TO ENGAGE CLEAN SLATE (FLATTEN ALL)';
+      }
+
+      holdBtn.addEventListener('mousedown', startHold);
+      holdBtn.addEventListener('mouseup', cancelHold);
+      holdBtn.addEventListener('mouseleave', cancelHold);
+      holdBtn.addEventListener('touchstart', startHold, { passive: false });
+      holdBtn.addEventListener('touchend', cancelHold);
+      holdBtn.addEventListener('touchcancel', cancelHold);
+    }
+
+    // 2. Interactive Tactile Sparkline Scrubber
+    function initSparklineScrubber() {
+      const wrap = document.getElementById('opal-sparkline-wrap');
+      const scrubLine = document.getElementById('opal-scrub-line');
+      const scrubDot = document.getElementById('opal-scrub-dot');
+      const tooltip = document.getElementById('opal-scrub-tooltip');
+      const scrubTime = document.getElementById('scrub-time');
+      const scrubPrice = document.getElementById('scrub-price');
+      const scrubPips = document.getElementById('scrub-pips');
+
+      if (!wrap || !scrubLine || !scrubDot) return;
+
+      const dataPoints = [
+        { x: 0, y: 50, time: '14:00 UTC', price: '$2,642.10', pips: '+0.0p' },
+        { x: 40, y: 45, time: '14:10 UTC', price: '$2,644.50', pips: '+2.4p' },
+        { x: 80, y: 32, time: '14:20 UTC', price: '$2,648.80', pips: '+6.7p' },
+        { x: 160, y: 38, time: '14:30 UTC', price: '$2,646.90', pips: '+4.8p' },
+        { x: 240, y: 18, time: '14:40 UTC', price: '$2,654.80', pips: '+18.4p' },
+        { x: 320, y: 8, time: '14:50 UTC', price: '$2,661.20', pips: '+25.1p' }
+      ];
+
+      function handleScrub(clientX) {
+        const rect = wrap.getBoundingClientRect();
+        let ratio = (clientX - rect.left) / rect.width;
+        if (ratio < 0) ratio = 0;
+        if (ratio > 1) ratio = 1;
+
+        const svgX = ratio * 320;
+        scrubLine.setAttribute('x1', svgX);
+        scrubLine.setAttribute('x2', svgX);
+
+        let closest = dataPoints[0];
+        let minDiff = 999;
+        dataPoints.forEach(pt => {
+          const diff = Math.abs(pt.x - svgX);
+          if (diff < minDiff) {
+            minDiff = diff;
+            closest = pt;
+          }
+        });
+
+        scrubDot.setAttribute('cx', svgX);
+        scrubDot.setAttribute('cy', closest.y);
+
+        if (tooltip) {
+          if (scrubTime) scrubTime.textContent = closest.time;
+          if (scrubPrice) scrubPrice.textContent = closest.price;
+          if (scrubPips) scrubPips.textContent = `(${closest.pips})`;
+        }
+        playTactileHapticSound(1600, 0.012);
+      }
+
+      wrap.addEventListener('mousemove', (e) => handleScrub(e.clientX));
+      wrap.addEventListener('touchmove', (e) => {
+        if (e.touches && e.touches[0]) handleScrub(e.touches[0].clientX);
+      }, { passive: true });
+    }
+    initSparklineScrubber();
+
+    // 3. Segmented control view switcher
+    window.switchOpalSegment = function (view) {
+      playTactileHapticSound(900, 0.03);
+      if (navigator.vibrate) navigator.vibrate([20]);
+
+      document.querySelectorAll('.opal-seg-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-view') === view);
+      });
+
+      const shieldPanel = document.getElementById('opal-panel-shield');
+      const sessionsPanel = document.getElementById('opal-panel-sessions');
+      const consensusPanel = document.getElementById('opal-panel-consensus');
+
+      if (view === 'shield' && shieldPanel) {
+        shieldPanel.scrollIntoView({ behavior: 'smooth' });
+      } else if (view === 'sessions' && sessionsPanel) {
+        sessionsPanel.scrollIntoView({ behavior: 'smooth' });
+      } else if (view === 'consensus' && consensusPanel) {
+        consensusPanel.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+    // 4. Dial Metric Switcher
+    window.switchDialMetric = function (metric) {
+      playTactileHapticSound(1100, 0.03);
+      document.querySelectorAll('.dial-mode-pill').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      if (window.event && window.event.target) {
+        window.event.target.classList.add('active');
+      }
+
+      const numElem = document.getElementById('opal-alpha-score');
+      const lblElem = document.getElementById('opal-regime-label');
+      const arc = document.getElementById('opal-dial-arc');
+
+      if (metric === 'stability') {
+        if (numElem) numElem.textContent = '99.4';
+        if (lblElem) lblElem.textContent = 'BULLISH EXPANSION • KELLY 0.25';
+        if (arc) arc.style.strokeDashoffset = '24';
+      } else if (metric === 'volatility') {
+        if (numElem) numElem.textContent = '0.42';
+        if (lblElem) lblElem.textContent = 'JUMP-DIFFUSION SHOCK BUFFER';
+        if (arc) arc.style.strokeDashoffset = '280';
+      } else if (metric === 'kelly') {
+        if (numElem) numElem.textContent = '25.0';
+        if (lblElem) lblElem.textContent = 'FRACTIONAL KELLY RISK (1.0% CAP)';
+        if (arc) arc.style.strokeDashoffset = '160';
+      }
+    };
+
+    // 5. Toggle switch handler
+    window.handleOpalToggle = function (name, checked) {
+      playTactileHapticSound(checked ? 1400 : 700, 0.04);
+      if (navigator.vibrate) navigator.vibrate([checked ? 25 : 15]);
+      console.log(`[Opal Defense Buffer]: ${name} is now ${checked ? 'ENGAGED' : 'DISENGAGED'}`);
+    };
+
+    // 6. Quick Action button pulse
+    window.pulseOpalDeepFocus = function () {
+      playTactileHapticSound(1500, 0.06);
+      if (navigator.vibrate) navigator.vibrate([40, 40]);
+      const btn = document.getElementById('opal-btn-deep-focus');
+      if (btn) {
+        btn.style.transform = 'scale(0.94)';
+        btn.style.borderColor = '#10b981';
+        btn.style.boxShadow = '0 0 24px rgba(16, 185, 129, 0.7)';
+        setTimeout(() => {
+          btn.style.transform = 'scale(1)';
+          btn.style.borderColor = 'rgba(245, 197, 66, 0.4)';
+          btn.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.5)';
+        }, 300);
+      }
+      alert('⚡ DON AURELIUS • DEEP QUANTUM SURVEILLANCE:\nChameleon Market Regime active.\nStealth micro-order slicing locked at 0.05 lot clips.');
+    };
+
+    // 7. Mobile Dock Navigation
+    window.switchOpalTab = function (tabName) {
+      playTactileHapticSound(1200, 0.03);
+      if (navigator.vibrate) navigator.vibrate([25]);
+      document.querySelectorAll('.opal-dock-item').forEach(item => {
+        item.classList.toggle('active', item.getAttribute('data-tab') === tabName);
+      });
+
+      if (tabName === 'shield') {
+        const el = document.getElementById('mobile-opal-app');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      } else if (tabName === 'market') {
+        const el = document.getElementById('performance-backtest') || document.getElementById('overview');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      } else if (tabName === 'jarvis') {
+        window.open('https://t.me/DonAurelius_AI_bot', '_blank');
+      } else if (tabName === 'vault') {
+        if (typeof window.triggerBiometricCleanSlate === 'function') {
+          window.triggerBiometricCleanSlate();
+        }
+      }
+    };
+
+    // 8. Desktop iPhone 16 Pro Simulator frame toggle
+    window.toggleIphoneSimulator = function (show) {
+      playTactileHapticSound(800, 0.04);
+      const modal = document.getElementById('ios-device-simulator-modal');
+      const mount = document.getElementById('iphone-screen-mount');
+      const mobileApp = document.getElementById('mobile-opal-app');
+
+      if (!modal) return;
+
+      if (show) {
+        modal.style.display = 'flex';
+        if (mount && mobileApp && !mount.hasChildNodes()) {
+          const clone = mobileApp.cloneNode(true);
+          clone.id = 'mobile-opal-app-sim-clone';
+          mount.appendChild(clone);
+        }
+      } else {
+        modal.style.display = 'none';
+      }
+    };
+  }
+
   // Auto-boot on DOM ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSupabase);
+    document.addEventListener('DOMContentLoaded', () => {
+      initSupabase();
+      initOpalMobileSuite();
+    });
   } else {
     initSupabase();
+    initOpalMobileSuite();
   }
 })();

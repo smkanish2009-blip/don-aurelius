@@ -2766,3 +2766,847 @@ body {
     display: none;
   }
 }
+
+/* ==========================================================================
+   16. Opal iOS Mobile Experience (Apple VisionOS / Opal Design System)
+   Exclusively Active on Viewports <= 768px (Desktop maintains Cockpit)
+   ========================================================================== */
+.mobile-opal-app-view {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Activate Opal Mobile Container */
+  .mobile-opal-app-view {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 14px calc(92px + env(safe-area-inset-bottom, 0px)) 14px;
+    max-width: 100%;
+    margin: 64px auto 16px auto;
+    position: relative;
+    z-index: 50;
+    box-sizing: border-box;
+  }
+
+  /* 1. iOS Opal Top Dynamic Header */
+  .opal-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 4px 10px 4px;
+  }
+  .opal-profile-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .opal-avatar-wrapper {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    padding: 2px;
+    background: linear-gradient(135deg, #f5c542, #d4a017);
+    box-shadow: 0 0 14px rgba(245, 197, 66, 0.4);
+    flex-shrink: 0;
+  }
+  .opal-avatar-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+  .opal-pulse-dot {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 11px;
+    height: 11px;
+    background: #10b981;
+    border: 2px solid #06080c;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #10b981;
+  }
+  .opal-profile-info {
+    display: flex;
+    flex-direction: column;
+  }
+  .opal-founder-title {
+    font-family: var(--font-display, 'Outfit', sans-serif);
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.8px;
+    line-height: 1.1;
+  }
+  .opal-founder-sub {
+    font-size: 0.62rem;
+    letter-spacing: 1.2px;
+    color: #f5c542;
+    font-family: var(--font-mono, monospace);
+    font-weight: 600;
+  }
+  .opal-header-telemetry {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .opal-mt5-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    color: #10b981;
+    padding: 4px 8px;
+    border-radius: 9999px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .opal-mt5-pulse {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 6px #10b981;
+    animation: opalPulse 2s infinite;
+  }
+  .opal-latency-badge {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.75);
+    padding: 4px 8px;
+    border-radius: 9999px;
+    font-size: 0.65rem;
+    font-family: var(--font-mono, monospace);
+    font-weight: 600;
+  }
+  @keyframes opalPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+  }
+
+  /* 2. Opal Centerpiece Hero: Chameleon Alpha Shield Dial */
+  .opal-hero-dial-card {
+    position: relative;
+    background: linear-gradient(145deg, rgba(245, 197, 66, 0.08) 0%, rgba(14, 18, 26, 0.88) 45%, rgba(6, 8, 12, 0.96) 100%);
+    backdrop-filter: blur(28px) saturate(190%);
+    -webkit-backdrop-filter: blur(28px) saturate(190%);
+    border: 1px solid rgba(245, 197, 66, 0.2);
+    border-top: 1px solid rgba(255, 240, 180, 0.5);
+    border-radius: 28px;
+    padding: 24px 16px 20px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+    overflow: hidden;
+  }
+  .opal-dial-ambient-halo {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(245, 197, 66, 0.25) 0%, rgba(245, 197, 66, 0) 70%);
+    filter: blur(36px);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .opal-dial-svg-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+  }
+  .opal-dial-inner-content {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .opal-dial-tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #f5c542;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .opal-dial-number-group {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    line-height: 1;
+  }
+  .opal-dial-number {
+    font-family: var(--font-display, 'Outfit', sans-serif);
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -1.5px;
+    text-shadow: 0 0 24px rgba(245, 197, 66, 0.45);
+  }
+  .opal-dial-percent {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #f5c542;
+    margin-left: 2px;
+  }
+  .opal-dial-regime-label {
+    font-size: 0.64rem;
+    font-family: var(--font-mono, monospace);
+    color: rgba(255, 255, 255, 0.75);
+    letter-spacing: 0.8px;
+    margin-top: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .opal-tactile-capsule-btn {
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(245, 197, 66, 0.22) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border: 1px solid rgba(245, 197, 66, 0.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 9999px;
+    padding: 10px 22px;
+    color: #ffffff;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    transition: all 0.2s ease;
+    z-index: 3;
+  }
+  .opal-tactile-capsule-btn:active {
+    transform: scale(0.96);
+    background: rgba(245, 197, 66, 0.32);
+  }
+
+  /* 3. Concentric Squircle Cards (R_outer = 24px, R_inner = 16px) */
+  .opal-concentric-card {
+    position: relative;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(14, 18, 26, 0.82) 50%, rgba(6, 8, 12, 0.96) 100%);
+    backdrop-filter: blur(28px) saturate(190%);
+    -webkit-backdrop-filter: blur(28px) saturate(190%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.32);
+    border-radius: 24px;
+    padding: 18px 16px;
+    box-shadow: 0 18px 40px -10px rgba(0, 0, 0, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.22);
+    overflow: hidden;
+  }
+  .opal-card-sheen {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .opal-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 2;
+  }
+  .opal-card-title-group {
+    display: flex;
+    flex-direction: column;
+  }
+  .opal-card-eyebrow {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+  }
+  .opal-card-title {
+    font-family: var(--font-display, 'Outfit', sans-serif);
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+    margin: 0;
+  }
+  .opal-card-badge.positive {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    color: #10b981;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    padding: 3px 8px;
+    border-radius: 9999px;
+  }
+  .opal-card-timer {
+    background: rgba(245, 197, 66, 0.12);
+    border: 1px solid rgba(245, 197, 66, 0.3);
+    color: #f5c542;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    font-family: var(--font-mono, monospace);
+  }
+  .opal-metric-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 2;
+  }
+  .opal-pnl-headline {
+    font-family: var(--font-display, 'Outfit', sans-serif);
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #f5c542;
+    text-shadow: 0 0 16px rgba(245, 197, 66, 0.3);
+  }
+  .opal-pnl-sub.green {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #10b981;
+    font-family: var(--font-mono, monospace);
+  }
+  .opal-sparkline-wrap {
+    width: 100%;
+    height: 48px;
+    margin: 4px 0 12px 0;
+    position: relative;
+    z-index: 2;
+  }
+  .opal-sparkline-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .opal-card-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    position: relative;
+    z-index: 2;
+  }
+  .opal-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 0.62rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: var(--font-mono, monospace);
+  }
+  .chip-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+  }
+  .chip-dot.green { background: #10b981; box-shadow: 0 0 4px #10b981; }
+  .chip-dot.gold { background: #f5c542; box-shadow: 0 0 4px #f5c542; }
+  .chip-dot.cyan { background: #00f2ff; box-shadow: 0 0 4px #00f2ff; }
+
+  /* 4. Opal Toggle Switches (iOS HIG Pattern) */
+  .opal-toggle-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    z-index: 2;
+  }
+  .opal-toggle-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 10px 12px;
+  }
+  .opal-toggle-meta {
+    display: flex;
+    flex-direction: column;
+  }
+  .opal-toggle-name {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .opal-toggle-desc {
+    font-size: 0.64rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .opal-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+  .opal-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .opal-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.16);
+    border-radius: 34px;
+    transition: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .opal-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    transition: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .opal-switch input:checked + .opal-slider {
+    background-color: #10b981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+  }
+  .opal-switch input:checked + .opal-slider:before {
+    transform: translateX(18px);
+  }
+
+  /* 5. Opal Deliberate Friction Action (Hold-to-Flatten) */
+  .opal-emergency-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .opal-hold-friction-btn {
+    position: relative;
+    width: 100%;
+    height: 54px;
+    border-radius: 20px;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(20, 10, 12, 0.9) 100%);
+    backdrop-filter: blur(16px);
+    overflow: hidden;
+    cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .opal-hold-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    background: linear-gradient(90deg, #ef4444, #f59e0b);
+    opacity: 0.5;
+    transition: width 0.05s linear;
+    pointer-events: none;
+  }
+  .opal-hold-btn-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 100%;
+    color: #ffffff;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+  }
+  .opal-shield-icon {
+    stroke: #ef4444;
+  }
+  .opal-hold-hint {
+    font-size: 0.62rem;
+    color: rgba(255, 255, 255, 0.45);
+    text-align: center;
+  }
+
+  /* 6. Floating Apple VisionOS Liquid Glass Bottom Dock */
+  .opal-floating-dock {
+    position: fixed;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    left: 14px;
+    right: 14px;
+    max-width: 360px;
+    margin: 0 auto;
+    height: 58px;
+    background: rgba(14, 18, 26, 0.84);
+    backdrop-filter: blur(32px) saturate(210%);
+    -webkit-backdrop-filter: blur(32px) saturate(210%);
+    border: 1px solid rgba(245, 197, 66, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 8px;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    z-index: 1000;
+  }
+  .opal-dock-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .opal-dock-item svg {
+    stroke: currentColor;
+    transition: transform 0.2s ease;
+  }
+  .opal-dock-item.active {
+    color: #f5c542;
+    background: rgba(245, 197, 66, 0.14);
+    border: 1px solid rgba(245, 197, 66, 0.3);
+    box-shadow: 0 0 14px rgba(245, 197, 66, 0.2);
+  }
+  .opal-dock-item.active svg {
+    transform: scale(1.1);
+  }
+
+  /* 7. Opal Segmented Control (iOS 18 Glass Bar) */
+  .opal-segmented-control {
+    display: flex;
+    background: rgba(14, 18, 26, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9999px;
+    padding: 3px;
+    gap: 4px;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  }
+  .opal-seg-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 8px 10px;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+  .opal-seg-btn.active {
+    background: linear-gradient(135deg, rgba(245, 197, 66, 0.22) 0%, rgba(255, 255, 255, 0.06) 100%);
+    border: 1px solid rgba(245, 197, 66, 0.35);
+    color: #f5c542;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  }
+
+  /* 8. Dial Mode Pills */
+  .opal-dial-modes {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    position: relative;
+    z-index: 3;
+  }
+  .dial-mode-pill {
+    background: rgba(0, 0, 0, 0.38);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.6);
+    border-radius: 9999px;
+    padding: 3px 10px;
+    font-size: 0.58rem;
+    font-family: var(--font-mono, monospace);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .dial-mode-pill.active {
+    background: rgba(245, 197, 66, 0.16);
+    border-color: rgba(245, 197, 66, 0.4);
+    color: #f5c542;
+  }
+
+  /* 9. Interactive Sparkline Tooltip Scrubber */
+  .opal-scrub-tooltip {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    background: rgba(10, 14, 22, 0.85);
+    border: 1px solid rgba(245, 197, 66, 0.25);
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 0.62rem;
+    font-family: var(--font-mono, monospace);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    z-index: 5;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  /* 10. 4-Agent Consensus Grid */
+  .opal-consensus-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+    position: relative;
+    z-index: 2;
+  }
+  .opal-agent-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 8px 10px;
+  }
+  .opal-agent-chip.buy {
+    border-left: 3px solid #10b981;
+  }
+  .opal-agent-chip.pass {
+    border-left: 3px solid #f5c542;
+  }
+  .opal-agent-chip .agent-icon {
+    font-size: 1.1rem;
+  }
+  .opal-agent-chip .agent-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+  .opal-agent-chip .agent-text strong {
+    font-size: 0.72rem;
+    color: #ffffff;
+  }
+  .opal-agent-chip .agent-text span {
+    font-size: 0.58rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: var(--font-mono, monospace);
+  }
+}
+
+/* ==========================================================================
+   17. Desktop iPhone 16 Pro Device Simulator (Active on Desktop >= 769px)
+   ========================================================================== */
+.desktop-ios-sim-pill {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1200;
+  display: block;
+}
+@media (max-width: 768px) {
+  .desktop-ios-sim-pill {
+    display: none !important;
+  }
+}
+.btn-desktop-sim {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(14, 18, 26, 0.88);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(245, 197, 66, 0.35);
+  border-top: 1px solid rgba(255, 240, 180, 0.55);
+  border-radius: 9999px;
+  padding: 10px 18px;
+  color: #ffffff;
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), 0 0 20px rgba(245, 197, 66, 0.25);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-desktop-sim:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: #f5c542;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.85), 0 0 28px rgba(245, 197, 66, 0.45);
+}
+.sim-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: opalPulse 1.8s infinite;
+}
+.sim-tag {
+  background: rgba(245, 197, 66, 0.18);
+  border: 1px solid rgba(245, 197, 66, 0.4);
+  color: #f5c542;
+  font-size: 0.58rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* Photorealistic iPhone 16 Pro Titanium Chassis Modal */
+.ios-simulator-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 5, 8, 0.84);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  animation: simFadeIn 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes simFadeIn {
+  to { opacity: 1; }
+}
+.iphone-chassis {
+  position: relative;
+  width: 400px;
+  height: 820px;
+  max-height: 94vh;
+  background: #06080c;
+  border-radius: 54px;
+  border: 4px solid #3b4252;
+  box-shadow: 
+    0 0 0 2px rgba(255, 255, 255, 0.15),
+    0 40px 100px -15px rgba(0, 0, 0, 0.95),
+    0 0 60px rgba(245, 197, 66, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: chassisPop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes chassisPop {
+  from { transform: scale(0.92) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+.iphone-titanium-rim {
+  position: absolute;
+  inset: 0;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  pointer-events: none;
+  z-index: 50;
+}
+.iphone-dynamic-island {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 135px;
+  height: 30px;
+  background: #000000;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+.island-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+}
+.island-title {
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  font-family: var(--font-mono, monospace);
+}
+.iphone-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 101;
+  transition: all 0.2s ease;
+}
+.iphone-close-btn:hover {
+  background: rgba(239, 68, 68, 0.6);
+  transform: scale(1.08);
+}
+.iphone-screen-viewport {
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 48px 10px 30px 10px;
+  -webkit-overflow-scrolling: touch;
+}
+/* When inside simulator, display the mobile app view seamlessly */
+.iphone-screen-viewport .mobile-opal-app-view {
+  display: flex !important;
+  margin: 0 !important;
+  padding: 10px 4px 60px 4px !important;
+}
+.iphone-home-bar {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  z-index: 100;
+  pointer-events: none;
+}
+

@@ -4964,6 +4964,250 @@ body {
   <div id="mobile-nav-backdrop" class="mobile-nav-backdrop" aria-hidden="true"></div>
 
   <main id="main-content">
+    <!-- ====================================================================
+         OPAL iOS NATIVE MOBILE SUITE (Bespoke Mobile Architecture)
+         Exclusively Active on Viewports <= 768px (Desktop retains Cockpit)
+         ==================================================================== -->
+    <div class="mobile-opal-app-view" id="mobile-opal-app" aria-label="Don Aurelius iOS Opal Mobile Interface">
+      <!-- iOS Opal Top Dynamic Header -->
+      <div class="opal-top-bar">
+        <div class="opal-profile-pill">
+          <div class="opal-avatar-wrapper">
+            <img src="assets/don_aurelius.jpg" alt="Don Aurelius Sovereign Profile" class="opal-avatar-img">
+            <span class="opal-pulse-dot" title="Live Sovereign Core"></span>
+          </div>
+          <div class="opal-profile-info">
+            <span class="opal-founder-title">DON AURELIUS</span>
+            <span class="opal-founder-sub">SOVEREIGN QUANT SYNDICATE</span>
+          </div>
+        </div>
+        <div class="opal-header-telemetry">
+          <span class="opal-mt5-badge"><span class="opal-mt5-pulse"></span> MT5 LIVE</span>
+          <span class="opal-latency-badge">4.2ms</span>
+        </div>
+      </div>
+
+      <!-- iOS 18 Liquid Glass Segmented Control -->
+      <div class="opal-segmented-control" role="tablist" aria-label="Opal Navigation Tabs">
+        <button type="button" class="opal-seg-btn active" id="seg-btn-shield" data-view="shield" onclick="window.switchOpalSegment('shield')">🛡️ SHIELD</button>
+        <button type="button" class="opal-seg-btn" id="seg-btn-sessions" data-view="sessions" onclick="window.switchOpalSegment('sessions')">⚡ SESSIONS</button>
+        <button type="button" class="opal-seg-btn" id="seg-btn-consensus" data-view="consensus" onclick="window.switchOpalSegment('consensus')">🐅 WAR ROOM</button>
+      </div>
+
+      <!-- Opal Centerpiece Hero: Chameleon Alpha Shield Dial (Swiss Chronometer Calibrated) -->
+      <div class="opal-hero-dial-card" id="opal-panel-shield">
+        <div class="opal-dial-ambient-halo"></div>
+        <div class="opal-dial-svg-wrap">
+          <svg class="opal-dial-svg" viewBox="0 0 280 200" width="100%" height="200" aria-label="Chameleon Alpha Shield Dial">
+            <defs>
+              <linearGradient id="opalGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fff0b3" />
+                <stop offset="50%" stop-color="#f5c542" />
+                <stop offset="100%" stop-color="#d4a017" />
+              </linearGradient>
+              <filter id="opalGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <!-- Background Arc Track -->
+            <path d="M 40 170 A 100 100 0 1 1 240 170" fill="none" stroke="rgba(255, 215, 0, 0.12)" stroke-width="12" stroke-linecap="round" />
+            <!-- Calibrated Swiss Radial Precision Ticks -->
+            <g class="opal-dial-ticks" stroke="rgba(255, 215, 0, 0.28)" stroke-width="1.5" stroke-linecap="round">
+              <line x1="40" y1="170" x2="48" y2="164" />
+              <line x1="48" y1="140" x2="57" y2="137" />
+              <line x1="62" y1="112" x2="71" y2="112" />
+              <line x1="82" y1="88" x2="91" y2="92" />
+              <line x1="108" y1="70" x2="115" y2="78" />
+              <line x1="138" y1="62" x2="140" y2="72" />
+              <line x1="168" y1="64" x2="165" y2="74" />
+              <line x1="198" y1="74" x2="191" y2="82" />
+              <line x1="222" y1="94" x2="213" y2="98" />
+              <line x1="238" y1="120" x2="229" y2="120" />
+              <line x1="242" y1="148" x2="233" y2="145" />
+              <line x1="240" y1="170" x2="232" y2="164" />
+            </g>
+            <!-- Glowing Foreground Arc Progress -->
+            <path class="opal-dial-progress-arc" id="opal-dial-arc" d="M 40 170 A 100 100 0 1 1 240 170" fill="none" stroke="url(#opalGoldGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="415" stroke-dashoffset="24" filter="url(#opalGlow)" />
+            <!-- Micro Needle Indicator -->
+            <circle cx="232" cy="155" r="5" fill="#ffffff" filter="drop-shadow(0 0 6px #fff0b3)" />
+          </svg>
+          <div class="opal-dial-inner-content">
+            <span class="opal-dial-tag">CHAMELEON ALPHA SHIELD</span>
+            <div class="opal-dial-number-group">
+              <span class="opal-dial-number" id="opal-alpha-score">99.4</span><span class="opal-dial-percent">%</span>
+            </div>
+            <span class="opal-dial-regime-label" id="opal-regime-label">BULLISH EXPANSION • KELLY 0.25</span>
+          </div>
+        </div>
+
+        <!-- Dial Mode Switcher Micro Pills -->
+        <div class="opal-dial-modes">
+          <button type="button" class="dial-mode-pill active" onclick="window.switchDialMetric('stability')">STABILITY</button>
+          <button type="button" class="dial-mode-pill" onclick="window.switchDialMetric('volatility')">VOL 0.42%</button>
+          <button type="button" class="dial-mode-pill" onclick="window.switchDialMetric('kelly')">KELLY 0.25</button>
+        </div>
+
+        <!-- Tactile Glass Quick Action Capsule -->
+        <button type="button" class="opal-tactile-capsule-btn" id="opal-btn-deep-focus" onclick="window.pulseOpalDeepFocus()">
+          <span class="opal-capsule-icon">⚡</span>
+          <span>DEEP QUANTUM SURVEILLANCE</span>
+        </button>
+      </div>
+
+      <!-- Concentric Squircle Card 1: Live Alpha Position with Interactive Scrubber -->
+      <div class="opal-concentric-card" id="opal-card-position">
+        <div class="opal-card-sheen"></div>
+        <div class="opal-card-header">
+          <div class="opal-card-title-group">
+            <span class="opal-card-eyebrow">ACTIVE EXPOSURE</span>
+            <h4 class="opal-card-title">LIVE XAU/USD ALPHA</h4>
+          </div>
+          <span class="opal-card-badge positive">PROFITING</span>
+        </div>
+        
+        <div class="opal-metric-banner">
+          <div class="opal-pnl-headline" id="opal-live-pnl">+$18,420.00</div>
+          <span class="opal-pnl-sub green" id="opal-live-pnl-pct">+6.14% RETURN</span>
+        </div>
+
+        <!-- Interactive Golden Neon Sparkline with Live Touch Scrubber -->
+        <div class="opal-sparkline-wrap" id="opal-sparkline-wrap">
+          <div class="opal-scrub-tooltip" id="opal-scrub-tooltip">
+            <span class="scrub-time" id="scrub-time">14:40 UTC</span> • <strong class="scrub-price" id="scrub-price">$2,654.80</strong> <span class="scrub-pips green" id="scrub-pips">(+18.4p)</span>
+          </div>
+          <svg viewBox="0 0 320 60" class="opal-sparkline-svg" id="opal-sparkline-svg" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="sparklineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="rgba(245, 197, 66, 0.45)" />
+                <stop offset="100%" stop-color="rgba(245, 197, 66, 0.0)" />
+              </linearGradient>
+            </defs>
+            <path d="M 0 50 Q 40 45, 80 32 T 160 38 T 240 18 T 320 8 L 320 60 L 0 60 Z" fill="url(#sparklineGrad)" />
+            <path d="M 0 50 Q 40 45, 80 32 T 160 38 T 240 18 T 320 8" fill="none" stroke="#f5c542" stroke-width="2.5" stroke-linecap="round" />
+            <!-- Dynamic Interactive Scrubber Line & Dot -->
+            <line id="opal-scrub-line" x1="240" y1="0" x2="240" y2="60" stroke="rgba(255, 255, 255, 0.4)" stroke-width="1.5" stroke-dasharray="3 3" />
+            <circle id="opal-scrub-dot" cx="240" cy="18" r="4.5" fill="#ffffff" stroke="#f5c542" stroke-width="2" />
+          </svg>
+        </div>
+
+        <div class="opal-card-chips">
+          <span class="opal-chip"><span class="chip-dot green"></span> STEALTH TRAILING: ON</span>
+          <span class="opal-chip"><span class="chip-dot gold"></span> SPREAD: 0.12p</span>
+          <span class="opal-chip"><span class="chip-dot cyan"></span> LOTS: 2.50</span>
+        </div>
+      </div>
+
+      <!-- Concentric Squircle Card 2: Regime Defense Sessions (Opal Session Blocker Pattern) -->
+      <div class="opal-concentric-card" id="opal-panel-sessions">
+        <div class="opal-card-sheen"></div>
+        <div class="opal-card-header">
+          <div class="opal-card-title-group">
+            <span class="opal-card-eyebrow">VOLATILITY BUFFERS</span>
+            <h4 class="opal-card-title">REGIME DEFENSE SESSIONS</h4>
+          </div>
+          <span class="opal-card-timer" id="opal-session-timer">03:42:15 REMAINING</span>
+        </div>
+
+        <div class="opal-toggle-list">
+          <div class="opal-toggle-item">
+            <div class="opal-toggle-meta">
+              <span class="opal-toggle-name">London Breakout Guard</span>
+              <span class="opal-toggle-desc">Filters pre-market liquidity traps</span>
+            </div>
+            <label class="opal-switch">
+              <input type="checkbox" checked id="toggle-london-guard" onchange="window.handleOpalToggle('London Guard', this.checked)">
+              <span class="opal-slider"></span>
+            </label>
+          </div>
+
+          <div class="opal-toggle-item">
+            <div class="opal-toggle-meta">
+              <span class="opal-toggle-name">NY CPI Volatility Buffer</span>
+              <span class="opal-toggle-desc">Auto-widens stop ceilings &plusmn;15m</span>
+            </div>
+            <label class="opal-switch">
+              <input type="checkbox" checked id="toggle-cpi-buffer" onchange="window.handleOpalToggle('CPI Buffer', this.checked)">
+              <span class="opal-slider"></span>
+            </label>
+          </div>
+
+          <div class="opal-toggle-item">
+            <div class="opal-toggle-meta">
+              <span class="opal-toggle-name">Weekend Gap Shield</span>
+              <span class="opal-toggle-desc">Enforces Friday 21:00 UTC flat book</span>
+            </div>
+            <label class="opal-switch">
+              <input type="checkbox" checked id="toggle-weekend-shield" onchange="window.handleOpalToggle('Weekend Shield', this.checked)">
+              <span class="opal-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concentric Squircle Card 3: 4-Agent War Room Consensus -->
+      <div class="opal-concentric-card" id="opal-panel-consensus">
+        <div class="opal-card-sheen"></div>
+        <div class="opal-card-header">
+          <div class="opal-card-title-group">
+            <span class="opal-card-eyebrow">INSTITUTIONAL COUNCIL</span>
+            <h4 class="opal-card-title">4-AGENT WAR ROOM</h4>
+          </div>
+          <span class="opal-card-badge positive" id="opal-consensus-badge">4/4 UNANIMOUS BUY</span>
+        </div>
+        <div class="opal-consensus-grid">
+          <div class="opal-agent-chip buy">
+            <span class="agent-icon">🦅</span>
+            <div class="agent-text"><strong>HAWK</strong><span>DXY -0.32%</span></div>
+          </div>
+          <div class="opal-agent-chip buy">
+            <span class="agent-icon">📡</span>
+            <div class="agent-text"><strong>RADAR</strong><span>Range Swept</span></div>
+          </div>
+          <div class="opal-agent-chip buy">
+            <span class="agent-icon">🐅</span>
+            <div class="agent-text"><strong>PREDATOR</strong><span>FVG Retest</span></div>
+          </div>
+          <div class="opal-agent-chip pass">
+            <span class="agent-icon">⚔️</span>
+            <div class="agent-text"><strong>INQUISITOR</strong><span>Spread 0.12p</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Opal Deliberate Friction Action: Hold-to-Flatten (Emergency Clean Slate) -->
+      <div class="opal-emergency-section">
+        <button type="button" class="opal-hold-friction-btn" id="opal-hold-flatten-btn" aria-label="Hold 3 Seconds to Flatten All Positions">
+          <div class="opal-hold-progress-fill" id="opal-hold-progress"></div>
+          <div class="opal-hold-btn-content">
+            <svg class="opal-shield-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span class="opal-hold-btn-text" id="opal-hold-text">HOLD TO ENGAGE CLEAN SLATE (FLATTEN ALL)</span>
+          </div>
+        </button>
+        <span class="opal-hold-hint">3-second safety friction • Biometric Touch ID authentication required</span>
+      </div>
+
+      <!-- Floating Apple VisionOS Liquid Glass Bottom Dock -->
+      <nav class="opal-floating-dock" aria-label="Mobile Navigation Dock">
+        <button type="button" class="opal-dock-item active" data-tab="shield" onclick="window.switchOpalTab('shield')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Shield</span>
+        </button>
+        <button type="button" class="opal-dock-item" data-tab="market" onclick="window.switchOpalTab('market')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span>Market</span>
+        </button>
+        <button type="button" class="opal-dock-item" data-tab="jarvis" onclick="window.switchOpalTab('jarvis')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          <span>Jarvis</span>
+        </button>
+        <button type="button" class="opal-dock-item" data-tab="vault" onclick="window.switchOpalTab('vault')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>Vault</span>
+        </button>
+      </nav>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero" id="overview">
       <div class="container">
@@ -7815,7 +8059,31 @@ body {
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-telemetry.js?v=20261004b"></script>
 
-    <!-- Don Aurelius Quantum Omniscience War Room & 3D Neural Cockpit v5.0 -->
-    <script src="js/omniscience-warroom.js?v=20261004b"></script>
+    <!-- Desktop Interactive iPhone 16 Pro Opal Simulator Launcher (Active on Desktop >= 769px) -->
+    <aside class="desktop-ios-sim-pill" id="desktop-sim-launcher" aria-label="Launch Mobile Simulator">
+      <button type="button" class="btn-desktop-sim" onclick="window.toggleIphoneSimulator(true)">
+        <span class="sim-pulse"></span>
+        <span class="sim-icon">📱</span>
+        <span class="sim-label">OPAL iOS SIMULATOR</span>
+        <span class="sim-tag">NATIVE</span>
+      </button>
+    </aside>
+
+    <!-- iPhone 16 Pro Photorealistic Titanium Device Simulator Modal -->
+    <div id="ios-device-simulator-modal" class="ios-simulator-overlay" style="display:none;" onclick="if(event.target===this)window.toggleIphoneSimulator(false);">
+      <div class="iphone-chassis">
+        <div class="iphone-titanium-rim"></div>
+        <div class="iphone-dynamic-island">
+          <span class="island-pulse"></span>
+          <span class="island-title">DON AURELIUS • MT5 LIVE</span>
+          <span class="island-wave"></span>
+        </div>
+        <button type="button" class="iphone-close-btn" onclick="window.toggleIphoneSimulator(false)" title="Close Simulator">&times;</button>
+        <div class="iphone-screen-viewport" id="iphone-screen-mount">
+          <!-- Live Cloned Mount for Mobile Opal Experience in Simulator -->
+        </div>
+        <div class="iphone-home-bar"></div>
+      </div>
+    </div>
 </body>
 </html>
