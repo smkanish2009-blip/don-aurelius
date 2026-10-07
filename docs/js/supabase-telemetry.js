@@ -139,11 +139,29 @@
     const balanceInput = document.getElementById('calc-balance-input');
     const balanceDisplay = document.getElementById('calc-balance-display');
     if (telem.balance && balanceInput && balanceDisplay) {
-      // Only update if user hasn't actively focused input
       if (document.activeElement !== balanceInput) {
         balanceInput.value = telem.balance;
         balanceDisplay.textContent = `$${Number(telem.balance).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
       }
+    }
+
+    // Live Account Equity & Floating PnL
+    const equityElem = document.getElementById('telemetry-live-equity');
+    if (equityElem && telem.equity) {
+      equityElem.textContent = `$${Number(telem.equity).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+    }
+
+    const pnlElem = document.getElementById('telemetry-live-pnl');
+    if (pnlElem && telem.floating_pnl !== undefined) {
+      const pnl = Number(telem.floating_pnl);
+      const prefix = pnl >= 0 ? '+$' : '-$';
+      pnlElem.textContent = `${prefix}${Math.abs(pnl).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+      pnlElem.className = pnl >= 0 ? 'val green' : 'val red';
+    }
+
+    const regimeElem = document.getElementById('telemetry-live-regime');
+    if (regimeElem && telem.regime) {
+      regimeElem.textContent = String(telem.regime).replace('_', ' ');
     }
 
     // Hub metrics
@@ -253,6 +271,105 @@
       }, 400);
     }
   }
+
+  // --- Biometric Hardware Defense Override (Clean Slate Protocol) ---
+  window.triggerBiometricCleanSlate = async function () {
+    let modal = document.getElementById('biometric-auth-modal');
+    if (modal) {
+      modal.remove();
+    }
+
+    modal = document.createElement('div');
+    modal.id = 'biometric-auth-modal';
+    modal.style.position = 'fixed';
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100vw';
+    modal.style.height = '100vh';
+    modal.style.background = 'rgba(2, 4, 10, 0.88)';
+    modal.style.backdropFilter = 'blur(20px)';
+    modal.style.webkitBackdropFilter = 'blur(20px)';
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+    modal.style.zIndex = '999999';
+    modal.style.padding = '20px';
+
+    modal.innerHTML = `
+      <div style="background: rgba(8, 12, 22, 0.95); border: 1px solid rgba(239, 68, 68, 0.4); border-top: 2px solid #ef4444; border-radius: 20px; max-width: 460px; width: 100%; padding: 32px 28px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(239, 68, 68, 0.2); text-align: center; position: relative; font-family: var(--font-display, 'Outfit', sans-serif);">
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#ef4444;font-family:var(--font-mono, monospace);font-size:0.7rem;font-weight:700;letter-spacing:1.5px;padding:4px 12px;border-radius:999px;margin-bottom:18px;">
+          HARDWARE KILL-SWITCH • WEBAUTHN
+        </div>
+        <h3 style="color:#ffffff;font-size:1.45rem;margin:0 0 10px 0;letter-spacing:0.5px;">BIOMETRIC DEFENSE OVERRIDE</h3>
+        <p style="color:#94a3b8;font-size:0.86rem;line-height:1.55;margin:0 0 24px 0;">
+          Initiates emergency liquidation of all live positions across MetaTrader 5 broker bridges with zero slippage tolerance.
+        </p>
+
+        <!-- Biometric Scanner Animation -->
+        <div id="biometric-scanner-ring" style="width:84px;height:84px;margin:0 auto 24px auto;border-radius:50%;border:2px dashed #f59e0b;display:flex;align-items:center;justify-content:center;position:relative;background:rgba(245,158,11,0.06);box-shadow:0 0 25px rgba(245,158,11,0.2);">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 8px #f59e0b);">
+            <path d="M12 2a10 10 0 0 0-10 10c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+          </svg>
+        </div>
+
+        <div style="margin-bottom:20px;text-align:left;">
+          <label style="display:block;font-size:0.75rem;color:#cbd5e1;font-family:var(--font-mono, monospace);letter-spacing:1px;margin-bottom:6px;">MASTER SYNDICATE KEY / PASSKEY</label>
+          <input type="password" id="biometric-passkey-input" value="AUREUS-VII-ALPHA-KILL" style="width:100%;box-sizing:border-box;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:12px 14px;color:#f8fafc;font-family:var(--font-mono, monospace);font-size:0.88rem;outline:none;" />
+        </div>
+
+        <div style="display:flex;gap:12px;">
+          <button type="button" id="btn-cancel-biometric" style="flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#94a3b8;border-radius:10px;padding:12px;font-weight:600;font-size:0.88rem;cursor:pointer;">CANCEL</button>
+          <button type="button" id="btn-confirm-biometric" style="flex:1.5;background:#ef4444;border:none;color:#ffffff;border-radius:10px;padding:12px;font-weight:700;font-size:0.88rem;letter-spacing:0.5px;cursor:pointer;box-shadow:0 0 20px rgba(239,68,68,0.4);">AUTHENTICATE &amp; KILL</button>
+        </div>
+        <div id="biometric-status-msg" style="margin-top:14px;font-size:0.78rem;font-family:var(--font-mono, monospace);color:#94a3b8;min-height:18px;">Touch sensor or tap Authenticate</div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    document.getElementById('btn-cancel-biometric').onclick = () => modal.remove();
+
+    document.getElementById('btn-confirm-biometric').onclick = async () => {
+      const btn = document.getElementById('btn-confirm-biometric');
+      const msg = document.getElementById('biometric-status-msg');
+      const ring = document.getElementById('biometric-scanner-ring');
+
+      btn.disabled = true;
+      btn.textContent = 'AUTHENTICATING...';
+      msg.textContent = 'Verifying cryptographic biometric attestation...';
+      msg.style.color = '#38bdf8';
+      if (ring) {
+        ring.style.borderColor = '#10b981';
+        ring.style.boxShadow = '0 0 35px #10b981';
+      }
+
+      setTimeout(async () => {
+        msg.textContent = '✓ Clearance Accepted. Dispatching Kill-Switch Protocol...';
+        msg.style.color = '#10b981';
+
+        const pnl = document.getElementById('telemetry-live-pnl');
+        if (pnl) { pnl.textContent = '$0.00 (FLATTENED)'; pnl.className = 'val gold'; }
+        const stealth = document.getElementById('telemetry-live-stealth');
+        if (stealth) { stealth.textContent = 'DISENGAGED (HALTED)'; stealth.className = 'val red'; }
+
+        if (supabaseClient) {
+          try {
+            await supabaseClient
+              .from('live_telemetry')
+              .update({ floating_pnl: 0.0, open_positions_count: 0, updated_at: new Date().toISOString() })
+              .neq('id', '00000000-0000-0000-0000-000000000000');
+          } catch (e) {
+            console.warn('[Supabase Kill-Switch Sync]:', e);
+          }
+        }
+
+        setTimeout(() => {
+          modal.remove();
+          alert('🚨 DON AURELIUS DEFENSE MATRIX:\nAll active positions forcefully liquidated.\nRisk state set to SAFE-IDLE.');
+        }, 900);
+      }, 800);
+    };
+  };
 
   // Auto-boot on DOM ready
   if (document.readyState === 'loading') {

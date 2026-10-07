@@ -78,7 +78,8 @@ class SupabaseSyncer:
         margin: float = 106.58,
         free_margin: float = 100292.39,
         open_positions_count: int = 3,
-        win_rate: float = 88.4
+        win_rate: float = 88.4,
+        regime: str = "BULLISH_EXPANSION"
     ) -> bool:
         """Upserts live account telemetry to public.live_telemetry."""
         payload = {
@@ -91,6 +92,7 @@ class SupabaseSyncer:
             "free_margin": round(float(free_margin), 2),
             "open_positions_count": int(open_positions_count),
             "win_rate": round(float(win_rate), 2),
+            "regime": str(regime),
             "updated_at": datetime.now(timezone.utc).isoformat()
         }
 

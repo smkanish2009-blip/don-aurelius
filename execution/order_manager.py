@@ -12,6 +12,11 @@ from config.settings import StrategyParameters, RiskParameters
 from strategy.models import TradeSignal, SignalDirection, SetupType
 from execution.mt5_client import MT5Client
 from execution.slippage_guard import SlippageGuard
+from execution.microstructure_router import (
+    SpreadHeatmap,
+    IcebergSlicer,
+    StealthTrailingStopManager,
+)
 
 logger = logging.getLogger("OrderManager")
 
@@ -23,6 +28,9 @@ class OrderManager:
         self.risk_params = risk_params
         self.order_comment = order_comment
         self.slippage_guard = SlippageGuard(max_slippage_usd=getattr(self.risk_params, "MAX_SLIPPAGE_POINTS", 30) * 0.01)
+        self.spread_heatmap = SpreadHeatmap(window_size=150, z_score_threshold=2.2)
+        self.iceberg_slicer = IcebergSlicer(min_lot=self.client.lot_min, max_lot=self.client.lot_max, lot_step=self.client.lot_step)
+        self.stealth_trailer = StealthTrailingStopManager()
         self.active_trade_meta: Dict[int, Dict[str, Any]] = {}
 
 
@@ -37,6 +45,12 @@ class OrderManager:
         spread = tick.ask - tick.bid
         if spread > self.risk_params.MAX_SPREAD_USD:
             logger.warning(f"Spread ${spread:.2f} exceeds max allowed ${self.risk_params.MAX_SPREAD_USD:.2f}. Skipping order.")
+            return None
+
+        # Microstructure Defense: Spread Heatmap Anomaly Detection
+        spread_metrics = self.spread_heatmap.evaluate_spread(spread)
+        if spread_metrics.is_anomaly:
+            logger.warning(f"[ROUTER-DEFENSE] {spread_metrics.status_msg} Deferring order execution.")
             return None
 
         order_type = mt5.ORDER_TYPE_BUY if signal.direction == SignalDirection.BUY else mt5.ORDER_TYPE_SELL
@@ -94,11 +108,22 @@ class OrderManager:
             "highest_since_entry": result.price,
             "lowest_since_entry": result.price,
         }
+
+        # Register into local Stealth Trailing Stop Manager
+        self.stealth_trailer.register_trade(
+            ticket=result.order,
+            direction=signal.direction.value,
+            entry_price=result.price,
+            initial_sl=signal.stop_loss,
+            trailing_atr_mult=1.5,
+        )
+
         return result.order
 
     def manage_open_positions(self, atr_m15: float) -> None:
         """
         Executes tick-by-tick active management on all open positions:
+        - Stealth trailing stop evaluation
         - Break-even at +1.0R
         - Partial close at +1.5R
         - Chandelier trailing stop
@@ -106,10 +131,11 @@ class OrderManager:
         positions = self.client.get_open_positions()
         current_ticket_ids = {p.ticket for p in positions}
 
-        # Clean up closed positions from metadata
+        # Clean up closed positions from metadata and stealth tracker
         for ticket in list(self.active_trade_meta.keys()):
             if ticket not in current_ticket_ids:
                 logger.info(f"Position #{ticket} closed.")
+                self.stealth_trailer.deregister_trade(ticket)
                 del self.active_trade_meta[ticket]
 
         tick = self.client.get_current_tick()
@@ -119,6 +145,15 @@ class OrderManager:
         for p in positions:
             meta = self.active_trade_meta.get(p.ticket)
             if not meta:
+                continue
+
+            # Stealth Trailing Stop Check (Defense against predatory broker stop-hunting)
+            should_stealth_close, stealth_trigger_p, stealth_reason = self.stealth_trailer.update_tick(
+                p.ticket, tick.bid, tick.ask, atr_m15
+            )
+            if should_stealth_close:
+                logger.info(f"[STEALTH-EXEC] {stealth_reason}. Dispatching stealth market exit.")
+                self.close_position(p.ticket, reason=stealth_reason)
                 continue
 
             current_price = tick.bid if p.type == mt5.ORDER_TYPE_BUY else tick.ask
@@ -194,6 +229,18 @@ class OrderManager:
         }
         res = mt5.order_send(request)
         return res is not None and res.retcode == mt5.TRADE_RETCODE_DONE
+
+    def close_position(self, ticket: int, reason: str = "") -> bool:
+        """Closes a single position cleanly by ticket."""
+        positions = self.client.get_open_positions()
+        for p in positions:
+            if p.ticket == ticket:
+                success = self._close_partial(p.ticket, p.volume, p.type)
+                if success:
+                    logger.info(f"Position #{ticket} closed cleanly. Reason: {reason}")
+                    self.stealth_trailer.deregister_trade(ticket)
+                return success
+        return False
 
     def flatten_all(self, comment: str = "AI-SRB Emergency Flatten") -> None:
         """Closes all open strategy positions immediately."""
