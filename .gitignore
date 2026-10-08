@@ -33,3 +33,9 @@ env/
 Thumbs.db
 Desktop.ini
 scratch/
+
+# Node & Remotion build artifacts
+node_modules/
+out/
+*.mp4
+

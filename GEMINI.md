@@ -51,3 +51,18 @@ For every task requested in this project, the agent MUST strictly enforce the **
 2. **Zero Security & Regression Compromise**:
    - Never commit unvalidated inputs, exposed secrets, or relaxed Content Security Policies.
    - Ensure all public functions and modified components have clean error handling.
+
+---
+
+## Mandatory Cinematic Video & Media Protocol: Director Engine
+
+1. **Hollywood Narrative Architecture**:
+   - Every video, trailer, or visual asset must adhere to the 5-Act structure: Hook/Chaos $\rightarrow$ Paradigm Shift $\rightarrow$ Live Proof $\rightarrow$ Interactive Masterclass $\rightarrow$ Dead Silence Vacuum & Sovereign CTA.
+   - Ban static slides, template slop, and lifeless transitions.
+
+2. **Full-Spectrum Multi-Layer Audio**:
+   - Synchronize framerate-locked ticking clocks (60Hz / 120BPM), saturated 35Hz sub-bass braams at act boundaries, escalating orchestral rises, and dramatic cuts to dead silence.
+
+3. **Programmatic Remotion Precision**:
+   - Master compositions must run at 60 FPS progressive, frame-accurate cubic-bezier interpolation, and zero placeholder code.
+   - Always verify via `remotion still` and test builds before delivery.
