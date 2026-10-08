@@ -1,0 +1,54 @@
+# ==============================================================================
+# CodeRabbit AI Code Review Configuration
+# Repository: smkanish2009-blip/don-aurelius
+# ==============================================================================
+
+version: 2
+language: "en-US"
+
+reviews:
+  profile: "assertive"
+  request_changes_workflow: true
+  high_level_summary: true
+  poem: false
+  auto_review:
+    enabled: true
+    drafts: false
+
+  # Specialized Path Instructions for Don Aurelius Institutional Architecture
+  path_instructions:
+    - path: "bot/**"
+      instructions: |
+        - Verify numerical stability and precision in float math (e.g. lot sizing, price pips).
+        - Ensure MetaTrader 5 order routing calls have explicit error handling and timeout ceilings.
+        - Check that trailing stop loss adjustments are monotonic and cannot widen beyond risk limits.
+        - Confirm SQLite database queries use parameterized statements to prevent SQL injection.
+        - Flag any unhandled connection drops or missing heartbeat ping retries.
+
+    - path: "scripts/**"
+      instructions: |
+        - Ensure CLI utility scripts handle KeyboardInterrupt and process termination cleanly.
+        - Validate file I/O operations check for existence and handle encoding (utf-8).
+
+    - path: "docs/**"
+      instructions: |
+        - Ensure HTML semantic structure adheres to W3C standards and passes accessibility audits.
+        - Check that Content Security Policy (CSP) headers remain uncompromised.
+        - Verify CSS media queries maintain responsive boundaries across mobile and desktop.
+        - Ensure Web Audio API contexts and vibration haptics are guarded with feature detection.
+
+    - path: "tests/**"
+      instructions: |
+        - Verify pytest test cases cover boundary conditions, edge cases, and simulated network outages.
+        - Confirm test suites are deterministic and do not depend on external live broker state.
+
+  # Exclude binary media and cache artifacts from code review
+  path_filters:
+    - "!**/*.mp4"
+    - "!**/*.png"
+    - "!**/*.jpg"
+    - "!**/*.jpeg"
+    - "!**/*.ico"
+    - "!**/*.backup"
+    - "!**/node_modules/**"
+    - "!**/.git/**"

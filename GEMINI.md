@@ -39,3 +39,15 @@ For every task requested in this project, the agent MUST strictly enforce the **
 
 3. **Externalized State Tracking**:
    - Save task state and milestones to disk so progress is durable across turns and sessions.
+
+---
+
+## Mandatory Code Quality Gate: CodeRabbit Protocol
+
+1. **Pre-Commit Static Audit**:
+   - Before staging or committing non-trivial changes, audit the diff against CodeRabbit standards (security, memory management, numerical stability, and performance).
+   - Enforce domain-specific rules configured in `.coderabbit.yaml`.
+
+2. **Zero Security & Regression Compromise**:
+   - Never commit unvalidated inputs, exposed secrets, or relaxed Content Security Policies.
+   - Ensure all public functions and modified components have clean error handling.
