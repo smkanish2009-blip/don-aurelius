@@ -24,3 +24,18 @@ For every task requested in this project, the agent MUST strictly enforce the **
 5. **Atomic Git Discipline**:
    - Maintain a pristine working tree.
    - Commit verified milestones atomically using standard semantic commit messages (`feat:`, `fix:`, `refactor:`, `test:`).
+
+---
+
+## Mandatory Persistence Engine: Ralph Loop Protocol
+
+1. **Stop-Hook Completion Gate**:
+   - The agent is strictly forbidden from declaring completion or stopping while unresolved errors, failing tests, or broken builds exist.
+   - If an error or test failure occurs, the agent MUST immediately loop: parse the stack trace, formulate a new hypothesis, apply the fix, and re-verify.
+
+2. **Zero-Surrender Autonomous Self-Correction**:
+   - Never stop to ask "What should I do?" or apologize when a build or test fails.
+   - If a fix fails twice, shift hypothesis and take an alternative architectural route.
+
+3. **Externalized State Tracking**:
+   - Save task state and milestones to disk so progress is durable across turns and sessions.
