@@ -1,0 +1,387 @@
+/* ==============================================================================
+   DON AURELIUS • APPLE HIG & 3D MOTION SCROLL SYSTEM
+   Synthesized from Apple Developer Design (HIG) & MotionSites Tier Standards
+   Ultra-High-End 120 FPS WebGL • Liquid Glass • Continuous Squircles • Specular Sheen
+   ============================================================================== */
+
+:root {
+  /* Apple HIG Semantic Tokens */
+  --apple-font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Outfit", "Plus Jakarta Sans", sans-serif;
+  --apple-font-mono: "SF Mono", "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
+
+  /* Apple Liquid Glass Material Values */
+  --apple-squircle-radius: 28px;
+  --apple-squircle-inner: calc(var(--apple-squircle-radius) - 10px);
+  --apple-glass-bg-material: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  --apple-glass-blur-high: blur(28px) saturate(190%) contrast(105%);
+  --apple-glass-rim-top: rgba(255, 255, 255, 0.38);
+  --apple-glass-rim-side: rgba(255, 255, 255, 0.16);
+  --apple-glass-rim-bottom: rgba(255, 255, 255, 0.04);
+  --apple-glass-shadow-deep: 0 32px 64px -16px rgba(0, 0, 0, 0.75), 0 16px 32px -12px rgba(0, 0, 0, 0.6);
+  --apple-glass-occlusion-bevel: inset 0 1px 1px 0 rgba(255, 255, 255, 0.42), inset 0 -1px 1px 0 rgba(0, 0, 0, 0.55);
+
+  /* Sovereign Imperial Palette */
+  --apple-gold-specular: #F5D061;
+  --apple-gold-glow: rgba(245, 208, 97, 0.35);
+  --apple-cyan-hud: #38BDF8;
+  --apple-emerald-live: #10B981;
+}
+
+/* ==============================================================================
+   1. FIXED APPLE LIQUID GLASS CHAPTER SCROLL HUD (FLOATING CONTROLLER)
+   ============================================================================== */
+.apple-scroll-hud {
+  position: fixed;
+  top: 92px;
+  right: 28px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(9, 13, 22, 0.78);
+  backdrop-filter: var(--apple-glass-blur-high);
+  -webkit-backdrop-filter: var(--apple-glass-blur-high);
+  border: 1px solid var(--apple-glass-rim-side);
+  border-top: 1px solid var(--apple-glass-rim-top);
+  border-bottom: 1px solid var(--apple-glass-rim-bottom);
+  border-radius: 100px;
+  padding: 6px 14px 6px 10px;
+  box-shadow: var(--apple-glass-shadow-deep), var(--apple-glass-occlusion-bevel);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.apple-scroll-hud:hover {
+  background: rgba(13, 18, 30, 0.92);
+  border-top-color: rgba(255, 255, 255, 0.55);
+  transform: translateY(-2px);
+  box-shadow: 0 36px 72px -12px rgba(0, 0, 0, 0.85), var(--apple-glass-occlusion-bevel);
+}
+
+.hud-progress-ring {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hud-progress-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.hud-progress-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 2.5;
+}
+
+.hud-progress-bar {
+  fill: none;
+  stroke: url(#hudGoldGradient);
+  stroke-width: 2.5;
+  stroke-dasharray: 75.4;
+  stroke-dashoffset: 75.4;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.15s ease-out;
+}
+
+.hud-indicator-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--apple-gold-specular);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--apple-gold-glow);
+  animation: hudPulse 2s infinite ease-in-out;
+}
+
+@keyframes hudPulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.4); opacity: 1; box-shadow: 0 0 12px var(--apple-gold-specular); }
+}
+
+.hud-chapter-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.hud-chapter-index {
+  font-family: var(--apple-font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--apple-gold-specular);
+  text-transform: uppercase;
+}
+
+.hud-chapter-title {
+  font-family: var(--apple-font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* Quick Jump Drawer */
+.hud-quick-nav {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: rgba(9, 13, 22, 0.94);
+  backdrop-filter: var(--apple-glass-blur-high);
+  -webkit-backdrop-filter: var(--apple-glass-blur-high);
+  border: 1px solid var(--apple-glass-rim-side);
+  border-top: 1px solid var(--apple-glass-rim-top);
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: var(--apple-glass-shadow-deep);
+  flex-direction: column;
+  gap: 4px;
+  min-width: 220px;
+}
+
+.apple-scroll-hud:hover .hud-quick-nav {
+  display: flex;
+}
+
+.hud-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  font-family: var(--apple-font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.hud-nav-item:hover, .hud-nav-item.active {
+  background: rgba(245, 208, 97, 0.12);
+  color: #FFFFFF;
+  padding-left: 15px;
+}
+
+.hud-nav-item .nav-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+.hud-nav-item:hover .nav-dot, .hud-nav-item.active .nav-dot {
+  background: var(--apple-gold-specular);
+  box-shadow: 0 0 6px var(--apple-gold-specular);
+}
+
+/* ==============================================================================
+   2. REFINED 3D HERO QUANTUM STAGE (CINEMATIC VIEWPORT INTEGRATION)
+   ============================================================================== */
+.hero-3d-stage-master {
+  position: relative;
+  width: 100%;
+  max-width: 980px;
+  height: 380px;
+  margin: 32px auto 24px auto;
+  border-radius: var(--apple-squircle-radius);
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(245, 208, 97, 0.08) 0%,
+    rgba(14, 21, 35, 0.45) 50%,
+    rgba(5, 8, 14, 0.85) 100%
+  );
+  backdrop-filter: var(--apple-glass-blur-high);
+  -webkit-backdrop-filter: var(--apple-glass-blur-high);
+  border: 1px solid var(--apple-glass-rim-side);
+  border-top: 1px solid var(--apple-glass-rim-top);
+  box-shadow: var(--apple-glass-shadow-deep), var(--apple-glass-occlusion-bevel);
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-3d-stage-master:hover {
+  border-top-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 40px 80px -16px rgba(0, 0, 0, 0.85), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.hero-3d-canvas-element {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+  outline: none;
+}
+
+.hero-3d-canvas-element:active {
+  cursor: grabbing;
+}
+
+/* 3D Stage HUD Overlay */
+.stage-hud-overlay {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.stage-hud-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 100px;
+  padding: 5px 12px;
+  font-family: var(--apple-font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--apple-gold-specular);
+  letter-spacing: 0.05em;
+  pointer-events: auto;
+}
+
+.stage-hud-controls {
+  display: flex;
+  gap: 6px;
+  pointer-events: auto;
+}
+
+.stage-btn-control {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  padding: 5px 10px;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: var(--apple-font-mono);
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.stage-btn-control:hover, .stage-btn-control.active {
+  background: rgba(245, 208, 97, 0.18);
+  border-color: var(--apple-gold-specular);
+  color: #FFFFFF;
+}
+
+.stage-bottom-telemetry {
+  position: absolute;
+  bottom: 14px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  font-family: var(--apple-font-mono);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.55);
+  z-index: 10;
+}
+
+/* ==============================================================================
+   3. APPLE CONTINUOUS SQUIRCLE CONTAINERS & CONCENTRIC PODS
+   ============================================================================== */
+.apple-squircle-card {
+  border-radius: var(--apple-squircle-radius);
+  corner-smoothing: 60%;
+  background: var(--apple-glass-bg-material);
+  backdrop-filter: var(--apple-glass-blur-high);
+  -webkit-backdrop-filter: var(--apple-glass-blur-high);
+  border: 1px solid var(--apple-glass-rim-side);
+  border-top: 1px solid var(--apple-glass-rim-top);
+  border-bottom: 1px solid var(--apple-glass-rim-bottom);
+  box-shadow: var(--apple-glass-shadow-deep), var(--apple-glass-occlusion-bevel);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+/* Cursor-Tracking Specular Sheen */
+.apple-squircle-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.03) 30%,
+    transparent 60%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.apple-squircle-card:hover::before {
+  opacity: 1;
+}
+
+.apple-concentric-pod {
+  border-radius: var(--apple-squircle-inner);
+  background: rgba(4, 7, 13, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.06);
+  padding: 16px;
+}
+
+/* ==============================================================================
+   4. SCROLL-DRIVEN 3D PERSPECTIVE REVEAL
+   ============================================================================== */
+.scroll-reveal-item {
+  opacity: 0;
+  transform: perspective(1000px) translateY(40px) rotateX(6deg) scale(0.97);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal-item.is-revealed {
+  opacity: 1;
+  transform: perspective(1000px) translateY(0) rotateX(0deg) scale(1);
+}
+
+/* Subtle 3D Depth Tilting during fast scroll */
+body.is-scrolling-fast .apple-squircle-card {
+  transform: scale(0.99) translateY(4px);
+  transition: transform 0.25s ease-out;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .apple-scroll-hud {
+    top: 76px;
+    right: 14px;
+    padding: 4px 10px 4px 8px;
+  }
+  .hud-chapter-title {
+    display: none;
+  }
+  .hero-3d-stage-master {
+    height: 280px;
+    margin-top: 20px;
+  }
+}

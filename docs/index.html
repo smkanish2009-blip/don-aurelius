@@ -174,6 +174,7 @@
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <link rel="stylesheet" href="css/omniscience-warroom.css?v=original_gold_20261007">
+  <link rel="stylesheet" href="css/apple-hig-motion.css?v=20261009">
 
   <style>
     /* ==========================================================================
@@ -6908,7 +6909,11 @@ body {
 
     function init3DEngines() {
       if (typeof THREE === 'undefined') return;
-      initHeroStageCanvas();
+      if (window.apple3DEngine) {
+        window.apple3DEngine.init();
+      } else {
+        initHeroStageCanvas();
+      }
     }
 
     if (document.readyState === 'complete') {
@@ -7816,5 +7821,8 @@ body {
 
     <!-- Don Aurelius Quantum Omniscience War Room & 3D Neural Cockpit v5.0 -->
     <script src="js/omniscience-warroom.js?v=20261004b"></script>
+
+    <!-- Apple HIG & 3D Interactive Scroll Engine v6.0 -->
+    <script src="js/apple-3d-scroll-engine.js?v=20261009"></script>
 </body>
 </html>
