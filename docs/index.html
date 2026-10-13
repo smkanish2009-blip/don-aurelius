@@ -175,6 +175,7 @@
 
   <link rel="stylesheet" href="css/omniscience-warroom.css?v=original_gold_20261007">
   <link rel="stylesheet" href="css/apple-hig-motion.css?v=20261009">
+  <link rel="stylesheet" href="css/reactbits-buttermax-luxury.css?v=20261009">
 
   <style>
     /* ==========================================================================
@@ -4904,6 +4905,27 @@ body {
       </ul>
       <div class="header-actions">
         <div class="header-controls">
+          <div class="dock-live-beacon">
+            <span class="dock-beacon-dot"></span>
+            <span>MT5: 0.38ms | XAU: $2,648.35</span>
+          </div>
+          <button id="dock-audio-toggle" class="dock-audio-btn" aria-label="Toggle Sound Effects" title="Procedural Audio & Haptic Clicks">
+            <div class="eq-bars-mini">
+              <span class="eq-bar"></span>
+              <span class="eq-bar"></span>
+              <span class="eq-bar"></span>
+              <span class="eq-bar"></span>
+            </div>
+            <span>AUDIO</span>
+          </button>
+          <button id="btn-open-legal-shield" class="dock-audio-btn" style="border-color: rgba(245,208,97,0.35); color: var(--gold-pure);" title="Sovereign Legal Shield & CFTC/NFA Disclaimers">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>LEGAL</span>
+          </button>
+          <button id="btn-open-commercial-license" class="dock-audio-btn" style="border-color: rgba(56,189,248,0.35); color: var(--titan-cyan);" title="Anti-Piracy Machine Binding & Commercial Gas Wallet">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>LICENSE</span>
+          </button>
           <button id="btn-shortcuts-toggle" class="btn-header-shortcuts" aria-label="Keyboard Shortcuts Command Center" title="Shortcuts HUD (? or Ctrl+K)">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:2px;"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="6" y2="8"/><line x1="10" y1="8" x2="10" y2="8"/><line x1="14" y1="8" x2="14" y2="8"/><line x1="18" y1="8" x2="18" y2="8"/><line x1="6" y1="12" x2="6" y2="12"/><line x1="10" y1="12" x2="10" y2="12"/><line x1="14" y1="12" x2="14" y2="12"/><line x1="18" y1="12" x2="18" y2="12"/><line x1="7" y1="16" x2="17" y2="16"/></svg>
             <kbd class="header-kbd-badge">⌘K</kbd>
@@ -5051,6 +5073,81 @@ body {
               <div class="stat-label">Consensus Protocol</div>
               <div class="stat-val">3/4 Supermajority</div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         Don Aurelius 60-Second Installation Tutorial Video Section
+         ========================================================================== -->
+    <section class="section-tutorial-video bg-grid-subtle" id="installation-masterclass" style="position: relative; padding: 90px 0; overflow: hidden;">
+      <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+        <!-- Section Title & Badges -->
+        <div class="section-title-wrap" style="text-align: center; margin-bottom: 48px;">
+          <div style="display: inline-flex; align-items: center; gap: 10px; padding: 8px 22px; border-radius: 999px; background: rgba(245, 208, 97, 0.1); border: 1px solid rgba(245, 208, 97, 0.4); margin-bottom: 20px;">
+            <span style="color: #F5D061; font-size: 16px;">⚡</span>
+            <span style="color: #F5D061; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace;">60-SECOND INSTITUTIONAL TUTORIAL</span>
+          </div>
+          <h2 style="font-size: clamp(28px, 4.5vw, 46px); font-weight: 800; color: #F8FAFC; letter-spacing: -0.03em; margin: 0 0 16px 0; line-height: 1.15;">
+            Deploy Institutional Gold Execution in <span style="background: linear-gradient(135deg, #F5D061 0%, #FFF8E1 50%, #D4AF37 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Sixty Seconds</span>
+          </h2>
+          <p style="font-size: clamp(16px, 1.8vw, 19px); color: #94A3B8; max-width: 740px; margin: 0 auto; line-height: 1.6;">
+            Watch the complete terminal setup walkthrough: unpacking the repository architecture, establishing sub-millisecond Backtrader MT5 IPC telemetry, and verifying hard-coded demo account safety guardrails.
+          </p>
+        </div>
+
+        <!-- Sleek Video Card Stage -->
+        <div class="tutorial-video-card-wrap" style="display: flex; justify-content: center; align-items: center; position: relative;">
+          <!-- Ambient Halo Lighting -->
+          <div style="position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(245, 208, 97, 0.12) 0%, transparent 70%); filter: blur(50px); pointer-events: none; z-index: 1;"></div>
+
+          <div class="tutorial-video-card" style="position: relative; z-index: 2; width: 100%; max-width: 540px; border-radius: 24px; background: rgba(9, 14, 25, 0.88); border: 1px solid rgba(245, 208, 97, 0.32); box-shadow: 0 25px 65px rgba(0, 0, 0, 0.9), 0 0 45px rgba(245, 208, 97, 0.16); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); padding: 24px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+            
+            <!-- Video Top Bar / Player Chrome -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 11px; height: 11px; border-radius: 50%; background: #EF4444;"></div>
+                <div style="width: 11px; height: 11px; border-radius: 50%; background: #F5D061;"></div>
+                <div style="width: 11px; height: 11px; border-radius: 50%; background: #10B981;"></div>
+                <span style="margin-left: 10px; font-size: 13px; font-family: 'JetBrains Mono', monospace; color: #94A3B8;">don_aurelius_tutorial.mp4</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <div style="width: 8px; height: 8px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981;"></div>
+                <span style="font-size: 12px; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #F5D061;">60 FPS • 48 kHz</span>
+              </div>
+            </div>
+
+            <!-- HTML5 Video Element -->
+            <div style="position: relative; border-radius: 16px; overflow: hidden; background: #030508; border: 1px solid rgba(245, 208, 97, 0.2);">
+              <video 
+                id="don-aurelius-tutorial-player" 
+                controls 
+                preload="metadata" 
+                playsinline 
+                style="width: 100%; height: auto; display: block; border-radius: 16px; aspect-ratio: 9 / 16; object-fit: cover;"
+              >
+                <source src="assets/don_aurelius_tutorial.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
+            <!-- Video Timeline Checkpoint Badges -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px;">
+              <div style="padding: 10px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); text-align: center;">
+                <div style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #F5D061; font-weight: 700;">0:05 STEP 1</div>
+                <div style="font-size: 12px; color: #F8FAFC; margin-top: 2px;">Extract & .env</div>
+              </div>
+              <div style="padding: 10px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); text-align: center;">
+                <div style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #38BDF8; font-weight: 700;">0:14 STEP 2</div>
+                <div style="font-size: 12px; color: #F8FAFC; margin-top: 2px;">MT5 IPC Bridge</div>
+              </div>
+              <div style="padding: 10px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); text-align: center;">
+                <div style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #10B981; font-weight: 700;">0:35 STEP 3</div>
+                <div style="font-size: 12px; color: #F8FAFC; margin-top: 2px;">Demo Guardrail</div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -5414,6 +5511,53 @@ body {
               <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="cockpit-btn" aria-label="Open Full Institutional HUD on Telegram">Institutional HUD</a>
               <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="cockpit-btn" aria-label="Run Real-Time Profit Check on Telegram">Solvency Audit</a>
               <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="cockpit-btn btn-danger" aria-label="Trigger Clean Slate Protocol Kill-Switch on Telegram">Clean Slate Protocol</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buttermax & ReactBits Cinematic Media Lounge (Christopher Nolan Style Soundtrack) -->
+        <div class="cinematic-media-dock reactbits-spotlight-card buttermax-blueprint-bg reveal-3d" style="margin-top: 36px;">
+          <div class="buttermax-crosshair top-left"></div>
+          <div class="buttermax-crosshair top-right"></div>
+          <div class="buttermax-crosshair bottom-left"></div>
+          <div class="buttermax-crosshair bottom-right"></div>
+
+          <div class="media-dock-header">
+            <div class="media-dock-title">
+              <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(245,208,97,0.15); border: 1px solid var(--gold-pure); display: flex; align-items: center; justify-content: center; color: var(--gold-pure);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </div>
+              <div>
+                <h4 style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; color: #FFF; margin: 0;">CINEMATIC ACOUSTIC LOUNGE // 60S ORCHESTRAL MASTER</h4>
+                <p style="font-family: var(--font-code); font-size: 0.72rem; color: rgba(255,255,255,0.5); margin: 2px 0 0 0;">ORIGINAL SCORE • PROCEDURAL WEB AUDIO WAVEFORM • 120 FPS</p>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span id="media-soundtrack-time" style="font-family: var(--font-code); font-size: 0.8rem; color: var(--gold-pure); font-weight: 700;">00:00 / 01:00</span>
+              <span class="buttermax-stamp"><span class="buttermax-stamp-dot"></span> 48kHz WAV</span>
+            </div>
+          </div>
+
+          <canvas id="media-waveform-canvas" class="media-waveform-canvas"></canvas>
+
+          <div class="media-controls-row">
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <button id="btn-media-soundtrack-play" class="media-play-btn" aria-label="Play 60s Cinematic Soundtrack">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </button>
+              <div style="font-size: 0.85rem; color: rgba(255,255,255,0.85);">
+                <strong>Hans Zimmer & Christopher Nolan Procedural Tone</strong>
+                <div style="font-size: 0.74rem; color: rgba(255,255,255,0.5);">Dynamic low-brass tension & ticking sub-second market clocks.</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <a href="assets/don_aurelius_tutorial.mp4" target="_blank" class="skeuo-btn-secondary" style="padding: 9px 18px; font-size: 0.82rem;">
+                <span>Watch 4K Master Video</span>
+                <span style="color: var(--gold-pure);">▶</span>
+              </a>
+              <button id="btn-dock-audio-master-toggle" onclick="window.aureusAudio.toggleMute()" class="skeuo-btn-master" style="padding: 9px 18px; font-size: 0.82rem;">
+                <span>Toggle Haptics</span>
+              </button>
             </div>
           </div>
         </div>
@@ -6718,18 +6862,78 @@ body {
     </div>
   </div>
 
-  <!-- Initial Neural Core Skeleton Preloader -->
-  <div id="app-skeleton-overlay" aria-hidden="true">
-    <div class="skeleton-box">
-      <div class="skeleton-avatar skeleton-shimmer"></div>
-      <div class="skeleton-line-title skeleton-shimmer"></div>
-      <div class="skeleton-line-sub skeleton-shimmer"></div>
-      <div class="skeleton-status-text">
-        <span class="pulse"></span>
-        <span>INITIALIZING NEURAL WEIGHTS • DON AURELIUS CORE v4.1</span>
+  <!-- Ultra-Luxury Bloomberg & VisionOS Skeleton Boot Preloader -->
+  <div id="terminal-boot-preloader" aria-label="Don Aurelius Institutional Terminal Boot Sequence">
+    <div class="boot-pod-chassis buttermax-blueprint-bg">
+      <div class="buttermax-crosshair top-left"></div>
+      <div class="buttermax-crosshair top-right"></div>
+      <div class="buttermax-crosshair bottom-left"></div>
+      <div class="buttermax-crosshair bottom-right"></div>
+
+      <div class="boot-header-row">
+        <div class="boot-badge-group">
+          <div class="boot-avatar-box">
+            <img src="assets/don_aurelius.jpg" alt="Don Aurelius Sovereign Syndicate">
+          </div>
+          <div class="boot-title-block">
+            <h3>DON AURELIUS <span class="reactbits-shiny-text">SYNDICATE</span></h3>
+            <p>XAUUSD QUANTITATIVE AI MATRIX • META TRADER 5 BRIDGE</p>
+          </div>
+        </div>
+        <div class="boot-counter-ring">
+          <span id="boot-counter-percent">0%</span>
+        </div>
+      </div>
+
+      <!-- Shimmering Skeleton Wireframe Preview -->
+      <div class="boot-skeleton-wireframe">
+        <div class="skeleton-glass-bar skeleton-dock-preview"></div>
+        <div class="skeleton-glass-bar skeleton-headline-preview"></div>
+        <div class="skeleton-grid-preview">
+          <div class="skeleton-glass-bar cell"></div>
+          <div class="skeleton-glass-bar cell"></div>
+          <div class="skeleton-glass-bar cell"></div>
+          <div class="skeleton-glass-bar cell"></div>
+        </div>
+      </div>
+
+      <!-- Live Sequential Diagnostic Terminal -->
+      <div class="boot-terminal-log">
+        <div class="boot-log-entry" id="boot-log-1">
+          <span style="color:#10B981;">[SYS_01]</span>
+          <span>HARDWARE_BRIDGE: MT5 LD4 Sub-Millisecond Gateway Handshake ... VERIFIED (0.38ms)</span>
+        </div>
+        <div class="boot-log-entry" id="boot-log-2">
+          <span style="color:#38BDF8;">[SYS_02]</span>
+          <span>WAR_ROOM_COUNCIL: Calibrating HAWK, RADAR, PREDATOR, INQUISITOR ... CONSENSUS 4/4</span>
+        </div>
+        <div class="boot-log-entry" id="boot-log-3">
+          <span style="color:#F5D061;">[SYS_03]</span>
+          <span>QUANTUM_TWIN: Compiling 1,000-Path Monte Carlo Jump-Diffusion Engine ... WIN_RATE 88.4%</span>
+        </div>
+        <div class="boot-log-entry" id="boot-log-4">
+          <span style="color:#EC4899;">[SYS_04]</span>
+          <span>GRAPHICS_ENGINE: Initializing Three.js 120 FPS WebGL Holographic Stage & Liquid Glass ... READY</span>
+        </div>
+        <div class="boot-log-entry" id="boot-log-5">
+          <span style="color:#10B981;">[SYS_05]</span>
+          <span>SOVEREIGN_SYNDICATE: Cryptographic Security Grid Online • Entering Tactical Cockpit</span>
+        </div>
+      </div>
+
+      <!-- Progress Fill Bar -->
+      <div class="boot-progress-wrapper">
+        <div id="boot-progress-fill" class="boot-progress-fill"></div>
+      </div>
+
+      <div class="boot-actions-row">
+        <span class="buttermax-stamp"><span class="buttermax-stamp-dot"></span> LD4 LOW-LATENCY ROUTE ACTIVE</span>
+        <button id="btn-skip-boot" class="btn-skip-boot">ENTER COCKPIT ↗</button>
       </div>
     </div>
   </div>
+
+  <div id="app-skeleton-overlay" class="hidden" style="display:none;" aria-hidden="true"></div>
 
   <!-- 3D WebGL Engine, Debounced Glass Physics & Scroll Animations -->
   <script>
@@ -7815,6 +8019,126 @@ body {
 
     </script>
 
+    <!-- ========================================================================
+         SOVEREIGN LEGAL SHIELD & REGULATORY DISCLOSURE MODAL (CFTC 4.41 / NFA 2-29)
+         ======================================================================== -->
+    <div id="sovereign-legal-modal" class="sovereign-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-shield-title">
+      <div class="sovereign-modal-container buttermax-blueprint-bg">
+        <div class="buttermax-crosshair top-left"></div>
+        <div class="buttermax-crosshair top-right"></div>
+        <div class="buttermax-crosshair bottom-left"></div>
+        <div class="buttermax-crosshair bottom-right"></div>
+
+        <div class="sovereign-modal-header">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:36px; height:36px; border-radius:10px; background:rgba(245,208,97,0.15); border:1px solid var(--gold-pure); display:flex; align-items:center; justify-content:center; color:var(--gold-pure);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <h3 id="modal-shield-title" style="font-family:var(--font-display); font-size:1.15rem; font-weight:800; color:#FFF; margin:0;">SOVEREIGN LEGAL SHIELD & REGULATORY ACCORD</h3>
+              <p style="font-family:var(--font-code); font-size:0.72rem; color:rgba(255,255,255,0.5); margin:2px 0 0 0;">CFTC RULE 4.41 • NFA COMPLIANCE RULE 2-29 • FCA • ESMA • SEBI</p>
+            </div>
+          </div>
+          <button class="btn-close-modal btn-close-drawer" aria-label="Close Legal Modal" style="background:none; border:none; color:#FFF; cursor:pointer; font-size:1.2rem;">✕</button>
+        </div>
+
+        <div class="sovereign-modal-body">
+          <div style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); border-radius:12px; padding:14px; margin-bottom:18px;">
+            <div style="color:var(--crimson-veto); font-weight:700; font-family:var(--font-display); margin-bottom:6px; font-size:0.88rem;">⚖️ MANDATORY CFTC RULE 4.41 HYPOTHETICAL DISCLAIMER</div>
+            <p style="font-size:0.8rem; line-height:1.6; margin:0; color:rgba(255,255,255,0.85);">
+              HYPOTHETICAL OR SIMULATED PERFORMANCE RESULTS HAVE CERTAIN LIMITATIONS. UNLIKE AN ACTUAL PERFORMANCE RECORD, SIMULATED RESULTS DO NOT REPRESENT ACTUAL TRADING. ALSO, SINCE THE TRADES HAVE NOT BEEN EXECUTED, THE RESULTS MAY HAVE UNDER-OR-OVER COMPENSATED FOR THE IMPACT, IF ANY, OF CERTAIN MARKET FACTORS, SUCH AS LACK OF LIQUIDITY. SIMULATED TRADING PROGRAMS IN GENERAL ARE ALSO SUBJECT TO THE FACT THAT THEY ARE DESIGNED WITH THE BENEFIT OF HINDSIGHT. NO REPRESENTATION IS BEING MADE THAT ANY ACCOUNT WILL OR IS LIKELY TO ACHIEVE PROFIT OR LOSSES SIMILAR TO THOSE SHOWN.
+            </p>
+          </div>
+
+          <h4 style="color:var(--gold-pure); font-size:0.95rem; margin-top:16px;">1. Non-Fiduciary Status & Computational Model Definition</h4>
+          <p>Don Aurelius™ and the Genesis Suite™ are strictly proprietary computational algorithms, quantitative risk management software, and educational analytical models. Founder SM.KANISH and Don Aurelius operate strictly as technology providers, NOT as registered financial advisors (RIA), commodity trading advisors (CTA), brokers, or custodial investment managers.</p>
+
+          <h4 style="color:var(--gold-pure); font-size:0.95rem; margin-top:16px;">2. Complete Non-Custodial Broker Protection</h4>
+          <p>The software routes analytical trade orders through your personal, regulated MetaTrader 5 terminal. At no point does the software have access to deposit, custody, or withdraw your financial assets. All funds remain under the exclusive sovereignty of your broker.</p>
+
+          <h4 style="color:var(--gold-pure); font-size:0.95rem; margin-top:16px;">3. Cryptographic Consent Proof (Immutable SHA-256)</h4>
+          <p>By using the software, you affirm full understanding of speculative leveraged spot gold (XAUUSD) volatility risk. Below is your deterministic session cryptographic digest:</p>
+          <div id="legal-sha256-hash" class="crypto-hash-box">
+            SHA-256: COMPUTING_IMMUTABLE_HASH...
+          </div>
+
+          <div style="display:flex; gap:16px; margin-top:16px; font-size:0.82rem; font-family:var(--font-code);">
+            <a href="terms.html" target="_blank" style="color:var(--gold-pure); text-decoration:underline;">Terms of Service ↗</a>
+            <a href="privacy-policy.html" target="_blank" style="color:var(--gold-pure); text-decoration:underline;">Privacy Policy ↗</a>
+            <a href="refund-policy.html" target="_blank" style="color:var(--gold-pure); text-decoration:underline;">Refund Policy ↗</a>
+            <a href="cookie-policy.html" target="_blank" style="color:var(--gold-pure); text-decoration:underline;">Cookie Policy ↗</a>
+          </div>
+        </div>
+
+        <div class="sovereign-modal-footer">
+          <span style="font-family:var(--font-code); font-size:0.75rem; color:rgba(255,255,255,0.5);">STATUS: REGULATORY_SEAL_VERIFIED</span>
+          <button class="btn-close-modal skeuo-btn-master" style="padding:8px 20px; font-size:0.82rem;">ACKNOWLEDGE & CLOSE</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         COMMERCIAL SAAS LICENSING & ANTI-PIRACY HARDWARE BINDING MODAL
+         ======================================================================== -->
+    <div id="commercial-license-modal" class="sovereign-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-license-title">
+      <div class="sovereign-modal-container buttermax-blueprint-bg">
+        <div class="buttermax-crosshair top-left"></div>
+        <div class="buttermax-crosshair top-right"></div>
+        <div class="buttermax-crosshair bottom-left"></div>
+        <div class="buttermax-crosshair bottom-right"></div>
+
+        <div class="sovereign-modal-header">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:36px; height:36px; border-radius:10px; background:rgba(56,189,248,0.15); border:1px solid var(--titan-cyan); display:flex; align-items:center; justify-content:center; color:var(--titan-cyan);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div>
+              <h3 id="modal-license-title" style="font-family:var(--font-display); font-size:1.15rem; font-weight:800; color:#FFF; margin:0;">COMMERCIAL SAAS ENGINE & ANTI-PIRACY SECURITY</h3>
+              <p style="font-family:var(--font-code); font-size:0.72rem; color:rgba(255,255,255,0.5); margin:2px 0 0 0;">PILLAR 7 • HARDWARE MACHINE BINDING • PREPAID GAS WALLET</p>
+            </div>
+          </div>
+          <button class="btn-close-modal btn-close-drawer" aria-label="Close License Modal" style="background:none; border:none; color:#FFF; cursor:pointer; font-size:1.2rem;">✕</button>
+        </div>
+
+        <div class="sovereign-modal-body">
+          <p>Every commercial instance of Don Aurelius is cryptographically locked to a verified hardware signature (MAC & CPU Machine ID) and broker terminal account number. Unauthorized redistributions immediately engage the graceful termination kernel.</p>
+
+          <div style="background:rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:18px; margin:16px 0;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+              <span style="font-family:var(--font-code); font-size:0.75rem; color:var(--titan-cyan); font-weight:700;">SIMULATED MACHINE BINDING TERMINAL</span>
+              <button id="btn-simulate-hw-bind" class="btn-skip-boot" style="border-color:var(--titan-cyan); color:var(--titan-cyan);">Test Machine Lock</button>
+            </div>
+            <div id="hw-bind-result" style="font-family:var(--font-code); font-size:0.78rem; line-height:1.7; color:rgba(255,255,255,0.8);">
+              Click "Test Machine Lock" to generate a cryptographic hardware binding signature.
+            </div>
+          </div>
+
+          <h4 style="color:var(--gold-pure); font-size:0.95rem; margin-top:18px;">Prepaid Gas Wallet & High-Water Mark Logic</h4>
+          <p style="font-size:0.85rem; color:rgba(255,255,255,0.8);">
+            Commercial clients operate via an automated gas fee wallet: profits achieved trigger a 20% high-water mark fee deduction. If gas reaches $0.00, the terminal enters read-only protection without abrupt forced liquidations.
+          </p>
+
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-top:16px;">
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:14px;">
+              <div style="font-size:0.75rem; font-family:var(--font-code); color:var(--gold-pure);">ELITE LICENSE</div>
+              <div style="font-size:1.2rem; font-weight:800; font-family:var(--font-display); color:#FFF; margin:4px 0;">$1,490 / yr</div>
+              <div style="font-size:0.74rem; color:rgba(255,255,255,0.6);">Single MT5 account • 4-Agent Council • 24/7 Telegram HUD</div>
+            </div>
+            <div style="background:rgba(245,208,97,0.06); border:1px solid rgba(245,208,97,0.3); border-radius:12px; padding:14px;">
+              <div style="font-size:0.75rem; font-family:var(--font-code); color:var(--gold-pure);">SOVEREIGN MATRIX</div>
+              <div style="font-size:1.2rem; font-weight:800; font-family:var(--font-display); color:#FFF; margin:4px 0;">$3,950 / yr</div>
+              <div style="font-size:0.74rem; color:rgba(255,255,255,0.6);">Multi-account • Quantum Twin 1,000-Path • Jarvis Voice Co-Pilot</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sovereign-modal-footer">
+          <span style="font-family:var(--font-code); font-size:0.75rem; color:rgba(255,255,255,0.5);">SAAS ENGINE: STRIPE / WHOP / CRYPTO GATEWAYS</span>
+          <a href="https://t.me/DonAurelius_AI_bot" target="_blank" rel="noopener" class="skeuo-btn-master" style="padding:8px 20px; font-size:0.82rem;">DEPLOY LICENSE ↗</a>
+        </div>
+      </div>
+    </div>
+
     <!-- Supabase Realtime Cloud Database & Live Telemetry SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-telemetry.js?v=original_gold_20261007"></script>
@@ -7824,5 +8148,8 @@ body {
 
     <!-- Apple HIG & 3D Interactive Scroll Engine v6.0 -->
     <script src="js/apple-3d-scroll-engine.js?v=20261009"></script>
+
+    <!-- ReactBits & Buttermax Quantum Interaction Engine v7.0 -->
+    <script src="js/reactbits-buttermax-engine.js?v=20261009"></script>
 </body>
 </html>

@@ -4,4 +4,6 @@ Config.setVideoImageFormat("jpeg");
 Config.setOverwriteOutput(true);
 Config.setJpegQuality(95);
 Config.setConcurrency(4);
-Config.setChromiumOpenGlRenderer("angle");
+Config.setChromiumOpenGlRenderer("swiftshader");
+Config.setChromiumDisableWebSecurity(true);
+Config.setTimeoutInMilliseconds(120000);

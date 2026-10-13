@@ -5,8 +5,8 @@
   "description": "Christopher Nolan Style Cinematic Product Trailer for Don Aurelius AI Gold Trading Bot",
   "scripts": {
     "start": "remotion preview",
-    "build": "remotion render src/index.ts DonAureliusNolanTrailer out/don_aurelius_nolan_trailer.mp4",
-    "render": "remotion render src/index.ts DonAureliusNolanTrailer out/don_aurelius_nolan_trailer.mp4"
+    "build": "remotion render src/index.ts DonAureliusTutorial60s marketing/don_aurelius_tutorial.mp4",
+    "render": "remotion render src/index.ts DonAureliusTutorial60s marketing/don_aurelius_tutorial.mp4"
   },
   "dependencies": {
     "@remotion/captions": "^4.0.534",
