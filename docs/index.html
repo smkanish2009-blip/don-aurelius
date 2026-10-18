@@ -8240,11 +8240,21 @@ body {
             </div>
 
             <!-- Master Deposit Stage (QR Code + Address + Deep Link) -->
-            <div style="display: grid; grid-template-columns: 160px 1fr; gap: 20px; align-items: center; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 18px; margin-bottom: 22px;">
-              <!-- Dynamic QR Code -->
-              <div style="background: #FFF; padding: 12px; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,0,0,0.5); text-align: center;">
-                <img id="checkout-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&margin=0&data=TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs" alt="USDT TRC20 Universal Deposit QR" style="width: 140px; height: 140px; display: block; border-radius: 6px;">
-                <span style="font-size: 10px; font-family: 'JetBrains Mono', monospace; color: #030508; font-weight: 800; margin-top: 6px; letter-spacing: 0.05em;">TRC-20 ADDRESS</span>
+            <div style="display: grid; grid-template-columns: 180px 1fr; gap: 20px; align-items: center; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 18px; margin-bottom: 22px;">
+              <!-- Dynamic QR Code Container with Camera vs Wallet Toggle -->
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div style="display: flex; gap: 4px; margin-bottom: 8px; width: 100%; justify-content: center;">
+                  <button type="button" id="btn-qr-portal" onclick="setQrMode('portal')" style="padding: 4px 8px; border-radius: 6px; font-size: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 700; background: rgba(245,208,97,0.2); border: 1px solid #F5D061; color: #F5D061; cursor: pointer; transition: all 0.2s;">
+                    📱 Camera
+                  </button>
+                  <button type="button" id="btn-qr-wallet" onclick="setQrMode('wallet')" style="padding: 4px 8px; border-radius: 6px; font-size: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 700; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: #94A3B8; cursor: pointer; transition: all 0.2s;">
+                    💎 Wallet
+                  </button>
+                </div>
+                <div style="background: #FFF; padding: 10px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,0,0,0.5); text-align: center; width: 160px;">
+                  <img id="checkout-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&margin=0&data=https%3A%2F%2Fsmkanish2009-blip.github.io%2Fdon-aurelius%2Fcheckout.html%3Ftier%3Dannual" alt="Payment Checkout QR Code" style="width: 140px; height: 140px; display: block; border-radius: 6px;">
+                  <span id="checkout-qr-caption" style="font-size: 9px; font-family: 'JetBrains Mono', monospace; color: #030508; font-weight: 800; margin-top: 6px; letter-spacing: 0.03em;">SCAN TO OPEN CHECKOUT</span>
+                </div>
               </div>
 
               <!-- Address Details & Actions -->
@@ -8256,16 +8266,19 @@ body {
                     📋 COPY
                   </button>
                 </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
+                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;">
+                  <a id="link-web-checkout" href="checkout.html?tier=annual" target="_blank" style="font-size: 11px; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #10B981; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 8px; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.35);">
+                    ⚡ Open Payment Processor ↗
+                  </a>
                   <a id="link-tron-wallet" href="tron:TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs?token=USDT&amount=450" style="font-size: 11px; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #38BDF8; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 8px; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3);">
-                    🚀 Open in Mobile Tether / TronLink
+                    🚀 Open in Tether App
                   </a>
                   <a href="https://tronscan.org/#/address/TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs" target="_blank" rel="noopener" style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #94A3B8; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
-                    🔍 View on TronScan ↗
+                    🔍 TronScan ↗
                   </a>
                 </div>
-                <div style="font-size: 11px; color: #94A3B8; line-height: 1.5; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 8px 12px; border-left: 2px solid #F5D061;">
-                  💡 <strong>How to Scan:</strong> Open your <strong>Tether app</strong>, <strong>Binance</strong>, or <strong>Trust Wallet</strong>, tap <em>Send / Withdraw USDT</em>, and scan this QR code with the in-app scanner. Or scan with your phone camera to copy the address!
+                <div id="checkout-scan-tip" style="font-size: 11px; color: #94A3B8; line-height: 1.5; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 8px 12px; border-left: 2px solid #F5D061;">
+                  💡 <strong>Camera Scan:</strong> Point your phone camera at the QR code to open the <strong>Payment Processor</strong> in your browser (no Notes app!). Or tap <em>Wallet</em> above to scan directly inside Tether/Binance.
                 </div>
               </div>
             </div>
@@ -8435,19 +8448,50 @@ body {
           const info = tierData[tier];
           const amountUsdtEl = document.getElementById('checkout-amount-usdt');
           const amountInrEl = document.getElementById('checkout-amount-inr');
-          const qrImgEl = document.getElementById('checkout-qr-img');
           const tronWalletLink = document.getElementById('link-tron-wallet');
+          const webCheckoutLink = document.getElementById('link-web-checkout');
 
           if (amountUsdtEl) amountUsdtEl.textContent = '$' + info.usdt + '.00';
           if (amountInrEl) amountInrEl.textContent = '(≈ ₹' + info.inr + ' INR)';
-          
-          // Universal TRC-20 Address QR (100% compatible with phone cameras, Google Lens & in-wallet scanners)
-          if (qrImgEl) {
-            qrImgEl.src = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&margin=0&data=' + encodeURIComponent(MERCHANT_USDT_ADDR);
+          if (tronWalletLink) tronWalletLink.href = 'tron:' + MERCHANT_USDT_ADDR + '?token=USDT&amount=' + info.usdt;
+          if (webCheckoutLink) webCheckoutLink.href = 'checkout.html?tier=' + tier;
+
+          window.updateCheckoutQr();
+        };
+
+        let currentQrMode = 'portal';
+
+        window.setQrMode = function(mode) {
+          currentQrMode = mode;
+          const btnPortal = document.getElementById('btn-qr-portal');
+          const btnWallet = document.getElementById('btn-qr-wallet');
+          const caption = document.getElementById('checkout-qr-caption');
+          const tip = document.getElementById('checkout-scan-tip');
+
+          if (mode === 'portal') {
+            if (btnPortal) { btnPortal.style.background = 'rgba(245,208,97,0.2)'; btnPortal.style.borderColor = '#F5D061'; btnPortal.style.color = '#F5D061'; }
+            if (btnWallet) { btnWallet.style.background = 'rgba(255,255,255,0.05)'; btnWallet.style.borderColor = 'rgba(255,255,255,0.15)'; btnWallet.style.color = '#94A3B8'; }
+            if (caption) caption.textContent = 'SCAN TO OPEN CHECKOUT';
+            if (tip) tip.innerHTML = '💡 <strong>Camera Scan:</strong> Point your phone camera at the QR code to open the <strong>Payment Processor</strong> in your browser (no Notes app!). Or tap <em>Wallet</em> above to scan directly inside Tether/Binance.';
+          } else {
+            if (btnPortal) { btnPortal.style.background = 'rgba(255,255,255,0.05)'; btnPortal.style.borderColor = 'rgba(255,255,255,0.15)'; btnPortal.style.color = '#94A3B8'; }
+            if (btnWallet) { btnWallet.style.background = 'rgba(245,208,97,0.2)'; btnWallet.style.borderColor = '#F5D061'; btnWallet.style.color = '#F5D061'; }
+            if (caption) caption.textContent = 'TRC-20 ADDRESS';
+            if (tip) tip.innerHTML = '💡 <strong>Wallet Scan:</strong> Scan this QR code directly inside your <strong>Tether app</strong>, <strong>Binance</strong>, or <strong>Trust Wallet</strong> in-app scanner to transfer USDT.';
           }
-          if (tronWalletLink) {
-            tronWalletLink.href = 'tron:' + MERCHANT_USDT_ADDR + '?token=USDT&amount=' + info.usdt;
+          window.updateCheckoutQr();
+        };
+
+        window.updateCheckoutQr = function() {
+          const qrImgEl = document.getElementById('checkout-qr-img');
+          if (!qrImgEl) return;
+          let qrData = '';
+          if (currentQrMode === 'portal') {
+            qrData = 'https://smkanish2009-blip.github.io/don-aurelius/checkout.html?tier=' + currentTier;
+          } else {
+            qrData = MERCHANT_USDT_ADDR;
           }
+          qrImgEl.src = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&margin=0&data=' + encodeURIComponent(qrData);
         };
 
         window.copyDepositAddress = function() {

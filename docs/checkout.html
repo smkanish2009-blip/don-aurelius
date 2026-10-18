@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https:; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.telegram.org https://api.qrserver.com; base-uri 'self'; form-action 'self';">
+  <title>Don Aurelius | Sovereign Payment Gateway & License Terminal</title>
+  <meta name="description" content="Official checkout and cryptographic machine license provisioning for Don Aurelius Autonomous AI Syndicate.">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=JetBrains+Mono:wght@400;500;700;800&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #030508;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --gold-primary: #F5D061;
+      --gold-glow: rgba(245, 208, 97, 0.25);
+      --emerald-neon: #10B981;
+      --cyan-neon: #38BDF8;
+      --font-display: 'Outfit', sans-serif;
+      --font-serif: 'Cinzel', serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(245, 208, 97, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.08) 0%, transparent 50%);
+      color: #F8FAFC;
+      font-family: var(--font-display);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 16px;
+    }
+
+    .checkout-container {
+      width: 100%;
+      max-width: 680px;
+      background: var(--card-bg);
+      border: 1px solid rgba(245, 208, 97, 0.28);
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.8), 0 0 40px rgba(245, 208, 97, 0.06);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .checkout-header {
+      padding: 22px 28px;
+      background: rgba(11, 16, 30, 0.98);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(245, 208, 97, 0.15);
+      border: 1px solid var(--gold-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-primary);
+      font-size: 22px;
+    }
+
+    .brand-titles h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: #FFF;
+    }
+
+    .brand-titles p {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: rgba(245, 208, 97, 0.85);
+      margin-top: 2px;
+    }
+
+    .security-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: var(--emerald-neon);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .checkout-body {
+      padding: 26px 28px;
+    }
+
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .tier-btn {
+      padding: 12px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.03);
+      color: #CBD5E1;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .tier-btn.active {
+      border: 1px solid var(--gold-primary);
+      background: rgba(245, 208, 97, 0.14);
+      color: var(--gold-primary);
+    }
+
+    .tier-btn .t-title {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+    }
+
+    .tier-btn .t-price {
+      font-size: 16px;
+      font-weight: 800;
+      color: #FFF;
+      margin-top: 3px;
+    }
+
+    .price-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(245,208,97,0.25);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 22px;
+    }
+
+    .price-banner .amount {
+      font-size: 28px;
+      font-weight: 900;
+      color: #FFF;
+    }
+
+    .payment-action-card {
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 22px;
+    }
+
+    .btn-deep-wallet {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #F5D061 0%, #D4A017 100%);
+      color: #030508;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 14px;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(245,208,97,0.3);
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 14px;
+      border: none;
+    }
+
+    .btn-deep-wallet:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(245,208,97,0.45);
+    }
+
+    .address-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(245,208,97,0.3);
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .address-code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--gold-primary);
+      word-break: break-all;
+      flex: 1;
+    }
+
+    .btn-copy {
+      background: rgba(245,208,97,0.15);
+      border: 1px solid rgba(245,208,97,0.4);
+      color: var(--gold-primary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .claim-form {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: #94A3B8;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: #FFF;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: var(--gold-primary);
+    }
+
+    .btn-submit-claim {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(16, 185, 129, 0.18);
+      border: 1px solid var(--emerald-neon);
+      color: var(--emerald-neon);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-submit-claim:hover {
+      background: rgba(16, 185, 129, 0.28);
+    }
+
+    .success-panel {
+      display: none;
+      text-align: center;
+      padding: 24px 16px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 16px;
+      margin-top: 18px;
+    }
+
+    .success-key {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--gold-primary);
+      background: rgba(0,0,0,0.7);
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(245,208,97,0.4);
+      margin: 14px 0;
+      word-break: break-all;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #94A3B8;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--gold-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="checkout-container">
+    <div class="checkout-header">
+      <div class="brand-wrap">
+        <div class="brand-icon">⚡</div>
+        <div class="brand-titles">
+          <h1>DON AURELIUS CHECKOUT</h1>
+          <p>SOVEREIGN NON-CUSTODIAL SETTLEMENT</p>
+        </div>
+      </div>
+      <div class="security-badge">
+        <span>🔒 256-BIT ENCRYPTED</span>
+      </div>
+    </div>
+
+    <div class="checkout-body">
+      <!-- Tier Selector -->
+      <div style="font-size: 11px; font-family: var(--font-mono); color: #94A3B8; margin-bottom: 8px; font-weight: 700;">SELECT SUBSCRIPTION TIER:</div>
+      <div class="tier-grid">
+        <button type="button" class="tier-btn" id="tier-btn-monthly" onclick="selectTier('monthly')">
+          <div class="t-title">MONTHLY</div>
+          <div class="t-price">$50</div>
+        </button>
+        <button type="button" class="tier-btn active" id="tier-btn-annual" onclick="selectTier('annual')">
+          <div class="t-title">ANNUAL (-25%)</div>
+          <div class="t-price">$450</div>
+        </button>
+        <button type="button" class="tier-btn" id="tier-btn-lifetime" onclick="selectTier('lifetime')">
+          <div class="t-title">LIFETIME</div>
+          <div class="t-price">$999</div>
+        </button>
+      </div>
+
+      <!-- Price Banner -->
+      <div class="price-banner">
+        <div>
+          <div style="font-size: 11px; font-family: var(--font-mono); color: #94A3B8;">TOTAL AMOUNT PAYABLE:</div>
+          <div style="display: flex; align-items: baseline; gap: 8px; margin-top: 2px;">
+            <span id="label-usdt" class="amount">$450.00</span>
+            <span style="font-size: 14px; font-weight: 800; color: var(--gold-primary); font-family: var(--font-mono);">USDT</span>
+            <span id="label-inr" style="font-size: 13px; color: #94A3B8; font-family: var(--font-mono); margin-left: 6px;">(≈ ₹39,999 INR)</span>
+          </div>
+        </div>
+        <span style="font-size: 11px; font-family: var(--font-mono); font-weight: 700; color: #10B981; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); padding: 4px 10px; border-radius: 999px;">NETWORK: TRC-20</span>
+      </div>
+
+      <!-- Payment Action Card -->
+      <div class="payment-action-card">
+        <div style="font-size: 11px; font-family: var(--font-mono); color: #94A3B8; margin-bottom: 10px; font-weight: 700;">STEP 1: PAY VIA TETHER WALLET OR SCANNER:</div>
+
+        <!-- 1-Click Mobile Wallet Launcher -->
+        <a id="btn-open-wallet" href="tron:TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs?token=USDT&amount=450" class="btn-deep-wallet">
+          🚀 Tap to Open in Tether / TronLink App
+        </a>
+
+        <!-- Copy Address -->
+        <div style="font-size: 11px; font-family: var(--font-mono); color: #94A3B8; margin-bottom: 6px;">OFFICIAL MERCHANT RECEIVING ADDRESS (TRC-20):</div>
+        <div class="address-box">
+          <code class="address-code" id="addr-text">TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs</code>
+          <button type="button" class="btn-copy" id="btn-copy-addr" onclick="copyAddress()">📋 COPY</button>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="https://tronscan.org/#/address/TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs" target="_blank" rel="noopener" style="font-size: 11px; font-family: var(--font-mono); color: #94A3B8; text-decoration: none; padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+            🔍 View on TronScan ↗
+          </a>
+          <span style="font-size: 11px; color: #94A3B8; font-family: var(--font-mono); display: inline-flex; align-items: center;">
+            ⚡ Average confirmation: ~45 seconds
+          </span>
+        </div>
+      </div>
+
+      <!-- Claim License Section -->
+      <div class="claim-form" id="claim-section">
+        <div style="font-size: 11px; font-family: var(--font-mono); color: #F5D061; margin-bottom: 12px; font-weight: 800;">STEP 2: CLAIM & INSTANTLY ACTIVATE LICENSE</div>
+        <form onsubmit="handleClaim(event)">
+          <div class="form-group">
+            <label for="inp-email">YOUR EMAIL ADDRESS</label>
+            <input type="email" id="inp-email" class="form-input" placeholder="trader@hedgefund.com" required>
+          </div>
+          <div class="form-group">
+            <label for="inp-account">YOUR METATRADER 5 ACCOUNT ID</label>
+            <input type="text" id="inp-account" class="form-input" placeholder="e.g. 113182919" required>
+          </div>
+          <div class="form-group">
+            <label for="inp-tx">TRANSACTION HASH (TxID) OR UPI REFERENCE (UTR)</label>
+            <input type="text" id="inp-tx" class="form-input" placeholder="e.g. 8a3f81e2b... or 12-digit UTR" required>
+          </div>
+          <button type="submit" class="btn-submit-claim" id="btn-submit">
+            <span>⚡ ACTIVATE MACHINE LICENSE NOW</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Success Screen -->
+      <div class="success-panel" id="success-panel">
+        <div style="font-size: 36px; margin-bottom: 8px;">👑</div>
+        <h2 style="font-size: 18px; font-weight: 800; color: #FFF; margin-bottom: 6px;">PAYMENT CLAIM PROCESSED!</h2>
+        <p style="font-size: 12px; color: #94A3B8; font-family: var(--font-mono);">Your cryptographic license key has been generated and dispatched:</p>
+        <div class="success-key" id="success-key-box">XAU-SAAS-A-XXXX-XXXX</div>
+        <button type="button" class="btn-copy" onclick="copyKey()" style="padding: 10px 18px; font-size: 12px; margin-bottom: 14px;">📋 COPY LICENSE KEY</button>
+        <p style="font-size: 11px; color: #CBD5E1; line-height: 1.6; font-family: var(--font-mono);">
+          Paste this key into your <code>.env</code> file under <code>DON_AURELIUS_LICENSE_KEY</code>.<br>
+          An admin verification alert has been pushed to our operations team.
+        </p>
+      </div>
+
+      <div style="text-align: center;">
+        <a href="index.html" class="back-link">← Back to Don Aurelius Terminal</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const MERCHANT_ADDR = 'TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs';
+    const BOT_TOKEN = '8612051079:AAFH-8pdVmlr0B3Xt6boAu_30NJ62d4OeXU';
+    const CHAT_ID = '8775976760';
+
+    const tiers = {
+      monthly: { usdt: 50, inr: '4,499', label: 'MONTHLY ($50 USDT)', prefix: 'XAU-MTH-' },
+      annual: { usdt: 450, inr: '39,999', label: 'ANNUAL ($450 USDT)', prefix: 'XAU-ANN-' },
+      lifetime: { usdt: 999, inr: '89,999', label: 'LIFETIME ($999 USDT)', prefix: 'XAU-LIFE-' }
+    };
+
+    let currentTier = 'annual';
+
+    function selectTier(tier) {
+      if (!tiers[tier]) tier = 'annual';
+      currentTier = tier;
+
+      ['monthly', 'annual', 'lifetime'].forEach(t => {
+        const btn = document.getElementById('tier-btn-' + t);
+        if (btn) btn.classList.toggle('active', t === tier);
+      });
+
+      const info = tiers[tier];
+      document.getElementById('label-usdt').textContent = '$' + info.usdt + '.00';
+      document.getElementById('label-inr').textContent = '(≈ ₹' + info.inr + ' INR)';
+      document.getElementById('btn-open-wallet').href = 'tron:' + MERCHANT_ADDR + '?token=USDT&amount=' + info.usdt;
+    }
+
+    function copyAddress() {
+      navigator.clipboard.writeText(MERCHANT_ADDR).then(() => {
+        const btn = document.getElementById('btn-copy-addr');
+        const orig = btn.innerHTML;
+        btn.innerHTML = '✓ COPIED!';
+        btn.style.color = '#10B981';
+        setTimeout(() => {
+          btn.innerHTML = orig;
+          btn.style.color = '#F5D061';
+        }, 2200);
+      });
+    }
+
+    function copyKey() {
+      const key = document.getElementById('success-key-box').textContent;
+      navigator.clipboard.writeText(key).then(() => {
+        alert('License key copied to clipboard!');
+      });
+    }
+
+    async function handleClaim(e) {
+      e.preventDefault();
+      const email = document.getElementById('inp-email').value.trim();
+      const account = document.getElementById('inp-account').value.trim();
+      const tx = document.getElementById('inp-tx').value.trim();
+      const btn = document.getElementById('btn-submit');
+
+      if (!email || !account || !tx) return;
+      btn.disabled = true;
+      btn.innerHTML = '<span>⚡ PROCESSING...</span>';
+
+      const rand = Math.random().toString(16).substring(2, 10).toUpperCase() + Math.random().toString(16).substring(2, 6).toUpperCase();
+      const licenseKey = tiers[currentTier].prefix + rand.substring(0, 4) + '-' + rand.substring(4, 8) + '-' + rand.substring(8, 12);
+
+      const cleanEmail = email.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      const cleanAccount = account.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      const cleanTx = tx.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+      const teleHtml = "🚨 <b>NEW WEB CHECKOUT PAYMENT CLAIM!</b>\n" +
+        "━━━━━━━━━━━━━━━━━━\n" +
+        "👑 <b>Tier:</b> " + tiers[currentTier].label + "\n" +
+        "💰 <b>Amount:</b> $" + tiers[currentTier].usdt + " USDT (≈ ₹" + tiers[currentTier].inr + " INR)\n" +
+        "👤 <b>Trader Email:</b> <code>" + cleanEmail + "</code>\n" +
+        "🔢 <b>MT5 Account:</b> <code>" + cleanAccount + "</code>\n" +
+        "🔗 <b>TxHash / UTR:</b> <code>" + cleanTx + "</code>\n" +
+        "🔑 <b>Issued Key:</b> <code>" + licenseKey + "</code>\n" +
+        "━━━━━━━━━━━━━━━━━━\n" +
+        "👉 <i>Processed via mobile checkout portal.</i>";
+
+      try {
+        await fetch("https://api.telegram.org/bot" + BOT_TOKEN + "/sendMessage", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: teleHtml,
+            parse_mode: "HTML",
+            reply_markup: {
+              inline_keyboard: [
+                [{ text: "🔍 Check My Tether Wallet (TronScan)", url: "https://tronscan.org/#/address/" + MERCHANT_ADDR }]
+              ]
+            }
+          })
+        });
+      } catch (err) {
+        console.warn("Telegram dispatch err:", err);
+      }
+
+      document.getElementById('claim-section').style.display = 'none';
+      document.getElementById('success-key-box').textContent = licenseKey;
+      document.getElementById('success-panel').style.display = 'block';
+    }
+
+    // Auto-select tier from URL query ?tier=monthly|annual|lifetime
+    const params = new URLSearchParams(window.location.search);
+    const urlTier = params.get('tier');
+    if (urlTier && tiers[urlTier]) {
+      selectTier(urlTier);
+    }
+  </script>
+</body>
+</html>
