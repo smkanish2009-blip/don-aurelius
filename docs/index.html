@@ -4934,7 +4934,7 @@ body {
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             <span>LEGAL</span>
           </button>
-          <button id="btn-open-commercial-license" class="dock-audio-btn" style="border-color: rgba(56,189,248,0.35); color: var(--titan-cyan);" title="Anti-Piracy Machine Binding & Commercial Gas Wallet">
+          <button id="btn-open-commercial-license" class="dock-audio-btn" onclick="openCheckoutModal('annual')" style="border-color: rgba(56,189,248,0.35); color: var(--titan-cyan);" title="Anti-Piracy Machine Binding & Commercial Gas Wallet">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             <span>LICENSE</span>
           </button>
@@ -4977,7 +4977,10 @@ body {
         <li><a href="#faq" class="mobile-nav-link">Executive FAQs</a></li>
         <li><a href="#terminal-access" class="mobile-nav-link">Access Whitelist</a></li>
       </ul>
-      <div style="margin: 16px 0; padding: 0 4px;">
+      <div style="margin: 16px 0; padding: 0 4px; display: flex; flex-direction: column; gap: 8px;">
+        <button onclick="openCheckoutModal('annual'); if(document.getElementById('btn-close-mobile-menu')) document.getElementById('btn-close-mobile-menu').click();" style="width: 100%; padding: 12px; font-size: 0.88rem; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(245,208,97,0.18); border: 1px solid #F5D061; color: #F5D061; font-weight: 700; border-radius: 12px; cursor: pointer; font-family: 'JetBrains Mono', monospace;">
+          <span>⚡ Instant License (USDT / INR)</span>
+        </button>
         <button id="btn-mobile-shortcuts-toggle" class="btn-apple-primary" style="width: 100%; padding: 12px; font-size: 0.88rem; display: flex; align-items: center; justify-content: center; gap: 8px;" aria-label="Show Keyboard Shortcuts">
           <span>Shortcuts Command Center</span> <kbd class="header-kbd-badge" style="margin-left: 4px;">⌘K</kbd>
         </button>
@@ -8508,16 +8511,20 @@ body {
           // Dispatch Telegram push notification directly to Kanish's phone
           const botToken = "8612051079:AAFH-8pdVmlr0B3Xt6boAu_30NJ62d4OeXU";
           const chatId = "8775976760";
-          const teleText = "🚨 *NEW LICENSE ACTIVATION CLAIM!*\n" +
+          const cleanEmail = email.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          const cleanAccount = account.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          const cleanTx = txHash.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+          const teleHtml = "🚨 <b>NEW LICENSE ACTIVATION CLAIM!</b>\n" +
             "━━━━━━━━━━━━━━━━━━\n" +
-            "👑 *Tier:* " + tierData[currentTier].label + "\n" +
-            "💰 *Amount:* $" + tierData[currentTier].usdt + " USDT (≈ ₹" + tierData[currentTier].inr + " INR)\n" +
-            "👤 *Trader Email:* `" + email + "`\n" +
-            "🔢 *MT5 Account:* `" + account + "`\n" +
-            "🔗 *TxHash:* `" + txHash + "`\n" +
-            "🔑 *Generated Key:* `" + generatedKey + "`\n" +
+            "👑 <b>Tier:</b> " + tierData[currentTier].label + "\n" +
+            "💰 <b>Amount:</b> $" + tierData[currentTier].usdt + " USDT (≈ ₹" + tierData[currentTier].inr + " INR)\n" +
+            "👤 <b>Trader Email:</b> <code>" + cleanEmail + "</code>\n" +
+            "🔢 <b>MT5 Account:</b> <code>" + cleanAccount + "</code>\n" +
+            "🔗 <b>TxHash / UTR:</b> <code>" + cleanTx + "</code>\n" +
+            "🔑 <b>Generated Key:</b> <code>" + generatedKey + "</code>\n" +
             "━━━━━━━━━━━━━━━━━━\n" +
-            "👉 Live on-chain verification in progress.";
+            "👉 <i>Instant license delivered to client browser. Verify funds in your Tether wallet.</i>";
 
           try {
             await fetch("https://api.telegram.org/bot" + botToken + "/sendMessage", {
@@ -8525,8 +8532,15 @@ body {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 chat_id: chatId,
-                text: teleText,
-                parse_mode: "Markdown"
+                text: teleHtml,
+                parse_mode: "HTML",
+                reply_markup: {
+                  inline_keyboard: [
+                    [
+                      { text: "🔍 Check My Tether Wallet (TronScan)", url: "https://tronscan.org/#/address/TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs" }
+                    ]
+                  ]
+                }
               })
             });
           } catch (err) {
