@@ -200,7 +200,7 @@ class TestPaymentAndLicensing(unittest.TestCase):
         )
         self.assertEqual(invoice.amount_usdt, 100.0)
         self.assertEqual(invoice.network, "TRC20")
-        self.assertTrue(invoice.deposit_address.startswith("TR7"))
+        self.assertTrue(invoice.deposit_address.startswith("T"))
 
         # Confirm on-chain deposit
         ok, msg = self.crypto_gw.confirm_payment(
@@ -402,6 +402,69 @@ class TestPaymentAndLicensing(unittest.TestCase):
         self.assertIn("XAU-IB-113182919", resp.json()["license_key"])
         app.state.lic_app.db.close()
 
+    def test_upi_invoice_and_utr_confirmation(self):
+        from licensing.gateway_upi import UPIGateway
+        upi_gw = UPIGateway(self.db, merchant_vpa="testmerchant@upi")
+
+        # 1. Create UPI Invoice
+        invoice = upi_gw.create_invoice(
+            user_email="mumbaitrader@dalalstreet.com",
+            tier=BillingTier.SAAS_MONTHLY,
+            mt5_account_id=113182919
+        )
+        self.assertEqual(invoice.amount_inr, 4499.0)
+        self.assertEqual(invoice.vpa, "testmerchant@upi")
+        self.assertTrue(invoice.upi_intent_uri.startswith("upi://pay?pa=testmerchant@upi"))
+
+        # 2. Test Invalid UTR rejection
+        ok, msg = upi_gw.submit_utr_claim(invoice.invoice_id, "short", "mumbaitrader@dalalstreet.com")
+        self.assertFalse(ok)
+
+        # 3. Test Valid 12-Digit UTR submission
+        valid_utr = "429188201948"
+        ok, msg = upi_gw.submit_utr_claim(invoice.invoice_id, valid_utr, "mumbaitrader@dalalstreet.com")
+        self.assertTrue(ok)
+
+        # 4. Confirm Payment & License Provisioning
+        ok, msg, lic_key = upi_gw.confirm_payment(
+            invoice_id=invoice.invoice_id,
+            utr_code=valid_utr,
+            amount_confirmed_inr=4499.0,
+            user_email="mumbaitrader@dalalstreet.com",
+            tier=BillingTier.SAAS_MONTHLY,
+            mt5_account_id=113182919
+        )
+        self.assertTrue(ok)
+        self.assertIsNotNone(lic_key)
+        self.assertTrue(lic_key.startswith("XAU-SAAS-"))
+
+        # 5. Anti-Replay Duplicate check
+        dup_ok, dup_msg = upi_gw.submit_utr_claim(invoice.invoice_id, valid_utr, "mumbaitrader@dalalstreet.com")
+        self.assertFalse(dup_ok)
+        self.assertIn("already been claimed", dup_msg)
+
+        # 6. Test REST API Endpoints via TestClient
+        app = create_app(self.db_path)
+        client = TestClient(app)
+
+        # Checkout endpoint for UPI
+        checkout_resp = client.post("/api/v1/billing/checkout", json={
+            "user_email": "delhitrader@propdesk.com",
+            "tier": "SAAS_ANNUAL",
+            "gateway": "INR_UPI"
+        })
+        self.assertEqual(checkout_resp.status_code, 200)
+        inv_data = checkout_resp.json()["invoice"]
+        self.assertEqual(inv_data["amount_inr"], 39999.0)
+
+        # Status polling endpoint
+        status_resp = client.get(f"/api/v1/billing/status?invoice_id={invoice.invoice_id}")
+        self.assertEqual(status_resp.status_code, 200)
+        self.assertEqual(status_resp.json()["status"], "COMPLETED")
+        self.assertEqual(status_resp.json()["license_key"], lic_key)
+        app.state.lic_app.db.close()
+
 
 if __name__ == "__main__":
     unittest.main()
+

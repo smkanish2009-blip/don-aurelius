@@ -41,6 +41,7 @@ from licensing.models import (
 )
 from licensing.gateway_stripe import StripeGateway
 from licensing.gateway_crypto import CryptoGateway
+from licensing.gateway_upi import UPIGateway
 from licensing.gateway_whop import WhopGateway
 from compliance.sovereign_legal_shield import TERMS_HASH, SHIELD_VERSION
 from telemetry.audit_vault import audit_vault
@@ -101,6 +102,7 @@ class LicensingApp:
         self.db = LicensingDatabase(db_path)
         self.stripe_gw = StripeGateway(self.db)
         self.crypto_gw = CryptoGateway(self.db)
+        self.upi_gw = UPIGateway(self.db)
         self.whop_gw = WhopGateway(self.db)
 
     def sign_entitlement(self,
@@ -292,8 +294,18 @@ class LicensingApp:
         except ValueError:
             return JSONResponse({"error": f"Invalid tier: {tier_str}"}, status_code=400)
 
-        if gateway_str == PaymentGateway.CRYPTO_USDT.value:
-            amount_usdt = float(gas_amount) if gas_amount else (50.0 if tier == BillingTier.SAAS_MONTHLY else 999.0)
+        if gateway_str in (PaymentGateway.CRYPTO_USDT.value, "CRYPTO", "USDT", "CRYPTO_USDT"):
+            if gas_amount:
+                amount_usdt = float(gas_amount)
+            elif tier == BillingTier.SAAS_MONTHLY:
+                amount_usdt = 50.0
+            elif tier == BillingTier.SAAS_ANNUAL:
+                amount_usdt = 450.0
+            elif tier == BillingTier.LIFETIME_PERPETUAL:
+                amount_usdt = 999.0
+            else:
+                amount_usdt = 50.0
+
             invoice = self.crypto_gw.create_invoice(
                 user_email=user_email,
                 tier=tier,
@@ -301,7 +313,19 @@ class LicensingApp:
                 network=body.get("network", "TRC20"),
                 mt5_account_id=mt5_account_id
             )
-            return JSONResponse({"gateway": "CRYPTO_USDT", "invoice": invoice.dict()})
+            inv_dict = invoice.model_dump() if hasattr(invoice, "model_dump") else invoice.dict()
+            return JSONResponse({"gateway": "CRYPTO_USDT", "invoice": inv_dict})
+
+        elif gateway_str in (PaymentGateway.INR_UPI.value, "UPI", "INR", "INR_UPI"):
+            invoice = self.upi_gw.create_invoice(
+                user_email=user_email,
+                tier=tier,
+                amount_inr=body.get("amount_inr"),
+                gas_amount_usd=float(gas_amount) if gas_amount else None,
+                mt5_account_id=mt5_account_id
+            )
+            inv_dict = invoice.model_dump() if hasattr(invoice, "model_dump") else invoice.dict()
+            return JSONResponse({"gateway": "INR_UPI", "invoice": inv_dict})
 
         else:
             # Default to Stripe
@@ -463,6 +487,93 @@ class LicensingApp:
             return JSONResponse({"success": True, "message": f"License '{license_key}' successfully revoked."})
         return JSONResponse({"error": "License not found or update failed"}, status_code=404)
 
+    async def claim_utr(self, request: Request) -> JSONResponse:
+        """Processes trader's 12-digit UTR payment claim for UPI and notifies Admin."""
+        try:
+            body = await request.json()
+        except Exception:
+            return JSONResponse({"error": "Invalid JSON"}, status_code=400)
+
+        invoice_id = body.get("invoice_id", "").strip()
+        utr_code = body.get("utr_code", "").strip()
+        user_email = body.get("user_email", "").strip()
+
+        if not invoice_id or not utr_code:
+            return JSONResponse({"error": "Missing invoice_id or utr_code"}, status_code=400)
+
+        ok, msg = self.upi_gw.submit_utr_claim(invoice_id, utr_code, user_email)
+        return JSONResponse({"success": ok, "message": msg}, status_code=200 if ok else 400)
+
+    async def get_payment_status(self, request: Request) -> JSONResponse:
+        """Allows website checkout modal to poll payment status and retrieve unlocked license key."""
+        invoice_id = request.query_params.get("invoice_id", "").strip()
+        if not invoice_id:
+            return JSONResponse({"error": "Missing invoice_id parameter"}, status_code=400)
+
+        tx = self.db.get_payment(invoice_id)
+        if not tx:
+            return JSONResponse({"found": False, "status": "NOT_FOUND"}, status_code=404)
+
+        licenses = self.db.get_licenses_by_email(tx["user_email"])
+        matching = next((l for l in licenses if l.tier.value == tx["tier"]), None)
+        license_key = matching.license_key if matching else None
+
+        return JSONResponse({
+            "found": True,
+            "transaction_id": tx["transaction_id"],
+            "status": tx["status"],
+            "gateway": tx["gateway"],
+            "amount_usd": tx["amount_usd"],
+            "tier": tx["tier"],
+            "license_key": license_key
+        })
+
+    async def admin_approve_payment(self, request: Request) -> JSONResponse:
+        """Protected Admin Route: Approves a payment and immediately provisions the license."""
+        if not self._verify_admin(request):
+            return JSONResponse({"error": "Unauthorized: Invalid or missing X-Admin-Key"}, status_code=401)
+
+        try:
+            body = await request.json()
+        except Exception:
+            return JSONResponse({"error": "Invalid JSON"}, status_code=400)
+
+        invoice_id = body.get("invoice_id", "").strip()
+        ref_code = body.get("reference_code", invoice_id).strip()
+        mt5_account_id = body.get("mt5_account_id")
+
+        tx = self.db.get_payment(invoice_id)
+        if not tx:
+            return JSONResponse({"error": f"Invoice '{invoice_id}' not found."}, status_code=404)
+
+        tier = BillingTier(tx["tier"])
+        user_email = tx["user_email"]
+
+        if tx["gateway"] == PaymentGateway.INR_UPI.value:
+            amount_inr = body.get("amount_inr", float(tx["amount_usd"]) * self.upi_gw.USD_TO_INR_RATE)
+            ok, msg, lic_key = self.upi_gw.confirm_payment(
+                invoice_id=invoice_id,
+                utr_code=ref_code,
+                amount_confirmed_inr=float(amount_inr),
+                user_email=user_email,
+                tier=tier,
+                mt5_account_id=int(mt5_account_id) if mt5_account_id else None
+            )
+        else:
+            amount_usdt = float(tx["amount_usd"])
+            ok, msg = self.crypto_gw.confirm_payment(
+                invoice_id=invoice_id,
+                tx_hash=ref_code,
+                amount_confirmed_usdt=amount_usdt,
+                user_email=user_email,
+                tier=tier,
+                mt5_account_id=int(mt5_account_id) if mt5_account_id else None
+            )
+            matching = next((l for l in self.db.get_licenses_by_email(user_email) if l.tier == tier), None)
+            lic_key = matching.license_key if matching else None
+
+        return JSONResponse({"success": ok, "message": msg, "license_key": lic_key})
+
     async def health(self, request: Request) -> JSONResponse:
         return JSONResponse({
             "status": "healthy",
@@ -478,6 +589,8 @@ def create_app(db_path: str = "data/entitlement.db") -> Starlette:
         Route("/api/v1/license/validate", lic_app.validate_license, methods=["POST"]),
         Route("/api/v1/license/activate", lic_app.activate_license, methods=["POST"]),
         Route("/api/v1/billing/checkout", lic_app.create_checkout, methods=["POST"]),
+        Route("/api/v1/billing/claim-utr", lic_app.claim_utr, methods=["POST"]),
+        Route("/api/v1/billing/status", lic_app.get_payment_status, methods=["GET"]),
         Route("/api/v1/webhooks/stripe", lic_app.webhook_stripe, methods=["POST"]),
         Route("/api/v1/webhooks/crypto", lic_app.webhook_crypto, methods=["POST"]),
         Route("/api/v1/webhooks/whop", lic_app.webhook_whop, methods=["POST"]),
@@ -485,6 +598,7 @@ def create_app(db_path: str = "data/entitlement.db") -> Starlette:
         # Protected Admin Endpoints
         Route("/api/v1/admin/licenses", lic_app.admin_list_licenses, methods=["GET"]),
         Route("/api/v1/admin/license/revoke", lic_app.admin_revoke_license, methods=["POST"]),
+        Route("/api/v1/admin/payment/approve", lic_app.admin_approve_payment, methods=["POST"]),
     ]
 
     # Explicit CORS Whitelist

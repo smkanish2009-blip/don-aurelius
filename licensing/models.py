@@ -27,6 +27,7 @@ class LicenseStatus(str, Enum):
 class PaymentGateway(str, Enum):
     STRIPE = "STRIPE"
     CRYPTO_USDT = "CRYPTO_USDT"
+    INR_UPI = "INR_UPI"
     WHOP = "WHOP"
     IB_AFFILIATE = "IB_AFFILIATE"
 
@@ -85,3 +86,18 @@ class CryptoInvoice(BaseModel):
     status: PaymentStatus = PaymentStatus.PENDING
     expires_at: str
     created_at: str
+
+
+class UPIInvoice(BaseModel):
+    invoice_id: str
+    user_email: str
+    tier: BillingTier
+    amount_inr: float
+    amount_usd: float
+    vpa: str
+    merchant_name: str = "Don Aurelius AI"
+    upi_intent_uri: str
+    status: PaymentStatus = PaymentStatus.PENDING
+    expires_at: str
+    created_at: str
+

@@ -320,6 +320,14 @@ class LicensingDatabase:
             conn.commit()
         return True
 
+    def get_payment(self, transaction_id: str) -> Optional[Dict[str, Any]]:
+        conn = self._get_connection()
+        cursor = conn.execute("SELECT * FROM payment_transactions WHERE transaction_id = ?", (transaction_id,))
+        row = cursor.fetchone()
+        if not row:
+            return None
+        return dict(row)
+
     def log_audit(self, event_type: str, license_key: Optional[str], details: str) -> None:
         try:
             conn = self._get_connection()

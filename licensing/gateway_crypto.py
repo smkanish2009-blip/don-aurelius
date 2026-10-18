@@ -7,6 +7,7 @@ Handles:
 4. Cryptographic webhook verification and replay protection.
 """
 
+import os
 import time
 import hmac
 import hashlib
@@ -23,9 +24,9 @@ logger = logging.getLogger("CryptoGateway")
 class CryptoGateway:
     # Production hot-wallet deposit addresses (configurable via environment)
     DEFAULT_DEPOSIT_ADDRESSES = {
-        "TRC20": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",  # USDT TRC20 merchant master
-        "BEP20": "0x55d398326f99059fF775485246999027B3197955",  # Binance-Peg USDT
-        "ERC20": "0xdAC17F958D2ee523a2206206994597C13D831ec7"   # Tether USD Ethereum
+        "TRC20": os.environ.get("MERCHANT_USDT_TRC20_ADDRESS", "TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs"),  # User Mobile Tether TRC20
+        "BEP20": os.environ.get("MERCHANT_USDT_BEP20_ADDRESS", "0x55d398326f99059fF775485246999027B3197955"),
+        "ERC20": os.environ.get("MERCHANT_USDT_ERC20_ADDRESS", "0xdAC17F958D2ee523a2206206994597C13D831ec7")
     }
 
     def __init__(self,
