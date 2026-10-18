@@ -8239,8 +8239,9 @@ body {
             <!-- Master Deposit Stage (QR Code + Address + Deep Link) -->
             <div style="display: grid; grid-template-columns: 160px 1fr; gap: 20px; align-items: center; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 18px; margin-bottom: 22px;">
               <!-- Dynamic QR Code -->
-              <div style="background: #FFF; padding: 10px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.5);">
-                <img id="checkout-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=0&data=tron:TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs?token=USDT&amount=450" alt="USDT TRC20 Deposit QR" style="width: 140px; height: 140px; display: block; border-radius: 6px;">
+              <div style="background: #FFF; padding: 12px; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,0,0,0.5); text-align: center;">
+                <img id="checkout-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&margin=0&data=TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs" alt="USDT TRC20 Universal Deposit QR" style="width: 140px; height: 140px; display: block; border-radius: 6px;">
+                <span style="font-size: 10px; font-family: 'JetBrains Mono', monospace; color: #030508; font-weight: 800; margin-top: 6px; letter-spacing: 0.05em;">TRC-20 ADDRESS</span>
               </div>
 
               <!-- Address Details & Actions -->
@@ -8252,13 +8253,16 @@ body {
                     📋 COPY
                   </button>
                 </div>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
                   <a id="link-tron-wallet" href="tron:TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs?token=USDT&amount=450" style="font-size: 11px; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #38BDF8; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 8px; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3);">
                     🚀 Open in Mobile Tether / TronLink
                   </a>
-                  <span style="font-size: 11px; color: #94A3B8; display: inline-flex; align-items: center;">
-                    ⚡ Estimated fee: ~$1.20 | Confirmation: ~45 sec
-                  </span>
+                  <a href="https://tronscan.org/#/address/TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs" target="_blank" rel="noopener" style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #94A3B8; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
+                    🔍 View on TronScan ↗
+                  </a>
+                </div>
+                <div style="font-size: 11px; color: #94A3B8; line-height: 1.5; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 8px 12px; border-left: 2px solid #F5D061;">
+                  💡 <strong>How to Scan:</strong> Open your <strong>Tether app</strong>, <strong>Binance</strong>, or <strong>Trust Wallet</strong>, tap <em>Send / Withdraw USDT</em>, and scan this QR code with the in-app scanner. Or scan with your phone camera to copy the address!
                 </div>
               </div>
             </div>
@@ -8434,12 +8438,12 @@ body {
           if (amountUsdtEl) amountUsdtEl.textContent = '$' + info.usdt + '.00';
           if (amountInrEl) amountInrEl.textContent = '(≈ ₹' + info.inr + ' INR)';
           
-          const qrData = 'tron:' + MERCHANT_USDT_ADDR + '?token=USDT&amount=' + info.usdt;
+          // Universal TRC-20 Address QR (100% compatible with phone cameras, Google Lens & in-wallet scanners)
           if (qrImgEl) {
-            qrImgEl.src = 'https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=0&data=' + encodeURIComponent(qrData);
+            qrImgEl.src = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&margin=0&data=' + encodeURIComponent(MERCHANT_USDT_ADDR);
           }
           if (tronWalletLink) {
-            tronWalletLink.href = qrData;
+            tronWalletLink.href = 'tron:' + MERCHANT_USDT_ADDR + '?token=USDT&amount=' + info.usdt;
           }
         };
 
