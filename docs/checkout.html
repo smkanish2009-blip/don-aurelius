@@ -383,10 +383,22 @@
       <div class="payment-action-card">
         <div style="font-size: 11px; font-family: var(--font-mono); color: #94A3B8; margin-bottom: 10px; font-weight: 700;">STEP 1: PAY VIA TETHER WALLET OR SCANNER:</div>
 
-        <!-- 1-Click Mobile Wallet Launcher -->
-        <a id="btn-open-wallet" href="tron:TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs?token=USDT&amount=450" class="btn-deep-wallet">
-          🚀 Tap to Open in Tether / TronLink App
-        </a>
+        <!-- 1-Click Mobile Wallet Launcher with Smart Copy -->
+        <button id="btn-open-wallet" type="button" onclick="handleWalletPay()" class="btn-deep-wallet">
+          <span>🚀 Tap to Pay with Tether / Crypto Wallet</span>
+        </button>
+
+        <!-- Payment Instructions Banner (revealed on tap) -->
+        <div id="wallet-pay-guide" style="display: none; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; font-size: 12px; line-height: 1.6;">
+          <div style="font-weight: 800; color: #10B981; margin-bottom: 6px; font-size: 13px;">✅ ADDRESS COPIED TO YOUR CLIPBOARD!</div>
+          <p style="color: #F8FAFC; margin-bottom: 8px;">Follow these 3 quick steps to complete your payment:</p>
+          <ol style="padding-left: 20px; color: #CBD5E1; display: flex; flex-direction: column; gap: 4px;">
+            <li>Switch to your <strong>Tether app</strong> (or Binance / Trust Wallet).</li>
+            <li>Tap <strong>Send</strong> → Select <strong>USD₮ on Tron (TRC-20)</strong>.</li>
+            <li>Paste your clipboard into the address field and send <strong id="guide-amount">$450.00 USDT</strong>.</li>
+            <li>Once sent, copy your Transaction Hash (TxID) and paste it below in <strong>Step 2</strong> to receive your license key!</li>
+          </ol>
+        </div>
 
         <!-- Copy Address -->
         <div style="font-size: 11px; font-family: var(--font-mono); color: #94A3B8; margin-bottom: 6px;">OFFICIAL MERCHANT RECEIVING ADDRESS (TRC-20):</div>
@@ -471,7 +483,31 @@
       const info = tiers[tier];
       document.getElementById('label-usdt').textContent = '$' + info.usdt + '.00';
       document.getElementById('label-inr').textContent = '(≈ ₹' + info.inr + ' INR)';
-      document.getElementById('btn-open-wallet').href = 'tron:' + MERCHANT_ADDR + '?token=USDT&amount=' + info.usdt;
+      const guideAmount = document.getElementById('guide-amount');
+      if (guideAmount) guideAmount.textContent = '$' + info.usdt + '.00 USDT';
+    }
+
+    function handleWalletPay() {
+      navigator.clipboard.writeText(MERCHANT_ADDR).then(() => {
+        const btn = document.getElementById('btn-open-wallet');
+        const guide = document.getElementById('wallet-pay-guide');
+        const guideAmount = document.getElementById('guide-amount');
+        if (guideAmount) guideAmount.textContent = '$' + tiers[currentTier].usdt + '.00 USDT';
+        if (guide) guide.style.display = 'block';
+        if (btn) {
+          btn.innerHTML = '<span>✓ ADDRESS COPIED! (SEE STEPS BELOW)</span>';
+          btn.style.background = '#10B981';
+          btn.style.color = '#FFFFFF';
+        }
+      }).catch(() => {
+        const guide = document.getElementById('wallet-pay-guide');
+        if (guide) guide.style.display = 'block';
+      });
+
+      try {
+        const deepUri = 'tron:' + MERCHANT_ADDR + '?token=USDT&amount=' + tiers[currentTier].usdt;
+        window.location.href = deepUri;
+      } catch (e) {}
     }
 
     function copyAddress() {

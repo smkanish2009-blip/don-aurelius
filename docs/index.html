@@ -8270,9 +8270,9 @@ body {
                   <a id="link-web-checkout" href="checkout.html?tier=annual" target="_blank" style="font-size: 11px; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #10B981; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 8px; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.35);">
                     ⚡ Open Payment Processor ↗
                   </a>
-                  <a id="link-tron-wallet" href="tron:TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs?token=USDT&amount=450" style="font-size: 11px; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #38BDF8; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 8px; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3);">
-                    🚀 Open in Tether App
-                  </a>
+                  <button id="link-tron-wallet" type="button" onclick="handleWalletPayModal()" style="font-size: 11px; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #38BDF8; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 8px; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3); cursor: pointer; transition: all 0.2s;">
+                    🚀 Pay with Tether App
+                  </button>
                   <a href="https://tronscan.org/#/address/TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs" target="_blank" rel="noopener" style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #94A3B8; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
                     🔍 TronScan ↗
                   </a>
@@ -8510,7 +8510,31 @@ body {
                 }, 2200);
               }
             });
-          }
+        };
+
+        window.handleWalletPayModal = function() {
+          navigator.clipboard.writeText(MERCHANT_USDT_ADDR).then(function() {
+            const btn = document.getElementById('link-tron-wallet');
+            const tip = document.getElementById('checkout-scan-tip');
+            if (btn) {
+              btn.innerHTML = '✓ ADDRESS COPIED!';
+              btn.style.color = '#10B981';
+              btn.style.borderColor = '#10B981';
+              setTimeout(function() {
+                btn.innerHTML = '🚀 Pay with Tether App';
+                btn.style.color = '#38BDF8';
+                btn.style.borderColor = 'rgba(56,189,248,0.3)';
+              }, 4000);
+            }
+            if (tip) {
+              tip.innerHTML = '✅ <strong>Address Copied:</strong> <code>TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs</code><br>👉 Open your <strong>Tether app</strong>, tap <em>Send</em> → select <em>USD₮ on Tron</em>, paste this address and transfer $' + tierData[currentTier].usdt + ' USDT.';
+              tip.style.borderColor = '#10B981';
+              tip.style.background = 'rgba(16,185,129,0.15)';
+            }
+          });
+          try {
+            window.location.href = 'tron:' + MERCHANT_USDT_ADDR + '?token=USDT&amount=' + tierData[currentTier].usdt;
+          } catch(e) {}
         };
 
         window.toggleIndiaGuide = function() {
