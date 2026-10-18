@@ -204,10 +204,10 @@
 
     init() {
       this.canvas = document.getElementById('stage-3d-canvas');
-      if (!this.canvas || typeof THREE === 'undefined') {
-        console.warn('Three.js or stage-3d-canvas not ready for Apple 3D Engine.');
+      if (!this.canvas || typeof THREE === 'undefined' || this.canvas.dataset.hasEngine) {
         return;
       }
+      this.canvas.dataset.hasEngine = 'true';
 
       this.setupContainer();
       this.setupScene();
