@@ -1,32 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://smkanish2009-blip.github.io/don-aurelius/</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://smkanish2009-blip.github.io/don-aurelius/assets/og-image.png</image:loc>
+      <image:title>Don Aurelius Sovereign AI Quantitative Syndicate &amp; Genesis Suite</image:title>
+      <image:caption>Autonomous multi-agent algorithmic trading intelligence for spot Gold (XAUUSD) on MetaTrader 5</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://smkanish2009-blip.github.io/don-aurelius/assets/don_aurelius.jpg</image:loc>
+      <image:title>Don Aurelius Official Emblem</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://smkanish2009-blip.github.io/don-aurelius/checkout.html</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://smkanish2009-blip.github.io/don-aurelius/privacy-policy.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://smkanish2009-blip.github.io/don-aurelius/terms.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://smkanish2009-blip.github.io/don-aurelius/cookie-policy.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://smkanish2009-blip.github.io/don-aurelius/refund-policy.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

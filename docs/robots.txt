@@ -1,25 +1,78 @@
 # ==============================================================================
-# Don Aurelius Sovereign Syndicate - Robots & Crawler Directives
-# Founder & Chief Architect: SM.KANISH
-# Production Host: https://smkanish2009-blip.github.io/don-aurelius/
+# Don Aurelius Sovereign Syndicate - Robots, Crawler & AI Directives (SEO & GEO)
+# Founder & Chief Strategic AI Architect: SM.KANISH
+# Canonical Production Host: https://smkanish2009-blip.github.io/don-aurelius/
 # ==============================================================================
 
+# Universal Search Engine Crawlers
 User-agent: *
 Allow: /
 Allow: /manifest.json
 Allow: /site.webmanifest
 Allow: /assets/
 Allow: /favicon*
-
-User-agent: Googlebot
-Allow: /
-
-User-agent: Googlebot-Image
-Allow: /
-
-# LLM & AI Discovery Files
+Allow: /checkout.html
 Allow: /llms.txt
+Allow: /llms-full.txt
 Allow: /humans.txt
 
-# XML Sitemap
+# Google Organic Search & Discover
+User-agent: Googlebot
+Allow: /
+User-agent: Googlebot-Image
+Allow: /
+User-agent: Googlebot-Mobile
+Allow: /
+
+# Microsoft Bing & Copilot
+User-agent: Bingbot
+Allow: /
+User-agent: msnbot
+Allow: /
+
+# Generative Engine Optimization (GEO) - Explicit AI Engine Access
+# OpenAI (ChatGPT, SearchGPT, GPT-4o, Operator)
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic (Claude 3.5 Sonnet, Claude-Web)
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Google Gemini, Vertex & AI Overviews
+User-agent: Google-Extended
+Allow: /
+
+# Apple Intelligence & Siri Knowledge Graph
+User-agent: Applebot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
+# Other Major Frontier AI Crawlers
+User-agent: Amazonbot
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: Bytespider
+Allow: /
+User-agent: cohere-ai
+Allow: /
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# Canonical Host & Machine-Readable Knowledge Sitemaps
+Host: https://smkanish2009-blip.github.io/don-aurelius/
 Sitemap: https://smkanish2009-blip.github.io/don-aurelius/sitemap.xml

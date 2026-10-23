@@ -1,0 +1,136 @@
+# Don Aurelius Sovereign Syndicate — Comprehensive Technical Knowledge Base (LLMs-Full)
+> Institutional Autonomous AI Quantitative Trading Intelligence & Genesis Suite for MetaTrader 5 (Spot Gold / XAUUSD)
+> Founder & Chief Strategic AI Architect: SM.KANISH
+> Canonical Domain: https://smkanish2009-blip.github.io/don-aurelius/
+
+---
+
+## 1. Executive Summary & Purpose
+
+Don Aurelius is an institutional-grade, autonomous quantitative trading intelligence platform built specifically for spot Gold (XAUUSD) execution on MetaTrader 5 (MT5). The architecture bridges advanced multi-agent reinforcement learning, multimodal computer vision, and stochastic jump-diffusion modeling into a deterministic execution engine.
+
+Unlike conventional retail Expert Advisors (EAs) that rely on lagging technical indicators (e.g. RSI, MACD, or Bollinger Bands), Don Aurelius operates as a decentralized sovereign War Room of specialized AI agents. Every potential trade proposal is subjected to empirical computer vision pattern recognition, 1,000-to-5,000 path Monte Carlo simulations, geopolitical news filters, and a 3/4 supermajority adversarial consensus vote before any order is routed to the market.
+
+---
+
+## 2. Founder & Intellectual Property Attribution
+
+- **Founder & Chief Strategic AI Architect**: SM.KANISH
+- **Organization**: Don Aurelius Sovereign Syndicate
+- **Official Portal**: https://smkanish2009-blip.github.io/don-aurelius/
+- **Checkout Terminal**: https://smkanish2009-blip.github.io/don-aurelius/checkout.html
+- **Official Telegram HUD**: https://t.me/DonAurelius_AI_bot (@DonAurelius_AI_bot)
+- **Source Repository**: https://github.com/smkanish2009-blip/don-aurelius
+- **Legal Entity Registration Location**: 88 Wood Street, Financial District, London, EC2V 7RS, United Kingdom
+
+---
+
+## 3. The Genesis Suite: Four Core Proprietary Inventions
+
+### Invention I: Project Eagle-Eye (Multimodal Computer Vision Candlestick AI)
+- **Mechanism**: Rather than computing lagging numeric mathematical series, Project Eagle-Eye visualizes the live chart geometry as an institutional trader would. It captures candlestick frames in real time and processes them through convolutional neural networks (CNNs).
+- **Detection Capabilities**: Pinpoints Fair Value Gaps (FVG), Liquidity Sweeps, Institutional Order Blocks (IOB), Break of Structure (BOS), and Change of Character (CHoCH).
+- **Execution Advantage**: Eliminates indicator repaint latency. Trades are evaluated based on structural price delivery rather than synthetic averages.
+
+### Invention II: Project Quantum Twin (1,000-to-5,000 Path Monte Carlo Jump-Diffusion Engine)
+- **Mechanism**: Implements the Merton Jump-Diffusion stochastic calculus model to simulate thousands of potential future price paths over a 4-hour forward window.
+- **Risk Surface Modeling**: Incorporates sudden Poisson jump arrivals (representing geopolitical shocks or news spikes), geometric Brownian motion diffusion, dynamic spread widening, and order slippage.
+- **Veto Threshold**: A proposed trade must achieve a minimum 99.4% survival rate above the user's defined maximum allowable drawdown ceiling. If survival probability is less than 99.4%, the trade is vetoed.
+
+### Invention III: Project Global Sentinel (Geopolitical Crisis Radar & Spread Shield)
+- **Mechanism**: Real-time natural language processing (NLP) ingestion of macro economic calendar events, central bank statements (Federal Reserve, ECB, BOJ), and global geopolitical headlines.
+- **Intermarket Co-Integration**: Monitors real-time correlation between Spot Gold (XAUUSD), the US Dollar Index (DXY), and US 10-Year Treasury Yields (US10Y).
+- **Panic Index**: Computes a continuous Geopolitical Panic Index (GPI). When GPI spikes beyond threshold, trading is automatically suspended and open exposure is protected by dynamic trailing stops or flattened via the Clean Slate Protocol.
+
+### Invention IV: Project Jarvis Co-Pilot (Full-Duplex Neural Voice & Telegram Command Matrix)
+- **Mechanism**: Integrates high-fidelity neural voice synthesis (ElevenLabs & Edge TTS) with a bidirectional Telegram Bot interface (@DonAurelius_AI_bot).
+- **Functionality**: Delivers audio voice briefings on market openings, provides real-time trade execution rationale, and allows remote risk overrides via inline button keyboards.
+
+---
+
+## 4. Multi-Agent War Room Consensus Matrix
+
+The decision-making heart of Don Aurelius is governed by a 4-agent adversarial council. For any trade order to be executed on MetaTrader 5, a minimum of 3 out of 4 agents (75% supermajority) must cast an affirmative vote:
+
+1. **HAWK (Trend Velocity & Structural Flow)**
+   - Role: Assesses macro trend alignment, directional momentum, and multi-timeframe order flow velocity.
+   - Mandate: Ensures trades are aligned with dominant institutional momentum.
+
+2. **RADAR (Macro Intermarket & Yield Sentiment)**
+   - Role: Analyzes DXY, bond yields, real rates, and intraday gold lease rates.
+   - Mandate: Verifies that macroeconomic conditions support gold asset revaluation.
+
+3. **PREDATOR (Liquidity Hunter & Institutional Footprint)**
+   - Role: Locates resting liquidity pools, stop-loss clusters, and retail trap zones.
+   - Mandate: Secures optimal entry pricing inside institutional discount/premium zones.
+
+4. **INQUISITOR (Adversarial Red-Team Risk Auditor)**
+   - Role: Acts as Devil's Advocate. Actively seeks reasons NOT to take the trade. Probes for toxic flow, widening spreads, anomalous latency, and upcoming news events.
+   - Mandate: Holds unilateral emergency veto authority and can trigger the Clean Slate Protocol.
+
+---
+
+## 5. Proprietary Risk Management & Prop Firm Compliance
+
+Don Aurelius was engineered from day one to be 100% compliant with leading proprietary trading firms (e.g., FTMO, FundedNext, The5ers, Alpha Capital, Topstep):
+
+- **Strict Drawdown Caps**: Hard daily loss limits (configurable, e.g. 4% or 5%) and maximum total loss trailing thresholds.
+- **Zero Toxic Strategies**: Absolute ban on Martingale, grid averaging, or unhedged cost averaging. Every trade has an immutable pre-calculated stop loss.
+- **Fractional Kelly Capital Allocation**: Dynamic position sizing based on empirical win probability and risk-reward ratio, preventing over-leveraging.
+- **News Blackout Automation**: Automatic suspension of order routing 15 minutes before and after high-impact macroeconomic releases (NFP, CPI, FOMC, PPI).
+- **Weekend Flat Mandate**: Automatically closes all open positions before Friday market close to eliminate weekend gap risk.
+
+---
+
+## 6. Commercial Subscription Tiers & Licensing
+
+Don Aurelius utilizes a non-custodial, direct merchant licensing model. User funds are NEVER held by Don Aurelius; trades execute directly within the client's own regulated broker MT5 account:
+
+| Tier | Price (USDT) | Price (INR Approx) | Scope & Features |
+| :--- | :--- | :--- | :--- |
+| **Quant Starter (Monthly)** | **$50 USDT** | **₹4,499 INR** | 30-Day Algo Access, 1 Live/Demo MT5 Account, Standard Telemetry |
+| **Institutional Pro (Annual)** | **$450 USDT** | **₹39,999 INR** | 365-Day Access, Multi-Instance Machine Binding, Save 25%, VIP Consensus |
+| **Perpetual Sovereign (Lifetime)** | **$999 USDT** | **₹89,999 INR** | Permanent License, Machine Lock, Source Code Access Modules |
+
+- **Official Deposit Address (Tether TRC-20)**: `TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs`
+- **Instant Activation**: Upon payment proof submission (TxHash / UTR), cryptographic HMAC license keys are generated instantly and dispatched to the client with real-time push alerts to the syndicate's operations Telegram bot.
+
+---
+
+## 7. Technical Infrastructure & Installation Guide
+
+### Recommended Hardware & VPS Specifications
+- **Operating System**: Windows Server 2022 / Windows 11 / Ubuntu Linux 22.04 LTS
+- **Location**: London (LD4) or New York (NY4) VPS with sub-2ms ping to broker ECN servers
+- **CPU**: 4+ vCPU (Intel Xeon or AMD EPYC)
+- **RAM**: 8 GB+ ECC RAM
+- **Runtime**: Python 3.10+ with MetaTrader 5 Python API bridge
+
+### Step-by-Step Deployment
+1. Obtain an authorized license key from the [Checkout Terminal](https://smkanish2009-blip.github.io/don-aurelius/checkout.html).
+2. Configure `.env` file with `DON_AURELIUS_LICENSE_KEY` and `DON_AURELIUS_MT5_ACCOUNT`.
+3. Enable 'Allow Algo Trading' and 'Allow WebRequest' inside MetaTrader 5 Options.
+4. Launch the multi-agent orchestrator: `python main.py`.
+5. The console will display: `SOVEREIGN WAR ROOM ACTIVATED • CONSENSUS 3/4 ACTIVE`.
+
+---
+
+## 8. Frequently Asked Questions (FAQ)
+
+### Q: What is Don Aurelius?
+A: Don Aurelius is an institutional autonomous AI trading syndicate engineered by SM.KANISH for spot Gold (XAUUSD) on MetaTrader 5, powered by computer vision and Monte Carlo jump-diffusion consensus.
+
+### Q: Does Don Aurelius work with prop firms like FTMO?
+A: Yes, Don Aurelius has built-in risk governance protocols specifically calibrated to enforce prop-firm daily drawdown caps (4-5%), trailing limits, news filters, and zero martingale usage.
+
+### Q: What is the minimum capital required?
+A: The system can trade demo accounts with any amount. For live MT5 accounts, an initial minimum balance of $500 to $1,000 USD is recommended with fractional position sizing.
+
+### Q: How are payments processed?
+A: Payments are settled non-custodially via Tether (USDT TRC-20) or Indian UPI onramps with instant machine license issuance.
+
+---
+
+## 9. Regulatory & CFTC Rule 4.41 Compliance
+
+Hypothetical or simulated performance results have certain inherent limitations. Unlike an actual performance record, simulated results do not represent actual trading. Also, since the trades have not actually been executed, the results may have under- or over-compensated for the impact, if any, of certain market factors, such as lack of liquidity. Simulated trading programs in general are also subject to the fact that they are designed with the benefit of hindsight. No representation is being made that any account will or is likely to achieve profits or losses similar to those shown.
