@@ -1,0 +1,24 @@
+================================================================================
+DON AURELIUS • OFFICIAL MQL5 MARKET & SIGNALS METADATA (SEO #1 RANK FORMULA)
+================================================================================
+
+1. EXACT PRODUCT TITLE (Enter this in MQL5 Market Title):
+Don Aurelius • Institutional AI Gold Trading Bot (XAUUSD)
+
+2. EXACT SIGNAL NAME (Enter this in MQL5 Signals Name):
+Don Aurelius AI Gold
+
+3. SHORT TAGLINE (150 Chars):
+Autonomous multi-agent quantitative AI execution engine for Spot Gold (XAUUSD) on MetaTrader 5. Engineered by SM.KANISH.
+
+4. CATEGORY:
+Experts -> Trend / Scalping
+
+5. KEYWORDS & TAGS (Copy & Paste into MQL5 Tag input):
+Don Aurelius, XAUUSD, Gold, AI, MetaTrader 5, Quantitative, Neural Network, Prop Firm, FTMO, HAWK RADAR, Zero Martingale, SM Kanish
+
+6. AUTHOR ATTRIBUTION:
+SM.KANISH (Founder & Chief Strategic AI Architect)
+
+7. OFFICIAL AUDIT LINK:
+https://smkanish2009-blip.github.io/don-aurelius/forward-test.html

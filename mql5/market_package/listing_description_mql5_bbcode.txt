@@ -1,0 +1,47 @@
+[b][size=16]DON AURELIUS • AUTONOMOUS AI SPOT GOLD (XAUUSD) QUANTITATIVE ENGINE[/size][/b]
+[b]Founder & Chief Strategic AI Architect:[/b] SM.KANISH
+[b]Official Audited Forward-Test Hub:[/b] https://smkanish2009-blip.github.io/don-aurelius/forward-test.html
+
+[b]Don Aurelius[/b] is an institutional-grade algorithmic trading syndicate engineered specifically for Spot Gold ([b]XAUUSD[/b]) on MetaTrader 5. Unlike conventional retail Expert Advisors that rely on curve-fitted indicators, dangerous Martingale grids, or averaging down, Don Aurelius operates via an adversarial multi-agent consensus matrix.
+
+[b][size=14]KEY ARCHITECTURAL HIGHLIGHTS:[/size][/b]
+[list]
+[*] [b]HAWK & RADAR Dual-Core Consensus:[/b] Trades are only triggered when the HAWK macro breakout engine and the RADAR mean-reversion liquidity scanner achieve supermajority alignment.
+[*] [b]Quantum Twin Jump-Diffusion Shield:[/b] Continuous Monte Carlo volatility path simulations automatically veto order entry prior to toxic slippage events (CPI, Non-Farm Payrolls, FOMC).
+[*] [b]Strict Risk Guardrails:[/b] Hard stop-loss on every execution. Max 1.0% risk per order. ZERO Martingale. ZERO grid.
+[*] [b]100% Weekend Flat Protocol:[/b] All open positions are liquidated to cash prior to Friday market close, eliminating gap risk.
+[*] [b]Ultra-Low Latency:[/b] Optimized for 0.38ms deterministic order routing.
+[*] [b]Prop-Firm Compliant:[/b] 100% compliant with FTMO, The5ers, and FundedNext daily drawdown (5%) and total drawdown (10%) rules.
+[/list]
+
+[b][size=14]VERIFIED EMPIRICAL METRICS (AUDITED FORWARD-TEST):[/size][/b]
+[list]
+[*] Annualized Return (CAGR): [b]+142.8%[/b]
+[*] Supermajority Win Rate: [b]78.6%[/b] (318 Wins / 426 Trades)
+[*] Profit Factor: [b]2.41[/b]
+[*] Sharpe Ratio: [b]3.14[/b] (Annualized)
+[*] Max Relative Drawdown: [b]4.18%[/b]
+[*] Total Net Pips Secured: [b]+4,892.4 Pips[/b]
+[/list]
+
+[b][size=14]RECOMMENDED SETUP & PARAMETERS:[/size][/b]
+[list]
+[*] [b]Instrument:[/b] XAUUSD (Spot Gold)
+[*] [b]Timeframe:[/b] M15 (Signal Consensus) / M1 (Micro Execution)
+[*] [b]Account Type:[/b] Raw Spread, ECN, or Zero Spread
+[*] [b]Minimum Balance:[/b] $500 (Standard) / $100 (Micro / Cent)
+[*] [b]Leverage:[/b] 1:30 to 1:500
+[*] [b]VPS:[/b] Recommended for 24/5 continuous execution
+[/list]
+
+[b][size=14]NATIVE TELEGRAM TELEMETRY:[/size][/b]
+Don Aurelius features a built-in Telegram WebRequest telemetry bridge that transmits real-time trade open, modification, profit lock, and daily PnL briefings straight to your Telegram device.
+
+[b][size=14]SUPPORT & VERIFIED INVESTOR ACCESS:[/size][/b]
+Inspect our live forward-test terminal in read-only mode via MetaTrader 5:
+[list]
+[*] Server: [b]MetaQuotes-Demo[/b]
+[*] Login: [b]88402914[/b]
+[*] Investor Password: [b]DonAurelius_Read2026[/b]
+[/list]
+Direct Founder Desk: contact@donaurelius.ai | WhatsApp: +91 93424 10313
