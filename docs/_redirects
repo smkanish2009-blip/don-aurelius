@@ -1,0 +1,28 @@
+# Don Aurelius Sovereign 301 Redirect Rules
+# Enforces Canonical Clean URLs and High-Conversion Fast Redirection
+
+# Canonical HTTPS Upgrade
+http://donaurelius.ai/*            https://donaurelius.ai/:splat            301!
+http://www.donaurelius.ai/*        https://donaurelius.ai/:splat            301!
+https://www.donaurelius.ai/*       https://donaurelius.ai/:splat            301!
+
+# Direct Navigation Shortcuts (301 Permanent Redirects)
+/pricing                           /checkout.html                           301
+/buy                               /checkout.html                           301
+/checkout                          /checkout.html                           301
+/order                             /checkout.html                           301
+/license                           /checkout.html                           301
+/thank-you                         /thank-you.html                          301
+/contact                           /#terminal-access                        301
+/faq                               /#faq                                    301
+/telemetry                         /#empirical-showcase                     301
+/proof                             /#empirical-showcase                     301
+
+# Communication & VIP Channel Fast Bypasses (302)
+/telegram                          https://t.me/DonAurelius_AI_bot          302
+/tg                                https://t.me/DonAurelius_AI_bot          302
+/whatsapp                          https://wa.me/919342410313?text=Hi%20Kanish,%20I%20am%20interested%20in%20deploying%20the%20Don%20Aurelius%20AI%20Bot 302
+/wa                                https://wa.me/919342410313?text=Hi%20Kanish,%20I%20am%20interested%20in%20deploying%20the%20Don%20Aurelius%20AI%20Bot 302
+
+# Fallback 404 Route
+/*                                 /404.html                                404

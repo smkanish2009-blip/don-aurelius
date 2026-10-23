@@ -114,9 +114,9 @@ export const DemoShieldScene: React.FC = () => {
     config: { damping: 14, stiffness: 115, mass: 0.65 },
   });
 
-  const cardScale = interpolate(zoomSpring, [0, 1], [0.82, 1]);
+  const cardScale = interpolate(zoomSpring, [0, 1], [0.94, 1]);
   const cardOpacity = interpolate(zoomSpring, [0, 1], [0, 1]);
-  const cardTranslateY = interpolate(zoomSpring, [0, 1], [40, 0]);
+  const cardTranslateY = interpolate(zoomSpring, [0, 1], [16, 0]);
 
   // Sub-badges staggered entrance springs
   const badgeSpring1 = spring({

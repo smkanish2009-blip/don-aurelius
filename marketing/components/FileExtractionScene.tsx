@@ -138,7 +138,7 @@ export const FileExtractionScene: React.FC = () => {
   });
 
   const treeOpacity = interpolate(treeExpandSpring, [0, 1], [0, 1]);
-  const treeScale = interpolate(treeExpandSpring, [0, 1], [0.88, 1]);
+  const treeScale = interpolate(treeExpandSpring, [0, 1], [0.95, 1]);
 
   return (
     <AbsoluteFill

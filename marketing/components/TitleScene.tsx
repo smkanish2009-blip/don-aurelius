@@ -44,21 +44,19 @@ interface PriceLineData {
 
 const AlgorithmicPriceLinesCanvas: React.FC = () => {
   const frame = useCurrentFrame();
+  const { width = 1920, height = 1080 } = useVideoConfig();
 
   const lines: PriceLineData[] = useMemo(
     () => [
-      { id: 1, baseY: 380, amplitude: 55, frequency: 0.008, speed: 0.8, strokeWidth: 2, opacity: 0.4, color: TOKENS.accentGold },
-      { id: 2, baseY: 520, amplitude: 80, frequency: 0.006, speed: 1.2, strokeWidth: 2.5, opacity: 0.65, color: TOKENS.accentGold },
-      { id: 3, baseY: 680, amplitude: 65, frequency: 0.009, speed: 0.6, strokeWidth: 1.8, opacity: 0.35, color: "#D4AF37" },
-      { id: 4, baseY: 940, amplitude: 95, frequency: 0.005, speed: 1.0, strokeWidth: 3, opacity: 0.7, color: TOKENS.accentGold },
-      { id: 5, baseY: 1180, amplitude: 70, frequency: 0.007, speed: 1.4, strokeWidth: 2, opacity: 0.45, color: TOKENS.accentCyan },
-      { id: 6, baseY: 1420, amplitude: 85, frequency: 0.006, speed: 0.9, strokeWidth: 2.2, opacity: 0.5, color: TOKENS.accentGold },
+      { id: 1, baseY: 180, amplitude: 35, frequency: 0.008, speed: 0.8, strokeWidth: 2, opacity: 0.4, color: TOKENS.accentGold },
+      { id: 2, baseY: 340, amplitude: 50, frequency: 0.006, speed: 1.2, strokeWidth: 2.5, opacity: 0.65, color: TOKENS.accentGold },
+      { id: 3, baseY: 520, amplitude: 45, frequency: 0.009, speed: 0.6, strokeWidth: 1.8, opacity: 0.35, color: "#D4AF37" },
+      { id: 4, baseY: 700, amplitude: 60, frequency: 0.005, speed: 1.0, strokeWidth: 3, opacity: 0.7, color: TOKENS.accentGold },
+      { id: 5, baseY: 860, amplitude: 45, frequency: 0.007, speed: 1.4, strokeWidth: 2, opacity: 0.45, color: TOKENS.accentCyan },
+      { id: 6, baseY: 980, amplitude: 40, frequency: 0.006, speed: 0.9, strokeWidth: 2.2, opacity: 0.5, color: TOKENS.accentGold },
     ],
     []
   );
-
-  const width = 1080;
-  const height = 1920;
 
   return (
     <div
@@ -74,12 +72,12 @@ const AlgorithmicPriceLinesCanvas: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: "30%",
+          top: "50%",
           left: "50%",
-          width: 800,
+          width: 1200,
           height: 800,
           transform: "translate(-50%, -50%)",
-          background: "radial-gradient(circle, rgba(245, 208, 97, 0.12) 0%, transparent 65%)",
+          background: "radial-gradient(ellipse at center, rgba(245, 208, 97, 0.12) 0%, transparent 65%)",
           filter: "blur(60px)",
         }}
       />
@@ -172,8 +170,8 @@ export const TitleScene: React.FC = () => {
     config: { damping: 14, stiffness: 120, mass: 0.6 },
   });
 
-  // Scale in from 0.78 to 1.0, with slight continuous cinematic drift
-  const scale = interpolate(titleSpring, [0, 1], [0.78, 1]) + frame * 0.0004;
+  // Steady, cinematic scale-in from 0.92 to 1.0 without aggressive jumping
+  const scale = interpolate(titleSpring, [0, 1], [0.92, 1.0]) + frame * 0.00015;
   const opacity = interpolate(titleSpring, [0, 1], [0, 1]);
 
   // Subtle breathing pulse for gold glow
