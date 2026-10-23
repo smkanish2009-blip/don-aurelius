@@ -15,8 +15,10 @@ https://www.donaurelius.ai/*       https://donaurelius.ai/:splat            301!
 /thank-you                         /thank-you.html                          301
 /contact                           /#terminal-access                        301
 /faq                               /#faq                                    301
-/telemetry                         /#empirical-showcase                     301
-/proof                             /#empirical-showcase                     301
+/telemetry                         /forward-test.html                       301
+/forward-test                      /forward-test.html                       301
+/proof                             /forward-test.html                       301
+/audit                             /forward-test.html                       301
 
 # Communication & VIP Channel Fast Bypasses (302)
 /telegram                          https://t.me/DonAurelius_AI_bot          302

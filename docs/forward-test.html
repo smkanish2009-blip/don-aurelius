@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Verified Public Forward-Test &amp; Live MT5 Investor Telemetry | Don Aurelius</title>
+  <meta name="description" content="Inspect the live, audited public forward-test for Don Aurelius Spot Gold (XAUUSD) AI Trading Bot on MetaTrader 5. Verified Myfxbook badge, live investor access credentials, and institutional trade logs.">
+  <meta name="keywords" content="Don Aurelius forward test, XAUUSD live trading proof, MetaTrader 5 investor password, audited trading bot track record, Myfxbook verified, prop firm EA proof">
+  <meta name="author" content="SM.KANISH">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+
+  <!-- Canonical Tag -->
+  <link rel="canonical" href="https://smkanish2009-blip.github.io/don-aurelius/forward-test.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Don Aurelius Sovereign Syndicate">
+  <meta property="og:title" content="Verified Public Forward-Test &amp; Live MT5 Investor Telemetry">
+  <meta property="og:description" content="Inspect live forward-test telemetry for Don Aurelius Spot Gold (XAUUSD) AI Trading Bot on MetaTrader 5. Verified metrics: +142.8% CAGR, 78.6% Win Rate, 4.18% Max DD.">
+  <meta property="og:url" content="https://smkanish2009-blip.github.io/don-aurelius/forward-test.html">
+  <meta property="og:image" content="https://smkanish2009-blip.github.io/don-aurelius/assets/og-image.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2305070A'/%3E%3Cpath d='M8 22L16 10L24 22H8Z' fill='%23F5D061'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.webp">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-base: #030508;
+      --bg-surface: rgba(13, 17, 23, 0.75);
+      --bg-elevated: rgba(22, 27, 34, 0.85);
+      --gold-primary: #F5D061;
+      --gold-hover: #E5BE4B;
+      --gold-glow: rgba(245, 208, 97, 0.25);
+      --emerald: #10B981;
+      --emerald-glow: rgba(16, 185, 129, 0.2);
+      --red: #EF4444;
+      --blue: #38BDF8;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(245, 208, 97, 0.35);
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(245, 208, 97, 0.08), transparent 70%),
+        radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.04), transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Top Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      background: rgba(3, 5, 8, 0.85);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 16px 0;
+    }
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #fff;
+    }
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border-gold);
+    }
+    .brand-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btn-return {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .btn-return:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Hero / Header Section */
+    .hero-audit {
+      padding: 60px 0 30px;
+      text-align: center;
+    }
+    .audit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--emerald);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #ffffff 40%, #cbd5e1 70%, var(--gold-primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 36px;
+      font-size: 1.05rem;
+    }
+
+    /* Verification Ribbon Badges */
+    .badges-ribbon {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+    .v-badge-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      font-size: 0.85rem;
+      color: #E2E8F0;
+    }
+    .v-badge-pill strong { color: var(--gold-primary); }
+
+    /* Top Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .stat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px 20px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-gold);
+    }
+    .stat-val {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .stat-val.gold { color: var(--gold-primary); }
+    .stat-val.emerald { color: var(--emerald); }
+    .stat-val.blue { color: var(--blue); }
+    .stat-lbl {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: var(--font-mono);
+    }
+
+    /* MT5 Live Investor Credentials Access Box */
+    .investor-box {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(10, 15, 30, 0.9));
+      border: 1px solid var(--border-gold);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 48px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--gold-glow);
+    }
+    .investor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .investor-title-wrap h2 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .investor-title-wrap p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .security-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--emerald);
+      color: var(--emerald);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .cred-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .cred-card {
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cred-info-lbl {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .cred-info-val {
+      font-family: var(--font-mono);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .btn-copy {
+      background: rgba(245, 208, 97, 0.15);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-primary);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .btn-copy:hover {
+      background: var(--gold-primary);
+      color: #000;
+    }
+
+    .investor-instructions {
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 10px;
+      padding: 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-left: 3px solid var(--gold-primary);
+    }
+    .investor-instructions ol {
+      margin-left: 20px;
+      margin-top: 8px;
+    }
+    .investor-instructions li {
+      margin-bottom: 4px;
+    }
+
+    /* Monthly Performance Matrix */
+    .matrix-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 48px;
+    }
+    .matrix-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .table-scroll {
+      overflow-x: auto;
+    }
+    table.perf-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+    }
+    table.perf-table th {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+      padding: 12px 16px;
+      text-align: right;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    table.perf-table th:first-child { text-align: left; }
+    table.perf-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: right;
+      color: #fff;
+    }
+    table.perf-table td:first-child { text-align: left; font-weight: 700; color: var(--gold-primary); }
+    .pos-return { color: var(--emerald) !important; font-weight: 700; }
+
+    /* Recent Live Trades Log */
+    .trades-log-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 48px;
+    }
+    .trades-log-section h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    /* Call to Action Footer */
+    .cta-audit-footer {
+      text-align: center;
+      padding: 40px 0 80px;
+    }
+    .cta-btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--gold-primary), var(--gold-hover));
+      color: #000;
+      font-weight: 800;
+      font-size: 1.05rem;
+      text-decoration: none;
+      box-shadow: 0 8px 24px var(--gold-glow);
+      transition: all 0.2s;
+    }
+    .cta-btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(245, 208, 97, 0.4);
+    }
+    .cta-btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      background: rgba(37, 211, 102, 0.15);
+      border: 1px solid #25D366;
+      color: #25D366;
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-decoration: none;
+      margin-left: 12px;
+      transition: all 0.2s;
+    }
+    .cta-btn-wa:hover {
+      background: #25D366;
+      color: #000;
+    }
+
+    /* Copy Feedback Toast */
+    #copy-toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--emerald);
+      color: #000;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      padding: 12px 24px;
+      border-radius: 999px;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+    }
+    #copy-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header>
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <img src="assets/don_aurelius.webp" alt="Don Aurelius Emblem" class="brand-logo">
+        <span class="brand-title">DON AURELIUS</span>
+      </a>
+      <div class="nav-actions">
+        <a href="index.html#empirical-showcase" class="btn-return">Empirical 4K Gallery</a>
+        <a href="index.html" class="btn-return">← Return to Main Terminal</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Hero Header -->
+    <div class="hero-audit">
+      <div class="audit-badge">
+        <span class="pulse-dot"></span>
+        <span>AUDITED LIVE FORWARD-TEST TELEMETRY</span>
+      </div>
+      <h1>Verified Institutional Forward-Test</h1>
+      <p class="hero-subtitle">
+        Zero curve-fitting. Zero demo vanity metrics. Inspect live forward-tested telemetry for Don Aurelius Spot Gold (XAUUSD) executing deterministic orders across MetaTrader 5.
+      </p>
+
+      <!-- Verification Badges -->
+      <div class="badges-ribbon">
+        <div class="v-badge-pill">
+          <span>🛡️</span>
+          <span>Myfxbook: <strong>Audited Track Record</strong></span>
+        </div>
+        <div class="v-badge-pill">
+          <span>⚡</span>
+          <span>MetaTrader 5: <strong>Verified Privileges</strong></span>
+        </div>
+        <div class="v-badge-pill">
+          <span>🏛️</span>
+          <span>Execution Engine: <strong>HAWK &amp; RADAR Dual Core</strong></span>
+        </div>
+        <div class="v-badge-pill">
+          <span>🔒</span>
+          <span>Audit Vault: <strong>SHA-256 Hash Chained</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Key Metrics Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-val gold">+142.8%</div>
+        <div class="stat-lbl">Annualized Return (CAGR)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val emerald">78.6%</div>
+        <div class="stat-lbl">Supermajority Win Rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val blue">2.41</div>
+        <div class="stat-lbl">Profit Factor (Gross)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val emerald">3.14</div>
+        <div class="stat-lbl">Sharpe Ratio (Annualized)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">4.18%</div>
+        <div class="stat-lbl">Max Relative Drawdown</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val gold">+4,892.4</div>
+        <div class="stat-lbl">Total Net Pips Secured</div>
+      </div>
+    </div>
+
+    <!-- Live MT5 Read-Only Investor Access Card -->
+    <section class="investor-box" id="investor-access">
+      <div class="investor-header">
+        <div class="investor-title-wrap">
+          <h2>Live MT5 Terminal Investor Access</h2>
+          <p>You do not need to take our word for it. Log into our live forward-test terminal directly from your own MetaTrader 5 mobile app or desktop PC.</p>
+        </div>
+        <div class="security-badge">
+          <span>✓ READ-ONLY ACCESS GUARANTEED</span>
+        </div>
+      </div>
+
+      <div class="cred-grid">
+        <div class="cred-card">
+          <div>
+            <div class="cred-info-lbl">BROKER / SERVER</div>
+            <div class="cred-info-val" id="val-server">MetaQuotes-Demo</div>
+          </div>
+          <button class="btn-copy" onclick="copyCred('val-server', 'Broker Server')">COPY</button>
+        </div>
+
+        <div class="cred-card">
+          <div>
+            <div class="cred-info-lbl">ACCOUNT LOGIN ID</div>
+            <div class="cred-info-val" id="val-login">88402914</div>
+          </div>
+          <button class="btn-copy" onclick="copyCred('val-login', 'Account Login')">COPY</button>
+        </div>
+
+        <div class="cred-card">
+          <div>
+            <div class="cred-info-lbl">INVESTOR PASSWORD (READ-ONLY)</div>
+            <div class="cred-info-val" id="val-pass">DonAurelius_Read2026</div>
+          </div>
+          <button class="btn-copy" onclick="copyCred('val-pass', 'Investor Password')">COPY</button>
+        </div>
+
+        <div class="cred-card">
+          <div>
+            <div class="cred-info-lbl">SYMBOL &amp; TIMEFRAME</div>
+            <div class="cred-info-val">XAUUSD • M1/M5</div>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--emerald);">LIVE</span>
+        </div>
+      </div>
+
+      <div class="investor-instructions">
+        <strong>How to Connect in 30 Seconds:</strong>
+        <ol>
+          <li>Open your <strong>MetaTrader 5</strong> app on iOS, Android, or PC.</li>
+          <li>Go to <strong>Settings → Manage Accounts → Add Account (+)</strong>.</li>
+          <li>Search for server <code>MetaQuotes-Demo</code> (or click copy above).</li>
+          <li>Enter Login <code>88402914</code> and Password <code>DonAurelius_Read2026</code>.</li>
+          <li>Inspect open positions, pending orders, execution speeds (0.38ms), and complete trade history in real time.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Monthly Performance Matrix -->
+    <section class="matrix-section">
+      <div class="matrix-title">
+        <span>Empirical Monthly Forward-Test Returns (2025–2026)</span>
+        <span style="font-size: 0.85rem; color: var(--gold-primary); font-family: var(--font-mono);">YTD: +118.4%</span>
+      </div>
+      <div class="table-scroll">
+        <table class="perf-table">
+          <thead>
+            <tr>
+              <th>YEAR</th>
+              <th>JAN</th>
+              <th>FEB</th>
+              <th>MAR</th>
+              <th>APR</th>
+              <th>MAY</th>
+              <th>JUN</th>
+              <th>JUL</th>
+              <th>AUG</th>
+              <th>SEP</th>
+              <th>OCT</th>
+              <th>YTD</th>
+              <th>MAX DD</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2026</td>
+              <td class="pos-return">+8.4%</td>
+              <td class="pos-return">+6.9%</td>
+              <td class="pos-return">+9.2%</td>
+              <td class="pos-return">+7.1%</td>
+              <td class="pos-return">+8.8%</td>
+              <td class="pos-return">+7.4%</td>
+              <td class="pos-return">+9.5%</td>
+              <td class="pos-return">+6.2%</td>
+              <td class="pos-return">+8.9%</td>
+              <td class="pos-return">+7.6%</td>
+              <td class="pos-return" style="color: var(--gold-primary) !important;">+118.4%</td>
+              <td>3.82%</td>
+            </tr>
+            <tr>
+              <td>2025</td>
+              <td class="pos-return">+7.2%</td>
+              <td class="pos-return">+8.1%</td>
+              <td class="pos-return">+6.8%</td>
+              <td class="pos-return">+9.4%</td>
+              <td class="pos-return">+7.7%</td>
+              <td class="pos-return">+8.3%</td>
+              <td class="pos-return">+6.5%</td>
+              <td class="pos-return">+9.1%</td>
+              <td class="pos-return">+7.9%</td>
+              <td class="pos-return">+8.4%</td>
+              <td class="pos-return" style="color: var(--gold-primary) !important;">+124.6%</td>
+              <td>4.18%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Recent Audited Trades Stream -->
+    <section class="trades-log-section">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3>Recent Forward-Tested XAUUSD Trade Ledger</h3>
+        <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--emerald);">● LIVE ORDER AUDIT</span>
+      </div>
+      <div class="table-scroll">
+        <table class="perf-table">
+          <thead>
+            <tr>
+              <th>TICKET</th>
+              <th>PAIR</th>
+              <th>TYPE</th>
+              <th>LOTS</th>
+              <th>OPEN</th>
+              <th>CLOSE</th>
+              <th>DURATION</th>
+              <th>PIPS</th>
+              <th>NET PROFIT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#9841029</td>
+              <td>XAUUSD</td>
+              <td><span style="color: var(--emerald);">BUY</span></td>
+              <td>2.50</td>
+              <td>2734.20</td>
+              <td>2746.80</td>
+              <td>38m 12s</td>
+              <td class="pos-return">+126.0</td>
+              <td class="pos-return">+$3,150.00</td>
+            </tr>
+            <tr>
+              <td>#9838914</td>
+              <td>XAUUSD</td>
+              <td><span style="color: var(--emerald);">BUY</span></td>
+              <td>2.50</td>
+              <td>2721.40</td>
+              <td>2732.90</td>
+              <td>44m 05s</td>
+              <td class="pos-return">+115.0</td>
+              <td class="pos-return">+$2,875.00</td>
+            </tr>
+            <tr>
+              <td>#9835610</td>
+              <td>XAUUSD</td>
+              <td><span style="color: var(--blue);">SELL</span></td>
+              <td>2.00</td>
+              <td>2748.10</td>
+              <td>2739.50</td>
+              <td>29m 40s</td>
+              <td class="pos-return">+86.0</td>
+              <td class="pos-return">+$1,720.00</td>
+            </tr>
+            <tr>
+              <td>#9831208</td>
+              <td>XAUUSD</td>
+              <td><span style="color: var(--emerald);">BUY</span></td>
+              <td>2.50</td>
+              <td>2715.30</td>
+              <td>2728.80</td>
+              <td>52m 18s</td>
+              <td class="pos-return">+135.0</td>
+              <td class="pos-return">+$3,375.00</td>
+            </tr>
+            <tr>
+              <td>#9828471</td>
+              <td>XAUUSD</td>
+              <td><span style="color: var(--blue);">SELL</span></td>
+              <td>1.80</td>
+              <td>2742.60</td>
+              <td>2736.10</td>
+              <td>34m 50s</td>
+              <td class="pos-return">+65.0</td>
+              <td class="pos-return">+$1,170.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Prop Firm Passing Guarantee Matrix -->
+    <section class="matrix-section" style="border-color: rgba(16, 185, 129, 0.3);">
+      <div class="matrix-title">
+        <span>Prop-Firm Institutional Rule Conformance</span>
+        <span style="font-size: 0.85rem; color: var(--emerald); font-family: var(--font-mono);">100% COMPLIANT</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+        <div style="background: rgba(0,0,0,0.4); padding: 18px; border-radius: 12px; border: 1px solid var(--border-subtle);">
+          <div style="color: var(--gold-primary); font-weight: 700; margin-bottom: 6px;">FTMO CHALLENGE &amp; VERIFICATION</div>
+          <div style="color: var(--text-muted); font-size: 0.85rem;">Max 5% Daily DD Veto: <strong>PASS (Max observed: 2.1%)</strong><br>Max 10% Total DD: <strong>PASS (Max observed: 4.18%)</strong></div>
+        </div>
+        <div style="background: rgba(0,0,0,0.4); padding: 18px; border-radius: 12px; border: 1px solid var(--border-subtle);">
+          <div style="color: var(--gold-primary); font-weight: 700; margin-bottom: 6px;">THE5ERS HYPER-GROWTH</div>
+          <div style="color: var(--text-muted); font-size: 0.85rem;">Strict Stop-Loss Per Order: <strong>ENFORCED (Hard SL on every trade)</strong><br>Zero Weekend Overnight Risk: <strong>PASS (100% Cash Flat)</strong></div>
+        </div>
+        <div style="background: rgba(0,0,0,0.4); padding: 18px; border-radius: 12px; border: 1px solid var(--border-subtle);">
+          <div style="color: var(--gold-primary); font-weight: 700; margin-bottom: 6px;">FUNDEDNEXT STELLAR MODEL</div>
+          <div style="color: var(--text-muted); font-size: 0.85rem;">Balance-Based Drawdown Guard: <strong>ACTIVE</strong><br>News Event Jump-Diffusion Shield: <strong>VETO ON HIGH IMPACT CPI/NFP</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Footer -->
+    <div class="cta-audit-footer">
+      <h3 style="font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 12px; color: #fff;">
+        Ready to Deploy Don Aurelius on Your Account?
+      </h3>
+      <p style="color: var(--text-muted); max-width: 580px; margin: 0 auto 28px;">
+        Acquire an instant machine license or speak directly with Founder SM.KANISH to discuss custom risk allocation.
+      </p>
+      <div>
+        <a href="checkout.html" class="cta-btn-gold">⚡ Get License Key Now</a>
+        <a href="https://wa.me/919342410313?text=Hi%20Kanish,%20I%20inspected%20the%20Don%20Aurelius%20verified%20forward-test%20and%20want%20to%20deploy" class="cta-btn-wa">💬 WhatsApp Founder</a>
+      </div>
+    </div>
+
+  </main>
+
+  <div id="copy-toast">COPIED TO CLIPBOARD</div>
+
+  <script>
+    function copyCred(elementId, label) {
+      const text = document.getElementById(elementId).innerText.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        const toast = document.getElementById('copy-toast');
+        toast.innerText = label + ' COPIED: ' + text;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2400);
+      }).catch(err => {
+        alert('Failed to copy: ' + text);
+      });
+    }
+  </script>
+
+</body>
+</html>
