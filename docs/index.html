@@ -5537,6 +5537,45 @@ body {
         padding: 8px 6px !important;
         border-radius: 8px !important;
       }
+
+      /* Modal & Checkout Mobile Layout Armor */
+      .sovereign-modal-container {
+        width: calc(100% - 20px) !important;
+        margin: 10px auto !important;
+        max-height: 94vh !important;
+        border-radius: 16px !important;
+      }
+      .sovereign-modal-header {
+        padding: 12px 14px !important;
+      }
+      .sovereign-modal-header h3 {
+        font-size: 0.90rem !important;
+        line-height: 1.25 !important;
+      }
+      .sovereign-modal-body {
+        padding: 14px 12px !important;
+      }
+      div[style*="grid-template-columns: 180px 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+        text-align: center !important;
+      }
+      div[style*="grid-template-columns: 180px 1fr"] > div:first-child {
+        margin: 0 auto !important;
+      }
+      div[style*="grid-template-columns: repeat(3, 1fr)"] {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+      }
+      div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+      }
+      div[style*="justify-content: space-between; align-items: center"][style*="TOTAL AMOUNT PAYABLE"] {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+      }
     }
 
     /* 6. Ultra-Compact Mobile Phones (<= 420px) */
