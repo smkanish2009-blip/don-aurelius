@@ -61,6 +61,7 @@
      3. BUILD & INJECT THE APPLE LIQUID GLASS FLOATING SCROLL HUD
      ============================================================================ */
   function injectAppleScrollHud() {
+    if (window.innerWidth <= 768 || document.documentElement.classList.contains('force-mobile-view')) return;
     if (document.getElementById('apple-scroll-hud')) return;
 
     const hud = document.createElement('div');
