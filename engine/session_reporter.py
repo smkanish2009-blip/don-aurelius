@@ -1,29 +1,42 @@
 """
 TITAN-X Autonomous Executive Session Reporter.
-Compiles institutional trading metrics, P&L, win-rate, and Council telemetry
-into a high-fidelity HTML dashboard saved directly to the user's Desktop.
+Compiles empirical trading metrics, P&L, win-rate, and Council telemetry
+alongside rigorous 6–12 month live forward-test verification metrics:
+Annualized Sharpe, Sortino, Max Drawdown %, Calmar Ratio, and Sample Maturity.
+Saved directly to the user's Desktop.
 """
 
 import os
 import sqlite3
+import logging
 from datetime import datetime, timezone
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 try:
     import MetaTrader5 as mt5
 except ImportError:
     mt5 = None
 
+from telemetry.forward_test_tracker import ForwardTestTracker
+
+logger = logging.getLogger("TitanSessionReporter")
+
 
 class TitanSessionReporter:
-    """Compiles and generates executive visual trading reports."""
+    """Compiles and generates executive visual trading reports with forward-test telemetry."""
 
-    def __init__(self, db_path: str = "data/jarvis_metrics.db"):
+    def __init__(
+        self,
+        db_path: str = "data/jarvis_metrics.db",
+        forward_db_path: str = "data/forward_test.sqlite"
+    ):
         self.db_path = db_path
+        self.forward_db_path = forward_db_path
         self.desktop_path = os.path.expandvars(r"C:\Users\LENOVO\Desktop\VIEW_MY_PROFITS_REPORT.html")
+        self.forward_tracker = ForwardTestTracker(db_path=self.forward_db_path)
 
     def fetch_db_trades(self) -> List[Dict[str, Any]]:
-        """Retrieves trade history from SQLite logger."""
+        """Retrieves trade history from SQLite logger (backward compatible)."""
         if not os.path.exists(self.db_path):
             return []
         trades = []
@@ -58,65 +71,93 @@ class TitanSessionReporter:
                     pass
         return trades
 
+    def fetch_forward_metrics(self) -> Dict[str, Any]:
+        """Fetches empirical 6-12 month forward test metrics."""
+        try:
+            return self.forward_tracker.compute_metrics(window_days=None)
+        except Exception as e:
+            logger.debug(f"Could not fetch forward test metrics: {e}")
+            return {
+                "elapsed_days": 0.0,
+                "maturity_status": "COLLECTING_DATA",
+                "progress_6m_pct": 0.0,
+                "progress_12m_pct": 0.0,
+                "total_trades": 0,
+                "win_rate_pct": 0.0,
+                "profit_factor": 1.0,
+                "expectancy_r": 0.0,
+                "max_drawdown_pct": 0.0,
+                "sharpe_ratio": None,
+                "sortino_ratio": None,
+                "calmar_ratio": None
+            }
+
     def fetch_live_mt5_metrics(self) -> Dict[str, Any]:
-        """Fetches live balance, equity, and positions from MT5."""
+        """Fetches live balance, equity, and positions from MT5 without fake fallbacks."""
         metrics = {
-            "balance": 100000.0,
-            "equity": 100000.0,
-            "margin_free": 100000.0,
+            "account_id": "STANDBY",
+            "balance": 0.0,
+            "equity": 0.0,
+            "margin_free": 0.0,
             "open_positions": [],
             "history_deals": []
         }
 
-        if mt5 is None or not mt5.initialize():
+        if mt5 is None:
             return metrics
 
-        acc = mt5.account_info()
-        if acc:
-            metrics["balance"] = acc.balance
-            metrics["equity"] = acc.equity
-            metrics["margin_free"] = acc.margin_free
+        try:
+            if not mt5.initialize():
+                return metrics
 
-        # Open positions
-        positions = mt5.positions_get(symbol="XAUUSD")
-        if positions:
-            for p in positions:
-                metrics["open_positions"].append({
-                    "ticket": p.ticket,
-                    "type": "BUY" if p.type == 0 else "SELL",
-                    "volume": p.volume,
-                    "price_open": p.price_open,
-                    "price_current": p.price_current,
-                    "sl": p.sl,
-                    "tp": p.tp,
-                    "profit": p.profit
-                })
+            acc = mt5.account_info()
+            if acc:
+                metrics["account_id"] = str(acc.login)
+                metrics["balance"] = float(acc.balance)
+                metrics["equity"] = float(acc.equity)
+                metrics["margin_free"] = float(acc.margin_free)
 
-        # Today's history
-        now = datetime.now()
-        start_of_day = datetime(now.year, now.month, now.day)
-        deals = mt5.history_deals_get(start_of_day, now)
-        if deals:
-            for d in deals:
-                if d.entry == 1:  # Out / closed deal
-                    metrics["history_deals"].append({
-                        "ticket": d.ticket,
-                        "profit": d.profit,
-                        "volume": d.volume,
-                        "symbol": d.symbol,
-                        "time": datetime.fromtimestamp(d.time).strftime("%H:%M:%S")
+            # Open positions
+            positions = mt5.positions_get(symbol="XAUUSD")
+            if positions:
+                for p in positions:
+                    metrics["open_positions"].append({
+                        "ticket": p.ticket,
+                        "type": "BUY" if p.type == 0 else "SELL",
+                        "volume": p.volume,
+                        "price_open": p.price_open,
+                        "price_current": p.price_current,
+                        "sl": p.sl,
+                        "tp": p.tp,
+                        "profit": p.profit
                     })
+
+            # History deals
+            now = datetime.now()
+            deals = mt5.history_deals_get(now.replace(hour=0, minute=0, second=0), now)
+            if deals:
+                for d in deals:
+                    if d.entry == mt5.DEAL_ENTRY_OUT and d.symbol == "XAUUSD":
+                        metrics["history_deals"].append({
+                            "ticket": d.ticket,
+                            "profit": d.profit,
+                            "time": d.time
+                        })
+        except Exception:
+            pass
 
         return metrics
 
     def generate_html_report(self) -> str:
-        """Renders complete executive dark-mode HTML report."""
+        """Renders comprehensive, honest HTML performance dashboard."""
         mt5_data = self.fetch_live_mt5_metrics()
         db_trades = self.fetch_db_trades()
+        fwd = self.fetch_forward_metrics()
 
         balance = mt5_data["balance"]
         equity = mt5_data["equity"]
-        net_pl = equity - 100000.0  # Starting baseline $100k
+        net_pl = equity - balance if balance > 0 else 0.0
+
         pl_color = "#00ff88" if net_pl >= 0 else "#ff4444"
         pl_sign = "+" if net_pl >= 0 else ""
 
@@ -124,14 +165,18 @@ class TitanSessionReporter:
         wins = sum(1 for d in deals if d["profit"] > 0)
         losses = sum(1 for d in deals if d["profit"] < 0)
         total_closed = len(deals)
-        win_rate = (wins / total_closed * 100.0) if total_closed > 0 else 0.0
+        session_win_rate = (wins / total_closed * 100.0) if total_closed > 0 else 0.0
+
+        sharpe_str = f"{fwd['sharpe_ratio']:.2f}" if fwd.get("sharpe_ratio") is not None else "Calibrating"
+        sortino_str = f"{fwd['sortino_ratio']:.2f}" if fwd.get("sortino_ratio") is not None else "Calibrating"
+        acc_tag = f"MT5 #{mt5_data['account_id']}" if mt5_data['account_id'] != "STANDBY" else "TELEMETRY STANDBY"
 
         html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>👑 DON AURELIUS • Sovereign Syndicate Report</title>
+    <title>DON AURELIUS • Quantitative Telemetry Audit</title>
     <style>
         body {{
             background-color: #0b0e14;
@@ -155,48 +200,84 @@ class TitanSessionReporter:
         .header h1 {{
             margin: 0;
             color: #00e5ff;
-            font-size: 26px;
-            letter-spacing: 1px;
+            font-size: 24px;
+            letter-spacing: 0.5px;
         }}
-        .header .timestamp {{
+        .timestamp {{
+            font-size: 13px;
             color: #8892b0;
-            font-size: 14px;
+            margin-top: 5px;
+        }}
+        .badge-acc {{
+            background: rgba(255,215,0,0.15);
+            color: #ffd700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 13px;
+            border: 1px solid rgba(255,215,0,0.3);
         }}
         .cards {{
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 15px;
+            margin-bottom: 25px;
         }}
         .card {{
             background: #121824;
             border: 1px solid #1f293d;
             border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            padding: 18px;
         }}
         .card .title {{
-            font-size: 13px;
-            text-transform: uppercase;
+            font-size: 11px;
             color: #8892b0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin-bottom: 8px;
-            letter-spacing: 0.5px;
         }}
         .card .value {{
-            font-size: 26px;
+            font-size: 24px;
             font-weight: bold;
+            margin-bottom: 5px;
         }}
         .card .sub {{
-            font-size: 12px;
-            color: #8892b0;
-            margin-top: 5px;
+            font-size: 11px;
+            color: #64748b;
+        }}
+        .fwd-banner {{
+            background: linear-gradient(135deg, rgba(0,229,255,0.06), rgba(18,24,36,0.95));
+            border: 1px solid #1a365d;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }}
+        .fwd-banner h3 {{
+            margin: 0 0 12px 0;
+            font-size: 15px;
+            color: #00e5ff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }}
+        .progress-bar {{
+            height: 6px;
+            background: #1a2230;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 6px;
+        }}
+        .progress-fill {{
+            height: 100%;
+            background: linear-gradient(90deg, #00e5ff, #00ff88);
+            border-radius: 3px;
         }}
         .section-title {{
-            font-size: 18px;
-            color: #00e5ff;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
             margin: 30px 0 15px 0;
-            border-left: 4px solid #00e5ff;
-            padding-left: 10px;
+            letter-spacing: 0.5px;
         }}
         table {{
             width: 100%;
@@ -205,63 +286,65 @@ class TitanSessionReporter:
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid #1f293d;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }}
         th, td {{
-            padding: 14px 18px;
+            padding: 12px 16px;
             text-align: left;
-            border-bottom: 1px solid #1a2334;
         }}
         th {{
             background: #172030;
             color: #8892b0;
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #1f293d;
         }}
-        tr:hover {{
-            background: #172236;
+        td {{
+            border-bottom: 1px solid #1a2230;
+            font-size: 13px;
         }}
         .badge-buy {{
             background: rgba(0, 255, 136, 0.15);
             color: #00ff88;
-            padding: 4px 8px;
-            border-radius: 6px;
+            padding: 3px 8px;
+            border-radius: 4px;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 11px;
         }}
         .badge-sell {{
             background: rgba(255, 68, 68, 0.15);
             color: #ff4444;
-            padding: 4px 8px;
-            border-radius: 6px;
+            padding: 3px 8px;
+            border-radius: 4px;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 11px;
         }}
         .empty-row {{
             text-align: center;
             color: #8892b0;
-            padding: 30px;
+            padding: 24px;
             font-style: italic;
         }}
         .council-box {{
             background: #121824;
             border: 1px solid #1f293d;
             border-radius: 12px;
-            padding: 20px;
+            padding: 16px;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
+            gap: 12px;
         }}
         .council-agent {{
             background: #172030;
-            padding: 15px;
+            padding: 14px;
             border-radius: 8px;
             border-left: 3px solid #00e5ff;
         }}
         .council-agent .name {{
             font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 5px;
+            font-size: 13px;
+            margin-bottom: 4px;
         }}
         .council-agent .role {{
             font-size: 11px;
@@ -273,64 +356,97 @@ class TitanSessionReporter:
     <div class="container">
         <div class="header">
             <div>
-                <h1>👑 DON AURELIUS • SOVEREIGN QUANTUM SYNDICATE</h1>
-                <div class="timestamp">Session Executive Report • Generated at {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</div>
+                <h1>DON AURELIUS • QUANTITATIVE TELEMETRY AUDIT</h1>
+                <div class="timestamp">Session Executive Report • Generated {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")}</div>
             </div>
             <div>
-                <span style="background: rgba(255,215,0,0.15); color: #ffd700; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 13px; border: 1px solid rgba(255,215,0,0.3);">
-                    DEMO #113182919
-                </span>
+                <span class="badge-acc">{acc_tag}</span>
+            </div>
+        </div>
+
+        <!-- 6-12 Month Live Forward-Test Maturity Banner -->
+        <div class="fwd-banner">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                <h3>🛡️ LONG-TERM FORWARD-TEST MATURITY: {fwd['maturity_status']}</h3>
+                <span style="font-size: 12px; color: #8892b0;">Elapsed: {fwd['elapsed_days']:.1f} Days | Trades: {fwd['total_trades']}</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 10px;">
+                <div>
+                    <div style="font-size: 11px; color: #8892b0;">Annualized Sharpe (252d)</div>
+                    <div style="font-size: 18px; font-weight: bold; color: #00e5ff; margin-top: 2px;">{sharpe_str}</div>
+                </div>
+                <div>
+                    <div style="font-size: 11px; color: #8892b0;">Peak Max Drawdown</div>
+                    <div style="font-size: 18px; font-weight: bold; color: #ffb703; margin-top: 2px;">{fwd['max_drawdown_pct']:.2f}%</div>
+                </div>
+                <div>
+                    <div style="font-size: 11px; color: #8892b0;">Profit Factor</div>
+                    <div style="font-size: 18px; font-weight: bold; color: #00ff88; margin-top: 2px;">{fwd['profit_factor']:.2f}</div>
+                </div>
+                <div>
+                    <div style="font-size: 11px; color: #8892b0;">Expectancy (R)</div>
+                    <div style="font-size: 18px; font-weight: bold; color: #e2e8f0; margin-top: 2px;">{fwd['expectancy_r']:+.2f}R</div>
+                </div>
+            </div>
+            <div style="margin-top: 14px;">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b;">
+                    <span>6-Month Verification Horizon ({fwd['progress_6m_pct']:.0f}%)</span>
+                    <span>12-Month Institutional Benchmark ({fwd['progress_12m_pct']:.0f}%)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {fwd['progress_6m_pct']}%;"></div>
+                </div>
             </div>
         </div>
 
         <div class="cards">
             <div class="card">
-                <div class="title">Net Session P&L</div>
+                <div class="title">Session P&L</div>
                 <div class="value" style="color: {pl_color};">{pl_sign}${net_pl:,.2f}</div>
-                <div class="sub">Baseline: $100,000.00 USD</div>
+                <div class="sub">Account Balance: ${balance:,.2f}</div>
             </div>
             <div class="card">
-                <div class="title">Current Account Equity</div>
+                <div class="title">Current Equity</div>
                 <div class="value" style="color: #00e5ff;">${equity:,.2f}</div>
                 <div class="sub">Free Margin: ${mt5_data['margin_free']:,.2f}</div>
             </div>
             <div class="card">
-                <div class="title">Win Rate</div>
-                <div class="value" style="color: #ffb703;">{win_rate:.1f}%</div>
+                <div class="title">Session Win Rate</div>
+                <div class="value" style="color: #ffb703;">{session_win_rate:.1f}%</div>
                 <div class="sub">{wins} Wins / {losses} Losses ({total_closed} Total)</div>
             </div>
             <div class="card">
                 <div class="title">Active Positions</div>
                 <div class="value" style="color: #ffffff;">{len(mt5_data['open_positions'])}</div>
-                <div class="sub">Auto-Trailing Protection: ON</div>
+                <div class="sub">Risk Guardrails: ACTIVE</div>
             </div>
         </div>
 
-        <div class="section-title">🏛️ TITAN-X Consensus Council Status</div>
+        <div class="section-title">🏛️ Autonomous Syndicate Consensus Status</div>
         <div class="council-box">
             <div class="council-agent">
                 <div class="name">🦅 Agent HAWK</div>
                 <div class="role">Macro & Intermarket (DXY/US10Y)</div>
-                <div style="margin-top: 10px; font-size: 12px; color: #00ff88;">Status: Active</div>
+                <div style="margin-top: 8px; font-size: 11px; color: #00ff88;">Status: Active</div>
             </div>
             <div class="council-agent">
                 <div class="name">📡 Agent RADAR</div>
                 <div class="role">Real-Time News & Sentiment Velocity</div>
-                <div style="margin-top: 10px; font-size: 12px; color: #00ff88;">Status: Active</div>
+                <div style="margin-top: 8px; font-size: 11px; color: #00ff88;">Status: Active</div>
             </div>
             <div class="council-agent">
                 <div class="name">🦈 Agent PREDATOR</div>
                 <div class="role">FVG & Liquidity Sweep Detection</div>
-                <div style="margin-top: 10px; font-size: 12px; color: #00ff88;">Status: Active</div>
+                <div style="margin-top: 8px; font-size: 11px; color: #00ff88;">Status: Active</div>
             </div>
             <div class="council-agent">
                 <div class="name">⚔️ Agent INQUISITOR</div>
                 <div class="role">Red-Team Adversary (Spread & Risk)</div>
-                <div style="margin-top: 10px; font-size: 12px; color: #00ff88;">Status: Active</div>
+                <div style="margin-top: 8px; font-size: 11px; color: #00ff88;">Status: Active</div>
             </div>
         </div>
 
-        <div class="section-title">📊 Open Positions (Active Auto-Trailing)</div>
+        <div class="section-title">📊 Open Positions</div>
         <table>
             <thead>
                 <tr>
@@ -365,7 +481,7 @@ class TitanSessionReporter:
         else:
             html += """
                 <tr>
-                    <td colspan="8" class="empty-row">No active floating positions right now. Council is scanning for high-probability setups.</td>
+                    <td colspan="8" class="empty-row">No active positions currently open. Syndicate is monitoring market liquidity.</td>
                 </tr>
 """
 
@@ -373,7 +489,7 @@ class TitanSessionReporter:
             </tbody>
         </table>
 
-        <div class="section-title">📜 Session Execution Log</div>
+        <div class="section-title">📜 Execution & Audit Ledger</div>
         <table>
             <thead>
                 <tr>
@@ -405,7 +521,7 @@ class TitanSessionReporter:
         else:
             html += """
                 <tr>
-                    <td colspan="7" class="empty-row">No trades logged yet in this session. Full ledger will populate as trades deploy.</td>
+                    <td colspan="7" class="empty-row">No trades logged yet in this session. Ledger populates upon live signal execution.</td>
                 </tr>
 """
 
@@ -416,7 +532,6 @@ class TitanSessionReporter:
 </body>
 </html>
 """
-        # Save to Desktop
         try:
             with open(self.desktop_path, "w", encoding="utf-8") as f:
                 f.write(html)
@@ -430,7 +545,7 @@ def run_session_report():
     """Generates the report directly."""
     reporter = TitanSessionReporter()
     reporter.generate_html_report()
-    print(f"[+] Executive Trading Report generated at: {reporter.desktop_path}")
+    print(f"[+] Quantitative Telemetry Audit generated at: {reporter.desktop_path}")
 
 
 if __name__ == "__main__":

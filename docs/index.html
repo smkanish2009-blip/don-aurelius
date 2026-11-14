@@ -385,8 +385,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Three.js 3D WebGL Engine (Deferred to prevent render-blocking) -->
+  <!-- Three.js 3D WebGL Engine & GLTFLoader -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <!-- Lenis Inertial Smooth Scrolling Engine ($10,000 Agency Momentum Standard) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 
   <link rel="stylesheet" href="css/omniscience-warroom.css?v=original_gold_20261007">
   <link rel="stylesheet" href="css/apple-hig-motion.css?v=20261009">
@@ -5668,6 +5671,7 @@ body {
       gap: 16px;
       width: 100% !important;
       box-sizing: border-box !important;
+      padding-bottom: 120px !important;
       animation: opalScreenFade 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .opal-screen.active {
@@ -6424,6 +6428,12 @@ body {
       padding: 0 8px !important;
       box-shadow: 0 20px 48px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
       z-index: 99999 !important;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease !important;
+    }
+    .opal-floating-dock.dock-hidden {
+      transform: translateY(140%) !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
     }
     .opal-dock-item {
       display: flex !important;
@@ -6725,24 +6735,24 @@ body {
       letter-spacing: 0.3px !important;
     }
 
-    /* Hero CTA Cluster */
+    /* Hero CTA Cluster - Apple VisionOS Side-by-Side Ergonomic Grid */
     .opal-hero-ctas {
       position: relative !important;
-      z-index: 1 !important;
+      z-index: 2 !important;
       width: 100% !important;
-      display: flex !important;
-      flex-direction: column !important;
+      display: grid !important;
+      grid-template-columns: 1.15fr 0.95fr !important;
       gap: 8px !important;
-      margin-top: 2px !important;
+      margin-top: 6px !important;
     }
     .opal-hero-btn-primary {
       width: 100% !important;
-      padding: 12px 16px !important;
+      padding: 12px 10px !important;
       background: linear-gradient(135deg, #f5c542 0%, #e5a812 100%) !important;
       color: #06080c !important;
-      font-size: 0.78rem !important;
+      font-size: 0.74rem !important;
       font-weight: 800 !important;
-      letter-spacing: 0.4px !important;
+      letter-spacing: 0.3px !important;
       border-radius: 14px !important;
       border: 1px solid #ffe885 !important;
       box-shadow: 0 8px 20px rgba(245, 197, 66, 0.3) !important;
@@ -6750,44 +6760,49 @@ body {
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: 8px !important;
+      gap: 6px !important;
       transition: all 0.25s ease !important;
       text-decoration: none !important;
       box-sizing: border-box !important;
+      white-space: nowrap !important;
     }
     .opal-hero-btn-primary:active {
       transform: scale(0.98) !important;
     }
     .opal-btn-inner-icon {
-      width: 20px !important;
-      height: 20px !important;
+      width: 18px !important;
+      height: 18px !important;
       border-radius: 50% !important;
       background: rgba(0, 0, 0, 0.15) !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
-      font-size: 0.70rem !important;
+      font-size: 0.65rem !important;
     }
     .opal-hero-btn-secondary {
       width: 100% !important;
-      padding: 10px 16px !important;
-      background: rgba(255, 255, 255, 0.05) !important;
+      padding: 12px 8px !important;
+      background: rgba(255, 255, 255, 0.06) !important;
       color: #ffffff !important;
-      font-size: 0.72rem !important;
+      font-size: 0.70rem !important;
       font-weight: 700 !important;
-      border-radius: 12px !important;
-      border: 1px solid rgba(255, 255, 255, 0.12) !important;
-      backdrop-filter: blur(12px) !important;
+      letter-spacing: 0.2px !important;
+      border-radius: 14px !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
       cursor: pointer !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: 8px !important;
+      gap: 5px !important;
       box-sizing: border-box !important;
       transition: all 0.2s ease !important;
+      white-space: nowrap !important;
     }
     .opal-hero-btn-secondary:active {
-      background: rgba(255, 255, 255, 0.1) !important;
+      background: rgba(255, 255, 255, 0.12) !important;
+      transform: scale(0.98) !important;
     }
 
     /* Section Transition Divider */
@@ -7195,9 +7210,10 @@ body {
             Autonomous multi-agent neural syndicate executing high-volatility spot Gold regimes with 0.38ms sub-millisecond precision.
           </p>
 
-          <!-- 3D Visual Centerpiece Stage -->
-          <div class="opal-hero-3d-stage">
-            <img src="assets/scene1_brand_emblem_3d.webp" alt="Don Aurelius Sovereign 3D Emblem" class="opal-hero-3d-bg" onerror="this.src='assets/don_aurelius.webp'">
+          <!-- 3D Visual Centerpiece Stage (Interactive Three.js WebGL & MotionSites Standard) -->
+          <div class="opal-hero-3d-stage" id="opal-3d-interactive-stage">
+            <canvas id="aureus-3d-hero-canvas" class="opal-hero-3d-canvas" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: auto;"></canvas>
+            <img src="assets/scene1_brand_emblem_3d.webp" alt="Don Aurelius Sovereign 3D Emblem" class="opal-hero-3d-bg" id="aureus-3d-poster" onerror="this.src='assets/don_aurelius.webp'" style="transition: opacity 0.5s ease;">
             <div class="opal-hero-3d-overlay"></div>
             <!-- Floating Live Telemetry Badges -->
             <div class="opal-stage-badge top-right">
@@ -7205,37 +7221,37 @@ body {
               <span>0.38ms C++ IPC</span>
             </div>
             <div class="opal-stage-badge bottom-left">
-              <span>📈 +142.8% CAGR</span>
+              <span>📈 6–12M FORWARD</span>
             </div>
             <div class="opal-stage-badge bottom-right">
-              <span>🛡️ 99.4% SURVIVAL</span>
+              <span>🛡️ QUARTER-KELLY</span>
             </div>
           </div>
 
           <!-- Proof Ribbon Strip -->
           <div class="opal-hero-ribbon">
             <div class="opal-ribbon-col">
-              <span class="opal-ribbon-val">+142.8%</span>
-              <span class="opal-ribbon-label">Annualized Return</span>
+              <span class="opal-ribbon-val">6–12M</span>
+              <span class="opal-ribbon-label">Forward Validation</span>
             </div>
             <div class="opal-ribbon-col">
-              <span class="opal-ribbon-val">3.82%</span>
-              <span class="opal-ribbon-label">Max Drawdown</span>
+              <span class="opal-ribbon-val">≤ 2.0%</span>
+              <span class="opal-ribbon-label">Daily DD Ceiling</span>
             </div>
             <div class="opal-ribbon-col">
-              <span class="opal-ribbon-val">78.6%</span>
-              <span class="opal-ribbon-label">Supermajority Win</span>
+              <span class="opal-ribbon-val">3 of 4</span>
+              <span class="opal-ribbon-label">Council Consensus</span>
             </div>
           </div>
 
-          <!-- Action CTA Cluster -->
+          <!-- Action CTA Cluster - Apple VisionOS Ergonomic Grid (Zero Collision) -->
           <div class="opal-hero-ctas">
             <button type="button" class="opal-hero-btn-primary" onclick="window.scrollToCockpit()">
-              <span>⚡ ENTER QUANT COCKPIT</span>
+              <span>⚡ QUANT COCKPIT</span>
               <span class="opal-btn-inner-icon">▾</span>
             </button>
             <button type="button" class="opal-hero-btn-secondary" onclick="window.copyOpalInvestorCreds()">
-              <span>📋 LIVE INVESTOR DEMO (MT5)</span>
+              <span>📋 MT5 DEMO</span>
               <span>↗</span>
             </button>
           </div>
@@ -7289,9 +7305,9 @@ body {
             <div class="opal-dial-inner-content">
               <span class="opal-dial-tag">CHAMELEON ALPHA SHIELD</span>
               <div class="opal-dial-number-group">
-                <span class="opal-dial-number" id="opal-alpha-score">99.4</span><span class="opal-dial-percent">%</span>
+                <span class="opal-dial-number" id="opal-alpha-score">0.25</span><span class="opal-dial-percent"> Kelly</span>
               </div>
-              <span class="opal-dial-regime-label" id="opal-regime-label">BULLISH EXPANSION • KELLY 0.25</span>
+              <span class="opal-dial-regime-label" id="opal-regime-label">QUARTER-KELLY • RISK &le;0.75%</span>
             </div>
           </div>
 
@@ -7321,8 +7337,8 @@ body {
           </div>
           
           <div class="opal-metric-banner">
-            <div class="opal-pnl-headline" id="opal-live-pnl">+$18,420.00</div>
-            <span class="opal-pnl-sub green" id="opal-live-pnl-pct">+6.14% RETURN</span>
+            <div class="opal-pnl-headline" id="opal-live-pnl">QUANT HUD</div>
+            <span class="opal-pnl-sub green" id="opal-live-pnl-pct">FORWARD-TEST TELEMETRY</span>
           </div>
 
           <!-- Interactive Golden Neon Sparkline with Live Touch Scrubber -->
@@ -7740,32 +7756,32 @@ body {
               </thead>
               <tbody>
                 <tr>
-                  <td class="metric-name">Annualized Return (CAGR)</td>
-                  <td class="highlight">+142.8%</td>
+                  <td class="metric-name">Forward-Test Horizon</td>
+                  <td class="highlight">6–12 Months (Live Calibration)</td>
                 </tr>
                 <tr>
-                  <td class="metric-name">Sharpe Ratio (Risk-Adjusted)</td>
-                  <td class="highlight">3.14</td>
+                  <td class="metric-name">Target Sharpe Ratio (Ann.)</td>
+                  <td class="highlight">&gt; 1.80 (252d Basis)</td>
                 </tr>
                 <tr>
-                  <td class="metric-name">Max Historical Drawdown</td>
-                  <td style="color:#f5c542; font-weight:700; font-family:var(--font-mono, monospace);">3.82%</td>
+                  <td class="metric-name">Daily Loss Cutoff</td>
+                  <td style="color:#f5c542; font-weight:700; font-family:var(--font-mono, monospace);">&le; 2.00% Hard Stop</td>
                 </tr>
                 <tr>
-                  <td class="metric-name">Supermajority Win Rate</td>
-                  <td class="highlight">78.6% (1,420+ Trades)</td>
+                  <td class="metric-name">Consensus Supermajority</td>
+                  <td class="highlight">3 / 4 War Room Agents</td>
                 </tr>
                 <tr>
-                  <td class="metric-name">Profit Factor</td>
-                  <td style="color:#ffffff; font-weight:700; font-family:var(--font-mono, monospace);">2.84</td>
+                  <td class="metric-name">Peak Kill-Switch Ceiling</td>
+                  <td style="color:#ffffff; font-weight:700; font-family:var(--font-mono, monospace);">&le; 8.00% Trailing HWM</td>
                 </tr>
                 <tr>
-                  <td class="metric-name">Average Risk-to-Reward</td>
-                  <td style="color:#ffffff; font-weight:700; font-family:var(--font-mono, monospace);">1 : 2.65</td>
+                  <td class="metric-name">Risk Sizing Architecture</td>
+                  <td style="color:#ffffff; font-weight:700; font-family:var(--font-mono, monospace);">Quarter-Kelly (&le; 0.75%)</td>
                 </tr>
                 <tr>
-                  <td class="metric-name">Monthly Average Return</td>
-                  <td class="highlight">+8.2%</td>
+                  <td class="metric-name">Stop Loss Discipline</td>
+                  <td class="highlight">100% Server-Side Hard SL</td>
                 </tr>
                 <tr>
                   <td class="metric-name">Cryptographic Hash</td>
@@ -8248,8 +8264,8 @@ body {
         <!-- Composer-Style Architectural Hero Proof Band with Dotted Dividers -->
         <div class="composer-hero-metrics reveal-3d">
           <div class="c-metric-item">
-            <div class="c-metric-num gold">$48.6M+</div>
-            <div class="c-metric-lbl">forward volume</div>
+            <div class="c-metric-num gold">6–12M</div>
+            <div class="c-metric-lbl">forward test tracking</div>
           </div>
           <div class="c-divider-vert-dotted"></div>
           <div class="c-metric-item">
@@ -8263,8 +8279,8 @@ body {
           </div>
           <div class="c-divider-vert-dotted"></div>
           <div class="c-metric-item">
-            <div class="c-metric-num gold">99.4%</div>
-            <div class="c-metric-lbl">capital preservation record</div>
+            <div class="c-metric-num gold">&le; 8.0%</div>
+            <div class="c-metric-lbl">hard kill-switch ceiling</div>
           </div>
         </div>
 
@@ -8803,16 +8819,16 @@ body {
             <div>
               <div class="s-stats-row">
                 <div class="s-stat-unit">
-                  <div class="s-stat-val gold">+142.8%</div>
-                  <div class="s-stat-lbl">CAGR Return</div>
+                  <div class="s-stat-val gold">6–12M</div>
+                  <div class="s-stat-lbl">Forward Testing</div>
                 </div>
                 <div class="s-stat-unit">
-                  <div class="s-stat-val emerald">3.14</div>
-                  <div class="s-stat-lbl">Sharpe Ratio</div>
+                  <div class="s-stat-val emerald">&gt; 1.80</div>
+                  <div class="s-stat-lbl">Target Sharpe</div>
                 </div>
                 <div class="s-stat-unit">
-                  <div class="s-stat-val">4.2%</div>
-                  <div class="s-stat-lbl">Max Drawdown</div>
+                  <div class="s-stat-val">&le; 2.0%</div>
+                  <div class="s-stat-lbl">Daily DD Limit</div>
                 </div>
               </div>
               <button type="button" class="s-btn-inspect" onclick="loadSymphonyPreset('liquidity'); document.getElementById('symphony-studio').scrollIntoView({behavior:'smooth'});">Inspect Symphony Logic &rarr;</button>
@@ -8829,16 +8845,16 @@ body {
             <div>
               <div class="s-stats-row">
                 <div class="s-stat-unit">
-                  <div class="s-stat-val gold">+88.4%</div>
-                  <div class="s-stat-lbl">CAGR Return</div>
+                  <div class="s-stat-val gold">0.25</div>
+                  <div class="s-stat-lbl">Quarter-Kelly</div>
                 </div>
                 <div class="s-stat-unit">
-                  <div class="s-stat-val emerald">3.82</div>
-                  <div class="s-stat-lbl">Sharpe Ratio</div>
+                  <div class="s-stat-val emerald">100%</div>
+                  <div class="s-stat-lbl">Server-Side SL</div>
                 </div>
                 <div class="s-stat-unit">
-                  <div class="s-stat-val">2.1%</div>
-                  <div class="s-stat-lbl">Max Drawdown</div>
+                  <div class="s-stat-val">&le; 1.5%</div>
+                  <div class="s-stat-lbl">Daily DD Limit</div>
                 </div>
               </div>
               <button type="button" class="s-btn-inspect" onclick="loadSymphonyPreset('shockwave'); document.getElementById('symphony-studio').scrollIntoView({behavior:'smooth'});">Inspect Symphony Logic &rarr;</button>
@@ -8855,16 +8871,16 @@ body {
             <div>
               <div class="s-stats-row">
                 <div class="s-stat-unit">
-                  <div class="s-stat-val gold">+116.2%</div>
-                  <div class="s-stat-lbl">CAGR Return</div>
+                  <div class="s-stat-val gold">0.38ms</div>
+                  <div class="s-stat-lbl">IPC Latency</div>
                 </div>
                 <div class="s-stat-unit">
-                  <div class="s-stat-val emerald">2.95</div>
-                  <div class="s-stat-lbl">Sharpe Ratio</div>
+                  <div class="s-stat-val emerald">3 of 4</div>
+                  <div class="s-stat-lbl">Council Consensus</div>
                 </div>
                 <div class="s-stat-unit">
-                  <div class="s-stat-val">5.1%</div>
-                  <div class="s-stat-lbl">Max Drawdown</div>
+                  <div class="s-stat-val">&le; 2.0%</div>
+                  <div class="s-stat-lbl">Daily DD Limit</div>
                 </div>
               </div>
               <button type="button" class="s-btn-inspect" onclick="loadSymphonyPreset('quantum'); document.getElementById('symphony-studio').scrollIntoView({behavior:'smooth'});">Inspect Symphony Logic &rarr;</button>
@@ -8952,24 +8968,24 @@ body {
           <!-- Top KPI Metrics Pods -->
           <div class="backtest-top-metrics">
             <div class="b-metric-pod">
-              <div class="b-metric-val gold" id="kpi-cagr">+142.8%</div>
-              <div class="b-metric-lbl">Annualized Return (CAGR)</div>
+              <div class="b-metric-val gold" id="kpi-cagr">6–12M</div>
+              <div class="b-metric-lbl">Forward-Test Validation</div>
             </div>
             <div class="b-metric-pod">
-              <div class="b-metric-val emerald" id="kpi-sharpe">3.14</div>
-              <div class="b-metric-lbl">Sharpe Ratio (Risk-Adj)</div>
+              <div class="b-metric-val emerald" id="kpi-sharpe">&gt; 1.80</div>
+              <div class="b-metric-lbl">Target Annualized Sharpe</div>
             </div>
             <div class="b-metric-pod">
-              <div class="b-metric-val" id="kpi-maxdd">4.2%</div>
-              <div class="b-metric-lbl">Max Historical Drawdown</div>
+              <div class="b-metric-val" id="kpi-maxdd">&le; 2.0%</div>
+              <div class="b-metric-lbl">Daily Drawdown Limit</div>
             </div>
             <div class="b-metric-pod">
-              <div class="b-metric-val emerald" id="kpi-winrate">78.6%</div>
-              <div class="b-metric-lbl">Supermajority Win Rate</div>
+              <div class="b-metric-val emerald" id="kpi-winrate">3 / 4</div>
+              <div class="b-metric-lbl">Council Supermajority Gate</div>
             </div>
             <div class="b-metric-pod">
               <div class="b-metric-val gold" id="kpi-kelly">Quarter-Kelly</div>
-              <div class="b-metric-lbl">Mathematical Armor Sizing</div>
+              <div class="b-metric-lbl">Mathematical Lot Sizing</div>
             </div>
           </div>
 
@@ -9009,20 +9025,25 @@ body {
 
             <!-- Floating Scrubber Telemetry HUD Tooltip -->
             <div class="backtest-hud-overlay" id="backtest-hud">
-              <div class="hud-date" id="hud-date">OCTOBER 2026 • LIVE MATURITY</div>
+              <div class="hud-date" id="hud-date">OCTOBER 2026 • FORWARD TEST</div>
               <div class="hud-row">
                 <span>Don Aurelius:</span>
-                <strong class="gold-val" id="hud-aureus-equity">$24,280 (+142.8%)</strong>
+                <strong class="gold-val" id="hud-aureus-equity">Model Benchmark (CFTC 4.41)</strong>
               </div>
               <div class="hud-row">
                 <span>Spot Gold (XAUUSD):</span>
-                <strong id="hud-gold-equity">$12,840 (+28.4%)</strong>
+                <strong id="hud-gold-equity">Market Asset Baseline</strong>
               </div>
               <div class="hud-row">
                 <span>Retail Expert Advisor:</span>
-                <strong style="color:#f87171;" id="hud-retail-equity">$6,180 (-38.2%)</strong>
+                <strong style="color:#f87171;" id="hud-retail-equity">Uncontrolled Drawdown</strong>
               </div>
-              <div class="hud-regime" id="hud-regime">
+              <div class="hud-regime" id="hud-regime"></div>
+            </div>
+            
+            <div style="font-size:0.75rem; color:#64748b; margin-top:8px; font-family:var(--font-mono, monospace); text-align:center;">
+              CFTC RULE 4.41: Hypothetical/simulated stress model trajectory. Actual forward performance tracks live risk discipline and market variance.
+            </div>
                 Regime: Central Bank Bullion Acceleration • Eagle-Eye detects structural breakout.
               </div>
             </div>
@@ -10414,7 +10435,7 @@ body {
         </div>
         <div class="boot-log-entry" id="boot-log-3">
           <span style="color:#F5D061;">[SYS_03]</span>
-          <span>QUANTUM_TWIN: Compiling 1,000-Path Monte Carlo Jump-Diffusion Engine ... WIN_RATE 88.4%</span>
+          <span>QUANTUM_TWIN: Compiling 1,000-Path Monte Carlo Jump-Diffusion Engine ... STOCHASTIC CALIBRATION ARMED</span>
         </div>
         <div class="boot-log-entry" id="boot-log-4">
           <span style="color:#EC4899;">[SYS_04]</span>
@@ -11475,7 +11496,7 @@ body {
       { ratio: 0.52, date: "FEB 2025 • GEOPOLITICAL MARITIME CRISIS", aureus: "$17,450 (+74.5%)", gold: "$11,640 (+16.4%)", retail: "$7,820 (-21.8%)", regime: "Black Swan Shockwave: Global Sentinel freezes routing; Inquisitor blocks drawdowns." },
       { ratio: 0.72, date: "NOV 2025 • RECORD GOLD ATH RUN", aureus: "$20,890 (+108.9%)", gold: "$12,250 (+22.5%)", retail: "$6,940 (-30.6%)", regime: "Eagle-Eye Multimodal Vision captures daily Fair Value Gap breakouts repeatedly." },
       { ratio: 0.88, date: "MAY 2026 • CPI VOLATILITY CONTRACTION", aureus: "$22,640 (+126.4%)", gold: "$12,510 (+25.1%)", retail: "$6,420 (-35.8%)", regime: "Quantum Twin 1,000-path simulator prevents false breakouts during CPI release." },
-      { ratio: 1.00, date: "OCT 2026 • LIVE MATURITY", aureus: "$24,280 (+142.8%)", gold: "$12,840 (+28.4%)", retail: "$6,180 (-38.2%)", regime: "Full Sovereign Maturity • 99.4% Capital Preservation benchmark achieved." }
+      { ratio: 1.00, date: "OCT 2026 • FORWARD TEST MATURITY", aureus: "Simulated Model Curve", gold: "Spot Asset", retail: "Retail Drawdown", regime: "Empirical Forward Test Benchmark • Hard Drawdown Ceilings & Capital Preservation." }
     ];
 
     function initBacktestScrubber() {
@@ -11970,6 +11991,7 @@ body {
                 }, 2200);
               }
             });
+          }
         };
 
         window.handleWalletPayModal = function() {
@@ -12485,6 +12507,239 @@ body {
         }
         if (navigator.vibrate) try { navigator.vibrate(15); } catch(e){}
       };
+
+      // 14. Lenis Inertial Smooth Scrolling Engine ($10,000 Agency Kinetic Momentum)
+      // Reverse-Engineered from Viktor Oddy (MotionSites) & Shreyas Raj
+      (function initLenisSmoothScroll() {
+        function startLenis() {
+          if (typeof Lenis === 'undefined') {
+            setTimeout(startLenis, 150);
+            return;
+          }
+          try {
+            var lenis = new Lenis({
+              duration: 1.2,
+              easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+              orientation: 'vertical',
+              gestureOrientation: 'vertical',
+              smoothWheel: true,
+              wheelMultiplier: 1.0,
+              touchMultiplier: 1.2
+            });
+            window.lenisInstance = lenis;
+
+            function raf(time) {
+              lenis.raf(time);
+              requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+          } catch(e) {
+            console.warn('Lenis fallback to native scroll', e);
+          }
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', startLenis);
+        } else {
+          startLenis();
+        }
+      })();
+
+      // 15. Apple VisionOS Floating Dock Auto-Hide on Downward Scroll
+      (function initDockAutoHide() {
+        var lastScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+        var dock = document.querySelector('.opal-floating-dock');
+        if (!dock) return;
+
+        window.addEventListener('scroll', function() {
+          var currentScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+          if (currentScrollY > 120 && currentScrollY > lastScrollY + 8) {
+            dock.classList.add('dock-hidden');
+          } else if (currentScrollY < lastScrollY - 6 || currentScrollY < 60) {
+            dock.classList.remove('dock-hidden');
+          }
+          lastScrollY = currentScrollY;
+        }, { passive: true });
+      })();
+
+      // 16. Don Aurelius Interactive 3D WebGL Core (Three.js + Procedural Shader Artifact)
+      // Reverse-Engineered from Shreyas Raj / Mikey / Viktor Oddy 3D Pipelines
+      (function initAureus3DHeroCore() {
+        var canvas = document.getElementById('aureus-3d-hero-canvas');
+        if (!canvas) return;
+
+        function run3D() {
+          if (typeof THREE === 'undefined') {
+            setTimeout(run3D, 150);
+            return;
+          }
+
+          var stage = canvas.parentElement;
+          if (!stage) return;
+          var width = stage.clientWidth || 340;
+          var height = stage.clientHeight || 180;
+
+          var scene = new THREE.Scene();
+          var camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+          camera.position.set(0, 0, 4.0);
+
+          var renderer;
+          try {
+            renderer = new THREE.WebGLRenderer({
+              canvas: canvas,
+              alpha: true,
+              antialias: true,
+              powerPreference: 'high-performance'
+            });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+          } catch(e) {
+            console.warn('WebGL init error, keeping 2D poster fallback', e);
+            return;
+          }
+
+          // Studio Lighting
+          var ambientLight = new THREE.AmbientLight(0xfff0b3, 0.9);
+          scene.add(ambientLight);
+
+          var goldKeyLight = new THREE.DirectionalLight(0xf5c542, 2.4);
+          goldKeyLight.position.set(3, 4, 3);
+          scene.add(goldKeyLight);
+
+          var titanRimLight = new THREE.DirectionalLight(0x00f2ff, 1.6);
+          titanRimLight.position.set(-3, -2, -2);
+          scene.add(titanRimLight);
+
+          var coreGroup = new THREE.Group();
+          scene.add(coreGroup);
+
+          // Attempt loading Tripo3D exported model if available
+          if (typeof THREE.GLTFLoader !== 'undefined') {
+            var loader = new THREE.GLTFLoader();
+            loader.load('assets/aureus_core.glb', function(gltf) {
+              while (coreGroup.children.length > 0) {
+                coreGroup.remove(coreGroup.children[0]);
+              }
+              var model = gltf.scene;
+              model.scale.set(1.4, 1.4, 1.4);
+              coreGroup.add(model);
+              var poster = document.getElementById('aureus-3d-poster');
+              if (poster) poster.style.opacity = '0';
+            }, undefined, function() {
+              // Keeps procedural cube
+            });
+          }
+
+          // Procedural Obsidian & 24K Gold Quantum Cube
+          var cubeGeo = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+          var cubeMat = new THREE.MeshPhysicalMaterial({
+            color: 0x05070a,
+            metalness: 0.92,
+            roughness: 0.15,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.08,
+            transparent: true,
+            opacity: 0.88
+          });
+          var outerCube = new THREE.Mesh(cubeGeo, cubeMat);
+          coreGroup.add(outerCube);
+
+          var edgesGeo = new THREE.EdgesGeometry(cubeGeo);
+          var edgesMat = new THREE.LineBasicMaterial({
+            color: 0xf5c542,
+            linewidth: 2,
+            transparent: true,
+            opacity: 0.85
+          });
+          var wireframe = new THREE.LineSegments(edgesGeo, edgesMat);
+          coreGroup.add(wireframe);
+
+          var coreGeo = new THREE.IcosahedronGeometry(0.65, 1);
+          var coreMat = new THREE.MeshStandardMaterial({
+            color: 0xffd700,
+            metalness: 0.95,
+            roughness: 0.25,
+            emissive: 0xd4a017,
+            emissiveIntensity: 0.5,
+            wireframe: true
+          });
+          var innerCore = new THREE.Mesh(coreGeo, coreMat);
+          coreGroup.add(innerCore);
+
+          var poster = document.getElementById('aureus-3d-poster');
+          if (poster) poster.style.opacity = '0.12';
+
+          var targetRotX = 0.25;
+          var targetRotY = 0.35;
+          var isDragging = false;
+          var prevPointerX = 0;
+          var prevPointerY = 0;
+
+          canvas.addEventListener('pointerdown', function(e) {
+            isDragging = true;
+            prevPointerX = e.clientX;
+            prevPointerY = e.clientY;
+            if (canvas.setPointerCapture) try { canvas.setPointerCapture(e.pointerId); } catch(err){}
+          });
+
+          canvas.addEventListener('pointermove', function(e) {
+            if (isDragging) {
+              var deltaX = e.clientX - prevPointerX;
+              var deltaY = e.clientY - prevPointerY;
+              targetRotY += deltaX * 0.012;
+              targetRotX += deltaY * 0.012;
+              prevPointerX = e.clientX;
+              prevPointerY = e.clientY;
+            }
+          });
+
+          window.addEventListener('pointerup', function() { isDragging = false; });
+
+          // Device Gyroscope tilt on mobile
+          if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', function(e) {
+              if (!isDragging && e.gamma !== null && e.beta !== null) {
+                targetRotY = (e.gamma / 45) * 0.7;
+                targetRotX = ((e.beta - 45) / 45) * 0.7;
+              }
+            }, { passive: true });
+          }
+
+          var clock = new THREE.Clock();
+          function animate() {
+            requestAnimationFrame(animate);
+            var elapsed = clock.getElapsedTime();
+
+            if (!isDragging) {
+              targetRotY += 0.006;
+            }
+
+            coreGroup.rotation.x += (targetRotX - coreGroup.rotation.x) * 0.08;
+            coreGroup.rotation.y += (targetRotY - coreGroup.rotation.y) * 0.08;
+
+            innerCore.rotation.x -= 0.015;
+            innerCore.rotation.y += 0.018;
+            innerCore.position.y = Math.sin(elapsed * 2.2) * 0.04;
+
+            renderer.render(scene, camera);
+          }
+          animate();
+
+          window.addEventListener('resize', function() {
+            if (!stage) return;
+            var w = stage.clientWidth || 340;
+            var h = stage.clientHeight || 180;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', run3D);
+        } else {
+          run3D();
+        }
+      })();
     })();
   </script>
 

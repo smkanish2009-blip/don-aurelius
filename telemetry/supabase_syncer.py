@@ -70,16 +70,16 @@ class SupabaseSyncer:
 
     def sync_telemetry(
         self,
-        account_number: str = "10434714118",
-        balance: float = 100773.18,
-        equity: float = 100398.97,
+        account_number: str = "DEMO-FORWARD",
+        balance: float = 0.0,
+        equity: float = 0.0,
         floating_pnl: float = 0.0,
-        realized_profit: float = 773.18,
-        margin: float = 106.58,
-        free_margin: float = 100292.39,
-        open_positions_count: int = 3,
-        win_rate: float = 88.4,
-        regime: str = "BULLISH_EXPANSION"
+        realized_profit: float = 0.0,
+        margin: float = 0.0,
+        free_margin: float = 0.0,
+        open_positions_count: int = 0,
+        win_rate: float = 0.0,
+        regime: str = "NORMAL"
     ) -> bool:
         """Upserts live account telemetry to public.live_telemetry."""
         payload = {
@@ -109,20 +109,20 @@ class SupabaseSyncer:
     def sync_consensus(
         self,
         pair: str = "XAUUSD",
-        direction: str = "BUY",
-        confidence: float = 94.2,
-        setup_grade: str = "A+",
-        hawk_vote: str = "BUY",
-        hawk_reason: str = "DXY -0.32% • Yields Fall",
-        radar_vote: str = "BUY",
-        radar_reason: str = "Asian Range Swept",
-        predator_vote: str = "BUY",
-        predator_reason: str = "Bullish FVG Retest",
+        direction: str = "WAIT",
+        confidence: float = 50.0,
+        setup_grade: str = "NEUTRAL",
+        hawk_vote: str = "WAIT",
+        hawk_reason: str = "Macro Neutral",
+        radar_vote: str = "WAIT",
+        radar_reason: str = "Scanning Asian Range",
+        predator_vote: str = "WAIT",
+        predator_reason: str = "Awaiting Liquidity Sweep",
         inquisitor_vote: str = "PASS",
-        inquisitor_reason: str = "Spread 0.12p <= 5.0p Cap",
-        entry_zone: str = "2662.50 - 2664.50",
-        stop_loss: float = 2658.00,
-        take_profit: float = 2678.00
+        inquisitor_reason: str = "Risk Limits Nominal",
+        entry_zone: str = "Awaiting Setup",
+        stop_loss: float = 0.0,
+        take_profit: float = 0.0
     ) -> bool:
         """Upserts 4-agent consensus matrix to public.agent_consensus."""
         payload = {

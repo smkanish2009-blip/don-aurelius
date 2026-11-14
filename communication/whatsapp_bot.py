@@ -237,13 +237,13 @@ class WhatsAppBot:
             low_text = user_text.lower()
             if "price" in low_text or "btn_price" in low_text or "cost" in low_text or "quote" in low_text:
                 resp = (
-                    "⚡ *DON AURELIUS INSTITUTIONAL PRICING*\n"
+                    "⚡ *DON AURELIUS QUANT INTELLIGENCE PRICING*\n"
                     "━━━━━━━━━━━━━━━━━━━━━\n"
-                    "• *Quarterly Tactical Pass:* $499 (3 Months MT5 Access)\n"
-                    "• *Annual Sovereign Pass:* $1,499 (Full Year + VIP Radar Desk)\n"
-                    "• *Lifetime Institutional Monolith:* $3,999 (Perpetual Updates + Source Code Access)\n\n"
+                    "• *Monthly Access:* $50 USDT / ₹4,499 INR (30 Days Live MT5 License)\n"
+                    "• *Annual Sovereign:* $450 USDT / ₹39,999 INR (1 Year Full Access — Save 25%)\n"
+                    "• *Lifetime Sovereign:* $999 USDT / ₹89,999 INR (Perpetual License + Future Model Upgrades)\n\n"
                     "💳 *Crypto TRC-20 & Instant USDT Settlement:* Available.\n"
-                    "🌐 Visit our verified portal: https://donaurelius.ai/checkout.html\n\n"
+                    "🌐 Visit our verified portal: https://smkanish2009-blip.github.io/don-aurelius/checkout.html\n\n"
                     "Reply *BUY* to get direct TRC-20 payment instructions."
                 )
                 self.send_text_message(sender_id, resp)
@@ -255,7 +255,7 @@ class WhatsAppBot:
                     "Official USDT TRC-20 Vault:\n"
                     "`TFdDBCaBEbvyT3F8ZQLdb2ZmZtcksawWbs`\n\n"
                     "After deposit, send your Transaction Hash (TxID) and MetaTrader 5 Account Number here or visit:\n"
-                    "👉 https://donaurelius.ai/checkout.html\n\n"
+                    "👉 https://smkanish2009-blip.github.io/don-aurelius/checkout.html\n\n"
                     "Your cryptographic license key will be generated instantly."
                 )
                 self.send_text_message(sender_id, resp)
@@ -353,7 +353,7 @@ if __name__ == "__main__":
         print("Result:", res)
     elif len(sys.argv) > 1 and sys.argv[1] == "test-lead":
         print("Simulating inbound lead bridge to Telegram...")
-        bot.forward_lead_to_telegram(FOUNDER_WHATSAPP_DIRECT, "Inquiry from website: Want Lifetime Monolith pass.", "VIP Buyer")
+        bot.forward_lead_to_telegram(FOUNDER_WHATSAPP_DIRECT, "Inquiry from website: Want Lifetime Sovereign license.", "VIP Buyer")
         print("Dispatched to Founder Telegram!")
     else:
         print("Starting WhatsApp Webhook listener on port 8085...")

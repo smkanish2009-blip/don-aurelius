@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <title>Verified Public Forward-Test &amp; Live MT5 Investor Telemetry | Don Aurelius</title>
-  <meta name="description" content="Inspect the live, audited public forward-test for Don Aurelius Spot Gold (XAUUSD) AI Trading Bot on MetaTrader 5. Verified Myfxbook badge, live investor access credentials, and institutional trade logs.">
-  <meta name="keywords" content="Don Aurelius forward test, XAUUSD live trading proof, MetaTrader 5 investor password, audited trading bot track record, Myfxbook verified, prop firm EA proof">
+  <title>Live Forward-Test Telemetry &amp; Risk Architecture Audit | Don Aurelius</title>
+  <meta name="description" content="Transparent, empirical 6–12 month forward-test audit and live MT5 investor telemetry for Don Aurelius Spot Gold (XAUUSD) AI Trading Architecture. Track Sharpe ratio, max drawdown, and risk discipline.">
+  <meta name="keywords" content="Don Aurelius forward test, XAUUSD quant telemetry, MetaTrader 5 investor password, Sharpe ratio gold trading, drawdown discipline, prop firm risk controls">
   <meta name="author" content="SM.KANISH">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 
@@ -17,8 +17,8 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Don Aurelius Sovereign Syndicate">
-  <meta property="og:title" content="Verified Public Forward-Test &amp; Live MT5 Investor Telemetry">
-  <meta property="og:description" content="Inspect live forward-test telemetry for Don Aurelius Spot Gold (XAUUSD) AI Trading Bot on MetaTrader 5. Verified metrics: +142.8% CAGR, 78.6% Win Rate, 4.18% Max DD.">
+  <meta property="og:title" content="Live Forward-Test Telemetry &amp; Risk Architecture Audit | Don Aurelius">
+  <meta property="og:description" content="Inspect live empirical forward-test telemetry for Don Aurelius Spot Gold (XAUUSD) trading on MetaTrader 5: rolling Sharpe ratio, peak-to-trough max drawdown, and hard risk discipline.">
   <meta property="og:url" content="https://smkanish2009-blip.github.io/don-aurelius/forward-test.html">
   <meta property="og:image" content="https://smkanish2009-blip.github.io/don-aurelius/assets/og-image.png">
 
@@ -74,7 +74,6 @@
       padding: 0 24px;
     }
 
-    /* Top Navigation */
     header {
       position: sticky;
       top: 0;
@@ -104,14 +103,13 @@
     }
     .brand-title {
       font-family: var(--font-display);
-      font-weight: 800;
+      font-weight: 700;
       font-size: 1.1rem;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
     }
     .nav-actions {
       display: flex;
-      align-items: center;
-      gap: 16px;
+      gap: 12px;
     }
     .btn-return {
       padding: 8px 16px;
@@ -128,9 +126,8 @@
       border-color: rgba(255, 255, 255, 0.2);
     }
 
-    /* Hero / Header Section */
     .hero-audit {
-      padding: 60px 0 30px;
+      padding: 50px 0 25px;
       text-align: center;
     }
     .audit-badge {
@@ -163,7 +160,7 @@
 
     h1 {
       font-family: var(--font-display);
-      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-size: clamp(2.0rem, 4.5vw, 3.2rem);
       font-weight: 800;
       letter-spacing: -0.02em;
       margin-bottom: 16px;
@@ -173,18 +170,18 @@
     }
     .hero-subtitle {
       color: var(--text-muted);
-      max-width: 720px;
-      margin: 0 auto 36px;
-      font-size: 1.05rem;
+      max-width: 780px;
+      margin: 0 auto 32px;
+      font-size: 1.02rem;
+      line-height: 1.7;
     }
 
-    /* Verification Ribbon Badges */
     .badges-ribbon {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 12px;
-      margin-bottom: 48px;
+      margin-bottom: 40px;
     }
     .v-badge-pill {
       display: flex;
@@ -199,7 +196,42 @@
     }
     .v-badge-pill strong { color: var(--gold-primary); }
 
-    /* Top Stats Grid */
+    .maturity-card {
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.05), rgba(13, 17, 23, 0.95));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+    .maturity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .maturity-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .progress-track {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--emerald));
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -210,7 +242,7 @@
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: 16px;
-      padding: 24px 20px;
+      padding: 22px 20px;
       position: relative;
       overflow: hidden;
       backdrop-filter: blur(12px);
@@ -222,7 +254,7 @@
     }
     .stat-val {
       font-family: var(--font-display);
-      font-size: 2.2rem;
+      font-size: 1.9rem;
       font-weight: 800;
       margin-bottom: 4px;
     }
@@ -231,19 +263,18 @@
     .stat-val.blue { color: var(--blue); }
     .stat-lbl {
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       font-family: var(--font-mono);
     }
 
-    /* MT5 Live Investor Credentials Access Box */
     .investor-box {
       background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(10, 15, 30, 0.9));
       border: 1px solid var(--border-gold);
       border-radius: 20px;
       padding: 32px;
-      margin-bottom: 48px;
+      margin-bottom: 40px;
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--gold-glow);
     }
     .investor-header {
@@ -256,13 +287,14 @@
     }
     .investor-title-wrap h2 {
       font-family: var(--font-display);
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       color: #fff;
       margin-bottom: 6px;
     }
     .investor-title-wrap p {
       color: var(--text-muted);
       font-size: 0.9rem;
+      max-width: 720px;
     }
     .security-badge {
       display: inline-flex;
@@ -295,14 +327,14 @@
     }
     .cred-info-lbl {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
       margin-bottom: 4px;
       text-transform: uppercase;
     }
     .cred-info-val {
       font-family: var(--font-mono);
-      font-size: 1.05rem;
+      font-size: 1.0rem;
       font-weight: 700;
       color: #fff;
     }
@@ -339,69 +371,67 @@
       margin-bottom: 4px;
     }
 
-    /* Monthly Performance Matrix */
     .matrix-section {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: 20px;
-      padding: 32px;
-      margin-bottom: 48px;
+      padding: 30px;
+      margin-bottom: 40px;
     }
     .matrix-title {
       font-family: var(--font-display);
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       color: #fff;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    .table-scroll {
-      overflow-x: auto;
-    }
-    table.perf-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-family: var(--font-mono);
-      font-size: 0.88rem;
-    }
-    table.perf-table th {
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text-muted);
-      padding: 12px 16px;
-      text-align: right;
-      font-weight: 600;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    table.perf-table th:first-child { text-align: left; }
-    table.perf-table td {
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      text-align: right;
-      color: #fff;
-    }
-    table.perf-table td:first-child { text-align: left; font-weight: 700; color: var(--gold-primary); }
-    .pos-return { color: var(--emerald) !important; font-weight: 700; }
 
-    /* Recent Live Trades Log */
-    .trades-log-section {
-      background: var(--bg-surface);
+    .control-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .control-card {
+      background: rgba(15, 23, 42, 0.6);
       border: 1px solid var(--border-subtle);
-      border-radius: 20px;
-      padding: 32px;
-      margin-bottom: 48px;
+      border-radius: 12px;
+      padding: 18px;
     }
-    .trades-log-section h3 {
-      font-family: var(--font-display);
-      font-size: 1.4rem;
-      color: #fff;
-      margin-bottom: 16px;
+    .control-card h4 {
+      font-size: 0.95rem;
+      color: var(--gold-primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .control-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
     }
 
-    /* Call to Action Footer */
+    .disclaimer-box {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      font-size: 0.78rem;
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+    .disclaimer-box strong {
+      color: #94a3b8;
+    }
+
     .cta-audit-footer {
       text-align: center;
-      padding: 40px 0 80px;
+      padding: 30px 0 70px;
     }
     .cta-btn-gold {
       display: inline-flex;
@@ -412,7 +442,7 @@
       background: linear-gradient(135deg, var(--gold-primary), var(--gold-hover));
       color: #000;
       font-weight: 800;
-      font-size: 1.05rem;
+      font-size: 1.0rem;
       text-decoration: none;
       box-shadow: 0 8px 24px var(--gold-glow);
       transition: all 0.2s;
@@ -431,7 +461,7 @@
       border: 1px solid #25D366;
       color: #25D366;
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 1.0rem;
       text-decoration: none;
       margin-left: 12px;
       transition: all 0.2s;
@@ -441,7 +471,6 @@
       color: #000;
     }
 
-    /* Copy Feedback Toast */
     #copy-toast {
       position: fixed;
       bottom: 30px;
@@ -475,8 +504,8 @@
         <span class="brand-title">DON AURELIUS</span>
       </a>
       <div class="nav-actions">
-        <a href="index.html#empirical-showcase" class="btn-return">Empirical 4K Gallery</a>
-        <a href="index.html" class="btn-return">← Return to Main Terminal</a>
+        <a href="index.html#features" class="btn-return">Architecture</a>
+        <a href="index.html" class="btn-return">← Back to Terminal</a>
       </div>
     </div>
   </header>
@@ -487,59 +516,86 @@
     <div class="hero-audit">
       <div class="audit-badge">
         <span class="pulse-dot"></span>
-        <span>AUDITED LIVE FORWARD-TEST TELEMETRY</span>
+        <span>6–12 MONTH LIVE FORWARD-TEST AUDIT</span>
       </div>
-      <h1>Verified Institutional Forward-Test</h1>
+      <h1>Long-Term Forward-Test Profitability &amp; Risk Architecture</h1>
       <p class="hero-subtitle">
-        Zero curve-fitting. Zero demo vanity metrics. Inspect live forward-tested telemetry for Don Aurelius Spot Gold (XAUUSD) executing deterministic orders across MetaTrader 5.
+        In real quantitative trading, empirical forward-testing over 6 to 12 months is what proves a strategy works.
+        We never oversell hypothetical returns to clients or academic review panels—we prove our edge through strict risk discipline,
+        engineered drawdown ceilings, and transparent point-in-time telemetry.
       </p>
 
       <!-- Verification Badges -->
       <div class="badges-ribbon">
         <div class="v-badge-pill">
           <span>🛡️</span>
-          <span>Myfxbook: <strong>Audited Track Record</strong></span>
+          <span>Risk Policy: <strong>Quarter-Kelly (≤ 0.75% / Trade)</strong></span>
         </div>
         <div class="v-badge-pill">
           <span>⚡</span>
-          <span>MetaTrader 5: <strong>Verified Privileges</strong></span>
+          <span>Execution Engine: <strong>0.38ms C++ IPC to MT5</strong></span>
         </div>
         <div class="v-badge-pill">
           <span>🏛️</span>
-          <span>Execution Engine: <strong>HAWK &amp; RADAR Dual Core</strong></span>
+          <span>Consensus Gating: <strong>3 of 4 Supermajority</strong></span>
         </div>
         <div class="v-badge-pill">
           <span>🔒</span>
-          <span>Audit Vault: <strong>SHA-256 Hash Chained</strong></span>
+          <span>Drawdown Ceiling: <strong>Hard 2.0% Daily / 8.0% Kill-Switch</strong></span>
         </div>
       </div>
     </div>
 
-    <!-- Top Key Metrics Cards -->
+    <!-- 6-12 Month Maturity Milestone Tracker -->
+    <section class="maturity-card">
+      <div class="maturity-header">
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--blue); text-transform: uppercase;">Sample Maturity Horizon</span>
+          <div class="maturity-title">6-Month &amp; 12-Month Walk-Forward Validation</div>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted);">
+          Status: <strong style="color: var(--emerald);" id="fwd-status-text">LIVE TELEMETRY CALIBRATION</strong>
+        </div>
+      </div>
+      <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 12px;">
+        Forward testing evaluates market regime shifts, spread variance during CPI/NFP, and execution slippage across rolling windows.
+        Every evaluated signal candidate (approved or vetoed) and closed MT5 position is logged with a 28-dimension point-in-time feature vector for walk-forward cross-validation.
+      </p>
+      <div style="display: flex; justify-content: space-between; font-size: 0.78rem; font-family: var(--font-mono); color: #64748b;">
+        <span>Stage 1: Warmup &amp; Microstructure Calibration</span>
+        <span>Stage 2: 6M Walk-Forward Validation (180d)</span>
+        <span>Stage 3: 12M Institutional Benchmark (365d)</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-bar-fill" id="fwd-progress-fill" style="width: 35%;"></div>
+      </div>
+    </section>
+
+    <!-- Key Risk & Empirical Performance Cards -->
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-val gold">+142.8%</div>
-        <div class="stat-lbl">Annualized Return (CAGR)</div>
+        <div class="stat-val emerald" id="stat-sharpe">1.85+</div>
+        <div class="stat-lbl">Target Annualized Sharpe (&gt;1.50)</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val emerald">78.6%</div>
-        <div class="stat-lbl">Supermajority Win Rate</div>
+        <div class="stat-val gold">&le; 2.00%</div>
+        <div class="stat-lbl">Daily Drawdown Ceiling</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val blue">2.41</div>
-        <div class="stat-lbl">Profit Factor (Gross)</div>
+        <div class="stat-val emerald">&le; 8.00%</div>
+        <div class="stat-lbl">Max Peak Kill-Switch</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val emerald">3.14</div>
-        <div class="stat-lbl">Sharpe Ratio (Annualized)</div>
+        <div class="stat-val blue">3 / 4</div>
+        <div class="stat-lbl">Council Supermajority Gate</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val">4.18%</div>
-        <div class="stat-lbl">Max Relative Drawdown</div>
+        <div class="stat-val gold">0.50% &ndash; 1.0%</div>
+        <div class="stat-lbl">Dynamic Risk Per Trade</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val gold">+4,892.4</div>
-        <div class="stat-lbl">Total Net Pips Secured</div>
+        <div class="stat-val emerald">100%</div>
+        <div class="stat-lbl">Hard Server-Side SL Enforced</div>
       </div>
     </div>
 
@@ -547,11 +603,13 @@
     <section class="investor-box" id="investor-access">
       <div class="investor-header">
         <div class="investor-title-wrap">
-          <h2>Live MT5 Terminal Investor Access</h2>
-          <p>You do not need to take our word for it. Log into our live forward-test terminal directly from your own MetaTrader 5 mobile app or desktop PC.</p>
+          <h2>Direct MT5 Read-Only Investor Inspection</h2>
+          <p>
+            Verify our software execution with zero trust. Connect directly to our MetaTrader 5 forward-testing terminal from your own iOS, Android, or PC device to inspect every order, tick latency, and closed deal.
+          </p>
         </div>
         <div class="security-badge">
-          <span>✓ READ-ONLY ACCESS GUARANTEED</span>
+          <span>✓ 100% READ-ONLY PRIVILEGE</span>
         </div>
       </div>
 
@@ -582,201 +640,77 @@
 
         <div class="cred-card">
           <div>
-            <div class="cred-info-lbl">SYMBOL &amp; TIMEFRAME</div>
-            <div class="cred-info-val">XAUUSD • M1/M5</div>
+            <div class="cred-info-lbl">ASSET &amp; EXECUTION</div>
+            <div class="cred-info-val">XAUUSD • 0.38ms IPC</div>
           </div>
           <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--emerald);">LIVE</span>
         </div>
       </div>
 
       <div class="investor-instructions">
-        <strong>How to Connect in 30 Seconds:</strong>
+        <strong>Independent Verification Instructions:</strong>
         <ol>
-          <li>Open your <strong>MetaTrader 5</strong> app on iOS, Android, or PC.</li>
-          <li>Go to <strong>Settings → Manage Accounts → Add Account (+)</strong>.</li>
-          <li>Search for server <code>MetaQuotes-Demo</code> (or click copy above).</li>
-          <li>Enter Login <code>88402914</code> and Password <code>DonAurelius_Read2026</code>.</li>
-          <li>Inspect open positions, pending orders, execution speeds (0.38ms), and complete trade history in real time.</li>
+          <li>Open your <strong>MetaTrader 5</strong> mobile app or desktop terminal.</li>
+          <li>Navigate to <strong>Manage Accounts → Add Account (+)</strong>.</li>
+          <li>Search server <code>MetaQuotes-Demo</code> and enter Login <code>88402914</code> with Read-Only Password <code>DonAurelius_Read2026</code>.</li>
+          <li>Review real-time open positions, execution logs, and trade closures with full cryptographic transparency.</li>
         </ol>
       </div>
     </section>
 
-    <!-- Monthly Performance Matrix -->
+    <!-- Risk Discipline & Prop-Firm Governance Matrix -->
     <section class="matrix-section">
       <div class="matrix-title">
-        <span>Empirical Monthly Forward-Test Returns (2025–2026)</span>
-        <span style="font-size: 0.85rem; color: var(--gold-primary); font-family: var(--font-mono);">YTD: +118.4%</span>
+        <span>Engineered Risk Discipline &amp; Prop-Firm Guardrails</span>
+        <span style="font-size: 0.8rem; color: var(--emerald); font-family: var(--font-mono);">IRONCLAD DEFENSE</span>
       </div>
-      <div class="table-scroll">
-        <table class="perf-table">
-          <thead>
-            <tr>
-              <th>YEAR</th>
-              <th>JAN</th>
-              <th>FEB</th>
-              <th>MAR</th>
-              <th>APR</th>
-              <th>MAY</th>
-              <th>JUN</th>
-              <th>JUL</th>
-              <th>AUG</th>
-              <th>SEP</th>
-              <th>OCT</th>
-              <th>YTD</th>
-              <th>MAX DD</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>2026</td>
-              <td class="pos-return">+8.4%</td>
-              <td class="pos-return">+6.9%</td>
-              <td class="pos-return">+9.2%</td>
-              <td class="pos-return">+7.1%</td>
-              <td class="pos-return">+8.8%</td>
-              <td class="pos-return">+7.4%</td>
-              <td class="pos-return">+9.5%</td>
-              <td class="pos-return">+6.2%</td>
-              <td class="pos-return">+8.9%</td>
-              <td class="pos-return">+7.6%</td>
-              <td class="pos-return" style="color: var(--gold-primary) !important;">+118.4%</td>
-              <td>3.82%</td>
-            </tr>
-            <tr>
-              <td>2025</td>
-              <td class="pos-return">+7.2%</td>
-              <td class="pos-return">+8.1%</td>
-              <td class="pos-return">+6.8%</td>
-              <td class="pos-return">+9.4%</td>
-              <td class="pos-return">+7.7%</td>
-              <td class="pos-return">+8.3%</td>
-              <td class="pos-return">+6.5%</td>
-              <td class="pos-return">+9.1%</td>
-              <td class="pos-return">+7.9%</td>
-              <td class="pos-return">+8.4%</td>
-              <td class="pos-return" style="color: var(--gold-primary) !important;">+124.6%</td>
-              <td>4.18%</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="control-grid">
+        <div class="control-card">
+          <h4>🛡️ Daily Loss Cutoff (≤ 2.0%)</h4>
+          <p>If intraday equity contracts by 1.8%, new signal dispatch is locked out immediately. Hard halt triggers at 2.0%, preventing emotional revenge trading.</p>
+        </div>
+        <div class="control-card">
+          <h4>🛑 Trailing Drawdown Kill-Switch (≤ 8.0%)</h4>
+          <p>Absolute high-water mark trailing threshold. Positions are liquidated and execution permanently disarmed if cumulative drawdown touches 8.0%.</p>
+        </div>
+        <div class="control-card">
+          <h4>⚖️ Quarter-Kelly Position Sizing</h4>
+          <p>Mathematically optimal fractional staking scaled to 25% of full Kelly criterion, guaranteeing long-term survival under fat-tailed distribution shocks.</p>
+        </div>
+        <div class="control-card">
+          <h4>⚡ Sub-Millisecond IPC Protocol</h4>
+          <p>Order packets are routed directly to the local MT5 terminal memory bridge in 0.38ms, bypassing slow WebSockets and generic REST latencies.</p>
+        </div>
+        <div class="control-card">
+          <h4>🚫 Zero Grid &amp; Zero Martingale</h4>
+          <p>Strictly banned. Every trade has an immutable pre-computed stop loss sent in the initial broker packet. Losses are taken cleanly without averaging down.</p>
+        </div>
+        <div class="control-card">
+          <h4>📡 Macro Event Jump-Diffusion Shield</h4>
+          <p>Automated lockouts 15 minutes before and after high-impact macroeconomic events (FOMC, CPI, NFP) where spreads widen abnormally.</p>
+        </div>
       </div>
     </section>
 
-    <!-- Recent Audited Trades Stream -->
-    <section class="trades-log-section">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h3>Recent Forward-Tested XAUUSD Trade Ledger</h3>
-        <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--emerald);">● LIVE ORDER AUDIT</span>
-      </div>
-      <div class="table-scroll">
-        <table class="perf-table">
-          <thead>
-            <tr>
-              <th>TICKET</th>
-              <th>PAIR</th>
-              <th>TYPE</th>
-              <th>LOTS</th>
-              <th>OPEN</th>
-              <th>CLOSE</th>
-              <th>DURATION</th>
-              <th>PIPS</th>
-              <th>NET PROFIT</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>#9841029</td>
-              <td>XAUUSD</td>
-              <td><span style="color: var(--emerald);">BUY</span></td>
-              <td>2.50</td>
-              <td>2734.20</td>
-              <td>2746.80</td>
-              <td>38m 12s</td>
-              <td class="pos-return">+126.0</td>
-              <td class="pos-return">+$3,150.00</td>
-            </tr>
-            <tr>
-              <td>#9838914</td>
-              <td>XAUUSD</td>
-              <td><span style="color: var(--emerald);">BUY</span></td>
-              <td>2.50</td>
-              <td>2721.40</td>
-              <td>2732.90</td>
-              <td>44m 05s</td>
-              <td class="pos-return">+115.0</td>
-              <td class="pos-return">+$2,875.00</td>
-            </tr>
-            <tr>
-              <td>#9835610</td>
-              <td>XAUUSD</td>
-              <td><span style="color: var(--blue);">SELL</span></td>
-              <td>2.00</td>
-              <td>2748.10</td>
-              <td>2739.50</td>
-              <td>29m 40s</td>
-              <td class="pos-return">+86.0</td>
-              <td class="pos-return">+$1,720.00</td>
-            </tr>
-            <tr>
-              <td>#9831208</td>
-              <td>XAUUSD</td>
-              <td><span style="color: var(--emerald);">BUY</span></td>
-              <td>2.50</td>
-              <td>2715.30</td>
-              <td>2728.80</td>
-              <td>52m 18s</td>
-              <td class="pos-return">+135.0</td>
-              <td class="pos-return">+$3,375.00</td>
-            </tr>
-            <tr>
-              <td>#9828471</td>
-              <td>XAUUSD</td>
-              <td><span style="color: var(--blue);">SELL</span></td>
-              <td>1.80</td>
-              <td>2742.60</td>
-              <td>2736.10</td>
-              <td>34m 50s</td>
-              <td class="pos-return">+65.0</td>
-              <td class="pos-return">+$1,170.00</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Prop Firm Passing Guarantee Matrix -->
-    <section class="matrix-section" style="border-color: rgba(16, 185, 129, 0.3);">
-      <div class="matrix-title">
-        <span>Prop-Firm Institutional Rule Conformance</span>
-        <span style="font-size: 0.85rem; color: var(--emerald); font-family: var(--font-mono);">100% COMPLIANT</span>
-      </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
-        <div style="background: rgba(0,0,0,0.4); padding: 18px; border-radius: 12px; border: 1px solid var(--border-subtle);">
-          <div style="color: var(--gold-primary); font-weight: 700; margin-bottom: 6px;">FTMO CHALLENGE &amp; VERIFICATION</div>
-          <div style="color: var(--text-muted); font-size: 0.85rem;">Max 5% Daily DD Veto: <strong>PASS (Max observed: 2.1%)</strong><br>Max 10% Total DD: <strong>PASS (Max observed: 4.18%)</strong></div>
-        </div>
-        <div style="background: rgba(0,0,0,0.4); padding: 18px; border-radius: 12px; border: 1px solid var(--border-subtle);">
-          <div style="color: var(--gold-primary); font-weight: 700; margin-bottom: 6px;">THE5ERS HYPER-GROWTH</div>
-          <div style="color: var(--text-muted); font-size: 0.85rem;">Strict Stop-Loss Per Order: <strong>ENFORCED (Hard SL on every trade)</strong><br>Zero Weekend Overnight Risk: <strong>PASS (100% Cash Flat)</strong></div>
-        </div>
-        <div style="background: rgba(0,0,0,0.4); padding: 18px; border-radius: 12px; border: 1px solid var(--border-subtle);">
-          <div style="color: var(--gold-primary); font-weight: 700; margin-bottom: 6px;">FUNDEDNEXT STELLAR MODEL</div>
-          <div style="color: var(--text-muted); font-size: 0.85rem;">Balance-Based Drawdown Guard: <strong>ACTIVE</strong><br>News Event Jump-Diffusion Shield: <strong>VETO ON HIGH IMPACT CPI/NFP</strong></div>
-        </div>
-      </div>
-    </section>
+    <!-- Regulatory & Academic Transparency Notice -->
+    <div class="disclaimer-box">
+      <strong>CFTC RULE 4.41 &amp; REGULATORY DISCLOSURE:</strong><br>
+      Hypothetical or simulated performance results have certain inherent limitations. Unlike an actual performance record, simulated results do not represent actual trading.
+      No representation is being made that any account will or is likely to achieve profits or losses similar to those shown.
+      Don Aurelius is an algorithmic software framework designed for disciplined risk execution. All performance telemetry presented reflects ongoing forward-testing subject to live market volatility, liquidity variance, and slippage. Past results do not guarantee future performance.
+    </div>
 
     <!-- Call to Action Footer -->
     <div class="cta-audit-footer">
       <h3 style="font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 12px; color: #fff;">
-        Ready to Deploy Don Aurelius on Your Account?
+        Interested in Reviewing Full Technical Telemetry?
       </h3>
       <p style="color: var(--text-muted); max-width: 580px; margin: 0 auto 28px;">
-        Acquire an instant machine license or speak directly with Founder SM.KANISH to discuss custom risk allocation.
+        Acquire a cryptographic machine license or connect directly with Founder SM.KANISH for academic or quantitative due diligence.
       </p>
       <div>
-        <a href="checkout.html" class="cta-btn-gold">⚡ Get License Key Now</a>
-        <a href="https://wa.me/919342410313?text=Hi%20Kanish,%20I%20inspected%20the%20Don%20Aurelius%20verified%20forward-test%20and%20want%20to%20deploy" class="cta-btn-wa">💬 WhatsApp Founder</a>
+        <a href="checkout.html" class="cta-btn-gold">⚡ Get License Key</a>
+        <a href="https://wa.me/919342410313?text=Hi%20Kanish,%20I%20reviewed%20the%20Don%20Aurelius%20forward-test%20telemetry%20and%20want%20to%20discuss" class="cta-btn-wa">💬 WhatsApp Founder</a>
       </div>
     </div>
 

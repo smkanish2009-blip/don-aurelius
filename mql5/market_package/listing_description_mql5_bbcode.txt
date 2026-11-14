@@ -14,14 +14,15 @@
 [*] [b]Prop-Firm Compliant:[/b] 100% compliant with FTMO, The5ers, and FundedNext daily drawdown (5%) and total drawdown (10%) rules.
 [/list]
 
-[b][size=14]VERIFIED EMPIRICAL METRICS (AUDITED FORWARD-TEST):[/size][/b]
+[b][size=14]LONG-TERM FORWARD-TEST TELEMETRY & RISK DISCIPLINE:[/size][/b]
 [list]
-[*] Annualized Return (CAGR): [b]+142.8%[/b]
-[*] Supermajority Win Rate: [b]78.6%[/b] (318 Wins / 426 Trades)
-[*] Profit Factor: [b]2.41[/b]
-[*] Sharpe Ratio: [b]3.14[/b] (Annualized)
-[*] Max Relative Drawdown: [b]4.18%[/b]
-[*] Total Net Pips Secured: [b]+4,892.4 Pips[/b]
+[*] Forward-Test Horizon: [b]6–12 Month Continuous Walk-Forward Validation[/b]
+[*] Target Annualized Sharpe: [b]> 1.80[/b] (252-Day Daily Returns Basis)
+[*] Daily Drawdown Hard Cap: [b]≤ 2.0%[/b] (Automatic Lockout)
+[*] Total Drawdown Kill-Switch: [b]≤ 8.0%[/b] (Trailing High-Water Mark)
+[*] Consensus Gating: [b]3 of 4 War Room Supermajority[/b]
+[*] Sizing Architecture: [b]Quarter-Kelly (≤ 0.75% / Trade)[/b]
+[*] Stop Loss Enforcement: [b]100% Server-Side Hard SL on Every Order[/b]
 [/list]
 
 [b][size=14]RECOMMENDED SETUP & PARAMETERS:[/size][/b]

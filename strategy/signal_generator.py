@@ -35,6 +35,12 @@ class SignalGenerator:
         self.current_range: Optional[AsianRange] = None
         self.setup_b_fired_today = False
         self.setup_a_fired_today = False
+        self.last_evaluation: Optional[Dict[str, Any]] = None
+
+    @property
+    def current_asian_range(self) -> Optional[AsianRange]:
+        """Backward-compatible property for orchestrators/dashboard callers."""
+        return self.current_range
 
     def update_asian_range(self, df_m5: pd.DataFrame, df_h1: pd.DataFrame, target_date: datetime.date) -> Optional[AsianRange]:
         """Calculates and validates the Asian range at AsianEnd_GMT (07:00 GMT)."""
@@ -108,13 +114,45 @@ class SignalGenerator:
                             df_h1: pd.DataFrame, r_high: float, r_low: float, spread: float) -> Optional[Tuple[TradeSignal, float]]:
         """Passes candidate trade through the AI Meta-Labeling engine and adapts to Regime Policy."""
         base_risk_mult = 1.0
+        features = {}
+        p_win = 0.50
+        model_mode = self.meta_labeler.model_mode
+        regime_str = self.current_regime_policy.regime.value if self.current_regime_policy else "NORMAL"
+
         if self.config.ai.ENABLED:
-            features = FeatureExtractor.extract_features(df_m5, df_m15, df_h1, r_high, r_low, spread)
+            features = FeatureExtractor.extract_features(
+                df_m5, df_m15, df_h1, r_high, r_low, spread,
+                direction=signal.direction.value,
+                setup_type=signal.setup_type.value
+            )
             allowed, p_win, ai_risk_mult = self.meta_labeler.filter_trade(features)
+
+            self.last_evaluation = {
+                "features": features,
+                "p_win": p_win,
+                "model_mode": model_mode,
+                "allowed": allowed,
+                "veto_reason": None if allowed else f"P(Win) {p_win:.2f} < Threshold {self.config.ai.META_MODEL_MIN_PROBABILITY:.2f}",
+                "regime": regime_str,
+                "spread_usd": spread,
+                "signal": signal
+            }
+
             if not allowed:
                 return None
             signal.confidence_score = p_win
             base_risk_mult = ai_risk_mult
+        else:
+            self.last_evaluation = {
+                "features": {},
+                "p_win": 0.50,
+                "model_mode": "DISABLED",
+                "allowed": True,
+                "veto_reason": None,
+                "regime": regime_str,
+                "spread_usd": spread,
+                "signal": signal
+            }
 
         # Chameleon Dynamic Adaptation
         if self.current_regime_policy:
@@ -138,3 +176,9 @@ class SignalGenerator:
         self.current_range = None
         self.setup_b_fired_today = False
         self.setup_a_fired_today = False
+        self.last_evaluation: Optional[Dict[str, Any]] = None
+
+    @property
+    def current_asian_range(self) -> Optional[AsianRange]:
+        """Backward-compatible property for orchestrators/dashboard callers."""
+        return self.current_range

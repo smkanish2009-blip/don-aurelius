@@ -329,6 +329,18 @@ class BacktestEngine:
 
         recovery_factor = (net_profit / (initial * (max_drawdown_pct / 100.0) + 1e-9)) if max_drawdown_pct > 0 else 99.0
 
+        # Annualized Risk-Adjusted Metrics (Sharpe, Sortino, Calmar)
+        trade_returns = np.array([t["pnl_usd"] / initial for t in trades])
+        mean_ret = float(np.mean(trade_returns))
+        std_ret = float(np.std(trade_returns, ddof=1)) if len(trade_returns) > 1 else 0.0
+        annual_factor = np.sqrt(200.0)
+
+        sharpe_ratio = round((mean_ret / std_ret) * annual_factor, 2) if std_ret > 1e-9 else 0.0
+        downside = trade_returns[trade_returns < 0.0]
+        downside_std = float(np.sqrt(np.mean(downside ** 2))) if len(downside) > 0 else 0.0
+        sortino_ratio = round((mean_ret / downside_std) * annual_factor, 2) if downside_std > 1e-9 else 0.0
+        calmar_ratio = round(return_pct / max_drawdown_pct, 2) if max_drawdown_pct > 0.01 else 0.0
+
         return {
             "total_trades": total_trades,
             "wins": len(wins),
@@ -340,5 +352,8 @@ class BacktestEngine:
             "return_pct": round(return_pct, 2),
             "max_drawdown_pct": round(max_drawdown_pct, 2),
             "recovery_factor": round(recovery_factor, 2),
+            "sharpe_ratio": sharpe_ratio,
+            "sortino_ratio": sortino_ratio,
+            "calmar_ratio": calmar_ratio,
             "trades": trades
         }

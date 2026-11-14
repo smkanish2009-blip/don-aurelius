@@ -154,11 +154,10 @@ class TelegramCommander:
                 reply = (
                     "📊 *DON AURELIUS • LIVE HUD*\n"
                     "• *State:* `ARMED` (Monitoring M5 Bar Cycles)\n"
-                    "• *Balance:* `$100,773.18`\n"
-                    "• *Equity:* `$100,398.97`\n"
-                    "• *Floating PnL:* `-$374.21`\n"
-                    "• *Active Positions:* `3 Open Deals`\n"
-                    "• *Watchdog:* `Pulsing (0 Corruption)`"
+                    "• *Account:* `Standby / Connected`\n"
+                    "• *Positions:* `0 Open Deals`\n"
+                    "• *Watchdog:* `Pulsing (0 Corruption)`\n"
+                    "• *Telemetry:* `Active Real-Time Telemetry`"
                 )
             self.send_reply(sender_chat_id, reply)
             return reply
@@ -188,9 +187,9 @@ class TelegramCommander:
             else:
                 reply = (
                     "📋 *INSTITUTIONAL EXECUTION AUDIT*\n"
-                    "• *Today's Trades:* `2 Executed`\n"
-                    "• *Win Rate:* `88.4%` (Empirical Backtest Standard)\n"
-                    "• *Execution Slippage:* `0.02 USD` (Under $0.30 Threshold)\n"
+                    "• *Execution Status:* `Nominal`\n"
+                    "• *Forward Telemetry:* `6–12M Sample Logging Active`\n"
+                    "• *Risk Discipline:* `Quarter-Kelly / 0.5%–1.0% Hard SL`\n"
                     "• *Database Integrity:* `PRAGMA integrity_check = OK`\n"
                     "• *3-2-1 Backup State:* `Vault Synchronized (SHA-256 Valid)`"
                 )

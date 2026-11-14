@@ -15,20 +15,20 @@
   let supabaseClient = null;
   let activeConsensus = {
     pair: 'XAUUSD',
-    direction: 'BUY',
-    confidence: 94.2,
-    setup_grade: 'A+',
-    hawk_vote: 'BUY',
-    hawk_reason: 'DXY -0.32% • Yields Fall',
-    radar_vote: 'BUY',
-    radar_reason: 'Asian Range Swept',
-    predator_vote: 'BUY',
-    predator_reason: 'Bullish FVG Retest',
+    direction: 'WAIT',
+    confidence: 50.0,
+    setup_grade: 'MONITORING',
+    hawk_vote: 'WAIT',
+    hawk_reason: 'Macro Intermarket Baseline',
+    radar_vote: 'WAIT',
+    radar_reason: 'Asian Range Scanning',
+    predator_vote: 'WAIT',
+    predator_reason: 'Liquidity Levels Monitored',
     inquisitor_vote: 'PASS',
-    inquisitor_reason: 'Spread 0.12p <= 5.0p Cap',
-    entry_zone: '2662.50 - 2664.50',
-    stop_loss: 2658.00,
-    take_profit: 2678.00
+    inquisitor_reason: 'Spread Limits Nominal',
+    entry_zone: 'Awaiting Setup',
+    stop_loss: 0.0,
+    take_profit: 0.0
   };
 
   function initSupabase() {

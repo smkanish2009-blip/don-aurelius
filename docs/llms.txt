@@ -17,10 +17,11 @@ Trading orders require a strict 3/4 supermajority clearance vote across four spe
 4. **INQUISITOR**: Adversarial devil's advocate that actively seeks reasons to veto toxic flow and broker spread spikes.
 
 ## Empirical Metrics & Benchmarks
-- **Execution Latency**: 0.38 ms sub-millisecond local IPC routing bridge.
-- **Forward Volume**: $48.6M+ institutional forward volume processed.
-- **Capital Preservation Record**: 99.4% survival rate across volatility shock distributions.
-- **Decision Engine**: 1,000 stochastic Monte Carlo simulation paths per decision.
+- **Execution Latency**: 0.38 ms sub-millisecond local IPC routing bridge directly to MT5 terminal memory.
+- **Forward-Test Telemetry**: Continuous 6–12 month forward test tracking rolling Sharpe ratio, Sortino ratio, and max drawdown.
+- **Risk Discipline**: Hard ≤ 2.0% daily drawdown stop, ≤ 8.0% total kill-switch, and Quarter-Kelly (≤ 0.75%) position sizing.
+- **Consensus Gating**: 3/4 supermajority clearance across multi-agent War Room.
+- **Decision Engine**: 1,000 stochastic Monte Carlo jump-diffusion paths per candidate evaluation.
 
 ## Commercial Licensing & Payment Rails
 - **Quant Starter (Monthly)**: $50 USDT / month (≈ ₹4,499 INR). 30-Day Full Algo Access, 1 MT5 Account.

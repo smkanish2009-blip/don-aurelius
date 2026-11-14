@@ -290,12 +290,62 @@ class TestIroncladDefenseSystem(unittest.TestCase):
         self.assertNotIn("SuperSecretPassword99!", raw)
         self.assertNotIn("AIzaSyA8899FakeKeyForTesting", raw)
 
+        # Inspect payload structure (Version 2 Fernet AES with PBKDF2)
+        import json
+        payload = json.loads(raw)
+        self.assertEqual(payload["version"], 2)
+        self.assertEqual(payload["cipher"], "fernet-aes-128-cbc-hmac-sha256")
+        self.assertTrue(payload["data"].startswith("gAAAAA"))
+        self.assertTrue(len(payload["salt"]) > 10)
+
         # Decrypt and verify exact match
         decrypted = self.vault.load_and_decrypt()
         self.assertIsNotNone(decrypted)
         self.assertEqual(decrypted["MT5_LOGIN"], sample_secrets["MT5_LOGIN"])
         self.assertEqual(decrypted["MT5_PASSWORD"], sample_secrets["MT5_PASSWORD"])
         self.assertEqual(decrypted["GEMINI_API_KEY"], sample_secrets["GEMINI_API_KEY"])
+
+        # Test wrong passphrase returns None
+        wrong_vault = VaultManager(
+            vault_path="data/test_secrets.vault",
+            master_passphrase="wrong-passphrase-attempt"
+        )
+        self.assertIsNone(wrong_vault.load_and_decrypt())
+
+        # Test tampered ciphertext returns None
+        tampered_payload = dict(payload)
+        tampered_payload["data"] = payload["data"][:-5] + "XXXXX"
+        with open("data/test_secrets.vault", "w") as f:
+            json.dump(tampered_payload, f)
+        self.assertIsNone(self.vault.load_and_decrypt())
+
+        # Test legacy v1 (XOR) fallback and automatic upgrade
+        import base64
+        legacy_key = self.vault._derive_legacy_key(self.vault.master_passphrase)
+        raw_bytes = json.dumps(sample_secrets).encode("utf-8")
+        legacy_encrypted = bytearray()
+        for i, b in enumerate(raw_bytes):
+            legacy_encrypted.append(b ^ legacy_key[i % len(legacy_key)])
+        v1_payload = {
+            "version": 1,
+            "data": base64.b64encode(bytes(legacy_encrypted)).decode("ascii")
+        }
+        with open("data/test_secrets.vault", "w") as f:
+            json.dump(v1_payload, f)
+
+        # Ensure v1 decrypts via backward compatibility
+        v1_decrypted = self.vault.load_and_decrypt()
+        self.assertIsNotNone(v1_decrypted)
+        self.assertEqual(v1_decrypted["MT5_LOGIN"], sample_secrets["MT5_LOGIN"])
+
+        # Upgrade v1 to v2
+        upgraded = self.vault.upgrade_vault_to_fernet()
+        self.assertTrue(upgraded)
+        with open("data/test_secrets.vault", "r") as f:
+            upgraded_payload = json.load(f)
+        self.assertEqual(upgraded_payload["version"], 2)
+        upgraded_decrypted = self.vault.load_and_decrypt()
+        self.assertEqual(upgraded_decrypted["MT5_LOGIN"], sample_secrets["MT5_LOGIN"])
 
 
 if __name__ == "__main__":

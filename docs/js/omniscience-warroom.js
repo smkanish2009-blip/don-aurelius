@@ -1017,7 +1017,7 @@
 
       ctx.font = '600 10px JetBrains Mono, monospace';
       ctx.fillStyle = '#f5c542';
-      ctx.fillText('PREDICTIVE GHOST TRAJECTORY (94.2% CONFIDENCE)', lastX - 20, priceToY(2641.0) + 24);
+      ctx.fillText('MODEL GHOST TRAJECTORY (ILLUSTRATIVE)', lastX - 20, priceToY(2641.0) + 24);
 
       // Render Moving Gemini Multimodal Vision Laser Scanline
       this.laserX += 2.2 * this.laserDir;
@@ -1465,10 +1465,10 @@
       // Defense Rating
       if (resultRating) {
         if (actualRiskPct <= 0.75) {
-          resultRating.textContent = 'OPTIMAL (99.4%)';
+          resultRating.textContent = 'OPTIMAL (Kelly ≤ 0.75%)';
           resultRating.className = 'stat-val green';
         } else if (actualRiskPct <= 1.5) {
-          resultRating.textContent = 'STABLE (96.2%)';
+          resultRating.textContent = 'CONTROLLED (≤ 1.50%)';
           resultRating.className = 'stat-val gold';
         } else {
           resultRating.textContent = 'ELEVATED RISK';

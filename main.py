@@ -35,6 +35,7 @@ from indicators.technicals import compute_atr
 from telemetry.logger import setup_logger
 from telemetry.telegram_bot import TelegramBot
 from telemetry.trade_journal import TradeJournal
+from telemetry.forward_test_tracker import ForwardTestTracker
 from telemetry.mfa_webhook import MFAWebhook
 from telemetry.watchdog import HeartbeatWatchdog
 from telemetry.supabase_syncer import supabase_syncer
@@ -90,6 +91,7 @@ def run_bot():
     signal_gen = SignalGenerator(config)
     telegram = TelegramBot(credentials.TELEGRAM_BOT_TOKEN, credentials.TELEGRAM_CHAT_ID)
     journal = TradeJournal()
+    forward_tracker = ForwardTestTracker(db_path="data/forward_test.sqlite")
 
     # Ironclad Defense Modules
     dual_model_validator = DualModelValidator(config.strategy)
@@ -181,13 +183,17 @@ def run_bot():
         )
 
     def tg_get_audit():
+        fwd = forward_tracker.compute_metrics()
+        sh_str = f"{fwd['sharpe_ratio']:.2f}" if fwd.get("sharpe_ratio") is not None else "Calibrating"
         return (
             f"📋 *INSTITUTIONAL EXECUTION AUDIT*\n"
             f"• *Daily Trades Taken:* `{risk_mgr.daily_trades_taken}/{config.risk.MAX_TRADES_PER_DAY}`\n"
-            f"• *Win Rate Standard:* `88.4%` (Empirical Backtest)\n"
+            f"• *Forward Maturity:* `{fwd.get('maturity_status', 'COLLECTING_DATA')}`\n"
+            f"• *6M Verification:* `{fwd.get('progress_6m_pct', 0.0)}%` (Elapsed: {fwd.get('elapsed_days', 0.0):.1f}d)\n"
+            f"• *Sharpe Ratio (Ann):* `{sh_str}` | MaxDD: `{fwd.get('max_drawdown_pct', 0.0):.2f}%`\n"
+            f"• *ML Model Mode:* `{signal_gen.meta_labeler.model_mode}`\n"
             f"• *Database Integrity:* `PRAGMA integrity_check = OK`\n"
-            f"• *3-2-1 Data Resilience:* `Tri-Tier Synchronized (SHA-256 Valid)`\n"
-            f"• *Stealth Execution:* `Local Memory Protection Active`"
+            f"• *Risk Discipline:* `Quarter-Kelly / 0.5%–1.0% Hard SL`"
         )
 
     def tg_get_risk():
@@ -286,12 +292,14 @@ def run_bot():
                 try:
                     open_pos = client.get_open_positions()
                     floating_pnl = sum(p.profit for p in open_pos) if open_pos else 0.0
-                    acc_bal = (current_equity - floating_pnl) if current_equity > 0 else 100773.18
-                    regime_val = signal_gen.current_regime_policy.regime.value if signal_gen.current_regime_policy else "BULLISH_EXPANSION"
+                    acc_bal = (current_equity - floating_pnl) if current_equity > 0 else 0.0
+                    regime_val = signal_gen.current_regime_policy.regime.value if signal_gen.current_regime_policy else "NORMAL"
+                    acc_id = client.get_account_id()
+                    account_str = str(acc_id) if acc_id else "DISCONNECTED"
                     supabase_syncer.sync_telemetry(
-                        account_number=str(client.get_account_id() or "10434714118"),
+                        account_number=account_str,
                         balance=acc_bal,
-                        equity=current_equity if current_equity > 0 else 100398.97,
+                        equity=current_equity if current_equity > 0 else 0.0,
                         floating_pnl=floating_pnl,
                         open_positions_count=len(open_pos) if open_pos else 0,
                         regime=regime_val
@@ -393,6 +401,35 @@ def run_bot():
                                         f"• *Fee Deducted:* `${fee_res['fee_charged_usd']:.2f}`\n"
                                         f"• *Gas Wallet:* `${gas_wallet.balance_usd:.2f}`"
                                     )
+
+                            # Reconcile forward-test tracker and trade journal
+                            net_profit = float(last_deal.profit + last_deal.commission + last_deal.swap)
+                            exit_p = float(last_deal.price)
+                            ticket_pos = int(getattr(last_deal, "position_id", last_deal.ticket))
+                            risk_denom = abs(equity_before_trade * config.risk.RISK_PER_TRADE_PCT) if equity_before_trade > 0 else 500.0
+                            pnl_r = round(net_profit / max(1.0, risk_denom), 2)
+                            exit_comment = str(last_deal.comment or "BROKER_SL_TP")
+
+                            journal.record_exit(
+                                ticket=ticket_pos,
+                                exit_price=exit_p,
+                                pnl_usd=net_profit,
+                                pnl_r=pnl_r,
+                                exit_reason=exit_comment
+                            )
+                            forward_tracker.record_outcome(
+                                ticket_id=ticket_pos,
+                                exit_price=exit_p,
+                                net_pnl_usd=net_profit,
+                                pnl_r=pnl_r,
+                                exit_reason=exit_comment
+                            )
+                            forward_tracker.record_equity_snapshot(
+                                balance=client.get_account_balance(),
+                                equity=current_eq,
+                                floating_pnl=0.0
+                            )
+                            forward_tracker.write_json_report()
                 except Exception as e:
                     logger.error(f"Error processing deal fee: {e}")
 
@@ -580,6 +617,7 @@ def run_bot():
                                     risk_usd=risk_usd,
                                     confidence=signal.confidence_score
                                 )
+                                eval_feats = signal_gen.last_evaluation.get("features", {}) if signal_gen.last_evaluation else {}
                                 journal.record_entry(
                                     ticket=ticket,
                                     setup_type=signal.setup_type.value,
@@ -588,7 +626,30 @@ def run_bot():
                                     sl=signal.stop_loss,
                                     tp=signal.take_profit,
                                     lots=lots,
-                                    ai_confidence=signal.confidence_score
+                                    ai_confidence=signal.confidence_score,
+                                    features=eval_feats
+                                )
+                                forward_tracker.record_signal_candidate(
+                                    signal_id=f"sig_{ticket}_{int(time.time())}",
+                                    symbol=config.SYMBOL,
+                                    setup_type=signal.setup_type.value,
+                                    direction=signal.direction.value,
+                                    entry_price=signal.entry_price,
+                                    stop_loss=signal.stop_loss,
+                                    take_profit=signal.take_profit,
+                                    risk_r=signal.risk_r,
+                                    spread_usd=spread_usd,
+                                    regime=signal_gen.current_regime_policy.regime.value if signal_gen.current_regime_policy else "NORMAL",
+                                    meta_prob=signal.confidence_score,
+                                    model_mode=signal_gen.meta_labeler.model_mode,
+                                    status="EXECUTED",
+                                    features=eval_feats,
+                                    ticket_id=ticket
+                                )
+                                forward_tracker.record_equity_snapshot(
+                                    balance=client.get_account_balance(),
+                                    equity=client.get_account_equity(),
+                                    floating_pnl=0.0
                                 )
 
             # Dynamic loop sleep pacing with active watchdog heartbeat
